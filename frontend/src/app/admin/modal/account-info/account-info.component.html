@@ -1,0 +1,20 @@
+<h2>data.Account Info</h2>
+<p>User ID: {{ data.account.user_id }}</p>
+<p>Name: {{ data.account.fname }} {{ data.account.mname }} {{ data.account.lname }} {{ data.account.suffix }}</p>
+<p>Gender: {{ data.account.gender }}</p>
+<p>Birthday: {{ data.account.bday }}</p>
+<p>Email: {{ data.account.email }}</p>
+<p>Mobile Number: {{ data.account.mobile_no }}</p>
+<p>Address: {{ data.account.address }}</p>
+<p>Status: {{ data.account.status }}</p>
+
+<h3>Programs</h3>
+<ul>
+  <li *ngFor="let program of data.account.programs">
+    <p>Title: {{ program.title }}   <span *ngIf="program.leader">leader</span></p>
+  </li>
+</ul>
+
+<p>Previous Programs: {{ data.account.previous }}</p>
+<p>Ongoing Programs: {{ data.account.ongoing }}</p>
+<p>Upcoming Programs: {{ data.account.upcoming }}</p>

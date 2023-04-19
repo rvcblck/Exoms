@@ -1,0 +1,329 @@
+<div class="add-program">
+  <div class="dialog-title" *ngIf="!data.program">
+    <label for="">Create Extension Program</label>
+  </div>
+  <div class="dialog-title" *ngIf="data.program">
+    <label for="">Update Extension Program</label>
+  </div>
+  <div class="x-close">
+    <button (click)="closeDialog()"><i class="fa-solid fa-x"></i></button>
+  </div>
+</div>
+
+<mat-stepper #stepper>
+  <mat-step [stepControl]="programForm" [errorMessage]="getFirstErrorMessage()">
+    <form [formGroup]="programForm">
+      <ng-template matStepLabel>Page 1</ng-template>
+      <div class="first-form-wrapper">
+        <div class="title-field">
+          <label for="title">Title</label>
+          <input type="text" formControlName="title" id="title" name="title" required placeholder="Extension Title" />
+          <mat-error *ngIf="programForm.get('title')?.invalid && (programForm.get('title')?.touched || submitAttempted)"
+            >title is required.</mat-error
+          >
+        </div>
+
+        <div class="date-field">
+          <div class="start-date-wrapper">
+            <label for="start_date">Start Date</label>
+            <input class="start-date" formControlName="start_date" type="date" id="start_date" name="start_date" required placeholder="Select Date" />
+            <!-- <mat-error *ngIf="programForm.get('start_date')?.invalid && (programForm.get('start_date')?.touched || submitAttempted)">start date is required.</mat-error> -->
+          </div>
+          <div class="end-date-wrapper">
+            <label for="end_date">End Date</label>
+            <input class="end-date" formControlName="end_date" type="date" id="end_date" name="end_date" required placeholder="Select Date" />
+          </div>
+          <mat-error
+            *ngIf="
+              (programForm.get('end_date')?.invalid || programForm.get('start_date')?.invalid) &&
+              (programForm.get('end_date')?.touched || submitAttempted || programForm.get('start_date')?.touched || submitAttempted)
+            "
+            >start & end date is required.</mat-error
+          >
+        </div>
+
+        <div class="details-field">
+          <label for="details">Details</label>
+          <textarea
+            id="details"
+            formControlName="details"
+            name="details"
+            required
+            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          ></textarea>
+          <mat-error *ngIf="programForm.get('details')?.invalid && (programForm.get('details')?.touched || submitAttempted)"
+            >details is required.</mat-error
+          >
+        </div>
+
+        <label class="address-label">Address</label>
+        <hr />
+        <div class="address">
+          <div class="barangay">
+            <!-- <label for="barangay">Barangay</label> -->
+            <input type="text" #barangayInput formControlName="barangay" id="barangay" name="barangay" required placeholder="Barangay" />
+            <mat-error *ngIf="programForm.get('barangay')?.invalid && (programForm.get('barangay')?.touched || submitAttempted)"
+              >barangay is required.</mat-error
+            >
+          </div>
+
+          <div class="city">
+            <!-- <label for="city">City</label> -->
+            <input type="text" #cityInput formControlName="city" id="city" name="city" required placeholder="City / Municipality" />
+            <mat-error *ngIf="programForm.get('city')?.invalid && (programForm.get('city')?.touched || submitAttempted)">city is required.</mat-error>
+          </div>
+
+          <div class="province">
+            <!-- <label for="province">Province</label> -->
+            <input type="text" #provinceInput formControlName="province" id="province" name="province" required placeholder="Province" />
+            <mat-error *ngIf="programForm.get('province')?.invalid && (programForm.get('province')?.touched || submitAttempted)"
+              >province is required.</mat-error
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button (click)="closeDialog()">Cancel</button>
+        <button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- second form  -->
+
+  <mat-step [stepControl]="programForm" [errorMessage]="getFirstErrorMessagePage2()">
+    <form [formGroup]="programForm">
+      <ng-template matStepLabel tabIndex="-1">Page 2</ng-template>
+      <div class="first-form-wrapper">
+        <div class="leader">
+          <!-- <mat-form-field appearance="fill" style="width: 100%"> -->
+          <label>Leader</label>
+          <mat-chip-list #chipListLeader>
+            <mat-chip color="warn" *ngFor="let fullName of selectedLeader" [removable]="true" (removed)="onLeaderRemoved(fullName)">
+              {{ fullName.full_name }}
+              <mat-icon matChipRemove><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+            </mat-chip>
+            <input
+              matInput
+              type="text"
+              formControlName="leader_id"
+              (input)="checkLeader($event)"
+              [matAutocomplete]="auto"
+              #leaderInput
+              [matChipInputFor]="chipListLeader"
+              placeholder="Select faculty leader"
+            />
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onLeaderSelected($event)">
+            <mat-option *ngFor="let option of options" [value]="option.user_id">
+              <div class="autocomplete-option">
+                <div class="name">{{ option.full_name }}</div>
+                <div class="ongoing">{{ option.ongoing }}</div>
+                <div class="upcoming">{{ option.upcoming }}</div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <!-- </mat-form-field> -->
+          <mat-error *ngIf="selectedLeader.length === 0 && (programForm.get('leader_id')?.touched || submitAttempted)">Leader is required.</mat-error>
+          <mat-error *ngIf="showLeaderError && (leaderInput.value || selectedLeader.length === 0)">It should be a registered faculty.</mat-error>
+        </div>
+
+        <!-- member field  -->
+        <div class="member">
+          <!-- <mat-form-field appearance="fill" style="width: 100%"> -->
+          <label>Member</label>
+          <mat-chip-list #chipList>
+            <mat-chip color="warn" *ngFor="let member of selectedMember" [removable]="true" (removed)="onMemberRemoved(member)">
+              {{ member.full_name }}
+              <mat-icon matChipRemove><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+            </mat-chip>
+            <input
+              matInput
+              type="text"
+              formControlName="member_id"
+              (input)="checkMember($event)"
+              [matAutocomplete]="autoMember"
+              #memberInput
+              [matChipInputFor]="chipList"
+              placeholder="Select faculty member/s"
+            />
+          </mat-chip-list>
+          <mat-autocomplete #autoMember="matAutocomplete" (optionSelected)="onMemberSelected($event)">
+            <mat-option *ngFor="let option of suggestions" [value]="option.user_id">
+              <div class="autocomplete-option">
+                <div class="name">{{ option.full_name }}</div>
+                <div class="ongoing">{{ option.ongoing }}</div>
+                <div class="upcoming">{{ option.upcoming }}</div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <!-- </mat-form-field> -->
+          <mat-error *ngIf="selectedMember.length === 0 && (programForm.get('member_id')?.touched || submitAttempted)">Member is required.</mat-error>
+          <mat-error *ngIf="showMemberError && (memberInput.value || selectedMember.length === 0)">It should be a registered faculty.</mat-error>
+        </div>
+
+        <!-- field for partners -->
+        <div class="partner">
+          <!-- <mat-form-field appearance="fill" style="width: 100%"> -->
+          <label>Partner</label>
+          <mat-chip-list #partnerChipList>
+            <mat-chip color="warn" *ngFor="let fullName of selectedPartners" [removable]="true" (removed)="onPartnerRemoved(fullName)">
+              {{ fullName.name }}
+              <mat-icon matChipRemove><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+            </mat-chip>
+            <input
+              matInput
+              type="text"
+              formControlName="partner_id"
+              (input)="checkPartner($event)"
+              [matAutocomplete]="autoPartner"
+              #partnerInput
+              [matChipInputFor]="partnerChipList"
+              placeholder="Select program partner"
+            />
+          </mat-chip-list>
+          <mat-autocomplete #autoPartner="matAutocomplete" (optionSelected)="onPartnerSelected($event)">
+            <mat-option *ngFor="let option of partnerSuggestions" [value]="option.partner_id">
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <!-- </mat-form-field> -->
+          <mat-error *ngIf="selectedPartners.length === 0 && (programForm.get('partner_id')?.touched || submitAttempted)"
+            >Partner is required.</mat-error
+          >
+          <mat-error *ngIf="showPartnerError && (partnerInput.value || selectedPartners.length === 0)">It should be a registered partner.</mat-error>
+        </div>
+
+        <!-- field for participant -->
+        <div class="participant">
+          <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
+          <label>Participants</label>
+          <mat-chip-list #participantChipList aria-label="Participant selection">
+            <mat-chip color="warn" *ngFor="let participant of participants" (removed)="remove(participant)">
+              {{ participant }}
+              <button matChipRemove [attr.aria-label]="'remove ' + participant">
+                <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+              </button>
+            </mat-chip>
+            <input
+              placeholder="Type and enter to add participant.."
+              #participantInput
+              formControlName="participant"
+              [matChipInputFor]="participantChipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <!-- </mat-form-field> -->
+        </div>
+
+        <!-- invitation field  -->
+        <div class="upload-files">
+          <div class="upload-wrapper1">
+            <div class="inv-label">Invitation</div>
+            <div class="invitation">
+              <label for="invitation-upload" *ngIf="!invitation && !edithInv" class="invitation-label">
+                <mat-icon><i class="fa-solid fa-arrow-up-from-bracket"></i></mat-icon>
+                Upload Invitation
+              </label>
+              <input
+                type="file"
+                id="invitation-upload"
+                formControlName="invitation"
+                (change)="onInvitationFileSelected($event, 'invitation')"
+                style="display: none"
+              />
+              <div class="file-info" *ngIf="invitation || edithInv">
+                <div class="file-icon">
+                  <mat-icon id="invIcon"></mat-icon>
+                </div>
+                <div>
+                  <div #invFile id="fileName"></div>
+                  <div #invFileSize id="invitationSize"></div>
+                </div>
+                <div>
+                  <button mat-icon-button color="warn" (click)="removeInvitation()">
+                    <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="programForm.get('invitation')?.invalid && programForm.get('invitation')?.dirty">
+              <mat-error *ngIf="programForm.get('invitation')?.errors?.['invalidExtension']">
+                Invalid file type. Allowed extensions: pdf, docx, png, jpeg
+              </mat-error>
+              <mat-error *ngIf="programForm.get('invitation')?.errors?.['max']"> File size too large. Maximum file size: 5048 KB </mat-error>
+            </div>
+            <div class="dl-inv" *ngIf="edithInv">
+              <button (click)="downloadInvitation()">Download</button>
+            </div>
+          </div>
+
+          <div class="upload-wrapper2">
+            <div class="inv-label">Certificate</div>
+            <div class="invitation">
+              <label for="cert-upload" *ngIf="!certificate && !edithCert" class="invitation-label">
+                <mat-icon><i class="fa-solid fa-arrow-up-from-bracket"></i></mat-icon>
+                Upload Certificate
+              </label>
+              <input
+                type="file"
+                id="cert-upload"
+                formControlName="certificate"
+                (change)="onCertificateFileSelected($event, 'certificate')"
+                style="display: none"
+              />
+              <!-- <input type="file" id="invitation-upload" formControlName="invitation" (change)="onInvitationFileSelected($event, 'invitation')" style="display:none"/> -->
+              <div class="file-info" *ngIf="certificate || edithCert">
+                <div class="file-icon">
+                  <mat-icon id="certIcon"></mat-icon>
+                </div>
+                <div>
+                  <div #certFile id="fileNameCert"></div>
+                  <div #certFileSize id="certSize"></div>
+                </div>
+                <div>
+                  <button mat-icon-button color="warn" (click)="removeCert()">
+                    <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="programForm.get('certificate')?.invalid && programForm.get('certificate')?.dirty">
+              <mat-error *ngIf="programForm.get('certificate')?.errors?.['invalidExtension']"
+                >Invalid file type. Allowed extensions: pdf, docx, png, jpeg</mat-error
+              >
+              <mat-error *ngIf="programForm.get('certificate')?.errors?.['max']">File size too large. Maximum file size: 5048 KB</mat-error>
+            </div>
+            <div class="dl-inv" *ngIf="edithCert">
+              <button (click)="downloadCertificate()">Download</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button matStepperPrevious>Back</button>
+        <button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- third form  -->
+
+  <mat-step>
+    <form [formGroup]="programForm">
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="done-message" style="text-align: justify">
+        You're about to create an extension program,<br />
+        click 'Submit' when you're done.
+      </div>
+      <div class="footer">
+        <button matStepperPrevious>Back</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="!data.program">Add Program</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="data.program">Update Program</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>

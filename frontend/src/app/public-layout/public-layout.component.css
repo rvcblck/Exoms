@@ -1,0 +1,95 @@
+/* Global styles */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header */
+header {
+  background-color: #f7c78c;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  color: #5c5c5c;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #ffad7c;
+}
+
+/* Main section */
+main {
+  padding: 20px;
+}
+
+/* Login form */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 24px;
+  color: #5c5c5c;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #a0a0a0;
+  margin-bottom: 10px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #a0a0a0;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+button[type="submit"] {
+  background-color: #ffad7c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #f7c78c;
+}
+
+/* Footer */
+footer {
+  background-color: #91c7b1;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}

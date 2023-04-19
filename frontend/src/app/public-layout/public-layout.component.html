@@ -1,0 +1,18 @@
+<nav>
+  <ul>
+    <ng-container *ngIf="!(isAuthenticated$ | async)">
+      <li><a routerLink="/register">Register</a></li>
+      <li><a routerLink="/login">Login</a></li>
+    </ng-container>
+    <ng-container *ngIf="isAuthenticated$ | async; else authenticated">
+      <li><a routerLink="/register">Register</a></li>
+      <li><a [routerLink]="getDashboardLink()">Dashboard</a></li>
+    </ng-container>
+  </ul>
+</nav>
+
+<ng-template #authenticated>
+  <ng-container></ng-container>
+</ng-template>
+
+<router-outlet></router-outlet>

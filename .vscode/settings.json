@@ -1,0 +1,15 @@
+{
+  "editor.definitionLinkOpensInPeek": true,
+  "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.peekDefinition",
+  "editor.gotoLocation.alternativeReferenceCommand": "editor.action.peekDefinition",
+  "editor.gotoLocation.multipleDeclarations": "goto",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleReferences": "goto",
+  "editor.gotoLocation.multipleTypeDefinitions": "goto",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "bladeFormatter.format.sortHtmlAttributes": "vuejs",
+  "bladeFormatter.format.useTabs": true,
+  "bladeFormatter.format.noMultipleEmptyLines": true,
+  "editor.formatOnSave": true
+}

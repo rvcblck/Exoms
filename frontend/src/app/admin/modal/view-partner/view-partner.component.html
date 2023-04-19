@@ -1,0 +1,10 @@
+<div *ngIf="data.partner">
+  <h2>{{ data.partner.company_name }}</h2>
+  <p>{{ data.partner.address }}</p>
+  <p><strong>Contact No.</strong> {{ data.partner.contact_no }}</p>
+  <p><strong>MOA File</strong> {{ data.partner.moa_file }}</p>
+  <h2>Contracts</h2>
+  <li *ngFor="let contract of data.partner.contracts">{{ contract.start_date }} {{ contract.end_date }}</li>
+  <h2>Programs</h2>
+  <li *ngFor="let program of data.partner.programs">{{ program.title }}</li>
+</div>

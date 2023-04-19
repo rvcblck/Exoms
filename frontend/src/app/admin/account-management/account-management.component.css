@@ -1,0 +1,62 @@
+table {
+  width: 100%;
+}
+
+.mat-header-cell,
+.mat-cell {
+  padding: 8px;
+}
+.mat-row.mat-row-selected {
+  background-color: #e0e0e0;
+}
+
+.mat-checkbox-inner-container {
+  background-color: #f1f1f1;
+}
+
+.mat-checkbox {
+  margin: 0 8px;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+/* td, th {
+  width: 25%;
+} */
+
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+/* td, th {
+  width: 25%;
+} */
+
+.link-button {
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* .mat-column-select {
+  max-width: 25px;
+} */
+
+.mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+
+
+

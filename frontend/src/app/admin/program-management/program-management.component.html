@@ -1,0 +1,95 @@
+<div class="filter-container">
+  <div class="filter">
+    <div class="search">
+      <label for="search-toggle">
+        <i class="bx bx-search"></i>
+      </label>
+      <input id="search-toggle" type="checkbox" />
+      <input type="text" [(ngModel)]="searchText" placeholder="Search..." (mouseleave)="collapseSearch()" />
+    </div>
+    <div class="start-date">
+      <input type="date" id="start-date" [(ngModel)]="minStartDate" />
+    </div>
+    <div class="end-date">
+      <input type="date" id="end-date" [(ngModel)]="maxEndDate" />
+    </div>
+  </div>
+
+  <div class="sort">
+    <div class="sort-status">
+      <div class="sort-label">Status :</div>
+      <div class="status">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ selectedStatus || 'All' }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+            <li>
+              <a class="dropdown-item" (click)="selectedStatus = ''">All</a>
+            </li>
+            <li *ngFor="let status of statuses">
+              <a class="dropdown-item" (click)="selectedStatus = status">{{ status }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-new">
+      <button (click)="addProgram()">Add New</button>
+    </div>
+  </div>
+</div>
+
+<div class="program-list">
+  <div class="program-card" matRipple *ngFor="let program of filteredPrograms()" (click)="viewProgram(program.program_id)">
+    <div>
+      <div class="title">{{ program.title }}</div>
+      <div class="subtitle" [ngStyle]="{ color: program.status === 'Ongoing' ? '#00c519' : '#ff5a2f' }">
+        <i class="bx bx-loader-circle"></i>&nbsp;&nbsp;{{ program.status }}
+      </div>
+      <div class="date">
+        <i class="bx bx-calendar-week"></i>&nbsp;&nbsp;{{ program.start_date | date : 'longDate' }} -
+        {{ program.end_date | date : 'longDate' }}
+      </div>
+    </div>
+    <div>
+      <p>{{ program.details }}</p>
+      <div class="other-details">
+        <div class="leader">
+          <div class="leader-icon"><i class="fa-solid fa-user-gear"></i></div>
+          <div class="leader-label">Leader</div>
+          <div class="name">
+            {{ program.leader.fullName }}
+          </div>
+        </div>
+        <div class="participants">
+          <div>
+            <i class="fa-regular fa-handshake"></i>
+          </div>
+          <div>Participants</div>
+          <div>
+            {{ program.participant_count }}
+          </div>
+        </div>
+        <div class="place">
+          <div>
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>Place</div>
+          <div>
+            {{ program?.place }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="program-list">
+
+  <div class="program-card" *ngFor="let program of filteredPrograms()">
+
+  </div>
+
+</div> -->

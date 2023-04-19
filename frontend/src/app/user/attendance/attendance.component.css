@@ -1,0 +1,9 @@
+.mat-header-cell {
+  padding: 5px;
+}
+
+.mat-checkbox-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

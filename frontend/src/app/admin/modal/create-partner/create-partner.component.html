@@ -1,0 +1,77 @@
+<form [formGroup]="partnerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="company_name">Company Name</label>
+    <input type="text" formControlName="company_name" class="form-control" />
+    <mat-error *ngIf="partnerForm.get('company_name')?.invalid && (partnerForm.get('company_name')?.touched || submitted)">
+      company name is required.
+    </mat-error>
+  </div>
+
+  <div class="form-group">
+    <label>Address</label>
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" formControlName="address_street" class="form-control" placeholder="Street" />
+      </div>
+      <div class="col-md-3">
+        <input type="text" formControlName="address_barangay" class="form-control" placeholder="Barangay" />
+        <mat-error *ngIf="partnerForm.get('address_barangay')?.invalid && (partnerForm.get('address_barangay')?.touched || submitted)">
+          barangay is required.
+        </mat-error>
+      </div>
+      <div class="col-md-3">
+        <input type="text" formControlName="address_city" class="form-control" placeholder="City/Municipality" />
+        <mat-error *ngIf="partnerForm.get('address_city')?.invalid && (partnerForm.get('address_city')?.touched || submitted)">
+          city is required.
+        </mat-error>
+      </div>
+      <div class="col-md-3">
+        <input type="text" formControlName="address_province" class="form-control" placeholder="Province" />
+        <mat-error *ngIf="partnerForm.get('address_province')?.invalid && (partnerForm.get('address_province')?.touched || submitted)">
+          province is required.
+        </mat-error>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="contact_person">Contact Person</label>
+    <input type="text" formControlName="contact_person" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label for="contact_no">Contact No.</label>
+    <input type="text" formControlName="contact_no" class="form-control" />
+    <mat-error *ngIf="partnerForm.get('contact_no')?.invalid && (partnerForm.get('contact_no')?.touched || submitted)">
+      contact number is required.
+    </mat-error>
+  </div>
+
+  <label>Contract Date</label>
+
+  <div class="form-group">
+    <label for="contact_no">Start Date</label>
+    <input type="date" formControlName="start_date" class="form-control" />
+    <mat-error *ngIf="partnerForm.get('start_date')?.invalid && (partnerForm.get('start_date')?.touched || submitted)">
+      start date is required.
+    </mat-error>
+  </div>
+
+  <div class="form-group">
+    <label for="contact_no">End Date</label>
+    <input type="date" formControlName="end_date" class="form-control" />
+    <mat-error *ngIf="partnerForm.get('end_date')?.invalid && (partnerForm.get('end_date')?.touched || submitted)"> end date is required. </mat-error>
+  </div>
+
+
+  <div class="form-group">
+    <label for="moa_file">MOA File</label>
+    <input type="file" formControlName="moa_file" class="form-control" (change)="onMoaFileSelected($event, 'moa_file')" />
+    <mat-error *ngIf="partnerForm.get('moa_file')?.invalid && (partnerForm.get('moa_file')?.touched || submitted)"> MOA is required. </mat-error>
+    <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['invalidExtension']">Invalid file type. Allowed extensions: pdf and docx</mat-error>
+    <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['max']">File size too large. Maximum file size: 5048 KB</mat-error>
+    <span id="fileName"></span>
+  </div>
+
+  <button type="submit" [disabled]="!partnerForm.valid" class="btn btn-primary">Create Partner</button>
+</form>

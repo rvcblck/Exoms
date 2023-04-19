@@ -1,0 +1,104 @@
+
+
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header">Register</div>
+        <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" class="form-control" id="fname" formControlName="fname">
+              <div *ngIf="submitted && registerForm.controls['fname'].errors?.['required']" class="text-danger">First name is required.</div>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" class="form-control" id="lname" formControlName="lname">
+              <div *ngIf="submitted && registerForm.controls['lname'].errors?.['required']" class="text-danger">Last name is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="mname">Middle Name</label>
+              <input type="text" class="form-control" id="mname" formControlName="mname">
+            </div>
+
+            <div class="form-group">
+              <label for="suffix">Suffix</label>
+              <input type="text" class="form-control" id="suffix" formControlName="suffix">
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select class="form-control" id="gender" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <div *ngIf="submitted && registerForm.controls['gender'].errors?.['required']" class="text-danger">Gender is required.</div>
+            </div>
+            <div class="form-group">
+              <label for="bday">Birthday</label>
+              <input type="date" class="form-control" id="bday" formControlName="bday">
+              <div *ngIf="submitted && registerForm.controls['bday'].errors?.['required']" class="text-danger">Birthday is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="mobile_no">Mobile Number</label>
+              <input type="text" class="form-control" id="mobile_no" formControlName="mobile_no">
+              <div *ngIf="submitted && registerForm.controls['mobile_no'].errors?.['required']" class="text-danger">Mobile Number is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+              <div *ngIf="submitted && registerForm.controls['email'].errors?.['required']" class="text-danger">Email is required.</div>
+              <div *ngIf="submitted && registerForm.controls['email'].errors?.['email']" class="text-danger">Invalid email address.</div>
+              <div *ngIf="errors.length > 0 && errors[0] === 'Email is already registered'" class="text-danger">Email is already registered.</div>
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" formControlName="password" required minlength="6">
+              <div *ngIf="submitted && registerForm.controls['password'].errors">
+                <div *ngIf="registerForm.controls['password'].errors['required']">Password is required</div>
+                <div *ngIf="registerForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password_confirmation">Confirm Password</label>
+              <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required>
+
+              <div *ngIf="(submitted || registerForm.get('password_confirmation')?.touched) && registerForm.hasError('passwordMismatch')" class="text-danger">
+                <div *ngIf="registerForm.get('password_confirmation')?.hasError('required')">Please confirm your password</div>
+                <div *ngIf="registerForm.get('password_confirmation')?.hasError('passwordMismatch')">Passwords do not match</div>
+              </div>
+            </div> -->
+
+
+
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" formControlName="city">
+              <div *ngIf="submitted && registerForm.controls['city'].errors?.['required']">City is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Province</label>
+              <input type="text" class="form-control" id="province" formControlName="province">
+              <div *ngIf="submitted && registerForm.controls['province'].errors?.['required']">Address is required.</div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
+
+

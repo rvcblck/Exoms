@@ -1,0 +1,19 @@
+/* programs.component.css */
+
+.program-list {
+  width: 100%;
+}
+
+.program-card {
+  margin: 20px;
+}
+
+.mat-card {
+  min-width: 80%;
+  margin: 2%;
+}
+
+.mat-card-content {
+  min-height: 150px;
+  overflow: auto;
+}

@@ -1,0 +1,115 @@
+<div class="main-container">
+  <div class="x-close">
+    <button (click)="closeDialog()"><i class="fa-solid fa-x"></i></button>
+  </div>
+  <div mat-dialog-content class="view-program">
+    <div>
+      <div class="title">{{ data.program.title }}</div>
+      <div class="status" [ngStyle]="{ color: data.program.status === 'Ongoing' ? '#00c519' : '#ff5a2f' }">
+        <i class="bx bx-loader-circle"></i>&nbsp;&nbsp;{{ data.program.status }}
+      </div>
+      <div class="date"><i class="bx bx-calendar-week"></i>&nbsp;&nbsp;{{ data.program.start_date }} - {{ data.program.end_date }}</div>
+    </div>
+    <div class="detail">
+      {{ data.program.details }}
+    </div>
+    <div class="other-detail">
+      <div class="leader">
+        <div>
+          <i class="fa-solid fa-user-gear"></i>
+        </div>
+        <div>Leader</div>
+        <div>
+          {{ data.program.leader.fullName }}
+        </div>
+      </div>
+      <div class="participants">
+        <div>
+          <i class="fa-regular fa-handshake"></i>
+        </div>
+        <div>Participants</div>
+        <div>
+          {{ data.program.participant_count }}
+        </div>
+      </div>
+      <div class="place">
+        <div>
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <div>Place</div>
+        <div>
+          {{ data.program.place }}
+        </div>
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+    <div class="partner">
+      <div>Partner/s</div>
+      <div class="partner-list" *ngFor="let partner of data.program.partners">
+        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions>
+    <div class="footer">
+      <div>
+        <button><i class="fa-solid fa-box-archive"></i>&nbsp;&nbsp;&nbsp;Archive</button>
+      </div>
+      <div>
+        <div>
+          <button (click)="closeDialog()">Close</button>
+        </div>
+        <div>
+          <button (click)="editProgram(data.program.program_id)">Edit</button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

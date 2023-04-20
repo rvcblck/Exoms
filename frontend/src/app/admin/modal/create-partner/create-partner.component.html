@@ -86,6 +86,7 @@
       <div class="form-field">
         <label for="">Company Name</label>
         <input type="text" formControlName="company_name" />
+        &nbsp;
         <mat-error *ngIf="partnerForm.get('company_name')?.invalid && (partnerForm.get('company_name')?.touched || submitted)">
           company name is required.
         </mat-error>
@@ -96,6 +97,8 @@
         <div class="form-field">
           <label for="">Barangay</label>
           <input type="text" formControlName="address_barangay" />
+          &nbsp;
+
           <mat-error *ngIf="partnerForm.get('address_barangay')?.invalid && (partnerForm.get('address_barangay')?.touched || submitted)">
             barangay is required.
           </mat-error>
@@ -105,6 +108,8 @@
         <div class="form-field">
           <label for="">City/Municipality</label>
           <input type="text" formControlName="address_city" />
+          &nbsp;
+
           <mat-error *ngIf="partnerForm.get('address_city')?.invalid && (partnerForm.get('address_city')?.touched || submitted)">
             city is required.
           </mat-error>
@@ -114,6 +119,8 @@
         <div class="form-field">
           <label for="">Province</label>
           <input type="text" formControlName="address_province" />
+          &nbsp;
+
           <mat-error *ngIf="partnerForm.get('address_province')?.invalid && (partnerForm.get('address_province')?.touched || submitted)">
             province is required.
           </mat-error>
@@ -125,11 +132,16 @@
         <div class="form-field">
           <label for="">Contact Person</label>
           <input type="text" formControlName="contact_person" />
+          &nbsp;
+          <mat-error *ngIf="partnerForm.get('contact_person')?.invalid && (partnerForm.get('contact_person')?.touched || submitted)">
+            contact person is required.
+          </mat-error>
         </div>
 
         <div class="form-field">
           <label for="">Contact Number</label>
           <input type="text" formControlName="contact_no" />
+          &nbsp;
           <mat-error *ngIf="partnerForm.get('contact_no')?.invalid && (partnerForm.get('contact_no')?.touched || submitted)">
             contact number is required.
           </mat-error>
@@ -140,10 +152,18 @@
         <div class="form-field">
           <label for="">Start Date</label>
           <input type="date" formControlName="start_date" />
+          &nbsp;
+          <mat-error *ngIf="partnerForm.get('start_date')?.invalid && (partnerForm.get('start_date')?.touched || submitted)">
+            start date is required.
+          </mat-error>
         </div>
         <div class="form-field">
           <label for="">End Date</label>
           <input type="date" formControlName="end_date" />
+          &nbsp;
+          <mat-error *ngIf="partnerForm.get('end_date')?.invalid && (partnerForm.get('end_date')?.touched || submitted)">
+            end date is required.
+          </mat-error>
         </div>
       </div>
       <div class="upload-wrapper">
@@ -173,7 +193,9 @@
           <button matRipple (click)="downloadInvitation()">Download</button>
         </div> -->
       </div>
-      <div class="moa-error" *ngIf="partnerForm.get('moa_file')?.invalid && partnerForm.get('moa_file')?.dirty">
+
+      <div class="moa-error" *ngIf="(partnerForm.get('moa_file')?.invalid && partnerForm.get('moa_file')?.dirty) || (!moaFile && submitted)">
+        <mat-error *ngIf="!moaFile && submitted"> MOA is required. </mat-error>
         <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['invalidExtension']"> Invalid file type. Allowed extensions: pdf and docx </mat-error>
         <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['max']"> File size too large. Maximum file size: 5048 KB </mat-error>
       </div>
@@ -183,7 +205,7 @@
   <mat-dialog-actions>
     <div class="footer">
       <button (click)="closeDialog()">Cancel</button>
-      <button type="submit" [disabled]="!partnerForm.valid" (click)="openConfirmationDialog()">Submit</button>
+      <button class="submit" type="submit" (click)="onSubmit()">Submit</button>
     </div>
   </mat-dialog-actions>
 </div>

@@ -88,7 +88,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
   ) {
     if (data.program) {
       const address = data.program.place;
-      const addressParts = address.split(' ');
+      const addressParts = address.split(', ');
       const addressObject = {
         barangay: addressParts[0],
         city: addressParts[1],
@@ -305,7 +305,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         this.invFile.nativeElement.innerHTML = file.name;
       }, 0);
       setTimeout(() => {
-        this.invFileSize.nativeElement.innerHTML = file.size;
+        this.invFileSize.nativeElement.innerHTML = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
       }, 0);
       setTimeout(() => {
         const invIcon = document.getElementById('invIcon');
@@ -374,7 +374,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         this.certFile.nativeElement.innerHTML = file.name;
       }, 0);
       setTimeout(() => {
-        this.certFileSize.nativeElement.innerHTML = file.size;
+        this.certFileSize.nativeElement.innerHTML = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
       }, 0);
       setTimeout(() => {
         const invIcon = document.getElementById('certIcon');
@@ -657,10 +657,10 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     this.dialogRef.close();
   }
 
-  submitForm(): void {}
+
 
   onSubmit(): void {
-    console.log(this.programForm.value);
+    this.updateAddress();
     this.submitAttempted = true;
     if (this.programForm.invalid || this.showMemberError || this.showLeaderError || this.showPartnerError) {
       console.log('not submit', this.showLeaderError, this.showMemberError, this.showPartnerError, this.programForm.invalid, this.selectedLeader);
@@ -704,11 +704,10 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programService.updateProgram(formData).subscribe(
         (program) => {
           console.log('Program created successfully:', program);
-          // TODO: Handle success
+          this.dialogRef.close();
         },
         (error) => {
           console.error('Error creating program:', error);
-          // TODO: Handle error
         }
       );
     } else {

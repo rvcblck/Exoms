@@ -19,6 +19,7 @@ use Illuminate\Support\Str;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use SendinBlue\Client\Model\Contact;
 
 class ProgramController extends Controller
@@ -46,8 +47,6 @@ class ProgramController extends Controller
                     'fullName' => $leader->fname.' '.$leader->lname,
                 ];
             }
-
-            // dd($leader);
 
 
             //status
@@ -107,7 +106,7 @@ class ProgramController extends Controller
 
 
             //getting members
-            $users = $program->users()->get();
+            $users = $program->users()->wherePivot('leader',null)->get();
             $userData = [];
             foreach($users as $user){
 
@@ -155,6 +154,37 @@ class ProgramController extends Controller
             }
 
 
+            $invViewFile = [];
+            if($program->invitation){
+                $invpath = storage_path('app\public\\'.$program->invitation);
+            if (!File::exists($invpath)) {
+                abort(404);
+            }
+
+                $invViewFile = [
+                    'fileName' => basename($invpath),
+                    'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
+                    'fileSize' => filesize($invpath),
+                ];
+            }
+
+
+            $certViewFile = [];
+            if($program->certificate){
+                $certpath = storage_path('app\public\\'.$program->certificate);
+                if (!File::exists($certpath)) {
+                    abort(404);
+                }
+
+                $certViewFile = [
+                    'fileName' => basename($certpath),
+                    'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
+                    'fileSize' => filesize($certpath),
+                ];
+            }
+
+
+
 
             //status
             $endDate = Carbon::parse($program->end_date);
@@ -183,7 +213,11 @@ class ProgramController extends Controller
                 'members' => $userData,
                 'partners' => $partnerData,
                 'participants' => $participantData,
-                'participant_count' => $participantCount
+                'participant_count' => $participantCount,
+                'invitation_content' => $invViewFile,
+                'certificate_content' => $certViewFile,
+
+
 
             ];
 

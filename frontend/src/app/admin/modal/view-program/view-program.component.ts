@@ -6,7 +6,7 @@ import { ViewProgram } from 'src/app/program.model';
 import { ProgramService } from 'src/app/program.service';
 import { CreateProgramComponent } from '../create-program/create-program.component';
 import { forkJoin } from 'rxjs';
-
+import { ImageService } from 'src/app/image.service';
 
 @Component({
   selector: 'app-view-program',
@@ -24,12 +24,99 @@ export class ViewProgramComponent implements OnInit {
     public dialogRef: MatDialogRef<ViewProgramComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { program: ViewProgram },
     private programService: ProgramService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private imageService: ImageService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.data.program);
+    // console.log(this.data.program.members);
     // console.log(this.data.users);
+    setTimeout(() => {
+      const invIcon = document.getElementById('viewInvIcon');
+      const file = this.data.program.invitation_content.fileExtension;
+      if (invIcon && file) {
+        if (file === 'pdf') {
+          invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else if (['png', 'jpg', 'jpeg'].includes(file)) {
+          invIcon.innerHTML = '<i class="fa-regular fa-file-image" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else if (file === 'docx') {
+          invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else {
+          invIcon.innerHTML = '';
+        }
+      }
+    }, 0);
+
+    setTimeout(() => {
+      const viewCertSize = document.getElementById('viewInvSize');
+      const file = this.data.program.invitation_content.fileSize;
+      if (viewCertSize) {
+        viewCertSize.innerHTML = (file / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+    }, 0);
+
+    setTimeout(() => {
+      const viewCertSize = document.getElementById('viewCertSize');
+      const file = this.data.program.certificate_content.fileSize;
+      if (viewCertSize) {
+        viewCertSize.innerHTML = (file / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+    }, 0);
+
+    setTimeout(() => {
+      const certIcon = document.getElementById('viewCertIcon');
+      const file = this.data.program.certificate_content.fileExtension;
+      if (certIcon && file) {
+        if (file === 'pdf') {
+          certIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else if (['png', 'jpg', 'jpeg'].includes(file)) {
+          certIcon.innerHTML = '<i class="fa-regular fa-file-image" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else if (file === 'docx') {
+          certIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f; font-size: 25px"></i>';
+        } else {
+          certIcon.innerHTML = '';
+        }
+      }
+    }, 0);
+  }
+
+
+  downloadInvitation() {
+    this.imageService.downloadFile(this.data.program.program_id).subscribe((response) => {
+      const contentDispositionHeader = response.headers?.get('Content-Disposition');
+      let fileName = '';
+      if (contentDispositionHeader) {
+        fileName = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+        // ...
+      }
+
+      if (response.body instanceof Blob) {
+        const downloadLink = URL.createObjectURL(response.body);
+        const link = document.createElement('a');
+        link.href = downloadLink;
+        link.download = this.data.program.invitation_content.fileName;
+        link.click();
+      }
+    });
+  }
+
+  downloadCertificate() {
+    this.imageService.downloadCertFile(this.data.program.program_id).subscribe((response) => {
+      const contentDispositionHeader = response.headers?.get('Content-Disposition');
+      let fileName = '';
+      if (contentDispositionHeader) {
+        fileName = contentDispositionHeader.split(';')[1].trim().split('=')[1];
+        // ...
+      }
+
+      if (response.body instanceof Blob) {
+        const downloadLink = URL.createObjectURL(response.body);
+        const link = document.createElement('a');
+        link.href = downloadLink;
+        link.download = this.data.program.certificate_content.fileName;
+        link.click();
+      }
+    });
   }
 
   onNoClick(): void {
@@ -43,10 +130,7 @@ export class ViewProgramComponent implements OnInit {
   editProgram(program_id: string) {
     this.dialogRef.close();
 
-    forkJoin([
-      this.programService.getProgramInfo(program_id),
-      this.programService.getAutoComplete()
-    ]).subscribe(
+    forkJoin([this.programService.getProgramInfo(program_id), this.programService.getAutoComplete()]).subscribe(
       ([program, autocomplete]) => {
         const dialogRef = this.dialog.open(CreateProgramComponent, {
           data: { program: program, autocomplete: autocomplete },

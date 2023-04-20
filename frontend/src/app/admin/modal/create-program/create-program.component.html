@@ -255,8 +255,8 @@
               </mat-error>
               <mat-error *ngIf="programForm.get('invitation')?.errors?.['max']"> File size too large. Maximum file size: 5048 KB </mat-error>
             </div>
-            <div class="dl-inv" *ngIf="edithInv">
-              <button (click)="downloadInvitation()">Download</button>
+            <div class="dl-inv" *ngIf="edithInv && !invitation">
+              <button matRipple (click)="downloadInvitation()">Download</button>
             </div>
           </div>
 
@@ -296,8 +296,8 @@
               >
               <mat-error *ngIf="programForm.get('certificate')?.errors?.['max']">File size too large. Maximum file size: 5048 KB</mat-error>
             </div>
-            <div class="dl-inv" *ngIf="edithCert">
-              <button (click)="downloadCertificate()">Download</button>
+            <div class="dl-inv" *ngIf="edithCert && !certificate">
+              <button matRipple (click)="downloadCertificate()">Download</button>
             </div>
           </div>
         </div>

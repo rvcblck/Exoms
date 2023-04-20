@@ -103,7 +103,7 @@
 
 .view-program .other-detail .leader div:first-child {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   width: 100%;
 }
 
@@ -134,7 +134,7 @@
 
 .place div:first-child {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   width: 100%;
 }
 
@@ -167,15 +167,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  width: 46%;
+  width: min-content;
   margin: 2%;
+  white-space: nowrap; /* Prevents text from wrapping */
+  /* text-overflow: ellipsis; */
+  overflow: hidden; /* Hides overflow */
 }
 
 .partner-list i {
   color: #ff5a2f;
   align-items: center;
 }
-
 
 .footer {
   margin: 0;
@@ -263,6 +265,76 @@
   z-index: 500;
 }
 
+.view-files {
+  margin: 2% 20px;
+}
+.view-files label {
+  font-weight: bolder;
+  font-size: 15px;
+  width: 100%;
+}
+.view-files .wrapper {
+  width: 100%;
+  border: 2px solid #f0f0f0;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  /* height: 70px; */
+}
+.view-files .wrapper .icon {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.view-files .wrapper .file {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+.view-files .wrapper .downloadbtn {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-files .wrapper .icon .circle-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #f0f0f087;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-files .wrapper .icon .circle-icon i {
+  font-size: 25px;
+  color: #ff5a2f;
+}
+.view-files .wrapper .file .filename {
+  width: 100%;
+  font-weight: bold;
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-overflow: ellipsis;
+  overflow: hidden; /* Hides overflow */
+
+}
+.view-files .wrapper .file .filesize {
+  width: 100%;
+  font-weight: lighter;
+}
+.view-files .wrapper .downloadbtn button {
+  border: 1px solid #368aff3f;
+  color: #3689ff;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -300,11 +372,6 @@
 
   .view-program .date {
     margin-left: 0;
-  }
-
-  .partner-list {
-    width: 96%;
-    margin: 2%;
   }
 
   .full-width-dialog .mat-dialog-container {

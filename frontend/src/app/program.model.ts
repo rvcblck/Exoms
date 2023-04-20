@@ -48,6 +48,18 @@ export interface ViewParticipant {
   name: string;
 }
 
+export interface ViewInvitation {
+  fileName: string;
+  fileExtension: string;
+  fileSize: number;
+}
+
+export interface ViewCertificate {
+  fileName: string;
+  fileExtension: string;
+  fileSize: number;
+}
+
 export interface ViewProgram {
   program_id: string;
   title: string;
@@ -56,13 +68,15 @@ export interface ViewProgram {
   start_date: string;
   end_date: string;
   status: string;
-  certificate: any;
-  invitation: any;
+  certificate: string;
+  invitation: string;
   leader: ViewLeader;
   members: ViewMember[];
   partners: ViewPartner[];
   participants: ViewParticipant[];
   participant_count: number;
+  invitation_content: ViewInvitation;
+  certificate_content: ViewCertificate;
 }
 
 //AutoComplete

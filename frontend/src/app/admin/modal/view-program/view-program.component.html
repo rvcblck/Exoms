@@ -32,6 +32,7 @@
           {{ data.program.participant_count }}
         </div>
       </div>
+
       <div class="place">
         <div>
           <i class="fa-solid fa-location-dot"></i>
@@ -43,57 +44,45 @@
       </div>
     </div>
     <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+      <div>Member/s</div>
+      <div class="partner-list" *ngFor="let member of data.program.members">
+        <span style="white-space: nowrap"><i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ member.fullName }}</span>
       </div>
     </div>
     <div class="partner">
       <div>Partner/s</div>
       <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+        <span style="white-space: nowrap"><i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}</span>
       </div>
     </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+    <div class="view-files">
+      <label>Invitation</label>
+      <div class="wrapper">
+        <div class="icon">
+          <div class="circle-icon" id="viewInvIcon"><i class="fa-regular fa-file-pdf"></i></div>
+        </div>
+        <div class="file">
+          <div class="filename">{{ data.program.invitation_content.fileName }}</div>
+          <div class="filesize" id="viewInvSize">{{ data.program.invitation_content.fileSize }}</div>
+        </div>
+        <div class="downloadbtn">
+          <button matRipple (click)="downloadInvitation()">Download</button>
+        </div>
       </div>
     </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
-      </div>
-    </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
-      </div>
-    </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
-      </div>
-    </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
-      </div>
-    </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
-      </div>
-    </div>
-    <div class="partner">
-      <div>Partner/s</div>
-      <div class="partner-list" *ngFor="let partner of data.program.partners">
-        <i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}
+    <div class="view-files">
+      <label>Certificate</label>
+      <div class="wrapper">
+        <div class="icon">
+          <div class="circle-icon" id="viewCertIcon"></div>
+        </div>
+        <div class="file">
+          <div class="filename">{{ data.program.certificate_content.fileName }}</div>
+          <div class="filesize" id="viewCertSize">{{ data.program.certificate_content.fileSize }}</div>
+        </div>
+        <div class="downloadbtn">
+          <button matRipple (click)="downloadCertificate()">Download</button>
+        </div>
       </div>
     </div>
   </div>

@@ -490,6 +490,7 @@ hr {
   padding: 5px;
   display: flex;
   flex-wrap: wrap;
+  padding-right: 10px;
 }
 .file-info div:nth-child(3) {
   width: 25%;
@@ -517,6 +518,9 @@ hr {
   width: 100%;
   font-size: 15px;
   font-weight: bold;
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-overflow: ellipsis;
+  overflow: hidden; /* Hides overflow */
 }
 
 .file-info div:nth-child(2) div:nth-child(2) {
@@ -590,6 +594,24 @@ hr {
   justify-content: center;
   align-items: center;
 }
+.dl-inv{
+  width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.dl-inv button{
+  border: 1px solid #ff5a2f;
+  border-radius: 3px;
+  width: 100%;
+
+}
+
+
 
 /* .file-icon {
 

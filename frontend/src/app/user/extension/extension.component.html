@@ -1,49 +1,177 @@
-<div class="input-group mb-3">
-  <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search..." />
-  <button class="btn btn-outline-secondary" type="button">Search</button>
+<!-- <div class="sec-title shadow-sm p-2 mb-4 bg-white">
+  <h2>Program Management </h2>
 </div>
+<div class="container mx-4">
+  <div class="container d-flex flex-row ">
+    <div class="input-group">
+      <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search..." />
+      <button class="btn btn-outline-secondary" type="button">Search</button>
+    </div>
 
-<mat-form-field>
-  <mat-label>Start Date Range</mat-label>
-  <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="minStartDate" />
-  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-  <mat-datepicker #startDatePicker></mat-datepicker>
-</mat-form-field>
+    <div class="dateRange d-flex flex-row">
+      <mat-form-field>
+        <mat-label>Start Date Range</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="minStartDate" />
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
 
-<mat-form-field>
-  <mat-label>End Date Range</mat-label>
-  <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="maxEndDate" />
-  <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-  <mat-datepicker #endDatePicker></mat-datepicker>
-</mat-form-field>
+      <mat-form-field>
+        <mat-label>End Date Range</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="maxEndDate" />
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-<div class="filter-sort">
-  <mat-form-field appearance="outline">
-    <mat-label>Filter by status</mat-label>
-    <mat-select [(ngModel)]="selectedStatus">
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="filter-sort">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter by status</mat-label>
+        <mat-select [(ngModel)]="selectedStatus">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="program-list">
+    <div class="program-card " *ngFor="let program of filteredPrograms()">
+      <mat-card matRipple (click)="viewProgram(program.program_id)">
+        <mat-card-header>
+          <mat-card-title>{{ program.title }}</mat-card-title>
+          <div class="btn-attendance" matRippleDisabled>
+            <button (click)="onAttendanceClick($event, program.program_id)">Attendance</button>
+          </div>
+          <mat-card-subtitle>
+            <span>
+              <i class="bx bx-loader-circle"></i>&nbsp;{{ program.status }} &nbsp; &nbsp;
+              <i class="bx bx-calendar-week"></i>&nbsp;{{ program.start_date | date : 'longDate' }} - {{ program.end_date | date : 'longDate' }}
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="cont-detailes">{{ program.details }}</p>
+          <div class="card-footer d-flex flex-row ">
+            <div class="card shadow-sm">
+              <p>{{ program.status }}</p>
+            </div>
+            <div class="card shadow-sm">
+              <p>Place: </p>
+              <span>{{ program?.place }}</span>
+            </div>
+            <div class="card shadow-sm">
+              <p>Participants:</p>
+              <span>{{ program.participant_count }}</span>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</div> -->
+
+
+<div class="filter-container">
+  <div class="filter">
+    <div class="search">
+      <label for="search-toggle">
+        <i class="bx bx-search"></i>
+      </label>
+      <input id="search-toggle" type="checkbox" />
+      <input type="text" [(ngModel)]="searchText" placeholder="Search..." (mouseleave)="collapseSearch()" />
+    </div>
+    <div class="start-date">
+      <input type="date" id="start-date" [(ngModel)]="minStartDate" />
+    </div>
+    <div class="end-date">
+      <input type="date" id="end-date" [(ngModel)]="maxEndDate" />
+    </div>
+  </div>
+
+  <div class="sort">
+    <div class="sort-status">
+      <div class="sort-label">Status :</div>
+      <div class="status">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ selectedStatus || 'All' }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+            <li>
+              <a class="dropdown-item" (click)="selectedStatus = ''">All</a>
+            </li>
+            <li *ngFor="let status of statuses">
+              <a class="dropdown-item" (click)="selectedStatus = status">{{ status }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-new">
+      <button (click)="addProgram()">Add New</button>
+    </div>
+  </div>
 </div>
 
 <div class="program-list">
-  <div class="program-card" *ngFor="let program of filteredPrograms()">
-    <mat-card matRipple (click)="viewProgram(program.program_id)">
-      <mat-card-header>
-        <div mat-card-avatar></div>
-        <mat-card-title>{{ program.title }}</mat-card-title>
-        <mat-card-subtitle>{{ program.start_date | date : 'longDate' }} - {{ program.end_date | date : 'longDate' }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>{{ program.details }}</p>
-        <p>{{ program.status }}</p>
-        <p>Place: {{ program?.place }}</p>
-        <p>Number of participants: {{ program.participant_count }}</p>
-        <div class="p-3" matRippleDisabled>
-          <button (click)="onAttendanceClick($event, program.program_id)">Attendance</button>
+  <div class="program-card" matRipple *ngFor="let program of filteredPrograms()" (click)="viewProgram(program.program_id)">
+    <div>
+      <div class="title">
+        <p>{{ program.title }}</p>
+        <div class="btn-attendance" matRippleDisabled>
+          <button (click)="onAttendanceClick($event, program.program_id)"><i class="fa-solid fa-user-check"></i>&nbsp;Attendance</button>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+
+      <div class="subtitle" [ngStyle]="{ color: program.status === 'Ongoing' ? '#00c519' : '#ff5a2f' }">
+        <i class="bx bx-loader-circle"></i>&nbsp;&nbsp;{{ program.status }}
+      </div>
+      <div class="date">
+        <i class="bx bx-calendar-week"></i>&nbsp;&nbsp;{{ program.start_date | date : 'longDate' }} -
+        {{ program.end_date | date : 'longDate' }}
+      </div>
+    </div>
+    <div>
+      <p>{{ program.details }}</p>
+      <div class="other-details">
+        <div class="leader">
+          <div class="leader-icon"><i class="fa-solid fa-user-gear"></i></div>
+          <div class="leader-label">Leader</div>
+          <div class="name">
+            {{ program.leader.fullName }}
+          </div>
+        </div>
+        <div class="participants">
+          <div>
+            <i class="fa-regular fa-handshake"></i>
+          </div>
+          <div>Participants</div>
+          <div>
+            {{ program.participant_count }}
+          </div>
+        </div>
+        <div class="place">
+          <div>
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>Place</div>
+          <div>
+            {{ program?.place }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- <div class="program-list">
+
+  <div class="program-card" *ngFor="let program of filteredPrograms()">
+
+  </div>
+
+</div> -->

@@ -2,18 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ProgramService } from 'src/app/program.service';
 import { Program } from 'src/app/program.model';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateProgramComponent } from '../../admin/modal/create-program/create-program.component';
+import { ViewProgramComponent } from '../../admin/modal/view-program/view-program.component';
 import { Profile } from 'src/app/profile.model';
 import { forkJoin } from 'rxjs';
 import { PartnerService } from 'src/app/partner.service';
 import { Accounts } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
-import { Faculty } from 'src/app/faculty.model';
-import { FacultyProgram } from 'src/app/faculty.model';
-import { ViewProgramComponent } from 'src/app/admin/modal/view-program/view-program.component';
 import { AttendanceComponent } from '../attendance/attendance.component';
 
 @Component({
-  selector: 'app-extension',
+  selector: 'app-program-management',
   templateUrl: './extension.component.html',
   styleUrls: ['./extension.component.css']
 })
@@ -27,6 +26,10 @@ export class ExtensionComponent implements OnInit {
   statuses = ['Previous', 'Upcoming', 'Ongoing'];
   minStartDate: Date | undefined;
   maxEndDate: Date | undefined;
+  pageName = 'Program Management';
+
+  isSearchActive = true;
+  datePipe: any;
 
   constructor(
     private programService: ProgramService,
@@ -36,47 +39,52 @@ export class ExtensionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getPrograms();
-    const user_id = localStorage.getItem('user_id');
-    if (user_id) {
-      this.programService.getUserPrograms(user_id).subscribe(
-        (programs) => {
-          this.programs = programs;
-          // console.log(this.programs);
-
-          console.log('Programs retrieved successfully');
-        },
-        (error) => {
-          console.error('Error retrieving programs:', error);
-        }
-      );
-    }
+    this.getPrograms();
   }
 
-  getPrograms(): void {}
-
-  filteredPrograms() {
-    if (!this.programs || !Array.isArray(this.programs)) {
-      console.log(this.programs, 'data not showing');
-      return [];
-    }
-    return this.programs.filter(
-      (programs) =>
-        (programs.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
-          programs.place.toLowerCase().includes(this.searchText.toLowerCase())) &&
-        programs.status.includes(this.selectedStatus) &&
-        (!this.minStartDate || new Date(programs.start_date) >= this.minStartDate) &&
-        (!this.maxEndDate || new Date(programs.end_date) <= this.maxEndDate)
+  getPrograms(): void {
+    this.programService.getPrograms().subscribe(
+      (programs) => {
+        this.programs = programs;
+        console.log('Programs retrieved successfully');
+      },
+      (error) => {
+        console.error('Error retrieving programs:', error);
+      }
     );
   }
 
-  viewProgram(program_id: string) {
-    this.programService.getProgramInfo(program_id).subscribe(
-      (program) => {
-        // console.log(program);
-        const dialogRef = this.dialog.open(ViewProgramComponent, {
-          data: { program: program },
-          width: '500px'
+  collapseSearch() {
+    const checkbox = document.getElementById('search-toggle') as HTMLInputElement;
+    checkbox.checked = false;
+  }
+
+  formatDate(dateString: string): string {
+    const formattedDate = this.datePipe.transform(dateString, 'yyyy-MM-dd');
+    return formattedDate;
+  }
+
+  filteredPrograms() {
+    if (!this.programs || !Array.isArray(this.programs)) {
+      return [];
+    }
+    return this.programs.filter(
+      (program) =>
+        (program.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          program.place.toLowerCase().includes(this.searchText.toLowerCase())) &&
+        program.status.includes(this.selectedStatus) &&
+        (!this.minStartDate || new Date(program.start_date) >= new Date(this.minStartDate)) &&
+        (!this.maxEndDate || new Date(program.end_date) <= new Date(this.maxEndDate))
+    );
+  }
+
+  addProgram() {
+    this.programService.getAutoComplete().subscribe(
+      (autocomplete) => {
+        const dialogRef = this.dialog.open(CreateProgramComponent, {
+          data: { autocomplete: autocomplete },
+          maxWidth: '90%',
+          minWidth: '60%'
         });
       },
       (error) => {
@@ -85,6 +93,22 @@ export class ExtensionComponent implements OnInit {
     );
   }
 
+  viewProgram(user_id: string) {
+    this.programService.getProgramInfo(user_id).subscribe(
+      (program) => {
+        // console.log(program);
+        const dialogRef = this.dialog.open(ViewProgramComponent, {
+          data: { program: program },
+          maxWidth: '90%',
+          minWidth: '60%',
+          maxHeight: '80vh'
+        });
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+  }
   onAttendanceClick(event: Event, programId: string) {
     // program_id.stopPropagation();
     event.stopPropagation();

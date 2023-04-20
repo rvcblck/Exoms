@@ -2,7 +2,7 @@
 
 :root{
   --color-default:#004f83;
-  --color-second:#0067ac;
+  --color-second:#000000;
   --color-white:#fff;
   --color-body:#e4e9f7;
   --color-light:#e0e0e0;
@@ -25,7 +25,7 @@ body{
   width: 78px;
   padding: 6px 14px;
   z-index: 99;
-  background-color: #004f83;
+  background: radial-gradient(circle at top left, #31323a 0%, #303237 50%, #2a2a31 100%);
   transition: all .5s ease;
   position: fixed;
   top:0;
@@ -164,7 +164,7 @@ body{
   width: 100%;
   align-items: center;
   text-decoration: none;
-  background-color: #004f83;
+  /* background-color: #004f83; */
   position: relative;
   transition: all .5s ease;
   z-index: 12;

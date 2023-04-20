@@ -1,4 +1,4 @@
-<div *ngIf="data.partner">
+<!-- <div *ngIf="data.partner">
   <h2>{{ data.partner.company_name }}</h2>
   <p>{{ data.partner.address }}</p>
   <p><strong>Contact No.</strong> {{ data.partner.contact_no }}</p>
@@ -7,4 +7,51 @@
   <li *ngFor="let contract of data.partner.contracts">{{ contract.start_date }} {{ contract.end_date }}</li>
   <h2>Programs</h2>
   <li *ngFor="let program of data.partner.programs">{{ program.title }}</li>
-</div>
+</div> -->
+
+<mat-dialog-content>
+  <div class="view-partner">
+    <label for="" class="title">
+      {{ data.partner.company_name }}
+    </label>
+    <label for="" class="subtitle">
+      {{ data.partner.address }}
+    </label>
+    <hr />
+    <div class="partner-details">
+      <div class="detail-wrapper">
+        <div class="icon"><i class="fa-regular fa-user"></i></div>
+        <div class="detail">
+          <label for=""></label>
+          <div class data></div>
+        </div>
+      </div>
+      <div class="detail-wrapper">
+        <div class="icon"></div>
+        <div class="detail">
+          <label for=""></label>
+          <div class data></div>
+        </div>
+      </div>
+      <div class="detail-wrapper">
+        <div class="icon"></div>
+        <div class="detail">
+          <label for=""></label>
+          <div class data></div>
+        </div>
+      </div>
+      <div class="detail-wrapper">
+        <div class="icon"></div>
+        <div class="detail">
+          <label for=""></label>
+          <div class data></div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

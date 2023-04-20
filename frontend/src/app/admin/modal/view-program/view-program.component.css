@@ -1,5 +1,6 @@
 *:not(.fa-solid):not(.fa-regular) {
   font-family: 'Assistant', sans-serif;
+  color: #51354b;
 }
 
 ::-webkit-scrollbar {
@@ -207,6 +208,9 @@
   width: 60%;
   outline: none;
   color: #ff5a2f;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .footer div:nth-child(2) {
@@ -322,7 +326,6 @@
   white-space: nowrap; /* Prevents text from wrapping */
   text-overflow: ellipsis;
   overflow: hidden; /* Hides overflow */
-
 }
 .view-files .wrapper .file .filesize {
   width: 100%;

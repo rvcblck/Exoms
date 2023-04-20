@@ -1,5 +1,6 @@
 *:not(.fa-solid):not(.fa-regular) {
   font-family: 'Assistant', sans-serif;
+  color: #51354b;
 }
 
 ::-webkit-scrollbar {
@@ -21,10 +22,9 @@
   border-radius: 10px;
 }
 
-.mat-dialog-container{
+.mat-dialog-container {
   overflow-y: hidden !important;
 }
-
 
 .filter-container {
   position: relative;
@@ -33,7 +33,6 @@
   height: 130px;
   width: 90%;
   margin-left: 5%;
-
 }
 
 .filter {
@@ -113,12 +112,12 @@
   display: block;
 }
 
-.start-date{
+.start-date {
   display: flex;
   align-items: center;
 }
 
-.end-date{
+.end-date {
   display: flex;
   align-items: center;
 }
@@ -219,42 +218,37 @@
   justify-content: center;
 }
 
-.program-card{
+.program-card {
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   margin: 2% 5% 2% 5%;
   border-radius: 5px;
   padding: 5%;
-
 }
 
-.program-card div{
+.program-card div {
   display: flex;
   flex-wrap: wrap;
 }
 
-.program-card .title{
+.program-card .title {
   width: 100%;
   margin: 5px;
   font-weight: bolder;
   font-size: 20px;
 }
 
-.program-card .subtitle{
+.program-card .subtitle {
   margin: 10px;
 }
-.program-card .date{
+.program-card .date {
   margin: 10px;
   color: #ff5a2f;
 }
 
-.program-card div:nth-child(2) p{
+.program-card div:nth-child(2) p {
   margin: 10px;
   width: 100%;
 }
-
-
-
-
 
 .other-details {
   display: flex;
@@ -335,7 +329,6 @@
 }
 .place div:first-child i {
   color: #ff5a2f;
-
 }
 
 .place div:nth-child(2) {
@@ -344,7 +337,6 @@
 }
 
 .place div:nth-child(3) {
-
   white-space: nowrap; /* Prevents text from wrapping */
   text-overflow: ellipsis; /* Displays ellipsis when text is truncated */
   overflow: hidden; /* Hides overflow */
@@ -352,18 +344,17 @@
 
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
-  .program-card{
+  .program-card {
     width: 40%;
     padding: 20px;
     margin: 2%;
   }
-
 }
 
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
-  .program-card{
+  .program-card {
     width: 80%;
   }
 }
@@ -446,8 +437,8 @@
     width: 100%;
   }
 
-  .filter-container{
+  .filter-container {
     width: 100%;
-    margin-left:0;
+    margin-left: 0;
   }
 }

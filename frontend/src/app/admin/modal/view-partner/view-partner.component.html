@@ -1,14 +1,3 @@
-<!-- <div *ngIf="data.partner">
-  <h2>{{ data.partner.company_name }}</h2>
-  <p>{{ data.partner.address }}</p>
-  <p><strong>Contact No.</strong> {{ data.partner.contact_no }}</p>
-  <p><strong>MOA File</strong> {{ data.partner.moa_file }}</p>
-  <h2>Contracts</h2>
-  <li *ngFor="let contract of data.partner.contracts">{{ contract.start_date }} {{ contract.end_date }}</li>
-  <h2>Programs</h2>
-  <li *ngFor="let program of data.partner.programs">{{ program.title }}</li>
-</div> -->
-
 <mat-dialog-content>
   <div class="view-partner">
     <label for="" class="title">
@@ -22,36 +11,58 @@
       <div class="detail-wrapper">
         <div class="icon"><i class="fa-regular fa-user"></i></div>
         <div class="detail">
-          <label for=""></label>
-          <div class data></div>
+          <label for="">Contact Person</label>
+          <div class="data">{{ data.partner.contact_person }}</div>
         </div>
       </div>
       <div class="detail-wrapper">
-        <div class="icon"></div>
+        <div class="icon"><i class="fa-solid fa-mobile-screen"></i></div>
         <div class="detail">
-          <label for=""></label>
-          <div class data></div>
-        </div>
-      </div>
-      <div class="detail-wrapper">
-        <div class="icon"></div>
-        <div class="detail">
-          <label for=""></label>
-          <div class data></div>
-        </div>
-      </div>
-      <div class="detail-wrapper">
-        <div class="icon"></div>
-        <div class="detail">
-          <label for=""></label>
-          <div class data></div>
+          <label for="">Contact Number</label>
+          <div class="data">{{ data.partner.contact_no }}</div>
         </div>
       </div>
     </div>
     <hr />
+    <div class="partner-details" *ngFor="let contract of data.partner.contracts">
+      <div class="detail-wrapper">
+        <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+        <div class="detail">
+          <label for="">Start Date</label>
+          <div class="data">{{ formatDate(contract.start_date) }}</div>
+        </div>
+      </div>
+      <div class="detail-wrapper">
+        <div class="icon"><i class="fa-regular fa-calendar"></i></div>
+        <div class="detail">
+          <label for="">End Date</label>
+          <div class="data">{{ formatDate(contract.end_date) }}</div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="extend">
+      <label for="">Extend Contract</label>
+      <div class="date">
+        <div class="start-date"><input type="date" /></div>
+        <div class="end-date"><input type="date" /></div>
+        <div class="date-btn"><button>Extend</button></div>
+      </div>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  <div class="footer">
+    <div>
+      <button><i class="fa-solid fa-box-archive"></i>&nbsp;&nbsp;&nbsp;Archive</button>
+    </div>
+    <div>
+      <div>
+        <button (click)="closeDialog()">Close</button>
+      </div>
+      <div>
+        <button (click)="editProgram(data.partner.partner_id)">Edit</button>
+      </div>
+    </div>
+  </div>
 </mat-dialog-actions>

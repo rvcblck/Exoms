@@ -9,19 +9,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewPartnerComponent } from '../modal/view-partner/view-partner.component';
 import { CreatePartnerComponent } from '../modal/create-partner/create-partner.component';
 
-
-
-
 @Component({
   selector: 'app-partner-management',
   templateUrl: './partner-management.component.html',
-  styleUrls: ['./partner-management.component.css'],
+  styleUrls: ['./partner-management.component.css']
 })
 export class PartnerManagementComponent implements OnInit {
-  constructor(
-    private partnerService: PartnerService,
-    private dialog: MatDialog
-  ) {}
+  constructor(private partnerService: PartnerService, private dialog: MatDialog) {}
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -30,13 +24,7 @@ export class PartnerManagementComponent implements OnInit {
   sort!: MatSort;
 
   dataSource = new MatTableDataSource<Partner>();
-  displayedColumns: string[] = [
-    'company_name',
-    'address',
-    'contact_no',
-    'contract_dates',
-    'action',
-  ];
+  displayedColumns: string[] = ['company_name', 'address', 'contact_no', 'contract_dates', 'action'];
 
   ngOnInit(): void {
     this.partnerService.getAllPartners().subscribe((partners) => {
@@ -60,11 +48,12 @@ export class PartnerManagementComponent implements OnInit {
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'contract_dates': return item.contracts.start_date;
-        default: return item[property];
+        case 'contract_dates':
+          return item.contracts.start_date;
+        default:
+          return item[property];
       }
     };
-
   }
 
   viewPartner(partner_id: string) {
@@ -72,7 +61,8 @@ export class PartnerManagementComponent implements OnInit {
       (partner) => {
         const dialogRef = this.dialog.open(ViewPartnerComponent, {
           data: { partner: partner },
-          width: '80%',
+          maxWidth: '90%',
+          minWidth: '40%'
         });
       },
       (error) => {
@@ -92,7 +82,12 @@ export class PartnerManagementComponent implements OnInit {
 
   createAccount() {
     const dialogRef = this.dialog.open(CreatePartnerComponent, {
-      width: '80%',
+      width: '80%'
     });
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
   }
 }

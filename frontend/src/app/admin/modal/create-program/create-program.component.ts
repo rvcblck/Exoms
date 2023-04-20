@@ -698,9 +698,9 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       formData.append('certificate', this.certificate);
     }
     if (this.data.program) {
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(key, value);
+      // });
       this.programService.updateProgram(formData).subscribe(
         (program) => {
           console.log('Program created successfully:', program);

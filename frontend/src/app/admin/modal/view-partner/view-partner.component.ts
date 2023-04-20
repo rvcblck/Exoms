@@ -13,4 +13,17 @@ export class ViewPartnerComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data.partner);
   }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+  }
+
+  closeDialog(){
+    this.dialogRef.close();
+  }
+
+  editProgram(partner_id:string){
+    this.dialogRef.close();
+  }
 }

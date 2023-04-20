@@ -1,3 +1,8 @@
+*:not(.fa-solid):not(.fa-regular) {
+  font-family: 'Assistant', sans-serif;
+  /* color: #51354b; */
+}
+
 .partner-management {
   /* position: relative; */
   margin: 0;
@@ -11,10 +16,12 @@ table {
   width: 100%;
 }
 
-.mat-header-cell,
+/* .mat-header-cell,
 .mat-cell {
   padding: 8px;
-}
+  color: #a8a5b6;
+  font-weight: 400;
+} */
 .mat-row.mat-row-selected {
   background-color: #e0e0e0;
 }
@@ -35,6 +42,22 @@ table {
 /* td, th {
   width: 25%;
 } */
+
+::ng-deep .mat-header-cell {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-sort-header-content {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-cell {
+  color: #51354b;
+}
 
 table {
   width: 100%;
@@ -83,14 +106,31 @@ table {
   margin-top: auto;
 }
 
+.search {
+  position: relative;
+}
+
 .search input {
   border: none;
   border-radius: 5px;
   background-color: #f0f0f0;
+  min-width: 200px;
   max-width: 300px;
   width: auto;
   height: 40px;
-  text-indent: 20px;
+  text-indent: 40px;
+}
+
+.search input::placeholder {
+  color: #a8a5b6;
+}
+
+.search span {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 20px;
+  color: #a8a5b6;
 }
 
 .filter {
@@ -119,7 +159,7 @@ table {
 .view-button {
   border: none;
   border-radius: 3px;
-  font-weight:700;
+  font-weight: 700;
   font-size: 12px;
   color: #ff5a2f;
   padding: 5px 20px;

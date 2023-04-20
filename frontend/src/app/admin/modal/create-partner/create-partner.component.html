@@ -1,4 +1,4 @@
-<form [formGroup]="partnerForm" (ngSubmit)="onSubmit()">
+<!-- <form [formGroup]="partnerForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="company_name">Company Name</label>
     <input type="text" formControlName="company_name" class="form-control" />
@@ -74,4 +74,116 @@
   </div>
 
   <button type="submit" [disabled]="!partnerForm.valid" class="btn btn-primary">Create Partner</button>
-</form>
+</form> -->
+
+<div class="add-partner">
+  <div mat-dialog-content class="view-partner">
+    <form [formGroup]="partnerForm">
+      <label for="" class="company-name">Create Partner</label>
+      <hr />
+
+      <!-- company name field  -->
+      <div class="form-field">
+        <label for="">Company Name</label>
+        <input type="text" formControlName="company_name" />
+        <mat-error *ngIf="partnerForm.get('company_name')?.invalid && (partnerForm.get('company_name')?.touched || submitted)">
+          company name is required.
+        </mat-error>
+      </div>
+
+      <div class="address-wrapper">
+        <!-- barangay field  -->
+        <div class="form-field">
+          <label for="">Barangay</label>
+          <input type="text" formControlName="address_barangay" />
+          <mat-error *ngIf="partnerForm.get('address_barangay')?.invalid && (partnerForm.get('address_barangay')?.touched || submitted)">
+            barangay is required.
+          </mat-error>
+        </div>
+
+        <!-- city field  -->
+        <div class="form-field">
+          <label for="">City/Municipality</label>
+          <input type="text" formControlName="address_city" />
+          <mat-error *ngIf="partnerForm.get('address_city')?.invalid && (partnerForm.get('address_city')?.touched || submitted)">
+            city is required.
+          </mat-error>
+        </div>
+
+        <!-- province field  -->
+        <div class="form-field">
+          <label for="">Province</label>
+          <input type="text" formControlName="address_province" />
+          <mat-error *ngIf="partnerForm.get('address_province')?.invalid && (partnerForm.get('address_province')?.touched || submitted)">
+            province is required.
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="contact-wrapper">
+        <!-- contact person field  -->
+        <div class="form-field">
+          <label for="">Contact Person</label>
+          <input type="text" formControlName="contact_person" />
+        </div>
+
+        <div class="form-field">
+          <label for="">Contact Number</label>
+          <input type="text" formControlName="contact_no" />
+          <mat-error *ngIf="partnerForm.get('contact_no')?.invalid && (partnerForm.get('contact_no')?.touched || submitted)">
+            contact number is required.
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="date-wrapper">
+        <div class="form-field">
+          <label for="">Start Date</label>
+          <input type="date" formControlName="start_date" />
+        </div>
+        <div class="form-field">
+          <label for="">End Date</label>
+          <input type="date" formControlName="end_date" />
+        </div>
+      </div>
+      <div class="upload-wrapper">
+        <div class="moa">
+          <div class="moa-label">MOA File</div>
+          <label for="moa-upload" *ngIf="!moaFile" class="moa-upload">
+            <span><i class="fa-solid fa-arrow-up-from-bracket"></i>Upload MOA</span>
+          </label>
+          <input type="file" id="moa-upload" formControlName="moa_file" (change)="onMoaFileSelected($event, 'moa_file')" style="display: none" />
+          <div class="file-info" *ngIf="moaFile">
+            <div class="file-icon">
+              <mat-icon id="moaIcon"></mat-icon>
+            </div>
+            <div>
+              <div #moaFileName></div>
+              <div #moaFileSize></div>
+            </div>
+            <div>
+              <button class="x-upload" mat-icon-button color="warn" (click)="removeMoa()">
+                <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="dl-inv" *ngIf="edithInv && !invitation">
+          <button matRipple (click)="downloadInvitation()">Download</button>
+        </div> -->
+      </div>
+      <div class="moa-error" *ngIf="partnerForm.get('moa_file')?.invalid && partnerForm.get('moa_file')?.dirty">
+        <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['invalidExtension']"> Invalid file type. Allowed extensions: pdf and docx </mat-error>
+        <mat-error *ngIf="partnerForm.get('moa_file')?.errors?.['max']"> File size too large. Maximum file size: 5048 KB </mat-error>
+      </div>
+    </form>
+  </div>
+
+  <mat-dialog-actions>
+    <div class="footer">
+      <button (click)="closeDialog()">Cancel</button>
+      <button type="submit" [disabled]="!partnerForm.valid" (click)="openConfirmationDialog()">Submit</button>
+    </div>
+  </mat-dialog-actions>
+</div>

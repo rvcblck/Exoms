@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fileValidator } from 'src/app/file-type.validator';
 import { DatePipe } from '@angular/common';
@@ -6,7 +6,7 @@ import { PartnerService } from 'src/app/partner.service';
 import { FileUploader } from 'ng2-file-upload';
 import { FileItem } from 'ng2-file-upload';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-partner',
@@ -18,17 +18,26 @@ export class CreatePartnerComponent implements OnInit {
   submitted = false;
   moaFile: any;
   profileFile: any;
+  invalidExtension = false;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private partnerService: PartnerService, private dialog: MatDialog) {
+  @ViewChild('moaFileName', { static: false }) moaFileName!: ElementRef;
+  @ViewChild('moaFileSize') moaFileSize!: ElementRef;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private partnerService: PartnerService,
+    private dialog: MatDialog,
+    public dialogRef: MatDialogRef<CreatePartnerComponent>
+  ) {
     this.partnerForm = this.formBuilder.group({
       company_name: ['', Validators.required],
       address: [''],
-      contact_person: [''],
+      contact_person: ['', Validators.required],
       contact_no: ['', Validators.required],
       start_date: ['', Validators.required],
       end_date: ['', Validators.required],
       moa_file: [null],
-      address_street: [''],
       address_barangay: ['', Validators.required],
       address_city: ['', Validators.required],
       address_province: ['', Validators.required]
@@ -39,16 +48,17 @@ export class CreatePartnerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.partnerForm.invalid) {
+    if (this.partnerForm.invalid || !this.moaFile) {
       return;
     }
     this.openConfirmationDialog();
   }
 
   onMoaFileSelected(event: any, controlName: string) {
+    // this.edithInv = true;
     const file = event.target.files[0];
     const allowedExtensions = ['pdf', 'docx'];
-    const maxSize = 5048; // in kilobytes
+    const maxFileSize = 5048; // in KB
 
     if (!file) {
       return;
@@ -59,16 +69,45 @@ export class CreatePartnerComponent implements OnInit {
     if (!allowedExtensions.includes(extension.toLowerCase())) {
       this.partnerForm.get(controlName)?.setErrors({ invalidExtension: true });
       event.target.value = ''; // clear the file input
-    } else if (file.size > maxSize * 1024) {
+    } else if (file.size > maxFileSize * 1024) {
       this.partnerForm.get(controlName)?.setErrors({ max: true });
       event.target.value = ''; // clear the file input
     } else {
-      console.log(file);
       this.moaFile = file;
-      const fileNameSpan = document.getElementById('fileName');
-      if (fileNameSpan) {
-        fileNameSpan.innerHTML = file.name; // set the file name or an empty string
-      }
+      console.log(file.name);
+      setTimeout(() => {
+        this.moaFileName.nativeElement.innerHTML = file.name;
+      }, 0);
+      setTimeout(() => {
+        this.moaFileSize.nativeElement.innerHTML = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      }, 0);
+      setTimeout(() => {
+        const invIcon = document.getElementById('moaIcon');
+        if (invIcon) {
+          if (extension === 'pdf') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f;"></i>';
+          } else if (extension === 'docx') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f;"></i>';
+          } else {
+            invIcon.innerHTML = '';
+          }
+        }
+      }, 0);
+    }
+  }
+
+  removeMoa() {
+    this.moaFile = null;
+    // this.edithInv = false;
+    const inputElement = document.getElementById('moa-upload') as HTMLInputElement;
+    if (inputElement) {
+      inputElement.value = '';
+    }
+    this.moaFileName.nativeElement.innerHTML = '';
+    this.moaFileSize.nativeElement.innerHTML = '';
+    const invIcon = document.getElementById('moaIcon');
+    if (invIcon) {
+      invIcon.innerHTML = '';
     }
   }
 
@@ -91,15 +130,13 @@ export class CreatePartnerComponent implements OnInit {
     });
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
   submitForm(): void {
     const address =
-      this.partnerForm.value.address_street +
-      ', ' +
-      this.partnerForm.value.address_barangay +
-      ', ' +
-      this.partnerForm.value.address_city +
-      ', ' +
-      this.partnerForm.value.address_province;
+      this.partnerForm.value.address_barangay + ', ' + this.partnerForm.value.address_city + ', ' + this.partnerForm.value.address_province;
     this.partnerForm.patchValue({ address: address });
 
     const startDateValue = this.partnerForm.get('start_date')?.value;
@@ -121,6 +158,9 @@ export class CreatePartnerComponent implements OnInit {
     if (this.moaFile) {
       formData.append('moa_file', this.moaFile, this.moaFile.name);
     }
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     this.partnerService.createPartner(formData).subscribe(
       (program) => {

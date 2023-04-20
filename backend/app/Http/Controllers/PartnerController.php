@@ -111,19 +111,18 @@ class PartnerController extends Controller
             'contact_person' => 'nullable',
             'address' => 'required',
             'moa_file' => 'required|mimes:pdf,docx|max:5048',
-            'profile_pic' => 'nullable|mimes:png,jpeg,jpg|max:5048',
         ];
 
         $messages = [
-            'title.required' => 'Title is required.',
-            'details.required' => 'Details are required.',
+            'company_name.required' => 'company is required.',
+            'address.required' => 'address is required.',
             'start_date.required' => 'Start date is required.',
             'end_date.required' => 'End date is required.',
             'contact_no.required' => 'contact_no is required.',
+            'contact_person.required' => 'contact_person is required',
             'moa_file.mimes' => 'The :attribute must be a pdf, docx file.',
             'moa_file.max' => 'moa_file file may not be greater than 5MB.',
-            'profile_pic.mimes' => 'The :attribute must be a png,jpg, or jpeg file.',
-            'profile_pic.max' => 'profile_pic file may not be greater than 5MB.',
+
 
         ];
 
@@ -136,12 +135,12 @@ class PartnerController extends Controller
 
 
 
-        //string to date
-        // $start_dateString = $request->input('start_date');
-        // $start_date = Carbon::parse($start_dateString)->toDateString();
+        // string to date
+        $start_dateString = $request->input('start_date');
+        $start_date = Carbon::parse($start_dateString)->toDateString();
 
-        // $end_dateString = $request->input('end_date');
-        // $end_date = Carbon::parse($end_dateString)->toDateString();
+        $end_dateString = $request->input('end_date');
+        $end_date = Carbon::parse($end_dateString)->toDateString();
 
         $partner_id = $this->generatePartnerId();
 
@@ -155,7 +154,7 @@ class PartnerController extends Controller
         if(!empty($moa_file)){
             $filename = $moa_file->getClientOriginalName();
             $new_filename = 'MOA_' . $filename;
-            $path_moaFile = Storage::putFileAs('public/partner/'.$partner_id, $moa_file, $new_filename);
+            $path_moaFile = Storage::putFileAs('partner/'.$partner_id, $moa_file, $new_filename);
         }
 
 
@@ -176,8 +175,8 @@ class PartnerController extends Controller
         Contract::create([
             'partner_id' => $partner_id,
             'contract_id' => $this->generateContractId(),
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date
+            'start_date' => $start_date,
+            'end_date' => $end_date
         ]);
 
 

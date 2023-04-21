@@ -68,6 +68,7 @@ export class AdminLayoutComponent implements OnInit {
     const closeBtn = document.querySelector('#btn');
     const navList = document.querySelector('.nav-list');
     const logo = document.querySelector('.cict-logo');
+    // const profileLink = document.querySelector('.profile-link');
     // const searchBtn = document.querySelector('.bx-search');
 
     if (closeBtn) {
@@ -82,6 +83,7 @@ export class AdminLayoutComponent implements OnInit {
         burgerMenu.classList.toggle('open');
         navList?.classList.toggle('open');
         logo?.classList.toggle('open');
+
       });
     }
 

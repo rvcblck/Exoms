@@ -67,4 +67,22 @@ export class PartnerService {
       })
     );
   }
+
+  updatePartner(partnerData: any): Observable<any> {
+    const headers = this.getHeaders();
+    // console.log(programData);
+    // for (const entry of (<any>partnerData).entries()) {
+    //   console.log(entry);
+    // }
+    return this.http.post<any>(`${this.apiUrl}/update-partner`, partnerData, { headers }).pipe(
+      tap((response) => {
+        console.log('Partner update successfully');
+      }),
+      catchError((error) => {
+        console.error('Error update Partner:', error);
+        console.error('Error Message:', error.message);
+        return throwError('Error update Partner. Please try again later.');
+      })
+    );
+  }
 }

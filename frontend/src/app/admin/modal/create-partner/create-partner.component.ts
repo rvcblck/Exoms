@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fileValidator } from 'src/app/file-type.validator';
 import { DatePipe } from '@angular/common';
@@ -6,7 +6,9 @@ import { PartnerService } from 'src/app/partner.service';
 import { FileUploader } from 'ng2-file-upload';
 import { FileItem } from 'ng2-file-upload';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ViewPartner } from 'src/app/partner.model';
+import { ImageService } from 'src/app/image.service';
 
 @Component({
   selector: 'app-create-partner',
@@ -19,6 +21,7 @@ export class CreatePartnerComponent implements OnInit {
   moaFile: any;
   profileFile: any;
   invalidExtension = false;
+  edithMoa = false;
 
   @ViewChild('moaFileName', { static: false }) moaFileName!: ElementRef;
   @ViewChild('moaFileSize') moaFileSize!: ElementRef;
@@ -28,34 +31,99 @@ export class CreatePartnerComponent implements OnInit {
     private datePipe: DatePipe,
     private partnerService: PartnerService,
     private dialog: MatDialog,
-    public dialogRef: MatDialogRef<CreatePartnerComponent>
+    public dialogRef: MatDialogRef<CreatePartnerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner },
+    private imageService: ImageService
   ) {
-    this.partnerForm = this.formBuilder.group({
-      company_name: ['', Validators.required],
-      address: [''],
-      contact_person: ['', Validators.required],
-      contact_no: ['', Validators.required],
-      start_date: ['', Validators.required],
-      end_date: ['', Validators.required],
-      moa_file: [null],
-      address_barangay: ['', Validators.required],
-      address_city: ['', Validators.required],
-      address_province: ['', Validators.required]
-    });
+    if (data) {
+      const address = data.partner.address;
+      const addressParts = address.split(', ');
+      const addressObject = {
+        barangay: addressParts[0],
+        city: addressParts[1],
+        province: addressParts[2]
+      };
+
+      const latestContract = data.partner.contracts.reduce((latest, current) => {
+        const latestStartDate = new Date(latest.start_date);
+        const currentStartDate = new Date(current.start_date);
+        return currentStartDate > latestStartDate ? current : latest;
+      }, data.partner.contracts[0]);
+
+      const startDate = latestContract.start_date;
+      const endDate = latestContract.end_date;
+
+      if (data.partner.moa_file) {
+        this.edithMoa = true;
+        // this.dlInv = true;
+        this.viewFiles();
+      }
+      console.log(this.data.partner.moaFile_content.fileName, this.data.partner.moaFile_content.fileSize, this.data.partner.moaFile_content.fileExt);
+
+      this.partnerForm = this.formBuilder.group({
+        company_name: [data.partner.company_name],
+        address: [''],
+        contact_person: [data.partner.contact_person],
+        contact_no: [data.partner.contact_no],
+        start_date: [startDate],
+        end_date: [endDate],
+        moa_file: [null],
+        address_barangay: [addressObject.barangay],
+        address_city: [addressObject.city],
+        address_province: [addressObject.province]
+      });
+    } else {
+      this.partnerForm = this.formBuilder.group({
+        company_name: ['', Validators.required],
+        address: [''],
+        contact_person: ['', Validators.required],
+        contact_no: ['', Validators.required],
+        start_date: ['', Validators.required],
+        end_date: ['', Validators.required],
+        moa_file: [null],
+        address_barangay: ['', Validators.required],
+        address_city: ['', Validators.required],
+        address_province: ['', Validators.required]
+      });
+    }
   }
 
   ngOnInit(): void {}
 
   onSubmit() {
     this.submitted = true;
-    if (this.partnerForm.invalid && !this.moaFile) {
+    if (this.partnerForm.invalid || !this.moaFile) {
       return;
     }
     this.openConfirmationDialog();
   }
 
+  viewFiles() {
+    if (this.data) {
+      setTimeout(() => {
+        this.moaFileName.nativeElement.innerHTML = this.data.partner.moaFile_content.fileName;
+      }, 0);
+      setTimeout(() => {
+        this.moaFileSize.nativeElement.innerHTML = (this.data.partner.moaFile_content.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+      }, 0);
+      setTimeout(() => {
+        const extension = this.data.partner.moaFile_content.fileExt;
+        const invIcon = document.getElementById('moaIcon');
+        if (invIcon) {
+          if (extension === 'pdf') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f;"></i>';
+          } else if (extension === 'docx') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f;"></i>';
+          } else {
+            invIcon.innerHTML = '';
+          }
+        }
+      }, 0);
+    }
+  }
+
   onMoaFileSelected(event: any, controlName: string) {
-    // this.edithInv = true;
+    this.edithMoa = true;
     const file = event.target.files[0];
     const allowedExtensions = ['pdf', 'docx'];
     const maxFileSize = 5048; // in KB
@@ -98,7 +166,7 @@ export class CreatePartnerComponent implements OnInit {
 
   removeMoa() {
     this.moaFile = null;
-    // this.edithInv = false;
+    this.edithMoa = false;
     const inputElement = document.getElementById('moa-upload') as HTMLInputElement;
     if (inputElement) {
       inputElement.value = '';
@@ -108,6 +176,20 @@ export class CreatePartnerComponent implements OnInit {
     const invIcon = document.getElementById('moaIcon');
     if (invIcon) {
       invIcon.innerHTML = '';
+    }
+  }
+
+  downloadMoa() {
+    if (this.data) {
+      this.imageService.downloadMoaFile(this.data.partner.partner_id).subscribe((response) => {
+        if (response.body instanceof Blob) {
+          const downloadLink = URL.createObjectURL(response.body);
+          const link = document.createElement('a');
+          link.href = downloadLink;
+          link.download = this.data.partner.moaFile_content.fileName;
+          link.click();
+        }
+      });
     }
   }
 
@@ -158,19 +240,34 @@ export class CreatePartnerComponent implements OnInit {
     if (this.moaFile) {
       formData.append('moa_file', this.moaFile, this.moaFile.name);
     }
+
     formData.forEach((value, key) => {
       console.log(key, value);
     });
 
-    this.partnerService.createPartner(formData).subscribe(
-      (program) => {
-        console.log('Program created successfully:', program);
-        // TODO: Handle success
-      },
-      (error) => {
-        console.error('Error creating program:', error);
-        // TODO: Handle error
-      }
-    );
+    if (this.data) {
+      formData.append('partner_id', this.data.partner.partner_id);
+      this.partnerService.updatePartner(formData).subscribe(
+        (program) => {
+          console.log('Program created successfully:', program);
+          this.dialogRef.close();
+        },
+        (error) => {
+          console.error('Error creating program:', error);
+          // TODO: Handle error
+        }
+      );
+    } else {
+      this.partnerService.createPartner(formData).subscribe(
+        (program) => {
+          console.log('Program created successfully:', program);
+          this.dialogRef.close();
+        },
+        (error) => {
+          console.error('Error creating program:', error);
+          // TODO: Handle error
+        }
+      );
+    }
   }
 }

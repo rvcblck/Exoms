@@ -15,7 +15,7 @@ export interface Contract {
   end_date: string;
 }
 
-// for view partner 
+// for view partner
 
 export interface ViewContract {
   contract_id: string;
@@ -37,4 +37,11 @@ export interface ViewPartner {
   moa_file: string;
   contracts: ViewContract[];
   programs: ViewProgram[];
+  moaFile_content: ViewMoa;
+}
+
+export interface ViewMoa {
+  fileName: string;
+  fileSize: number;
+  fileExt: string;
 }

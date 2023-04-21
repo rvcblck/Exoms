@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Partner;
 use App\Models\Program;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -111,6 +112,23 @@ class ImageController extends Controller
         $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
         $response->header('Content-Type', $type);
         $response->header('Content-Disposition', 'attachment; filename="' . basename($path) . '"');
+        return $response;
+    }
+
+    public function downloadMoa($id){
+        $filePath = Partner::where('partner_id',$id)->first();
+        $path = storage_path('app\public\\'.$filePath->moa_file);
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = new Response($file, 200);
+        $response->header('Access-Control-Allow-Origin', '*');
+        $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+        $response->header('Content-Type', $type);
         return $response;
     }
 

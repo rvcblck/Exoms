@@ -49,6 +49,26 @@
         <div class="date-btn"><button>Extend</button></div>
       </div>
     </div>
+    <hr />
+    <div class="upload-wrapper" *ngIf="data.partner.moa_file">
+      <div class="moa">
+        <div class="moa-label">MOA File</div>
+        <div class="file-info">
+          <div class="file-icon">
+            <mat-icon id="moaIcon"></mat-icon>
+          </div>
+          <div>
+            <div #moaFileName></div>
+            <div #moaFileSize></div>
+          </div>
+          <div>
+            <button class="x-upload" mat-icon-button color="warn" (click)="dlMoa()">
+              <mat-icon><i class="fa-regular fa-circle-down"></i></mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

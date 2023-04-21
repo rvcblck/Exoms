@@ -1,23 +1,26 @@
 <div class="container">
-  <div class="filter-cont pt-5">
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
-    </mat-form-field>
+  <div class="filter-cont pt-5 row mb-2">
+    <div class="search col-sm-3">
+      <span><i class="fa-solid fa-magnifying-glass"></i></span><input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
+    </div>
 
-    <button mat-raised-button color="warn" (click)="disapproveUser()">
-      Reject
-    </button>
+    <div class="buttons col justify-content-around">
+      <div class="btn-add-acc">
+        <button mat-raised-button color="primary" (click)="createAccount()" class="btn-add">
+          Add Account
+        </button>
+      </div>
+      <div class="btn-respond" *ngIf="selection.hasValue()">
+        <button  mat-raised-button color="warn" (click)="disapproveUser()">
+          Reject
+        </button>
 
-    <button mat-raised-button color="accent" (click)="approveUser()">
-      Approve
-    </button>
-
-    <button mat-raised-button color="primary" (click)="createAccount()" class="btn-add">
-      Add Account
-    </button>
-
-    <p *ngIf="selection.selected.length > 0">
+        <button  mat-raised-button color="accent" (click)="approveUser()">
+          Approve
+        </button>
+      </div>
+    </div>
+    <p class="counter" *ngIf="selection.selected.length > 0">
       You are currently selecting {{ selection.selected.length }} accounts.
       <span (click)="selectAllAccount()"
         ><Button class="link-button">{{
@@ -32,7 +35,7 @@
 </div>
 
 <div class="container">
-  <div class="mat-elevation-z8">
+  <div class="table-wrapper">
     <table mat-table [dataSource]="dataSource" matSort #sort="matSort">
       <!-- Checkbox Column -->
 
@@ -175,5 +178,4 @@
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
-
 </div>

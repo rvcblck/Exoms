@@ -9,9 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountInfoComponent } from '../modal/account-info/account-info.component';
 import { CreateAccountComponent } from '../modal/create-account/create-account.component';
 
-
-
-
 @Component({
   selector: 'app-account-management',
   templateUrl: './account-management.component.html',

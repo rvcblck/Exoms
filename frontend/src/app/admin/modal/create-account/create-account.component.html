@@ -3,30 +3,30 @@
     <h2>Add Account</h2>
     <hr />
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="row mb-4">
-        <div class="form-group col">
+      <div class="row ">
+        <div class="form-group col-sm">
           <label for="fname">First Name</label>
           <input type="text" class="form-control" id="fname" formControlName="fname">
           <div *ngIf="submitted && registerForm.controls['fname'].errors?.['required']" class="text-danger">First name is required.</div>
         </div>
-        <div class="form-group col">
+        <div class="form-group col-sm">
           <label for="lname">Last Name</label>
           <input type="text" class="form-control" id="lname" formControlName="lname">
           <div *ngIf="submitted && registerForm.controls['lname'].errors?.['required']" class="text-danger">Last name is required.</div>
         </div>
 
-        <div class="form-group col">
+        <div class="form-group col-sm">
           <label for="mname">Middle Name</label>
           <input type="text" class="form-control" id="mname" formControlName="mname">
         </div>
 
-        <div class="form-group col-2">
+        <div class="form-group col-sm-2">
           <label for="suffix">Suffix</label>
           <input type="text" class="form-control" id="suffix" formControlName="suffix">
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row">
         <div class="form-group col">
           <label for="gender">Gender</label>
           <select class="form-control" id="gender" formControlName="gender">
@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row">
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" class="form-control" id="email" formControlName="email">
@@ -60,13 +60,13 @@
       </div>
 
       <div class="row mb-4">
-        <div class="form-group col">
+        <div class="form-group col-sm">
           <label for="city">City</label>
           <input type="text" class="form-control" id="city" formControlName="city">
           <div *ngIf="submitted && registerForm.controls['city'].errors?.['required']">City is required.</div>
         </div>
 
-        <div class="form-group col">
+        <div class="form-group col-sm">
           <label for="address">Province</label>
           <input type="text" class="form-control" id="province" formControlName="province">
           <div *ngIf="submitted && registerForm.controls['province'].errors?.['required']">Address is required.</div>
@@ -93,8 +93,8 @@
       </div> -->
 
       <div class="row justify-content-end  my-3 footer">
-        <button type="submit" class="btn btn-primary col-2">Register</button>
-        <button class="btn btn-primary col-2 mx-2" mat-raised-button (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary col-3">Register</button>
+        <button class="btn btn-primary col-3 mx-2" mat-raised-button (click)="onCancel()">Cancel</button>
       </div>
     </form>
   </div>

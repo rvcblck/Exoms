@@ -1,12 +1,18 @@
 
-
 table {
   width: 100%;
-  box-shadow: none;
+  border-collapse: collapse;
+}
+.table-wrapper{
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  overflow-y: auto;
 }
 .filter-cont button{
   float: right;
   margin-left: 5px;
+  max-width: fit-content;
 }
 .mat-header-cell,
 .mat-cell {
@@ -15,11 +21,12 @@ table {
 .mat-row.mat-row-selected {
   background-color: #e0e0e0;
 }
-
 .mat-checkbox-inner-container {
   background-color: #f1f1f1;
 }
-
+/* .buttons button{
+  background: #ff5a2f;
+} */
 .mat-checkbox {
   margin: 0 8px;
 }
@@ -101,4 +108,69 @@ tr.mat-row, tr.mat-footer-row {
   color: #e4b830;
   border-radius: 3px;
   font-weight: 500;
+}
+.search {
+  position: relative;
+}
+.search input {
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  min-width: 200px;
+  max-width: 300px;
+  width: auto;
+  height: 40px;
+  text-indent: 40px;
+}
+
+.search input::placeholder {
+  color: #a8a5b6;
+}
+
+.search span {
+  position: absolute;
+  top: 20px;
+  transform: translate(-50%, -50%);
+  left: 29px;
+  color: #a8a5b6;
+}
+.mat-icon{
+  color: #ff5a2f;
+}
+
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  .counter{
+    display: none;
+  }
+  .buttons{
+    margin-bottom: 20px;
+  }
+  .search{
+    width: 100%;
+  }
+  .search input{
+    margin-bottom: 10px;
+    width: 100%;
+    padding-right: 60px;
+  }
+  .search input, .search span{
+    margin-left: 5px;
+  }
+
 }

@@ -81,6 +81,7 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
 .filter{
   width:70%;
   display: flex;
+  flex-wrap: wrap;
 }
 .filter button{
   background: #f0f0f0;
@@ -186,3 +187,21 @@ form input{
   margin-right: 10px;
 }
 
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+
+}

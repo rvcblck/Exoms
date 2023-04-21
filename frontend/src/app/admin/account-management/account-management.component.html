@@ -92,9 +92,10 @@
         </th>
         <td mat-cell *matCellDef="let element">
           <p class="approve" *ngIf="element.status == 'approve'">{{ element.status }}</p>
+          <p class="approve" *ngIf="element.status == 'approved'">{{ element.status }}</p>
           <p class="rejected" *ngIf="element.status == 'rejected'">{{ element.status }}</p>
           <p class="pending" *ngIf="element.status == 'pending'">{{ element.status }}</p>
-
+          <p class="rejected" *ngIf="element.status == 'disapproved'">{{ element.status }}</p>
         </td>
       </ng-container>
 

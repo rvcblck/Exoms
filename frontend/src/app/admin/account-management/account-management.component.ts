@@ -177,7 +177,7 @@ export class AccountManagementComponent implements OnInit {
 
   createAccount(){
     const dialogRef = this.dialog.open(CreateAccountComponent, {
-      width: '80%',
+      width: '60%',
       data: {}
     });
   }

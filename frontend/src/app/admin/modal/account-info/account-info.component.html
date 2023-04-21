@@ -1,20 +1,50 @@
-<h2>data.Account Info</h2>
-<p>User ID: {{ data.account.user_id }}</p>
-<p>Name: {{ data.account.fname }} {{ data.account.mname }} {{ data.account.lname }} {{ data.account.suffix }}</p>
-<p>Gender: {{ data.account.gender }}</p>
-<p>Birthday: {{ data.account.bday }}</p>
-<p>Email: {{ data.account.email }}</p>
-<p>Mobile Number: {{ data.account.mobile_no }}</p>
-<p>Address: {{ data.account.address }}</p>
-<p>Status: {{ data.account.status }}</p>
+<mat-dialog-content>
+  <div class="account">
+    <div class="cont-left">
+      <div class="profile">
+        <div class="profilePic">
 
-<h3>Programs</h3>
-<ul>
-  <li *ngFor="let program of data.account.programs">
-    <p>Title: {{ program.title }}   <span *ngIf="program.leader">leader</span></p>
-  </li>
-</ul>
+        </div>
+        <div class="profile-info">
+          <p class="profile-name">{{ data.account.fname }} {{ data.account.mname }} {{ data.account.lname }} {{ data.account.suffix }}</p>
+          <p class="profile-id">User ID: {{ data.account.user_id }}</p>
+          <p class="profile-status">{{ data.account.status }}</p>
+        </div>
+      </div>
+      <div class="user-data">
+        <p *ngIf="data.account.email" > <i class="fa-regular fa-envelope"></i> {{ data.account.email }}</p>
+        <p *ngIf="data.account.mobile_no"> <i class="fa-solid fa-phone"></i> {{ data.account.mobile_no }}</p>
+        <p *ngIf="data.account.bday"> <i class="fa-regular fa-calendar"></i> {{ data.account.bday }}</p>
 
-<p>Previous Programs: {{ data.account.previous }}</p>
-<p>Ongoing Programs: {{ data.account.ongoing }}</p>
-<p>Upcoming Programs: {{ data.account.upcoming }}</p>
+        <p *ngIf="data.account.gender == 'female'">
+          <i class="fa-solid fa-venus"></i>{{ data.account.gender }}
+        </p>
+        <p *ngIf="data.account.gender == 'male'">
+          <i class="fa-solid fa-mars"></i>{{ data.account.gender }}
+        </p>
+        <p *ngIf="data.account.gender == 'other'">
+          <i class="fa-solid fa-genderless"></i>{{ data.account.gender }}
+        </p>
+
+        <p *ngIf="data.account.address"><i class="fa-sharp fa-solid fa-location-dot"></i>{{ data.account.address }}</p>
+      </div>
+    </div>
+
+    <div class="cont-right">
+      <h2>Extesion Program History</h2>
+      <div class="box">
+        <h3>Programs</h3>
+        <ul>
+          <li *ngFor="let program of data.account.programs">
+            <p>{{ program.title }} <span *ngIf="program.leader">Leader</span></p>
+          </li>
+        </ul>
+      </div>
+      <div class="box">
+        <p>Previous Programs: {{ data.account.previous }}</p>
+        <p>Ongoing Programs: {{ data.account.ongoing }}</p>
+        <p>Upcoming Programs: {{ data.account.upcoming }}</p>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

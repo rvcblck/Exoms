@@ -33,7 +33,6 @@ export class AccountManagementComponent implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-
   constructor(private accountService: AccountService,private dialog: MatDialog) {}
 
   ngOnInit() {
@@ -164,9 +163,9 @@ export class AccountManagementComponent implements OnInit {
   viewAccount(user_id: string) {
     this.accountService.getAccountInfo(user_id).subscribe(
       (account) => {
-        const dialogRef = this.dialog.open(AccountInfoComponent, {
+        const dialogRef = this.dialog.open(AccountInfoComponent,{
           data: { account: account },
-          width: '500px',
+          width: '700px',
         });
       },
       (error) => {
@@ -174,6 +173,7 @@ export class AccountManagementComponent implements OnInit {
       }
     );
   }
+
 
   createAccount(){
     const dialogRef = this.dialog.open(CreateAccountComponent, {

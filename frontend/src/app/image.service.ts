@@ -55,6 +55,12 @@ export class ImageService {
     return this.http.get(url, { headers, observe: 'response', responseType: 'blob' });
   }
 
+  downloadMoaFile(partner_id: string): Observable<HttpResponse<Blob>> {
+    const headers = this.getHeaders();
+    const url = `${this.apiUrl}/download-moa/${partner_id}`;
+    return this.http.get(url, { headers, observe: 'response', responseType: 'blob' });
+  }
+
   // getUserFiles(filePath: string) {
   //   // const url = '/file';
   //   const body = { filePath };

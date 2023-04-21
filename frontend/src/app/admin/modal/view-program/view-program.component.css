@@ -338,6 +338,16 @@
   background-color: #fff;
 }
 
+.container {
+  border: 2px dashed #a8a5b6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #a8a5b6 !important;
+  font-style: italic;
+  padding: 10px;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */

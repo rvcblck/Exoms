@@ -26,6 +26,7 @@ export class AuthService {
         localStorage.setItem('firstName', response.user.fname);
         localStorage.setItem('role', response.user.role);
         localStorage.setItem('user_id', response.user.user_id);
+
       }),
       catchError((error) => {
         console.log(error);
@@ -47,18 +48,10 @@ export class AuthService {
         localStorage.setItem('email', response.email);
         return response;
 
-        // localStorage.setItem('firstName', response.user.fname);
-        // localStorage.setItem('role', response.user.role);
       }),
       catchError((error) => {
         console.log(error);
-        // if (error.status === 401) {
-        //   if (error.error.message === 'Email is not yet validated') {
-        //     return throwError('Email is not yet validated');
-        //   } else {
-        //     return throwError('Invalid email or password');
-        //   }
-        // }
+
         return throwError('An error occurred while logging in');
       })
     );
@@ -117,6 +110,7 @@ export class AuthService {
     }
     const jwtHelper = new JwtHelperService();
     const firstName = localStorage.getItem('firstName');
+
     const decodedToken = jwtHelper.decodeToken(token);
     const role = localStorage.getItem('role');
     console.log(token);

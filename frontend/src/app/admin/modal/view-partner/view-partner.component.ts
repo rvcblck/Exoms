@@ -1,6 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ViewPartner } from 'src/app/partner.model';
+import { PartnerService } from 'src/app/partner.service';
+import { CreatePartnerComponent } from '../create-partner/create-partner.component';
+import { ImageService } from 'src/app/image.service';
 
 @Component({
   selector: 'app-view-partner',
@@ -8,10 +11,21 @@ import { ViewPartner } from 'src/app/partner.model';
   styleUrls: ['./view-partner.component.css']
 })
 export class ViewPartnerComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<ViewPartnerComponent>, @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner }) {}
+  @ViewChild('moaFileName', { static: false }) moaFileName!: ElementRef;
+  @ViewChild('moaFileSize') moaFileSize!: ElementRef;
+
+  constructor(
+    public dialogRef: MatDialogRef<ViewPartnerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner },
+    private partnerService: PartnerService,
+    private dialog: MatDialog,
+    private imageService: ImageService
+  ) {}
 
   ngOnInit(): void {
     console.log(this.data.partner);
+    this.viewFiles();
+    
   }
 
   formatDate(dateString: string): string {
@@ -19,11 +33,59 @@ export class ViewPartnerComponent implements OnInit {
     return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 
-  editProgram(partner_id:string){
+  editProgram(partner_id: string) {
     this.dialogRef.close();
+    this.partnerService.getPartnerInfo(partner_id).subscribe(
+      (partner) => {
+        const dialogRef = this.dialog.open(CreatePartnerComponent, {
+          data: { partner: partner },
+          maxWidth: '90%',
+          minWidth: '40%'
+        });
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+
+    // call the edit page
+  }
+
+  dlMoa() {
+    this.imageService.downloadMoaFile(this.data.partner.partner_id).subscribe((response) => {
+      if (response.body instanceof Blob) {
+        const downloadLink = URL.createObjectURL(response.body);
+        const link = document.createElement('a');
+        link.href = downloadLink;
+        link.download = this.data.partner.moaFile_content.fileName;
+        link.click();
+      }
+    });
+  }
+
+  viewFiles() {
+    setTimeout(() => {
+      this.moaFileName.nativeElement.innerHTML = this.data.partner.moaFile_content.fileName;
+    }, 0);
+    setTimeout(() => {
+      this.moaFileSize.nativeElement.innerHTML = (this.data.partner.moaFile_content.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+    }, 0);
+    setTimeout(() => {
+      const extension = this.data.partner.moaFile_content.fileExt;
+      const invIcon = document.getElementById('moaIcon');
+      if (invIcon) {
+        if (extension === 'pdf') {
+          invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f;"></i>';
+        } else if (extension === 'docx') {
+          invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f;"></i>';
+        } else {
+          invIcon.innerHTML = '';
+        }
+      }
+    }, 0);
   }
 }

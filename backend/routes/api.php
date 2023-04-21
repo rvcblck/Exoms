@@ -72,6 +72,7 @@ Route::post('/update-programs', [ProgramController::class, 'updateProgram']);
     Route::get('/partnerInfo/{id}', [PartnerController::class, 'partnerInfo']);
     Route::get('/partners', [PartnerController::class, 'index']);
     Route::post('/create-partner', [PartnerController::class, 'createPartner']);
+    Route::post('/update-partner', [PartnerController::class, 'updatePartner']);
     Route::get('/accounts', [AccountController::class, 'index']);
 Route::get('/profileInfo/{id}', [ProfileController::class, 'index']);
 Route::get('/userPrograms/{id}', [ProgramController::class, 'userProgram']);
@@ -87,12 +88,16 @@ Route::get('/images/{filename}',[ImageController::class, 'getImage']);
 Route::get('/download-file/{id}',[ImageController::class, 'downloadFile'])->middleware('cors');
 
 Route::get('/download-certfile/{id}',[ImageController::class, 'downloadCertFile'])->middleware('cors');
+Route::get('/download-moa/{id}',[ImageController::class, 'downloadMoa'])->middleware('cors');
 
 Route::post('/file',[ImageController::class, 'getUserFiles'])->middleware('cors');
 
 Route::get('/view-file/{filePath}',[ImageController::class, 'viewUserFiles']);
 
 Route::post('/program-file',[ImageController::class,'getProgramFiles'])->middleware('cors');
+
+
+
 
 
 

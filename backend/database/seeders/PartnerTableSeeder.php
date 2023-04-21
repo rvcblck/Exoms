@@ -29,7 +29,6 @@ class PartnerTableSeeder extends Seeder
                 'address' => $faker->address,
                 'contact_no' => $faker->phoneNumber,
                 'contact_person' => $faker->firstName.' '.$faker->lastName,
-                'moa_file' => $faker->word . '.pdf',
                 // 'archived' => $faker->boolean(),
             ]);
         }

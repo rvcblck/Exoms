@@ -19,16 +19,16 @@ class PdfSeeder extends Seeder
 
         foreach ($programs as $program) {
             // Update invitation column
-            $invitationPath = 'public/images/Rovic_DeLeon.pdf';
-            if (Storage::exists($invitationPath)) {
-                $program->invitation = $invitationPath;
-            }
+            $invitationPath = null;
+            // if (Storage::exists($invitationPath)) {
+                $program->invitation = null;
+            // }
 
             // Update certificate column
-            $certificatePath = 'public/images/wallpapersden.jpg';
-            if (Storage::exists($certificatePath)) {
-                $program->certificate = $certificatePath;
-            }
+            $certificatePath = null;
+            // if (Storage::exists($certificatePath)) {
+                $program->certificate = null;
+            // }
 
             $program->save();
         }

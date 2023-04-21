@@ -69,7 +69,9 @@ input[type='date'] {
 .upload-wrapper {
   padding: 10px;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
+  width: 100%;
 }
 
 .upload-wrapper .moa-label {
@@ -216,6 +218,30 @@ input[type='date'] {
   cursor: not-allowed;
 }
 
+.dl-inv {
+  margin-top: 20px;
+  width: 60%;
+  padding: 5px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dl-inv button {
+  border: 1px solid #ff5a2f;
+  background-color: #ff5a2f;
+  border-radius: 5px;
+  color: white !important;
+  width: 100%;
+}
+
+.dl-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -269,9 +295,16 @@ input[type='date'] {
   .moa-error .mat-error {
     width: 80%;
   }
+
+  .dl-inv {
+    width: 80%;
+  }
 }
 
 /* Phone screens */
 @media only screen and (max-width: 767px) {
   /* Styles for phone screens go here */
+  .dl-inv {
+    width: 90%;
+  }
 }

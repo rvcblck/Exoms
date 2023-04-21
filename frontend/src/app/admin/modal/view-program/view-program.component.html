@@ -55,7 +55,7 @@
         <span style="white-space: nowrap"><i class="fa-regular fa-handshake">&nbsp;&nbsp;&nbsp;</i>{{ partner.name }}</span>
       </div>
     </div>
-    <div class="view-files">
+    <div class="view-files" *ngIf="data.program.invitation">
       <label>Invitation</label>
       <div class="wrapper">
         <div class="icon">
@@ -70,7 +70,10 @@
         </div>
       </div>
     </div>
-    <div class="view-files">
+    <div class="view-files" *ngIf="!data.program.invitation">
+      <div class="container">No Invitation File</div>
+    </div>
+    <div class="view-files" *ngIf="data.program.certificate">
       <label>Certificate</label>
       <div class="wrapper">
         <div class="icon">
@@ -84,6 +87,9 @@
           <button matRipple (click)="downloadCertificate()">Download</button>
         </div>
       </div>
+    </div>
+    <div class="view-files" *ngIf="!data.program.certificate">
+      <div class="container">No Certificate File</div>
     </div>
   </div>
   <mat-dialog-actions>

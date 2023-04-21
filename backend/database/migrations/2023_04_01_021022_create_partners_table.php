@@ -20,7 +20,7 @@ class CreatePartnersTable extends Migration
             $table->string('address');
             $table->string('contact_no');
             $table->string('contact_person')->nullable();
-            $table->string('moa_file');
+            $table->string('moa_file')->nullable();
             $table->boolean('archived')->default(false);
             $table->timestamps();
         });

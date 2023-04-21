@@ -125,14 +125,14 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.selectedLeader.push(leaderObject);
 
       this.programForm = this.formBuilder.group({
-        title: [data.program.title],
-        details: [data.program.details],
-        start_date: [data.program.start_date],
-        end_date: [data.program.end_date],
+        title: [data.program.title, Validators.required],
+        details: [data.program.details, Validators.required],
+        start_date: [data.program.start_date, Validators.required],
+        end_date: [data.program.end_date, Validators.required],
         address: [addressObject.barangay + ' ' + addressObject.city + ' ' + addressObject.barangay],
-        barangay: [addressObject.barangay],
-        city: [addressObject.city],
-        province: [addressObject.province],
+        barangay: [addressObject.barangay, Validators.required],
+        city: [addressObject.city, Validators.required],
+        province: [addressObject.province, Validators.required],
         leader_id: [''],
         member_id: [''],
         participant: [''],
@@ -656,8 +656,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
-
-
 
   onSubmit(): void {
     this.updateAddress();

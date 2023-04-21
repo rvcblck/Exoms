@@ -354,6 +354,21 @@ body {
   width: 250px;
 }
 
+.sidebar li.profile-link {
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: 60px;
+  padding: 10px 14px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open li.profile-link {
+  width: 250px;
+}
+
 @media only screen and (min-width: 1200px) {
   .navbar-mobile {
     display: none;
@@ -403,6 +418,10 @@ body {
     left: 0;
     /* width: calc(100% - 500px); */
     width: 100%;
+  }
+
+  .profile-link {
+    display: none;
   }
 
   .cict-logo img {

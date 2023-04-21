@@ -211,7 +211,7 @@ class PartnerController extends Controller
             'contact_no' => 'required',
             'contact_person' => 'nullable',
             'address' => 'required',
-            'moa_file' => 'required|mimes:pdf,docx|max:5048',
+            'moa_file' => 'mimes:pdf,docx|max:5048',
         ];
 
         $messages = [

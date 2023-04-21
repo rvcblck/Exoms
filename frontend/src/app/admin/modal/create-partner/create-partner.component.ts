@@ -61,16 +61,16 @@ export class CreatePartnerComponent implements OnInit {
       console.log(this.data.partner.moaFile_content.fileName, this.data.partner.moaFile_content.fileSize, this.data.partner.moaFile_content.fileExt);
 
       this.partnerForm = this.formBuilder.group({
-        company_name: [data.partner.company_name],
+        company_name: [data.partner.company_name, Validators.required],
         address: [''],
-        contact_person: [data.partner.contact_person],
-        contact_no: [data.partner.contact_no],
-        start_date: [startDate],
-        end_date: [endDate],
+        contact_person: [data.partner.contact_person, Validators.required],
+        contact_no: [data.partner.contact_no, Validators.required],
+        start_date: [startDate, Validators.required],
+        end_date: [endDate, Validators.required],
         moa_file: [null],
-        address_barangay: [addressObject.barangay],
-        address_city: [addressObject.city],
-        address_province: [addressObject.province]
+        address_barangay: [addressObject.barangay, Validators.required],
+        address_city: [addressObject.city, Validators.required],
+        address_province: [addressObject.province, Validators.required]
       });
     } else {
       this.partnerForm = this.formBuilder.group({
@@ -92,9 +92,16 @@ export class CreatePartnerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.partnerForm.invalid || !this.moaFile) {
-      return;
+    if (this.data) {
+      if (this.partnerForm.invalid) {
+        return;
+      }
+    } else {
+      if (this.partnerForm.invalid || !this.moaFile) {
+        return;
+      }
     }
+
     this.openConfirmationDialog();
   }
 

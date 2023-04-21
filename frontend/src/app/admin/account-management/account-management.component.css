@@ -1,10 +1,8 @@
-
-
 table {
   width: 100%;
   box-shadow: none;
 }
-.filter-cont button{
+.filter-cont button {
   float: right;
   margin-left: 5px;
 }
@@ -12,6 +10,7 @@ table {
 .mat-cell {
   padding: 8px;
 }
+
 .mat-row.mat-row-selected {
   background-color: #e0e0e0;
 }
@@ -29,11 +28,31 @@ table {
   width: 100%;
 }
 
+.mat-cell {
+  font-size: 15px;
+}
+
+::ng-deep .mat-header-cell {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-sort-header-content {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-cell {
+  color: #51354b;
+}
+
 /* td, th {
   width: 25%;
 } */
 
-td{
+td {
   width: 91px;
   height: 15px;
   font-family: Assistant;
@@ -42,12 +61,13 @@ td{
   text-decoration: none solid rgb(81, 53, 75);
 }
 
-th{
+th {
   /* border: 1px solid black; */
   height: 45px;
   font-weight: bold;
 }
-tr.mat-row, tr.mat-footer-row {
+tr.mat-row,
+tr.mat-footer-row {
   height: 48px;
 }
 .mat-mdc-form-field {
@@ -72,32 +92,32 @@ tr.mat-row, tr.mat-footer-row {
 } */
 
 .mat-sort-header-container {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 }
-.approve{
+.approve {
   background: #d9f0e2;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #74d49b;
   border-radius: 3px;
   font-weight: 500;
 }
-.rejected{
+.rejected {
   background: #fcd9e2;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #f47393;
   border-radius: 3px;
   font-weight: 500;
 }
-.pending{
+.pending {
   background: #f8edc9;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #e4b830;
   border-radius: 3px;
   font-weight: 500;

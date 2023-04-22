@@ -1,73 +1,39 @@
-<!-- <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  <div class="d-flex justify-content-evenly">
-    <div class="mb-3">
-      <label for="fname" class="form-label">First Name</label>
-      <input type="text" class="form-control" id="fname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Middle Name</label>
-      <input type="text" class="form-control" id="mname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="lname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Suffix</label>
-      <input type="text" class="form-control" id="suffix" />
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-evenly">
-    <div class="mb-3">
-      <label for="fname" class="form-label">Barangay</label>
-      <input type="text" class="form-control" id="fname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">City/Municipality</label>
-      <input type="text" class="form-control" id="mname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Province</label>
-      <input type="text" class="form-control" id="lname" />
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-evenly">
-    <div class="mb-3">
-      <label for="fname" class="form-label">Gender</label>
-      <input type="text" class="form-control" id="fname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Birthday</label>
-      <input type="text" class="form-control" id="mname" />
-    </div>
-    <div class="mb-3">
-      <label for="fname" class="form-label">Mobile No.</label>
-      <input type="text" class="form-control" id="lname" />
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="fname" class="form-label">Email</label>
-    <input type="text" class="form-control" id="fname" />
-  </div>
-  <div>
-    <button>Change password</button>
-  </div>
-</form>
- -->
 <form [formGroup]="profileForm">
   <div class="admin-profile">
-    <div class="picture">
+    <div class="picture" [ngClass]="{ shrink: toggleAccountInfo() }" [ngStyle]="{ width: toggleAccountInfo() ? '33%' : '60%' }">
       <div class="container">
-        <div class="status">status</div>
+        <div class="status">{{ user.status }}</div>
         <div class="img">
           <img class="round" [src]="imageUrl" alt="My Image" />
         </div>
       </div>
+      <div class="info-container">
+        <div class="fname">{{ user.fname }} {{ user.mname }} {{ user.lname }} {{ user.suffix }}</div>
+        <div class="email">
+          {{ user.email }}
+        </div>
+        <div class="gender">
+          Gender:&nbsp;
+          <ng-container *ngIf="user.gender === 'male'">
+            <i class="fa-solid fa-mars" style="color: rgb(5, 205, 255)"></i>
+          </ng-container>
+          <ng-container *ngIf="user.gender === 'female'">
+            <i class="fa-solid fa-venus" style="color: rgb(247, 142, 255); font-weight: bolder"></i>
+          </ng-container>
+        </div>
+        <div class="age">Age: {{ getAge(user.bday) }}</div>
+        <div class="mobile"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp;&nbsp;&nbsp;{{ user.mobile_no }}</div>
+
+        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user.address }}</div>
+        <div class="edit-label">Edit Mode</div>
+        <div class="edit-toggle">
+          <input type="checkbox" id="switch-toggle" class="switch" (change)="toggleAccountInfo()" />
+
+          <label class="switch-label" for="switch-toggle">Toggle</label>
+        </div>
+      </div>
     </div>
-    <div class="account-info">
+    <div class="account-info" [ngClass]="{ hidden: toggleAccountInfo() }">
       <div class="title">ACCOUNT INFORMATION</div>
       <hr />
       <div class="wrapper">

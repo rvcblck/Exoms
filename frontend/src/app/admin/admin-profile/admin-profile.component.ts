@@ -17,6 +17,7 @@ export class AdminProfileComponent implements OnInit {
   user!: Profile;
   private apiUrl = 'http://localhost:8000/api';
   public imageUrl: any;
+  showAccountInfo = false;
 
   constructor(
     private profileService: ProfileService,
@@ -93,8 +94,35 @@ export class AdminProfileComponent implements OnInit {
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     });
 
+    const toggleCheckbox = document.getElementById('switch-toggle');
+    const accountInfo = document.querySelector('.account-info');
+    const breakpoint = 768; // Set your desired breakpoint for mobile devices here
+
+    toggleCheckbox?.addEventListener('change', () => {
+      if (window.innerWidth < breakpoint) {
+        
+        accountInfo?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
     // this.profileForm
     // this.profileForm.patchValue({ fname: this.user.fname });
+  }
+
+  toggleAccountInfo(): boolean {
+    const checkbox = document.getElementById('switch-toggle') as HTMLInputElement;
+    return checkbox.checked;
+  }
+
+  getAge(birthdate: string): number {
+    const today = new Date();
+    const birthdateObj = new Date(birthdate);
+    let age = today.getFullYear() - birthdateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthdateObj.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdateObj.getDate())) {
+      age--;
+    }
+    return age;
   }
   onSubmit(): void {}
 }

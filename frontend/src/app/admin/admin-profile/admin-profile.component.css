@@ -14,20 +14,58 @@
   padding: 20px;
 }
 
-.picture {
-  width: 33%;
+.admin-profile .account-info {
+  margin: 0% 1%;
+  padding: 20px;
+  background-color: #fafafa;
+  width: 60%;
+  height: calc(90vh - 60px);
+  transition: all 0.5s ease;
+  display: none;
+}
+
+.admin-profile .account-info.hidden {
+  display: block;
+}
+
+.admin-profile .account-info.hidden {
+  display: block;
+  animation: slide-in 1s forwards;
+}
+
+.admin-profile .picture {
+  position: relative;
+  width: 60%;
   height: calc(90vh - 60px);
   background-color: #fff;
   border-radius: 0px 20px 20px 0px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  transition: all 0.5s ease;
 }
-.account-info {
-  margin: 0% 1%;
-  padding: 20px;
-  background-color: #fafafa00;
-  width: 60%;
-  height: calc(90vh - 60px);
+
+.admin-profile .picture.shrink {
+  width: 33%;
 }
+
+.admin-profile .account-info.hidden + .picture.shrink {
+  transform: translateX(-33%);
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+/* .admin-profile .account-info.hidden ~ .picture {
+  width: 33%;
+  margin: 0 auto;
+} */
 
 .title {
   font-size: 20px;
@@ -152,7 +190,7 @@ select {
   bottom: -40%;
   left: 50%;
   transform: translateX(-50%);
-  border: 2px solid #ff5a2f;
+  border: 4px solid #ff5a2f;
   border-radius: 50%;
   padding: 7px;
   width: 250px;
@@ -187,15 +225,197 @@ select {
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 }
 
-/* .container .round {
+.info-container {
+  position: relative;
+  margin-top: 120px;
+  width: 100%;
+  height: calc(70% - 120px);
+}
+
+.info-container .fname {
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.info-container .email {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 20px;
+  color: #a8a5b6 !important;
+  padding: 10px;
+}
+
+.info-container .mobile {
   position: absolute;
-  bottom: -40%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 2px solid #ff5a2f;
-  border-radius: 50%;
-  padding: 7px;
-  width: 200px;
-  background-color: white;
-  aspect-ratio: 1 /1;
+  bottom: 40px;
+  left: 10px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #a8a5b6 !important;
+  padding: 10px;
+}
+
+.info-container .age-gender {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.age {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 18px;
+  color: #a8a5b6 !important;
+  padding: 5px;
+}
+
+.gender {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 18px;
+  color: #a8a5b6 !important;
+  padding: 5px;
+}
+
+.address {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  color: #a8a5b6 !important;
+  padding: 10px;
+}
+
+input[type='checkbox'] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.switch-label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 70px;
+  height: 40px;
+  background: #a8a5b6;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+.switch-label:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input:checked + .switch-label {
+  background: #ff5a2f;
+}
+
+input:checked + .switch-label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+.switch-label:active:after {
+  width: 130px;
+}
+.edit-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.edit-label {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 70px;
+  right: 25px;
+  color: #a8a5b6 !important;
+}
+
+/* .admin-profile:hover .picture {
+  width: 33%;
+  transition: all 0.5s ease;
+}
+
+.admin-profile:hover .account-info {
+  transform: translateX(0%);
+  transition: all 0.5s ease;
 } */
+
+/* .admin-profile .account-info ~ .picture {
+  width: 33%;
+} */
+
+/* .admin-profile input[type='checkbox']:checked ~ .account-info {
+  display: block;
+} */
+/* // centering */
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  /* Styles for phone screens go here */
+  .admin-profile .picture {
+    width: 100% !important;
+    animation: none;
+  }
+  .admin-profile .picture.shrink {
+    width: 100%;
+  }
+  .admin-profile .account-info {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .admin-profile .account-info.hidden {
+    animation: none;
+  }
+
+  .admin-profile {
+    /* margin-top: 60px; */
+    height: 90vh;
+    overflow-y: auto;
+  }
+
+  .form-field {
+    width: 100% !important;
+  }
+
+  .save {
+    position: relative !important;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

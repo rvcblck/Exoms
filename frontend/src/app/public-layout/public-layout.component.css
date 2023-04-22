@@ -3,32 +3,61 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.container{
+  margin: 20px auto;
+}
 /* Header */
 header {
-  background-color: #f7c78c;
-  padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.logo{
   display: flex;
 }
-
-nav li {
-  margin-right: 20px;
+.logo img{
+  width: 50px;
+  height: 50px;
+}
+.logo h1{
+  margin: auto 12px;
+  color: #54394e;
+  font-weight: bold;
+  font-size: 24px;
+}
+.logo h1 span{
+  color: #ff5a2f;
 }
 
-nav a {
+nav{
+  margin: auto 0px;
+  width: 15%;
+}
+nav ul {
+  list-style-type: none;
+  margin:0px;
+  padding: 0;
+  display: flex;
+  width: 100%;
+}
+nav li {
+  flex: 1;
+  padding: 0%;
+  text-align: center;
+}
+nav ul li a{
   color: #5c5c5c;
   text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 7px 20px;
+  border-radius: 20px;
+  border: 2px solid #ff5a2f;
 }
 
-nav a:hover {
-  color: #ffad7c;
+nav ul li a:hover {
+  background-color: #ff5a2f;
+  color: white;
+  transition: 0.5s;
 }
 
 /* Main section */
@@ -92,4 +121,37 @@ footer {
   padding: 20px;
   text-align: center;
   color: #fff;
+}
+
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  header {
+    display: block;
+  }
+  nav{
+    margin-top: 30px;
+  }
+  .logo h1{
+    margin: auto 12px;
+    color: #54394e;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  a{
+    margin: 5px;
+  }
 }

@@ -1,18 +1,27 @@
-<nav>
-  <ul>
-    <ng-container *ngIf="!(isAuthenticated$ | async)">
-      <li><a routerLink="/register">Register</a></li>
-      <li><a routerLink="/login">Login</a></li>
-    </ng-container>
-    <ng-container *ngIf="isAuthenticated$ | async; else authenticated">
-      <li><a routerLink="/register">Register</a></li>
-      <li><a [routerLink]="getDashboardLink()">Dashboard</a></li>
-    </ng-container>
-  </ul>
-</nav>
+<div class="container">
+  <header>
+    <div class="logo">
+      <img src="../../assets/images/files_1299260_1248477_bulsu-84b9d04f6a6183d729a4b7ce6dc66149.png" alt="">
+      <h1>CICT<span>Exoms</span></h1>
+    </div>
+    <nav>
+      <ul>
+        <ng-container *ngIf="!(isAuthenticated$ | async)">
+          <li><a routerLink="/login">Login</a></li>
+          <li><a routerLink="/register">Register</a></li>
+        </ng-container>
+        <ng-container *ngIf="isAuthenticated$ | async; else authenticated">
+          <li><a routerLink="/register">Register</a></li>
+          <li><a [routerLink]="getDashboardLink()">Dashboard</a></li>
+        </ng-container>
+      </ul>
+    </nav>
+  </header>
 
-<ng-template #authenticated>
-  <ng-container></ng-container>
-</ng-template>
+  <ng-template #authenticated>
+    <ng-container></ng-container>
+  </ng-template>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>
+

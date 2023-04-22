@@ -1,0 +1,105 @@
+.container{
+  margin-top: 20px;
+}
+.content{
+  width: 50%;
+  margin:120px 40px;
+  box-sizing: border-box;
+}
+.content h2{
+  font-size: 34px;
+  font-weight: bold;
+  color: #51354b;
+  word-spacing: 2px;
+  letter-spacing: 2px;
+  line-height: 45px;
+}
+.content p{
+  margin-top: 5px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #51354b;
+}
+.content button{
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background-color: #ff5a2f;
+}
+
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  .img{
+    position: absolute;
+    top: 140px;
+    left: 759px;
+    width: 50%;
+    height: 620px;
+    border-top-left-radius:100%;
+    background-color: #fff2e5;
+    box-sizing: border-box;
+  }
+  .img img{
+    position: relative;
+    left: 150px;
+    width: 80%;
+    height: auto;
+  }
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+  .img{
+    position: absolute;
+    top: 140px;
+    left: 400px;
+    width: 50%;
+    height: 620px;
+    border-top-left-radius:100%;
+    box-sizing: border-box;
+  }
+  .img img{
+    position: relative;
+    left: 150px;
+    width: 80%;
+    height: auto;
+  }
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  .content{
+    width: 90%;
+    margin-top: 90%;
+  }
+  .img{
+    background: none;
+  }
+  .img img{
+    position: absolute;
+
+    top: 130px;
+    width: 80%;
+    height: 300px;
+  }
+  .content h2{
+    font-size: 22px;
+    font-weight: bold;
+    color: #51354b;
+  }
+  .content button{
+    margin-bottom: 50px;
+    width: 80%;
+    margin: auto;
+    margin: 20px auto;
+  }
+}

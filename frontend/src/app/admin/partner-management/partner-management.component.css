@@ -3,6 +3,25 @@
   /* color: #51354b; */
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
 .partner-management {
   /* position: relative; */
   margin: 0;
@@ -57,6 +76,7 @@ table {
 
 ::ng-deep .mat-cell {
   color: #51354b;
+  font-size: 15px !important;
 }
 
 table {

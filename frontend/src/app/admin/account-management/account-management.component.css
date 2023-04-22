@@ -1,19 +1,94 @@
-
 table {
   width: 100%;
   border-collapse: collapse;
 }
-.table-wrapper{
+
+.table-wrapper {
   display: flex;
   flex-direction: column;
   height: 75vh;
   overflow-y: auto;
 }
-.filter-cont button{
-  float: right;
-  margin-left: 5px;
-  max-width: fit-content;
+.filter-cont {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
 }
+
+.filter-cont .search {
+  position: relative;
+  width: 30%;
+  margin-right: 60%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-cont .search.show-btns {
+  margin-right: 40%;
+}
+
+.search input {
+  position: relative;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 40px;
+  text-indent: 40px;
+  /* min-width: 200px;
+  max-width: 300px; */
+}
+
+.search input::placeholder {
+  color: #a8a5b6;
+}
+
+.search span {
+  position: absolute;
+  top: 20px;
+  transform: translate(-50%, -50%);
+  left: 29px;
+  color: #a8a5b6;
+  z-index: 9999;
+}
+
+.filter-cont .btn-respond {
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-cont .btn-respond button:nth-child(2) {
+  margin-left: 5px;
+}
+
+.filter-cont .btn-add-acc {
+  width: 10%;
+  padding-left: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-cont .btn-add-acc button {
+  width: 100%;
+  background-color: #ff5a2f;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  outline: none;
+  border: none;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.multiple-message {
+  width: 100%;
+}
+
 .mat-header-cell,
 .mat-cell {
   padding: 8px;
@@ -24,9 +99,7 @@ table {
 .mat-checkbox-inner-container {
   background-color: #f1f1f1;
 }
-/* .buttons button{
-  background: #ff5a2f;
-} */
+
 .mat-checkbox {
   margin: 0 8px;
 }
@@ -36,11 +109,7 @@ table {
   width: 100%;
 }
 
-/* td, th {
-  width: 25%;
-} */
-
-td{
+td {
   width: 91px;
   height: 15px;
   font-family: Assistant;
@@ -49,12 +118,13 @@ td{
   text-decoration: none solid rgb(81, 53, 75);
 }
 
-th{
+th {
   /* border: 1px solid black; */
   height: 45px;
   font-weight: bold;
 }
-tr.mat-row, tr.mat-footer-row {
+tr.mat-row,
+tr.mat-footer-row {
   height: 48px;
 }
 .mat-mdc-form-field {
@@ -62,9 +132,29 @@ tr.mat-row, tr.mat-footer-row {
   width: 100%;
 }
 
-/* td, th {
-  width: 25%;
-} */
+.reject-btn {
+  background: #fcd9e2;
+  padding: 3px 5px;
+  font-size: 12px;
+  color: #f47393;
+  border-radius: 3px;
+  font-weight: 500;
+  border: none;
+  height: 40px;
+  width: 100%;
+}
+
+.approve-btn {
+  background: #d9f0e2;
+  padding: 3px 5px;
+  font-size: 12px;
+  color: #74d49b;
+  border-radius: 3px;
+  font-weight: 500;
+  border: none;
+  height: 40px;
+  width: 100%;
+}
 
 .link-button {
   background-color: transparent;
@@ -79,66 +169,67 @@ tr.mat-row, tr.mat-footer-row {
 } */
 
 .mat-sort-header-container {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 }
-.approve{
+.approve {
   background: #d9f0e2;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #74d49b;
   border-radius: 3px;
   font-weight: 500;
 }
-.rejected{
+.rejected {
   background: #fcd9e2;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #f47393;
   border-radius: 3px;
   font-weight: 500;
 }
-.pending{
+.pending {
   background: #f8edc9;
   padding: 3px 5px;
   font-size: 10px;
-  width:fit-content;
+  width: fit-content;
   color: #e4b830;
   border-radius: 3px;
   font-weight: 500;
 }
-.search {
-  position: relative;
-}
-.search input {
-  border: none;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  min-width: 200px;
-  max-width: 300px;
-  width: auto;
-  height: 40px;
-  text-indent: 40px;
-}
 
-.search input::placeholder {
-  color: #a8a5b6;
-}
-
-.search span {
-  position: absolute;
-  top: 20px;
-  transform: translate(-50%, -50%);
-  left: 29px;
-  color: #a8a5b6;
-}
-.mat-icon{
+.mat-icon {
   color: #ff5a2f;
 }
 
+::ng-deep .mat-cell {
+  color: #51354b;
+  font-size: 15px !important;
+}
 
+::ng-deep .mat-header-cell {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-sort-header-content {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+.view-button {
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #ff5a2f;
+  padding: 5px 20px;
+  background-color: #ff592f3c;
+}
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -147,7 +238,22 @@ tr.mat-row, tr.mat-footer-row {
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  .filter-cont .search {
+    width: 30%;
+    margin-right: 50%;
+  }
 
+  .filter-cont .search.show-btns {
+    margin-right: 20%;
+  }
+
+  .filter-cont .btn-add-acc {
+    width: 20%;
+  }
+
+  .filter-cont .btn-respond {
+    width: 30%;
+  }
 }
 
 /* Phone screens */
@@ -155,22 +261,58 @@ tr.mat-row, tr.mat-footer-row {
   ::ng-deep .mat-paginator-page-size {
     display: none !important;
   }
-  .counter{
-    display: none;
+
+  /* .filter-cont :nth-child(1) {
+    order: 1;
   }
-  .buttons{
-    margin-bottom: 20px;
-  }
-  .search{
-    width: 100%;
-  }
-  .search input{
-    margin-bottom: 10px;
-    width: 100%;
-    padding-right: 60px;
-  }
-  .search input, .search span{
-    margin-left: 5px;
+  .filter-cont :nth-child(2) {
+    order: 3;
   }
 
+  .filter-cont :nth-child(3) {
+    order: 2;
+  } */
+
+  .filter-cont :nth-child(4) {
+    order: 4;
+  }
+
+  /* .filter-cont .btn-respond {
+    width: 100%;
+  } */
+
+  .filter-cont {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .filter-cont .search {
+    flex: 0 0 50%;
+    margin-right: 20%;
+    order: 1;
+    margin-bottom: 5px;
+  }
+
+  .filter-cont .search.show-btns {
+    margin-right: 20%;
+  }
+
+  .filter-cont .btn-respond {
+    flex: 0 0 100%;
+    order: 3;
+    justify-content: end;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  .filter-cont .btn-respond button {
+    width: 20%;
+  }
+
+  .filter-cont .btn-add-acc {
+    flex: 0 0 30%;
+    order: 2;
+    margin-bottom: 5px;
+  }
 }

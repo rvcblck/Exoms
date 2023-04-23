@@ -5,6 +5,11 @@ import { Profile } from 'src/app/profile.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangeEmailComponent } from '../modal/change-email/change-email.component';
+import { ChangePasswordComponent } from '../modal/change-password/change-password.component';
+import { EditImgComponent } from '../modal/edit-img/edit-img.component';
 
 @Component({
   selector: 'app-admin-profile',
@@ -13,8 +18,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdminProfileComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({});
+  submitted = false;
 
-  user!: Profile;
+  public user: Profile | undefined;
   private apiUrl = 'http://localhost:8000/api';
   public imageUrl: any;
   showAccountInfo = false;
@@ -24,39 +30,30 @@ export class AdminProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sanitizer: DomSanitizer,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog // private profileService: ProfileService // public dialogRef: MatDialogRef<AdminProfileComponent>, // @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner }, // public user!: Profile
   ) {
     this.profileForm = this.formBuilder.group({
       fname: ['', Validators.required],
       mname: [''],
       lname: ['', Validators.required],
       suffix: [''],
+      address: [''],
       barangay: ['', Validators.required],
       city: ['', Validators.required],
       province: ['', Validators.required],
-      address: ['', Validators.required],
-      gender: [''],
+      gender: ['', Validators.required],
       bday: ['', Validators.required],
-      mobile_no: ['', Validators.required],
-      email: ['', Validators.required],
-      profile_pic: ['']
+      mobile_no: ['', Validators.required]
     });
-  }
-
-  getImage() {
-    const filename = 'samplepic.jpg';
-    return this.http.get(`${this.apiUrl}/images/${filename}`, { responseType: 'blob' });
-  }
-
-  ngOnInit(): void {
     const user_id = localStorage.getItem('user_id');
     if (user_id) {
       this.profileService.getUserInfo(user_id).subscribe(
         (user) => {
           this.user = user;
-          console.log(this.user);
+          // console.log(this.user);
 
-          const address = this.user.address;
+          const address = user.address;
           if (address) {
             const addressParts = address.split(', ');
             const addressObject = {
@@ -64,31 +61,36 @@ export class AdminProfileComponent implements OnInit {
               city: addressParts[1],
               province: addressParts[2]
             };
-            this.profileForm.patchValue({
-              barangay: addressObject.barangay,
-              city: addressObject.city,
-              province: addressObject.province
+
+            this.profileForm = this.formBuilder.group({
+              fname: [user.fname, Validators.required],
+              mname: [user.mname],
+              lname: [user.lname, Validators.required],
+              suffix: [user.suffix],
+              address: [''],
+              barangay: [addressObject.barangay, Validators.required],
+              city: [addressObject.city, Validators.required],
+              province: [addressObject.province, Validators.required],
+              gender: [user.gender, Validators.required],
+              bday: [user.bday, Validators.required],
+              mobile_no: [user.mobile_no, Validators.required]
             });
           }
-
-          this.profileForm.patchValue({
-            fname: this.user.fname,
-            mname: this.user.mname,
-            lname: this.user.lname,
-            suffix: this.user.suffix,
-            gender: this.user.gender,
-            bday: this.user.bday,
-            mobile_no: this.user.mobile_no,
-            email: this.user.email,
-            profile_pic: this.user.profile_pic
-          });
         },
         (error) => {
           console.log('Error:', error);
         }
       );
     }
+  }
 
+  getImage() {
+    // const filename = 'samplepic.jpg';
+    const user_id = localStorage.getItem('user_id');
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
+  }
+
+  ngOnInit(): void {
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
@@ -100,7 +102,6 @@ export class AdminProfileComponent implements OnInit {
 
     toggleCheckbox?.addEventListener('change', () => {
       if (window.innerWidth < breakpoint) {
-        
         accountInfo?.scrollIntoView({ behavior: 'smooth' });
       }
     });
@@ -124,5 +125,114 @@ export class AdminProfileComponent implements OnInit {
     }
     return age;
   }
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.profileForm.invalid) {
+      return;
+    }
+    console.log(this.profileForm);
+    this.openConfirmationDialog();
+  }
+  openConfirmationDialog(): void {
+    const message = 'Are you sure you want to submit the form?';
+    const header = 'Creating new partner';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The user confirmed the action, submit the form
+        this.submitForm();
+      }
+    });
+  }
+
+  changeEmail(): void {
+    const dialogRef = this.dialog.open(ChangeEmailComponent, {
+      data: { email: this.user?.email },
+      maxWidth: '90%',
+      minWidth: '40%'
+    });
+  }
+  changePassword(): void {
+    const dialogRef = this.dialog.open(ChangePasswordComponent, {
+      maxWidth: '90%',
+      minWidth: '40%'
+    });
+  }
+
+  editImg() {
+    const dialogRef = this.dialog.open(EditImgComponent, {
+      maxWidth: '90%',
+      minWidth: '40%'
+    });
+  }
+
+  submitForm() {
+    const address =
+      this.profileForm.get('barangay')?.value + ', ' + this.profileForm.get('city')?.value + ', ' + this.profileForm.get('province')?.value;
+    this.profileForm.patchValue({ address: address });
+
+    const formattedData = {
+      user_id: this.user?.user_id,
+      fname: this.profileForm.get('fname')?.value,
+      lname: this.profileForm.get('lname')?.value,
+      mname: this.profileForm.get('mname')?.value,
+      suffix: this.profileForm.get('suffix')?.value,
+      gender: this.profileForm.get('gender')?.value,
+      bday: this.profileForm.get('bday')?.value,
+      mobile_no: this.profileForm.get('mobile_no')?.value,
+      address: this.profileForm.get('address')?.value
+    };
+
+    this.profileService.updateProfile(formattedData).subscribe(
+      (response) => {
+        const user_id = localStorage.getItem('user_id');
+        if (user_id) {
+          this.profileService.getUserInfo(user_id).subscribe(
+            (user) => {
+              this.user = user;
+              // console.log(this.user);
+
+              const address = user.address;
+              if (address) {
+                const addressParts = address.split(', ');
+                const addressObject = {
+                  barangay: addressParts[0],
+                  city: addressParts[1],
+                  province: addressParts[2]
+                };
+
+                this.profileForm = this.formBuilder.group({
+                  fname: [user.fname, Validators.required],
+                  mname: [user.mname],
+                  lname: [user.lname, Validators.required],
+                  suffix: [user.suffix],
+                  address: [''],
+                  barangay: [addressObject.barangay, Validators.required],
+                  city: [addressObject.city, Validators.required],
+                  province: [addressObject.province, Validators.required],
+                  gender: [user.gender, Validators.required],
+                  bday: [user.bday, Validators.required],
+                  mobile_no: [user.mobile_no, Validators.required]
+                });
+              }
+            },
+            (error) => {
+              console.log('Error:', error);
+            }
+          );
+        }
+      },
+      (error) => {
+        // this.errors.push(error);
+        console.log('error updating');
+      }
+    );
+  }
 }

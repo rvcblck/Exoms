@@ -1,0 +1,41 @@
+<div mat-dialog-content class="view-partner">
+  <div class="title">Change Email</div>
+  <form [formGroup]="changeEmailForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" formControlName="email" />
+      <mat-error *ngIf="changeEmailForm.get('email')?.invalid && (changeEmailForm.get('email')?.touched || submited)"> Email is required. </mat-error>
+      <mat-error *ngIf="emailErrors && submited">{{ emailErrors }}</mat-error>
+      <mat-error *ngIf="submited && changeEmailForm.controls['email'].errors?.['email']" class="text-danger">Invalid email address.</mat-error>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" />
+      <div *ngIf="submited && changeEmailForm.controls['password'].errors">
+        <div *ngIf="changeEmailForm.controls['password'].errors['required']">Password is required</div>
+        <div *ngIf="changeEmailForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</div>
+      </div>
+      <mat-error *ngIf="passErrors && submited">{{ passErrors }}</mat-error>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="password_confirmation">Confirm Password</label>
+      <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required />
+
+      <div
+        *ngIf="(submited || changeEmailForm.get('password_confirmation')?.touched) && changeEmailForm.hasError('passwordMismatch')"
+        class="text-danger"
+      >
+        <div *ngIf="changeEmailForm.get('password_confirmation')?.hasError('required')">Please confirm your password</div>
+        <div *ngIf="changeEmailForm.get('password_confirmation')?.hasError('passwordMismatch')">Passwords do not match</div>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions>
+  <div class="footer">
+    <button (click)="closeDialog()">Cancel</button>
+    <button class="submit" type="submit" (click)="onSubmit()">Submit</button>
+  </div>
+</mat-dialog-actions>

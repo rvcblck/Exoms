@@ -16,11 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MatListModule,
-  MatSelectionList,
-  MatSelectionListChange,
-} from '@angular/material/list';
+import { MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PublicLayoutComponent } from './public-layout/public-layout.component';
 import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
@@ -43,7 +39,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { AccountInfoComponent } from './admin/modal/account-info/account-info.component';
-import { MatDialogModule,MatDialogConfig } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogConfig } from '@angular/material/dialog';
 import { CreateAccountComponent } from './admin/modal/create-account/create-account.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
@@ -62,11 +58,12 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
 import { ConfirmComponent } from './dialog/confirm/confirm.component';
 import { AttendanceComponent } from './user/attendance/attendance.component';
 import { AddDateComponent } from './user/add-date/add-date.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ChangeEmailComponent } from './admin/modal/change-email/change-email.component';
+import { ChangePasswordComponent } from './admin/modal/change-password/change-password.component';
+import { EditImgComponent } from './admin/modal/edit-img/edit-img.component';
 // import { MatDialogModule } from '@angular/material/dialog';
 // import { StepperProgressBarModule } from 'stepper-progress-bar'
-
-
 
 @NgModule({
   declarations: [
@@ -99,6 +96,9 @@ import {MatStepperModule} from '@angular/material/stepper';
     ConfirmComponent,
     AttendanceComponent,
     AddDateComponent,
+    ChangeEmailComponent,
+    ChangePasswordComponent,
+    EditImgComponent
   ],
   imports: [
     BrowserModule,
@@ -129,12 +129,11 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatAutocompleteModule,
     MatChipsModule,
     MatProgressBarModule,
-    MatStepperModule,
-
+    MatStepperModule
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],
   entryComponents: [AccountInfoComponent],
-  providers: [DatePipe,MatDialogConfig],
-  bootstrap: [AppComponent],
+  providers: [DatePipe, MatDialogConfig],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

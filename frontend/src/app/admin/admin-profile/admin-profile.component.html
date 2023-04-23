@@ -1,30 +1,36 @@
 <form [formGroup]="profileForm">
   <div class="admin-profile">
-    <div class="picture" [ngClass]="{ shrink: toggleAccountInfo() }" [ngStyle]="{ width: toggleAccountInfo() ? '33%' : '60%' }">
+    <div class="picture" [ngClass]="{ shrink: toggleAccountInfo() }" >
       <div class="container">
-        <div class="status">{{ user.status }}</div>
+        <div class="status">{{ user ? user.status : '' }}</div>
         <div class="img">
           <img class="round" [src]="imageUrl" alt="My Image" />
+          <div class="edit-img" matRipple (click)="editImg()">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </div>
         </div>
       </div>
       <div class="info-container">
-        <div class="fname">{{ user.fname }} {{ user.mname }} {{ user.lname }} {{ user.suffix }}</div>
+        <div class="fname">{{ user?.fname }} {{ user?.mname }} {{ user?.lname }} {{ user?.suffix }}</div>
         <div class="email">
-          {{ user.email }}
+          {{ user?.email }}
         </div>
         <div class="gender">
           Gender:&nbsp;
-          <ng-container *ngIf="user.gender === 'male'">
+          <ng-container *ngIf="user?.gender === 'male'">
             <i class="fa-solid fa-mars" style="color: rgb(5, 205, 255)"></i>
           </ng-container>
-          <ng-container *ngIf="user.gender === 'female'">
+          <ng-container *ngIf="user?.gender === 'female'">
             <i class="fa-solid fa-venus" style="color: rgb(247, 142, 255); font-weight: bolder"></i>
           </ng-container>
         </div>
-        <div class="age">Age: {{ getAge(user.bday) }}</div>
-        <div class="mobile"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp;&nbsp;&nbsp;{{ user.mobile_no }}</div>
+        <div *ngIf="user">
+          <div class="age">Age: {{ getAge(user.bday) }}</div>
+        </div>
 
-        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user.address }}</div>
+        <div class="mobile"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp;&nbsp;&nbsp;{{ user?.mobile_no }}</div>
+
+        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user?.address }}</div>
         <div class="edit-label">Edit Mode</div>
         <div class="edit-toggle">
           <input type="checkbox" id="switch-toggle" class="switch" (change)="toggleAccountInfo()" />
@@ -33,13 +39,14 @@
         </div>
       </div>
     </div>
-    <div class="account-info" [ngClass]="{ hidden: toggleAccountInfo() }">
+    <div class="account-info" *ngIf="profileForm" [ngClass]="{ hidden: toggleAccountInfo() }">
       <div class="title">ACCOUNT INFORMATION</div>
       <hr />
       <div class="wrapper">
         <div class="form-field fname">
           <label for="">First Name</label>
           <input type="text" formControlName="fname" />
+          <mat-error *ngIf="profileForm.get('fname')?.invalid && (profileForm.get('fname')?.touched || submitted)"> province is required. </mat-error>
         </div>
         <div class="form-field mname">
           <label for="">M.I.</label>
@@ -48,6 +55,7 @@
         <div class="form-field lname">
           <label for="">Last Name</label>
           <input type="text" formControlName="lname" />
+          <mat-error *ngIf="profileForm.get('lname')?.invalid && (profileForm.get('lname')?.touched || submitted)"> province is required. </mat-error>
         </div>
         <div class="form-field suffix">
           <label for="">Suffix</label>
@@ -58,20 +66,28 @@
         <div class="form-field barangay">
           <label for="">Barangay</label>
           <input type="text" formControlName="barangay" />
+          <mat-error *ngIf="profileForm.get('barangay')?.invalid && (profileForm.get('barangay')?.touched || submitted)">
+            province is required.
+          </mat-error>
         </div>
         <div class="form-field city">
           <label for="">City/Municipality</label>
           <input type="text" formControlName="city" />
+          <mat-error *ngIf="profileForm.get('city')?.invalid && (profileForm.get('city')?.touched || submitted)"> province is required. </mat-error>
         </div>
         <div class="form-field province">
           <label for="">Province</label>
           <input type="text" formControlName="province" />
+          <mat-error *ngIf="profileForm.get('province')?.invalid && (profileForm.get('province')?.touched || submitted)">
+            province is required.
+          </mat-error>
         </div>
       </div>
       <div class="wrapper">
         <div class="form-field barangay">
           <label for="">Birthday</label>
           <input type="date" formControlName="bday" />
+          <mat-error *ngIf="profileForm.get('bday')?.invalid && (profileForm.get('bday')?.touched || submitted)"> province is required. </mat-error>
         </div>
         <div class="form-field city">
           <label for="">Gender</label>
@@ -80,25 +96,28 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
+          <mat-error *ngIf="profileForm.get('gender')?.invalid && (profileForm.get('gender')?.touched || submitted)">
+            province is required.
+          </mat-error>
         </div>
         <div class="form-field province">
           <label for="">Mobile No.</label>
           <input type="text" formControlName="mobile_no" />
-        </div>
-      </div>
-      <div class="wrapper">
-        <div class="form-field email">
-          <label for="">Email</label>
-          <input type="text" formControlName="email" />
+          <mat-error *ngIf="profileForm.get('mobile_no')?.invalid && (profileForm.get('mobile_no')?.touched || submitted)">
+            province is required.
+          </mat-error>
         </div>
       </div>
       <div class="wrapper">
         <div class="form-field password">
-          <button>Change Password</button>
+          <button matRipple (click)="changeEmail()">Change Email</button>
+        </div>
+        <div class="form-field password">
+          <button matRipple (click)="changePassword()">Change Password</button>
         </div>
       </div>
       <div class="save">
-        <button>Save Changes</button>
+        <button type="submit" (click)="onSubmit()">Save Changes</button>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-*:not(.fa-solid):not(.fa-regular) {
+*:not(.fa-solid):not(.fa-regular):not(.mat-error) {
   font-family: 'Assistant', sans-serif;
   color: #51354b;
 }
@@ -136,6 +136,9 @@ select {
 
 .form-field.password {
   width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-field.email {
@@ -143,7 +146,8 @@ select {
 }
 
 .form-field button {
-  border: none;
+  border: 3px solid #ff5a2f;
+  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
   width: 100%;
@@ -162,7 +166,7 @@ select {
   background-color: #ff5a2f;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
   min-width: 100px;
-  color: #ffffff;
+  color: #ffffff !important;
   outline: none;
   border: none;
   height: 50px;
@@ -347,30 +351,24 @@ input:checked + .switch-label:after {
   color: #a8a5b6 !important;
 }
 
-/* .admin-profile:hover .picture {
-  width: 33%;
-  transition: all 0.5s ease;
-}
-
-.admin-profile:hover .account-info {
-  transform: translateX(0%);
-  transition: all 0.5s ease;
-} */
-
-/* .admin-profile .account-info ~ .picture {
-  width: 33%;
-} */
-
-/* .admin-profile input[type='checkbox']:checked ~ .account-info {
-  display: block;
-} */
-/* // centering */
-/* body {
+.edit-img {
+  border: 3px solid #ff5a2f;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  /* aspect-ratio: 1/1; */
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-} */
+  background: #fff;
+  color: #ff5a2f !important;
+  font-size: 17px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  cursor: pointer;
+}
 
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
@@ -380,6 +378,28 @@ input:checked + .switch-label:after {
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  .admin-profile .picture.shrink {
+    width: 45%;
+  }
+
+  /* .admin-profile .account-info.hidden + .picture.shrink {
+    transform: translateX(-33%);
+  } */
+
+  .admin-profile .account-info {
+    width: 50%;
+  }
+
+  .form-field {
+    width: 100% !important;
+  }
+  .save {
+    position: relative !important;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 /* Phone screens */

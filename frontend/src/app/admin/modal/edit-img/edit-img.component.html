@@ -1,0 +1,26 @@
+<div mat-dialog-content class="profile-pic">
+  <div class="title">Change Profile Picture</div>
+  <form [formGroup]="changePicForm" (ngSubmit)="onSubmit()">
+    <div class="upload-wrapper">
+      <label for="profile-img" class="img-upload" *ngIf="!profile_pic">
+        <span><i class="fa-solid fa-arrow-up-from-bracket"></i>Upload Image</span>
+      </label>
+      <input type="file" id="profile-img" formControlName="profile_pic" (change)="onImgFileSelected($event, 'moa_file')" style="display: none" />
+      <div class="img-container" *ngIf="profile_pic">
+        <img src="" id="preview-img" alt="" />
+        <div class="file-info" *ngIf="profile_pic">
+          <div #imgFileName></div>
+        </div>
+        <div class="btn-remove" *ngIf="profile_pic" (click)="removeImg()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions>
+  <div class="footer">
+    <button (click)="closeDialog()">Cancel</button>
+    <button class="submit" type="submit" (click)="onSubmit()">Submit</button>
+  </div>
+</mat-dialog-actions>

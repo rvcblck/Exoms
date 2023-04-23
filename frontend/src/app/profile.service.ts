@@ -37,4 +37,70 @@ export class ProfileService {
       })
     );
   }
+
+  updateProfile(user: any) {
+    const headers = this.getHeaders();
+    return this.http.post(`${this.apiUrl}/updateProfile`, user, { headers }).pipe(
+      tap((response) => {
+        console.log('Profle Updated Successfuly');
+      }),
+      catchError((errorResponse) => {
+        return throwError(errorResponse);
+        // if (errorResponse.status === 401 && errorResponse.error.error === 'Email is already registered') {
+        //   return throwError('Email is already registered');
+        // }
+        // return throwError('Something went wrong, please try again later.');
+      })
+    );
+  }
+
+  isEmailAvailable(email: string) {
+    const headers = this.getHeaders();
+
+    return this.http.get<any>(`${this.apiUrl}/isEmailAvailable/${email}`, { headers }).pipe(
+      tap((response: any) => {
+        // console.log('Profile info retrieved successfully:');
+      }),
+      catchError((error) => {
+        console.error('Error retrieving email info:', error);
+        throw error;
+      })
+    );
+  }
+
+  changeEmail(emailData: any) {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/changeEmail`, emailData, { headers }).pipe(
+      tap((response) => {
+        console.log(response);
+      }),
+      catchError((errorResponse) => {
+        return throwError(errorResponse);
+      })
+    );
+  }
+
+  changePass(passData: any) {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/changePass`, passData, { headers }).pipe(
+      tap((response) => {
+        console.log(response);
+      }),
+      catchError((errorResponse) => {
+        return throwError(errorResponse);
+      })
+    );
+  }
+
+  updateProfilePic(profile_pic: any) {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/changeProfilePic`, profile_pic, { headers }).pipe(
+      tap((response) => {
+        console.log(response);
+      }),
+      catchError((errorResponse) => {
+        return throwError(errorResponse);
+      })
+    );
+  }
 }

@@ -75,6 +75,19 @@ Route::post('/update-programs', [ProgramController::class, 'updateProgram']);
     Route::post('/update-partner', [PartnerController::class, 'updatePartner']);
     Route::get('/accounts', [AccountController::class, 'index']);
 Route::get('/profileInfo/{id}', [ProfileController::class, 'index']);
+Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
+Route::get('/isEmailAvailable/{email}', [ProfileController::class, 'isEmailAvailable']);
+Route::post('/changeEmail', [ProfileController::class, 'changeEmail']);
+Route::post('/changePass', [ProfileController::class, 'changePass']);
+Route::post('/changeProfilePic', [ProfileController::class, 'changeProfilePic']);
+
+Route::get('/profile-image/{id}', [ProfileController::class, 'profileImage']);
+
+
+
+
+
+
 Route::get('/userPrograms/{id}', [ProgramController::class, 'userProgram']);
 Route::get('/autoComplete',[ProgramController::class, 'AutoComplete']);
 

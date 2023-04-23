@@ -1,0 +1,44 @@
+* {
+  font-family: 'Assistant', sans-serif;
+}
+
+.footer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.footer button:first-child {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #51354b;
+  width: 30%;
+  max-width: 200px;
+}
+
+.footer button:nth-child(2) {
+  background-color: #ff5a2f;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #ffffff;
+  width: 30%;
+  max-width: 200px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+}

@@ -94,6 +94,8 @@ export class AdminProfileComponent implements OnInit {
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+
+      
     });
 
     const toggleCheckbox = document.getElementById('switch-toggle');

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class EditImgComponent implements OnInit {
   changePicForm: FormGroup = new FormGroup({});
   profile_pic: any;
+  submitted = false;
 
   @ViewChild('imgFileName', { static: false }) imgFileName!: ElementRef;
   @ViewChild('profile_pic') profile_pic_input!: ElementRef<HTMLInputElement>;
@@ -83,6 +84,7 @@ export class EditImgComponent implements OnInit {
     this.imgFileName.nativeElement.innerHTML = '';
   }
   onSubmit(): void {
+    this.submitted = true;
     const formData = new FormData();
     const user_id = localStorage.getItem('user_id');
     if (user_id) {

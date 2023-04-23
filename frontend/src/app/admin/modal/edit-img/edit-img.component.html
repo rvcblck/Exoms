@@ -5,7 +5,12 @@
       <label for="profile-img" class="img-upload" *ngIf="!profile_pic">
         <span><i class="fa-solid fa-arrow-up-from-bracket"></i>Upload Image</span>
       </label>
-      <input type="file" id="profile-img" formControlName="profile_pic" (change)="onImgFileSelected($event, 'moa_file')" style="display: none" />
+      <mat-error *ngIf="!profile_pic && submitted"> MOA is required. </mat-error>
+      <mat-error *ngIf="changePicForm.get('profile_pic')?.errors?.['invalidExtension']">
+        Invalid file type. Allowed extensions: png, jpg, jpeg
+      </mat-error>
+      <mat-error *ngIf="changePicForm.get('profile_pic')?.errors?.['max']"> File size too large. Maximum file size: 5048 KB </mat-error>
+      <input type="file" id="profile-img" formControlName="profile_pic" (change)="onImgFileSelected($event, 'profile_pic')" style="display: none" />
       <div class="img-container" *ngIf="profile_pic">
         <img src="" id="preview-img" alt="" />
         <div class="file-info" *ngIf="profile_pic">

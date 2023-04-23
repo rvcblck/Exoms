@@ -3,28 +3,26 @@
     <div class="cont-left">
       <div class="profile">
         <div class="profilePic">
-
+          <img class="round" [src]="imageUrl" alt="My Image" />
         </div>
         <div class="profile-info">
           <p class="profile-name">{{ data.account.fname }} {{ data.account.mname }} {{ data.account.lname }} {{ data.account.suffix }}</p>
           <p class="profile-id">User ID: {{ data.account.user_id }}</p>
-          <p class="profile-status">{{ data.account.status }}</p>
+          <p class="approve" *ngIf="data.account.status == 'approve'">{{ data.account.status }}</p>
+          <p class="approve" *ngIf="data.account.status == 'approved'">{{ data.account.status }}</p>
+          <p class="rejected" *ngIf="data.account.status == 'rejected'">{{ data.account.status }}</p>
+          <p class="pending" *ngIf="data.account.status == 'pending'">{{ data.account.status }}</p>
+          <p class="rejected" *ngIf="data.account.status == 'disapproved'">{{ data.account.status }}</p>
         </div>
       </div>
       <div class="user-data">
-        <p *ngIf="data.account.email" > <i class="fa-regular fa-envelope"></i> {{ data.account.email }}</p>
-        <p *ngIf="data.account.mobile_no"> <i class="fa-solid fa-phone"></i> {{ data.account.mobile_no }}</p>
-        <p *ngIf="data.account.bday"> <i class="fa-regular fa-calendar"></i> {{ data.account.bday }}</p>
+        <p *ngIf="data.account.email"><i class="fa-regular fa-envelope"></i> {{ data.account.email }}</p>
+        <p *ngIf="data.account.mobile_no"><i class="fa-solid fa-phone"></i> {{ data.account.mobile_no }}</p>
+        <p *ngIf="data.account.bday"><i class="fa-regular fa-calendar"></i> {{ data.account.bday }}</p>
 
-        <p *ngIf="data.account.gender == 'female'">
-          <i class="fa-solid fa-venus"></i>{{ data.account.gender }}
-        </p>
-        <p *ngIf="data.account.gender == 'male'">
-          <i class="fa-solid fa-mars"></i>{{ data.account.gender }}
-        </p>
-        <p *ngIf="data.account.gender == 'other'">
-          <i class="fa-solid fa-genderless"></i>{{ data.account.gender }}
-        </p>
+        <p *ngIf="data.account.gender == 'female'"><i class="fa-solid fa-venus"></i>{{ data.account.gender }}</p>
+        <p *ngIf="data.account.gender == 'male'"><i class="fa-solid fa-mars"></i>{{ data.account.gender }}</p>
+        <p *ngIf="data.account.gender == 'other'"><i class="fa-solid fa-genderless"></i>{{ data.account.gender }}</p>
 
         <p *ngIf="data.account.address"><i class="fa-sharp fa-solid fa-location-dot"></i>{{ data.account.address }}</p>
       </div>
@@ -32,18 +30,89 @@
 
     <div class="cont-right">
       <h2>Extesion Program History</h2>
-      <div class="box">
-        <h3>Programs</h3>
-        <ul>
-          <li *ngFor="let program of data.account.programs">
-            <p>{{ program.title }} <span *ngIf="program.leader">Leader</span></p>
-          </li>
-        </ul>
+      <div class="box" [class.open]="showTableOngoing">
+        <div class="box-header">
+          <div>
+            ONGOING : <span>{{ data.account.ongoing }}</span>
+          </div>
+          <div>
+            <Button class="table-toggle" (click)="showTableOngoing = !showTableOngoing" [class.table-open-ongoing]="showTableOngoing">
+              <i class="fa-solid fa-circle-chevron-down" [class.rotated-ongoing]="showTableOngoing"></i>
+            </Button>
+          </div>
+        </div>
+        <table class="table" [ngClass]="{ 'show-table-ongoing': showTableOngoing }">
+          <thead>
+            <tr>
+              <th>PROGRAMS</th>
+              <th>START DATE</th>
+              <th>END DATE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let program of data.account.programs_ongoing">
+              <td>{{ program.title }}</td>
+              <td>{{ formatDate(program.start_date) }}</td>
+              <td>{{ formatDate(program.end_date) }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="box">
-        <p>Previous Programs: {{ data.account.previous }}</p>
-        <p>Ongoing Programs: {{ data.account.ongoing }}</p>
-        <p>Upcoming Programs: {{ data.account.upcoming }}</p>
+        <div class="box-header">
+          <div>
+            UPCOMING : <span>{{ data.account.upcoming }}</span>
+          </div>
+          <div>
+            <Button class="table-toggle" (click)="showTableUpcoming = !showTableUpcoming" [class.table-open-upcoming]="showTableUpcoming">
+              <i class="fa-solid fa-circle-chevron-down" [class.rotated-upcoming]="showTableUpcoming"></i>
+            </Button>
+          </div>
+        </div>
+        <table class="table" [ngClass]="{ 'show-table-upcoming': showTableUpcoming }">
+          <thead>
+            <tr>
+              <th>PROGRAMS</th>
+              <th>START DATE</th>
+              <th>END DATE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let program of data.account.programs_upcoming">
+              <td>{{ program.title }}</td>
+              <td>{{ formatDate(program.start_date) }}</td>
+              <td>{{ formatDate(program.end_date) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box">
+        <div class="box-header">
+          <div>
+            PREVIOUS : <span>{{ data.account.previous }}</span>
+          </div>
+          <div>
+            <Button class="table-toggle" (click)="showTablePrevious = !showTablePrevious" [class.table-open-previous]="showTablePrevious">
+              <i class="fa-solid fa-circle-chevron-down" [class.rotated-previous]="showTablePrevious"></i>
+            </Button>
+          </div>
+        </div>
+        <table class="table" [ngClass]="{ 'show-table-previous': showTablePrevious }">
+          <thead>
+            <tr>
+              <th>PROGRAMS</th>
+              <th>START DATE</th>
+              <th>END DATE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let program of data.account.programs_previous">
+              <td>{{ program.title }}</td>
+              <td>{{ formatDate(program.start_date) }}</td>
+              <td>{{ formatDate(program.end_date) }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

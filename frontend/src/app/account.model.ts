@@ -28,14 +28,35 @@ export interface ViewAccount {
   mobile_no: string;
   address: string;
   status: string;
+  profile_pic: string;
   previous: number;
   ongoing: number;
   upcoming: number;
-  programs: Program[];
+  programs_previous: ProgramPrevious[];
+  programs_ongoing: ProgramOngoing[];
+  programs_upcoming: ProgramUpcoming[];
 }
 
-export interface Program {
+export interface ProgramPrevious {
   program_id: string;
   title: string;
+  start_date: string;
+  end_date: string;
+  leader: number | null;
+}
+
+export interface ProgramOngoing {
+  program_id: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  leader: number | null;
+}
+
+export interface ProgramUpcoming {
+  program_id: string;
+  title: string;
+  start_date: string;
+  end_date: string;
   leader: number | null;
 }

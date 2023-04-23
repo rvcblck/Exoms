@@ -4,6 +4,8 @@ import { ViewPartner } from 'src/app/partner.model';
 import { PartnerService } from 'src/app/partner.service';
 import { CreatePartnerComponent } from '../create-partner/create-partner.component';
 import { ImageService } from 'src/app/image.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 
 @Component({
   selector: 'app-view-partner',
@@ -14,18 +16,26 @@ export class ViewPartnerComponent implements OnInit {
   @ViewChild('moaFileName', { static: false }) moaFileName!: ElementRef;
   @ViewChild('moaFileSize') moaFileSize!: ElementRef;
 
+  extendForm: FormGroup = new FormGroup({});
+  submitted = false;
+
   constructor(
     public dialogRef: MatDialogRef<ViewPartnerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner },
     private partnerService: PartnerService,
     private dialog: MatDialog,
-    private imageService: ImageService
-  ) {}
+    private imageService: ImageService,
+    private formBuilder: FormBuilder
+  ) {
+    this.extendForm = this.formBuilder.group({
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     console.log(this.data.partner);
     this.viewFiles();
-    
   }
 
   formatDate(dateString: string): string {
@@ -87,5 +97,51 @@ export class ViewPartnerComponent implements OnInit {
         }
       }
     }, 0);
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.extendForm.invalid) {
+      return;
+    }
+
+    this.openConfirmationDialog();
+  }
+
+  openConfirmationDialog(): void {
+    const message = 'Are you sure you want to submit the form?';
+    const header = 'Extend Contract';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The user confirmed the action, submit the form
+        this.submitForm();
+      }
+    });
+  }
+  submitForm(): void {
+    const formattedData = {
+      partner_id: this.data.partner.partner_id,
+      start_date: this.extendForm.get('start_date')?.value,
+      end_date: this.extendForm.get('end_date')?.value
+    };
+
+    this.partnerService.extend(formattedData).subscribe(
+      (program) => {
+        console.log('Program created successfully:', program);
+        this.dialogRef.close();
+      },
+      (error) => {
+        console.error('Error creating program:', error);
+        // TODO: Handle error
+      }
+    );
   }
 }

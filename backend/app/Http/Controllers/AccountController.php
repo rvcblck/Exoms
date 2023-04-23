@@ -40,15 +40,8 @@ class AccountController extends Controller
                 }else{
                     $ongoing++;
                 }
-                // dd('tae');
             }
 
-
-            // foreach($programs as $program){
-
-
-
-            // }
 
             $userData [] = [
                 'user_id' => $user->user_id,
@@ -56,14 +49,9 @@ class AccountController extends Controller
                 'mname' => $user->mname,
                 'lname' => $user->lname,
                 'suffix' => $user->suffix,
-                // 'gender' => $data->gender,
-                // 'bday' => $data->bday,
                 'email' => $user->email,
                 'mobile_no' => $user->mobile_no,
-                // 'address' => $data->address,
                 'status' => $user->status,
-                // 'archived' => $data->archived,
-                // 'programs' => [$program],
                 'previous' => $previous,
                 'ongoing' => $ongoing,
                 'upcoming' => $upcoming,
@@ -103,59 +91,13 @@ class AccountController extends Controller
 
         ]);
 
-
-
-        // PasswordChange::create([
-        //     'password_id' => $password_id,
-        //     'user_id' => $user_id,
-        //     'password' => bcrypt($request->password),
-        //     'change_date' => now('Asia/Manila')
-        // ]);
-
-
         return response()->json([
             'success' => true,
             'message' => 'Account Created',
         ]);
     }
 
-    // public function show($id)
-    // {
-    //     $account = User::find($id);
-    //     if (!$account) {
-    //         return response()->json(['error' => 'Account not found'], 404);
-    //     }
-    //     return response()->json($account);
-    // }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $account = User::find($id);
-    //     if (!$account) {
-    //         return response()->json(['error' => 'Account not found'], 404);
-    //     }
-    //     $account->name = $request->input('name');
-    //     $account->email = $request->input('email');
-    //     $account->mobile = $request->input('mobile');
-    //     $account->status = $request->input('status');
-    //     $account->previous = $request->input('previous');
-    //     $account->ongoing = $request->input('ongoing');
-    //     $account->upcoming = $request->input('upcoming');
-    //     $account->save();
-    //     return response()->json(['message' => 'Account updated successfully']);
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $account = User::find($id);
-    //     if (!$account) {
-    //         return response()->json(['error' => 'Account not found'], 404);
-    //     }
-    //     $account->delete();
-    //     return response()->json(['message' => 'Account deleted successfully']);
-    // }
-
-    //AccountController.php
     public function approveAccount(Request $request){
         $accountIds = $request->input('accountIds');
         foreach ($accountIds as $accountId) {
@@ -187,55 +129,60 @@ class AccountController extends Controller
 
     public function accountInfo($id){
 
-        $now = Carbon::now('Asia/Manila');
+        $now = Carbon::now('Asia/Manila')->toDateTimeString();
         $userData = [];
 
         $user = User::with('programs')->where('user_id',$id)->first();
 
 
-            $programData = [];
-            $programs = $user->programs()->get();
-            $ongoing = 0;
-            $upcoming = 0;
-            $previous = 0;
+            $programDataPrevious = [];
+            $programDataOngoing = [];
+            $programDataUpcoming = [];
 
-
-            // foreach($programs as $program){
-            //     $leader = [];
-            //     $programLeader = $program->members()->wherePivot('leader',true)->get();
-            //     if($programLeader){
-            //         $leader = [
-            //             'program_id' => $programLeader->program_id,
-            //         ];
-
-            //     }
-            // }
-
-            // dd($programLeader);
-
-            foreach($programs as $program){
-
-                $programData [] = [
+            $ongoing = $user->programs()
+                ->where('end_date', '<', $now)
+                ->where('start_date', '>', $now)
+                ->count();
+            // dd($ongoing);
+            $upcoming = $user->programs()->where('start_date', '>' ,$now)->count();
+            $previous = $user->programs()->where('end_date', '<' ,$now)->count();
+            // dd($ongoing,$upcoming,$previous);
+            $programsPrevious = $user->programs()->where('end_date','<',$now)->get();
+            foreach($programsPrevious as $program){
+                $programDataPrevious [] = [
                     'program_id' => $program->program_id,
                     'title' => $program->title,
-                    // 'start_date' => $program->start_date,
-                    // 'end_date' => $program->end_date,
+                    'start_date' => $program->start_date,
+                    'end_date' => $program->end_date,
                     'leader' => $program->pivot->leader,
 
                 ];
+            }
 
 
+            $programsOngoing = $user->programs()->where('end_date', '<' , $now)->where('start_date', '>', $now)->get();
+            foreach($programsOngoing as $program){
+                $programDataOngoing [] = [
+                    'program_id' => $program->program_id,
+                    'title' => $program->title,
+                    'start_date' => $program->start_date,
+                    'end_date' => $program->end_date,
+                    'leader' => $program->pivot->leader,
 
-                $endDate = Carbon::parse($program->end_date);
-                $startDate = Carbon::parse($program->start_date);
-                if($endDate->lt($now)){
-                    $previous++;
-                }else if($startDate->gt($now)){
-                    $upcoming++;
-                }else{
-                    $ongoing++;
-                }
-                // dd('tae');
+                ];
+            }
+
+
+            $programsUpcomming = $user->programs()->where('start_date','>', $now)->get();
+            foreach($programsUpcomming as $program){
+                $programDataUpcoming [] = [
+                    'program_id' => $program->program_id,
+                    'title' => $program->title,
+                    'start_date' => $program->start_date,
+                    'end_date' => $program->end_date,
+                    'leader' => $program->pivot->leader,
+
+                ];
             }
 
 
@@ -243,7 +190,30 @@ class AccountController extends Controller
 
 
 
+            //     $programData [] = [
+            //         'program_id' => $program->program_id,
+            //         'title' => $program->title,
+            //         // 'start_date' => $program->start_date,
+            //         // 'end_date' => $program->end_date,
+            //         'leader' => $program->pivot->leader,
+
+            //     ];
+
+
+
+            //     $endDate = Carbon::parse($program->end_date);
+            //     $startDate = Carbon::parse($program->start_date);
+            //     if($endDate->lt($now)){
+            //         $previous++;
+            //     }else if($startDate->gt($now)){
+            //         $upcoming++;
+            //     }else{
+            //         $ongoing++;
+            //     }
+            //     // dd('tae');
             // }
+
+
 
             $userData = [
                 'user_id' => $user->user_id,
@@ -257,11 +227,14 @@ class AccountController extends Controller
                 'mobile_no' => $user->mobile_no,
                 'address' => $user->address,
                 'status' => $user->status,
+                'profile_pic' => $user->profile_pic,
                 'previous' => $previous,
                 'ongoing' => $ongoing,
                 'upcoming' => $upcoming,
-                'programs' => $programData,
-                // 'leader' => $leader,
+                'programs_previous' => $programDataPrevious,
+                'programs_ongoing' => $programDataOngoing,
+                'programs_upcoming' => $programDataUpcoming,
+
             ];
 
 
@@ -274,7 +247,7 @@ class AccountController extends Controller
 
     }
 
-    
+
 
     public function generateUserId() {
         $user_id = 'USER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);

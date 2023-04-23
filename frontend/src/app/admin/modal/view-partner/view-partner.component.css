@@ -1,4 +1,4 @@
-*:not(.fa-solid):not(.fa-regular) {
+*:not(.fa-solid):not(.fa-regular):not(.mat-error) {
   font-family: 'Assistant', sans-serif;
   color: #51354b;
 }

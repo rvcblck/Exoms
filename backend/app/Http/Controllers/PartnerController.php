@@ -294,6 +294,42 @@ class PartnerController extends Controller
         ]);
     }
 
+    public function extendPartner(Request $request){
+        $rules = [
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'partner_id' => 'required',
+        ];
+
+        $messages = [
+            'partner_id.required' => 'partner ID date is required.',
+            'start_date.required' => 'Start date is required.',
+            'end_date.required' => 'End date is required.',
+
+
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+
+        Contract::create([
+            'contract_id' => $this->generateContractId(),
+            'partner_id' => $request->partner_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Contract Extended'
+        ]);
+    }
+
 
 
 

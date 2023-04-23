@@ -43,11 +43,23 @@
     <hr />
     <div class="extend">
       <label for="">Extend Contract</label>
-      <div class="date">
-        <div class="start-date"><input type="date" /></div>
-        <div class="end-date"><input type="date" /></div>
-        <div class="date-btn"><button>Extend</button></div>
-      </div>
+      <form [formGroup]="extendForm">
+        <div class="date">
+          <div class="start-date">
+            <input type="date" formControlName="start_date" />
+            <mat-error *ngIf="extendForm.get('start_date')?.invalid && (extendForm.get('start_date')?.touched || submitted)">
+              start date is required.
+            </mat-error>
+          </div>
+          <div class="end-date">
+            <input type="date" formControlName="end_date" />
+            <mat-error *ngIf="extendForm.get('start_date')?.invalid && (extendForm.get('start_date')?.touched || submitted)">
+              start date is required.
+            </mat-error>
+          </div>
+          <div class="date-btn"><button (click)="onSubmit()">Extend</button></div>
+        </div>
+      </form>
     </div>
     <hr />
     <div class="upload-wrapper" *ngIf="data.partner.moa_file">

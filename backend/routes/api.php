@@ -72,6 +72,7 @@ Route::post('/update-programs', [ProgramController::class, 'updateProgram']);
     Route::get('/partnerInfo/{id}', [PartnerController::class, 'partnerInfo']);
     Route::get('/partners', [PartnerController::class, 'index']);
     Route::post('/create-partner', [PartnerController::class, 'createPartner']);
+    Route::post('/extend-partner', [PartnerController::class, 'extendPartner']);
     Route::post('/update-partner', [PartnerController::class, 'updatePartner']);
     Route::get('/accounts', [AccountController::class, 'index']);
 Route::get('/profileInfo/{id}', [ProfileController::class, 'index']);

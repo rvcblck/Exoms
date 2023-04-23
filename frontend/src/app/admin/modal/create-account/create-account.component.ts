@@ -1,9 +1,10 @@
-import { Component, OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AccountService } from 'src/app/account.service';
+import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 
 @Component({
   selector: 'app-create-account',
@@ -11,18 +12,18 @@ import { AccountService } from 'src/app/account.service';
   styleUrls: ['./create-account.component.css']
 })
 export class CreateAccountComponent implements OnInit {
-
-
   constructor(
-    private fb: FormBuilder, private accountService: AccountService,
+    private fb: FormBuilder,
+    private accountService: AccountService,
     public dialogRef: MatDialogRef<CreateAccountComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   registerForm: FormGroup = new FormGroup({});
   errors: any = [];
   submitted = false;
-
+  emailError = '';
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -34,10 +35,9 @@ export class CreateAccountComponent implements OnInit {
       bday: ['', [Validators.required]],
       mobile_no: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      // password: ['', [Validators.required, Validators.minLength(6)]],
-      // password_confirmation: ['', Validators.required],
+      barangay: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      province: ['', [Validators.required]],
+      province: ['', [Validators.required]]
     });
   }
 
@@ -46,8 +46,35 @@ export class CreateAccountComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    console.log(this.registerForm.value);
 
+    this.openConfirmationDialog();
+  }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  openConfirmationDialog(): void {
+    const message = 'Are you sure you want to submit the form?';
+    const header = 'Creating new partner';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The user confirmed the action, submit the form
+        this.submitForm();
+      }
+    });
+  }
+
+  submitForm() {
     const formattedData = {
       fname: this.registerForm.get('fname')?.value,
       lname: this.registerForm.get('lname')?.value,
@@ -57,19 +84,20 @@ export class CreateAccountComponent implements OnInit {
       bday: this.registerForm.get('bday')?.value,
       mobile_no: this.registerForm.get('mobile_no')?.value,
       email: this.registerForm.get('email')?.value,
-      // password: this.registerForm.get('password')?.value,
-      address : this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
-
+      address:
+        this.registerForm.get('barangay')?.value + ', ' + this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
     };
 
     this.accountService.createAccount(formattedData).subscribe(
       (response) => {
         console.log(response);
         this.dialogRef.close();
-        this.errors = [];
       },
       (error) => {
-        this.errors.push(error);
+        console.log(error);
+        if (error.error.error === 'Email is already registered') {
+          this.emailError = 'Email is already registered';
+        }
       }
     );
   }
@@ -101,5 +129,4 @@ export class CreateAccountComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close();
   }
-
 }

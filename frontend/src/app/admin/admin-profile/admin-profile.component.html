@@ -1,6 +1,6 @@
 <form [formGroup]="profileForm">
   <div class="admin-profile">
-    <div class="picture" [ngClass]="{ shrink: toggleAccountInfo() }" >
+    <div class="picture" [ngClass]="{ shrink: toggleAccountInfo() }">
       <div class="container">
         <div class="status">{{ user ? user.status : '' }}</div>
         <div class="img">
@@ -46,7 +46,9 @@
         <div class="form-field fname">
           <label for="">First Name</label>
           <input type="text" formControlName="fname" />
-          <mat-error *ngIf="profileForm.get('fname')?.invalid && (profileForm.get('fname')?.touched || submitted)"> province is required. </mat-error>
+          <mat-error *ngIf="profileForm.get('fname')?.invalid && (profileForm.get('fname')?.touched || submitted)">
+            first name is required.
+          </mat-error>
         </div>
         <div class="form-field mname">
           <label for="">M.I.</label>
@@ -55,7 +57,9 @@
         <div class="form-field lname">
           <label for="">Last Name</label>
           <input type="text" formControlName="lname" />
-          <mat-error *ngIf="profileForm.get('lname')?.invalid && (profileForm.get('lname')?.touched || submitted)"> province is required. </mat-error>
+          <mat-error *ngIf="profileForm.get('lname')?.invalid && (profileForm.get('lname')?.touched || submitted)">
+            last name is required.
+          </mat-error>
         </div>
         <div class="form-field suffix">
           <label for="">Suffix</label>
@@ -67,13 +71,13 @@
           <label for="">Barangay</label>
           <input type="text" formControlName="barangay" />
           <mat-error *ngIf="profileForm.get('barangay')?.invalid && (profileForm.get('barangay')?.touched || submitted)">
-            province is required.
+            barangay is required.
           </mat-error>
         </div>
         <div class="form-field city">
           <label for="">City/Municipality</label>
           <input type="text" formControlName="city" />
-          <mat-error *ngIf="profileForm.get('city')?.invalid && (profileForm.get('city')?.touched || submitted)"> province is required. </mat-error>
+          <mat-error *ngIf="profileForm.get('city')?.invalid && (profileForm.get('city')?.touched || submitted)"> city is required. </mat-error>
         </div>
         <div class="form-field province">
           <label for="">Province</label>
@@ -87,7 +91,7 @@
         <div class="form-field barangay">
           <label for="">Birthday</label>
           <input type="date" formControlName="bday" />
-          <mat-error *ngIf="profileForm.get('bday')?.invalid && (profileForm.get('bday')?.touched || submitted)"> province is required. </mat-error>
+          <mat-error *ngIf="profileForm.get('bday')?.invalid && (profileForm.get('bday')?.touched || submitted)"> bday is required. </mat-error>
         </div>
         <div class="form-field city">
           <label for="">Gender</label>
@@ -96,15 +100,13 @@
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-          <mat-error *ngIf="profileForm.get('gender')?.invalid && (profileForm.get('gender')?.touched || submitted)">
-            province is required.
-          </mat-error>
+          <mat-error *ngIf="profileForm.get('gender')?.invalid && (profileForm.get('gender')?.touched || submitted)"> gender is required. </mat-error>
         </div>
         <div class="form-field province">
           <label for="">Mobile No.</label>
           <input type="text" formControlName="mobile_no" />
           <mat-error *ngIf="profileForm.get('mobile_no')?.invalid && (profileForm.get('mobile_no')?.touched || submitted)">
-            province is required.
+            mobile number is required.
           </mat-error>
         </div>
       </div>

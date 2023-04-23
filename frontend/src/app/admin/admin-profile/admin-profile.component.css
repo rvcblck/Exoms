@@ -3,6 +3,25 @@
   color: #51354b;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
 .admin-profile {
   margin: 0;
   padding: 0;
@@ -399,6 +418,12 @@ input:checked + .switch-label:after {
     right: 0;
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 50px;
+  }
+
+
+  .admin-profile .account-info.hidden {
+    height: max-content;
   }
 }
 
@@ -414,7 +439,7 @@ input:checked + .switch-label:after {
   }
   .admin-profile .account-info {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
   }
 
   .admin-profile .account-info.hidden {
@@ -429,6 +454,10 @@ input:checked + .switch-label:after {
 
   .form-field {
     width: 100% !important;
+  }
+
+  .picture .container {
+    width: 100%;
   }
 
   .save {

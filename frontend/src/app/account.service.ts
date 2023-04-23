@@ -52,10 +52,7 @@ export class AccountService {
         return response.message;
       }),
       catchError((errorResponse) => {
-        if (errorResponse.status === 401 && errorResponse.error.error === 'Email is already registered') {
-          return throwError('Email is already registered');
-        }
-        return throwError('Something went wrong, please try again later.');
+        return throwError(errorResponse);
       })
     );
   }

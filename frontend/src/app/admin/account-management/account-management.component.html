@@ -1,40 +1,40 @@
-<div class="container">
-  <div class="filter-cont">
-    <div class="search" [class.show-btns]="this.selection.hasValue()">
-      <span><i class="fa-solid fa-magnifying-glass"></i></span><input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
-    </div>
-    <div class="btn-respond" *ngIf="selection.hasValue()">
-      <button class="reject-btn" (click)="disapproveUser()">Reject</button>
+<div class="account-management">
+  <div class="filter-container">
+    <div class="filter-cont">
+      <div class="search" [class.show-btns]="this.selection.hasValue()">
+        <span><i class="fa-solid fa-magnifying-glass"></i></span><input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
+      </div>
+      <div class="btn-respond" *ngIf="selection.hasValue()">
+        <button class="reject-btn" (click)="disapproveUser()">Reject</button>
 
-      <button class="approve-btn" (click)="approveUser()">Approve</button>
-    </div>
-    <div class="btn-add-acc">
-      <button (click)="createAccount()" class="btn-add">Add Account</button>
-    </div>
+        <button class="approve-btn" (click)="approveUser()">Approve</button>
+      </div>
+      <div class="btn-add-acc">
+        <button (click)="createAccount()" class="btn-add">Add Account</button>
+      </div>
 
-    <!-- <div class="buttons">
+      <!-- <div class="buttons">
 
 
-    </div> -->
-    <div class="multiple-message">
-      <p class="counter" *ngIf="selection.selected.length > 0">
-        You are currently selecting {{ selection.selected.length }} accounts.
-        <span (click)="selectAllAccount()"
-          ><Button class="link-button">{{ selection.selected.length === dataSource.filteredData.length ? 'Unselect' : 'Select all' }}</Button>
-          {{ dataSource.filteredData.length }} accounts?</span
-        >
-      </p>
+      </div> -->
+      <div class="multiple-message">
+        <p class="counter" *ngIf="selection.selected.length > 0">
+          You are currently selecting {{ selection.selected.length }} accounts.
+          <span (click)="selectAllAccount()"
+            ><Button class="link-button">{{ selection.selected.length === dataSource.filteredData.length ? 'Unselect' : 'Select all' }}</Button>
+            {{ dataSource.filteredData.length }} accounts?</span
+          >
+        </p>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container">
-  <div class="table-wrapper">
-    <table mat-table [dataSource]="dataSource" matSort #sort="matSort">
+  <div class="tablewrapper">
+    <table mat-table [dataSource]="dataSource" matSort #sort="matSort" class="mat-elevation-z8">
       <!-- Checkbox Column -->
 
       <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">
+        <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox
             (change)="$event ? toggleAllRows() : null"
             [checked]="selection.hasValue() && isAllSelected()"
@@ -55,22 +55,22 @@
       </ng-container>
 
       <ng-container matColumnDef="fname">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let element">{{ element.fname.charAt(0) }}. {{ element.lname }}</td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">Email</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
         <td mat-cell *matCellDef="let element">{{ element.email }}</td>
       </ng-container>
 
       <ng-container matColumnDef="mobile_no">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">Mobile No.</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No.</th>
         <td mat-cell *matCellDef="let element">{{ element.mobile_no }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2" class="text-center">Status</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Status</th>
         <td mat-cell *matCellDef="let element">
           <p class="approve" *ngIf="element.status == 'approve'">{{ element.status }}</p>
           <p class="approve" *ngIf="element.status == 'approved'">{{ element.status }}</p>
@@ -81,42 +81,44 @@
       </ng-container>
 
       <ng-container matColumnDef="previous">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2" class="text-center">Previous</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Previous</th>
         <td mat-cell *matCellDef="let element">
           {{ element.previous }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="ongoing">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">Ongoing</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ongoing</th>
         <td mat-cell *matCellDef="let element">
           {{ element.ongoing }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="upcoming">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">Upcoming</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Upcoming</th>
         <td mat-cell *matCellDef="let element">
           {{ element.upcoming }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="text-center">Action</th>
+        <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
         <td mat-cell *matCellDef="let element" class="text-center">
           <!-- <button mat-icon-button (click)="viewAccount(element.user_id); $event.stopPropagation()">
-            <mat-icon>visibility</mat-icon>
-          </button> -->
+              <mat-icon>visibility</mat-icon>
+            </button> -->
           <button matRipple class="view-button" (click)="viewAccount(element.user_id); $event.stopPropagation()">VIEW</button>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="['select', 'fname', 'email', 'mobile_no', 'status', 'previous', 'ongoing', 'upcoming', 'action']"></tr>
+      <tr mat-header-row *matHeaderRowDef="dataToCall; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: dataToCall" (click)="selection.toggle(row)"></tr>
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
       </tr>
     </table>
+  </div>
+  <div class="paginator-wrapper">
     <mat-paginator [pageSizeOptions]="[10, 20, 30]" aria-label="Select page of users"></mat-paginator>
   </div>
 </div>

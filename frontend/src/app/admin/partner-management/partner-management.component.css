@@ -21,7 +21,6 @@
   background-color: #f1f1f1;
   border-radius: 10px;
 }
-
 .partner-management {
   /* position: relative; */
   margin: 0;
@@ -29,101 +28,6 @@
   /* width: 100%;
   height: 100%; */
   overflow: hidden;
-}
-
-table {
-  width: 100%;
-}
-
-/* .mat-header-cell,
-.mat-cell {
-  padding: 8px;
-  color: #a8a5b6;
-  font-weight: 400;
-} */
-.mat-row.mat-row-selected {
-  background-color: #e0e0e0;
-}
-
-.mat-checkbox-inner-container {
-  background-color: #f1f1f1;
-}
-
-.mat-checkbox {
-  margin: 0 8px;
-}
-
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-/* td, th {
-  width: 25%;
-} */
-
-::ng-deep .mat-header-cell {
-  font-weight: 700 !important;
-  color: #a8a5b6;
-  font-size: 15px;
-}
-
-::ng-deep .mat-sort-header-content {
-  font-weight: 700 !important;
-  color: #a8a5b6;
-  font-size: 15px;
-}
-
-::ng-deep .mat-cell {
-  color: #51354b;
-  font-size: 15px !important;
-}
-
-table {
-  width: 100%;
-}
-
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-/* td, th {
-  width: 25%;
-} */
-
-.link-button {
-  background-color: transparent;
-  border: none;
-  color: blue;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-/* .mat-column-select {
-  max-width: 25px;
-} */
-
-.mat-sort-header-container {
-  display: flex;
-  justify-content: center;
-}
-
-.tablewrapper {
-  display: flex;
-  flex-direction: column;
-  height: 75vh;
-  overflow-y: auto;
-}
-
-/* .mat-paginator-container {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-} */
-
-.paginator-wrapper {
-  margin-top: auto;
 }
 
 .search {
@@ -176,6 +80,46 @@ table {
   background-color: #8a8a8b1a;
 }
 
+table {
+  width: 100%;
+}
+
+::ng-deep .mat-header-cell {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-sort-header-content {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-cell {
+  color: #51354b;
+  font-size: 15px !important;
+}
+
+table {
+  width: 100%;
+}
+
+.tablewrapper {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  overflow-y: auto;
+}
+
+.mat-cell {
+  padding: 16px 16px; /* Adjust padding as needed */
+}
+
+.paginator-wrapper {
+  margin-top: auto;
+}
+
 .view-button {
   border: none;
   border-radius: 3px;
@@ -184,6 +128,14 @@ table {
   color: #ff5a2f;
   padding: 5px 20px;
   background-color: #ff592f3c;
+}
+
+::ng-deep .cdk-column-company_name {
+  white-space: nowrap;
+}
+
+::ng-deep .cdk-column-contract_dates {
+  white-space: nowrap;
 }
 
 ::ng-deep .mat-sort-header-arrow {

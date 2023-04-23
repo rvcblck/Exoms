@@ -1,5 +1,5 @@
 <mat-dialog-content>
-  <div class="container">
+  <!-- <div class="container">
     <h2>Add Account</h2>
     <hr />
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -92,14 +92,104 @@
         </div>
       </div> -->
 
-      <div class="row justify-content-end  my-3 footer">
+  <!-- <div class="row justify-content-end  my-3 footer">
         <button type="submit" class="btn btn-primary col-3">Register</button>
         <button class="btn btn-primary col-3 mx-2" mat-raised-button (click)="onCancel()">Cancel</button>
       </div>
     </form>
+  </div> -->
+  <div class="add-account">
+    <form [formGroup]="registerForm">
+      <div class="account-info" *ngIf="registerForm">
+        <div class="title">ACCOUNT INFORMATION</div>
+        <hr />
+        <div class="wrapper">
+          <div class="form-field email">
+            <label for="">Email</label>
+            <input type="text" formControlName="email" />
+            <mat-error *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || submitted)">
+              Email is required.
+            </mat-error>
+            <mat-error *ngIf="emailError && submitted">{{ emailError }}</mat-error>
+          </div>
+          <div class="form-field fname">
+            <label for="">First Name</label>
+            <input type="text" formControlName="fname" />
+            <mat-error *ngIf="registerForm.get('fname')?.invalid && (registerForm.get('fname')?.touched || submitted)">
+              first name is required.
+            </mat-error>
+          </div>
+          <div class="form-field mname">
+            <label for="">M.I.</label>
+            <input type="text" formControlName="mname" />
+          </div>
+          <div class="form-field lname">
+            <label for="">Last Name</label>
+            <input type="text" formControlName="lname" />
+            <mat-error *ngIf="registerForm.get('lname')?.invalid && (registerForm.get('lname')?.touched || submitted)">
+              last name is required.
+            </mat-error>
+          </div>
+          <div class="form-field suffix">
+            <label for="">Suffix</label>
+            <input type="text" formControlName="suffix" />
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="form-field barangay">
+            <label for="">Barangay</label>
+            <input type="text" formControlName="barangay" />
+            <mat-error *ngIf="registerForm.get('barangay')?.invalid && (registerForm.get('barangay')?.touched || submitted)">
+              barangay is required.
+            </mat-error>
+          </div>
+          <div class="form-field city">
+            <label for="">City/Municipality</label>
+            <input type="text" formControlName="city" />
+            <mat-error *ngIf="registerForm.get('city')?.invalid && (registerForm.get('city')?.touched || submitted)"> city is required. </mat-error>
+          </div>
+          <div class="form-field province">
+            <label for="">Province</label>
+            <input type="text" formControlName="province" />
+            <mat-error *ngIf="registerForm.get('province')?.invalid && (registerForm.get('province')?.touched || submitted)">
+              province is required.
+            </mat-error>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="form-field barangay">
+            <label for="">Birthday</label>
+            <input type="date" formControlName="bday" />
+            <mat-error *ngIf="registerForm.get('bday')?.invalid && (registerForm.get('bday')?.touched || submitted)">
+              birthday is required.
+            </mat-error>
+          </div>
+          <div class="form-field city">
+            <label for="">Gender</label>
+            <select class="form-select" formControlName="gender" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <mat-error *ngIf="registerForm.get('gender')?.invalid && (registerForm.get('gender')?.touched || submitted)">
+              gender is required.
+            </mat-error>
+          </div>
+          <div class="form-field province">
+            <label for="">Mobile No.</label>
+            <input type="text" formControlName="mobile_no" />
+            <mat-error *ngIf="registerForm.get('mobile_no')?.invalid && (registerForm.get('mobile_no')?.touched || submitted)">
+              mobile number is required.
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </mat-dialog-content>
-
-
-
-
+<mat-dialog-actions>
+  <div class="footer">
+    <button (click)="closeDialog()">Cancel</button>
+    <button class="submit" type="submit" (click)="onSubmit()">Submit</button>
+  </div>
+</mat-dialog-actions>

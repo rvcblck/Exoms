@@ -94,8 +94,6 @@ export class AdminProfileComponent implements OnInit {
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-
-      
     });
 
     const toggleCheckbox = document.getElementById('switch-toggle');
@@ -104,7 +102,8 @@ export class AdminProfileComponent implements OnInit {
 
     toggleCheckbox?.addEventListener('change', () => {
       if (window.innerWidth < breakpoint) {
-        accountInfo?.scrollIntoView({ behavior: 'smooth' });
+        accountInfo?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('auto scroll');
       }
     });
 

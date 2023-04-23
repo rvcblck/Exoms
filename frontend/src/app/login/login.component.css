@@ -7,11 +7,13 @@
   width: 70%;
   /* padding: 40px; */
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
 }
 .form{
   width: 100%;
   margin: 10px auto;
-  padding: 20px 50px;
+  /* border: 1px solid black; */
+  margin: 20px 50px;
 }
 .line{
   width: 100px;
@@ -33,7 +35,7 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 input[type="email"],
@@ -46,22 +48,23 @@ input[type="password"] {
   padding: 10px;
   width: 100%;
 }
-
 form button[type="submit"] {
-  width: 200px;
+  width: 50%;
   background-color: #ff5a2f;
+  border: 2px solid  #ff5a2f;
   border-radius: 50px;
   color: #ffff;
   cursor: pointer;
   font-size: 16px;
   padding: 10px 20px;
   margin-top: 50px;
-  outline: none;
-  /* transition: background-color 0.2s ease-in-out; */
+  margin-left: 25%;
 }
 
-button[type="submit"]:hover {
-  background-color: none;
+form button[type="submit"]:hover{
+  background-color: white;
+  transition:0.5s;
+  color: #51354b;
 }
 
 .link-button {
@@ -76,8 +79,12 @@ button[type="submit"]:hover {
   margin-top: 15px;
   text-decoration: none;
   color: #ff5a2f;
-  font-size: 12px;
+  font-size: 13px;
   float: right;
+}
+.form-group a:hover{
+  text-decoration: underline;
+  transition: 0.4s;
 }
 
 
@@ -89,6 +96,10 @@ button[type="submit"]:hover {
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  .bg-image img{
+    height: auto;
+    margin: 35% 10%;
+  }
 }
 
 /* Phone screens */
@@ -96,5 +107,19 @@ button[type="submit"]:hover {
   ::ng-deep .mat-paginator-page-size {
     display: none !important;
   }
-
+  .bg-image{
+    display: none;
+  }
+  .content{
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+  }
+  .form{
+    margin: 0px;
+  }
+  .line{
+    width: 30%;
+    margin: 20px 0px;
+  }
 }

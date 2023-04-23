@@ -115,39 +115,14 @@ select {
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  .form-field {
+    width: 100% !important;
+  }
 }
 
 /* Phone screens */
 @media only screen and (max-width: 767px) {
-  /* ::ng-deep .mat-paginator-page-size {
-    display: none !important;
+  .form-field {
+    width: 100% !important;
   }
-
-  .footer button:first-child {
-    background-color: #ff5a2f;
-    border: none;
-    border-radius: 5px;
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-    padding: 5px;
-    color: #ffffff;
-    width: 45%;
-  }
-
-  .footer button:nth-child(2) {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-    padding: 5px;
-    color: #51354b;
-    width: 45%;
-  }
-
-  .form-group label {
-    margin-bottom: 4px;
-    margin-top: 30px;
-    color: #51354b;
-    font-size: 15px;
-    font-weight: 700;
-  } */
 }

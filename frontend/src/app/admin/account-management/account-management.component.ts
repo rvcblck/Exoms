@@ -155,7 +155,8 @@ export class AccountManagementComponent implements OnInit {
       (account) => {
         const dialogRef = this.dialog.open(AccountInfoComponent, {
           data: { account: account },
-          width: '700px'
+          maxWidth: '90%',
+          minWidth: '40%'
         });
       },
       (error) => {
@@ -166,8 +167,8 @@ export class AccountManagementComponent implements OnInit {
 
   createAccount() {
     const dialogRef = this.dialog.open(CreateAccountComponent, {
-      width: '60%',
-      data: {}
+      maxWidth: '90%',
+      minWidth: '40%'
     });
   }
 }

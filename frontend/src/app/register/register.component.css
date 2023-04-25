@@ -3,7 +3,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 75vh;
+  height: 80vh;
   overflow: auto;
 }
 .content {
@@ -46,11 +46,11 @@ button {
 }
 
 .user-info .form-group {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .user-info label {
   margin-bottom: 4px;
-  font-size: 14px;
+  font-size: 18px;
   color: #51354b;
 }
 

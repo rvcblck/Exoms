@@ -5,9 +5,10 @@
   width: 50%;
   margin:120px 40px;
   box-sizing: border-box;
+  
 }
 .content h2{
-  font-size: 34px;
+  font-size: 36px;
   font-weight: bold;
   color: #51354b;
   word-spacing: 2px;
@@ -17,7 +18,7 @@
 .content p{
   margin-top: 5px;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 18px;
   color: #51354b;
 }
 .content button{
@@ -26,7 +27,7 @@
   border: none;
   color: white;
   font-size: 16px;
-  padding: 8px 20px;
+  padding: 10px 25px;
   border-radius: 20px;
   background-color: #ff5a2f;
 }
@@ -77,17 +78,21 @@
   ::ng-deep .mat-paginator-page-size {
     display: none !important;
   }
+  .container{
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    /* overflow-y: auto; */
+    overflow: auto;
+  }
   .content{
     width: 90%;
-    margin-top: 90%;
+    margin: 20px 0px;
   }
   .img{
     background: none;
   }
   .img img{
-    position: absolute;
-
-    top: 130px;
     width: 80%;
     height: 300px;
   }

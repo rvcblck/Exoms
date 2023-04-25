@@ -33,9 +33,10 @@
 
 label {
   display: block;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 5px;
   margin-top: 25px;
+  font-size: 18px;
 }
 
 input[type="email"],
@@ -45,8 +46,9 @@ input[type="password"] {
   border-radius: 5px;
   color: #5c5c5c;
   font-size: 16px;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
+  margin-bottom: 10px;
 }
 form button[type="submit"] {
   width: 50%;
@@ -57,8 +59,9 @@ form button[type="submit"] {
   cursor: pointer;
   font-size: 16px;
   padding: 10px 20px;
-  margin-top: 50px;
+  margin-top: 40px;
   margin-left: 25%;
+  font-weight: 500;
 }
 
 form button[type="submit"]:hover{
@@ -76,11 +79,12 @@ form button[type="submit"]:hover{
 }
 
 .form-group a{
-  margin-top: 15px;
+  /* margin-top: 15px; */
   text-decoration: none;
   color: #ff5a2f;
-  font-size: 13px;
+  font-size: 16px;
   float: right;
+  
 }
 .form-group a:hover{
   text-decoration: underline;

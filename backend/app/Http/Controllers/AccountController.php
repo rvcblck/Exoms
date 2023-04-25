@@ -41,7 +41,7 @@ class AccountController extends Controller
                     $ongoing++;
                 }
             }
-
+            $total = $ongoing + $upcoming + $previous;
 
             $userData [] = [
                 'user_id' => $user->user_id,
@@ -55,6 +55,7 @@ class AccountController extends Controller
                 'previous' => $previous,
                 'ongoing' => $ongoing,
                 'upcoming' => $upcoming,
+                'total' => $total
             ];
         }
 
@@ -140,8 +141,8 @@ class AccountController extends Controller
             $programDataUpcoming = [];
 
             $ongoing = $user->programs()
-                ->where('end_date', '<', $now)
-                ->where('start_date', '>', $now)
+                ->where('end_date', '>=', $now)
+                ->where('start_date', '<=', $now)
                 ->count();
             // dd($ongoing);
             $upcoming = $user->programs()->where('start_date', '>' ,$now)->count();
@@ -160,7 +161,7 @@ class AccountController extends Controller
             }
 
 
-            $programsOngoing = $user->programs()->where('end_date', '<' , $now)->where('start_date', '>', $now)->get();
+            $programsOngoing = $user->programs()->where('end_date', '>=' , $now)->where('start_date', '<=', $now)->get();
             foreach($programsOngoing as $program){
                 $programDataOngoing [] = [
                     'program_id' => $program->program_id,

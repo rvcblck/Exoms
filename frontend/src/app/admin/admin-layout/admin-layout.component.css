@@ -343,6 +343,7 @@ body {
   width: calc(100% - 78px);
   transition: all 0.5s ease;
   z-index: 2;
+  overflow: auto;
 }
 
 .home-section .text {
@@ -488,12 +489,17 @@ body {
     align-items: center;
     z-index: 1000;
     text-align: center;
+    flex-direction: row;
+  }
+
+  .menu-wrapper {
+    width: 20%;
   }
 
   .burger-menu {
     width: 30px;
     height: 20px;
-    position: fixed;
+    position: relative;
     cursor: pointer;
     z-index: 1002;
   }
@@ -506,17 +512,22 @@ body {
     color: #fff;
     font-weight: 600;
     height: 100%;
+    width: 60%;
     /* display: flex;
     justify-content: center;
     align-items:center; */
+  }
+  .navbar-title img {
+    height: 100%;
   }
 
   .burger-menu span {
     display: block;
     position: absolute;
-    height: 3px;
+    height: 5px;
     width: 100%;
-    background: #ffffff;
+    background: #ff5a2f;
+    border: 0.5px solid #000000;
     border-radius: 3px;
     opacity: 1;
     left: 0;
@@ -556,70 +567,114 @@ body {
   }
 
   .profile {
-    position: absolute;
+    position: relative;
     color: white;
     font-size: 25px;
     right: 0;
-    padding: 30px;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    /* background-color: red; */
   }
 
   .dropdown-container {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 40px;
     right: 0;
     z-index: 1;
     padding: 50px;
-    background-color: white;
+    background: radial-gradient(circle at top left, #31323a 0%, #303237 50%, #2a2a31 100%);
     padding: 10px;
     border: 1px solid #ccc;
-    margin-right: 20px;
+    margin-right: 10px;
     margin-top: 10px;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+    /* display: flex;
+    flex-direction: column; */
   }
 
-  .profile:hover .dropdown-container {
+  /* .profile:hover .dropdown-container {
+    display: block;
+  } */
+
+  .dropdown-container.show {
     display: block;
   }
 
   .dropdown-container div .logout-link {
     display: flex;
     align-items: center;
+    padding: 10px;
+    cursor: pointer;
   }
   .dropdown-container div .profile-link {
     display: flex;
     align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .profile-link:hover,
+  .logout-link:hover {
+    background-color: #ffffff1f;
+    border-radius: 5px;
   }
 
   .dropdown-container div .profile-link a {
     position: relative;
-    width: 100%;
-    font-size: 20px;
-    color: #ff5a2f;
+    /* width: 100%; */
+    font-size: 15px;
+    color: #fff;
     text-decoration: none;
-    margin: 20px;
+    /* margin: 20px; */
   }
 
   .dropdown-container div .logout-link a {
     position: relative;
-    width: 100%;
-    font-size: 20px;
-    color: #ff5a2f;
+    /* width: 100%; */
+    font-size: 15px;
+    color: #fff;
     text-decoration: none;
-    margin: 20px;
+    /* margin: 20px; */
   }
 
   .logout-link i {
-    color: #ff5a2f;
+    color: #fff;
+    font-size: 15px;
   }
 
   .profile-link i {
-    color: #ff5a2f;
+    color: #fff;
+    font-size: 15px;
   }
 
   #log_out {
     display: none;
+  }
+
+  li .profile,
+  .profile_details {
+    display: none !important;
+  }
+
+  .profile-wrapper-mobile {
+    position: relative;
+    /* height: 90%; */
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    padding: 3px;
+    border: 1px solid #ff5a2f;
+  }
+
+  .profile-wrapper-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
   }
 }

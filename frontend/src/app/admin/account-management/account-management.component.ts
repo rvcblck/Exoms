@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Accounts } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountInfoComponent } from '../modal/account-info/account-info.component';
 import { CreateAccountComponent } from '../modal/create-account/create-account.component';
+import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-account-management',
@@ -19,7 +20,7 @@ export class AccountManagementComponent implements OnInit {
   displayedColumns: string[] = ['previous', 'ongoing', 'upcoming'];
   dataSource = new MatTableDataSource<Accounts>();
   selection = new SelectionModel<Accounts>(true, []);
-  dataToCall: string[] = ['select', 'fname', 'email', 'mobile_no', 'status', 'previous', 'ongoing', 'upcoming', 'action'];
+  dataToCall: string[] = ['select', 'fname', 'email', 'mobile_no', 'status', 'previous', 'ongoing', 'upcoming', 'total', 'action'];
   showSelectAllButton = false;
 
   @ViewChild(MatPaginator)
@@ -28,19 +29,20 @@ export class AccountManagementComponent implements OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor(private accountService: AccountService, private dialog: MatDialog) {}
+  constructor(
+    private accountService: AccountService,
+    private dialog: MatDialog,
+    private adminLayout: AdminLayoutComponent,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
+    // this.adminLayout.pageTitle = 'Account Management';
+    // this.cdr.detectChanges();
     this.accountService.getAccounts().subscribe((accounts) => {
       this.dataSource.data = accounts;
     });
 
-    // this.selection.changed.subscribe(() => {
-    //   if (this.selection.hasValue()) {
-    //     const search = document.querySelector('.search');
-    //     search?.classList.toggle('show-btns');
-    //   }
-    // });
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -156,7 +158,7 @@ export class AccountManagementComponent implements OnInit {
         const dialogRef = this.dialog.open(AccountInfoComponent, {
           data: { account: account },
           maxWidth: '90%',
-          minWidth: '40%'
+          minWidth: '60%'
         });
       },
       (error) => {

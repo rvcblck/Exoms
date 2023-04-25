@@ -13,6 +13,7 @@ export interface Accounts {
   previous: number;
   ongoing: number;
   upcoming: number;
+  total: number;
   // profile_pic: string | null;
 }
 

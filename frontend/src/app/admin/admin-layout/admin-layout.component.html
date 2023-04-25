@@ -1,16 +1,23 @@
 <nav class="navbar-mobile">
-  <div class="burger-menu">
-    <span></span>
-    <span></span>
-    <span></span>
+  <div class="menu-wrapper">
+    <div class="burger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
-  <h1 class="navbar-title">CICT-Exoms</h1>
+
+  <h1 class="navbar-title"><img class="logo" src="../../assets/images/logo.png" alt="My Image" />&nbsp;&nbsp;&nbsp; CICT-Exoms</h1>
   <div class="profile">
-    <i class="profile-btn bx bx-user-circle" (click)="profile($event); $event.stopPropagation()"></i>
+    <div class="profile-wrapper-mobile">
+      <img [src]="imageUrl" alt="profile image" (click)="profile($event); $event.stopPropagation()" />
+    </div>
+
+    <!-- <i class="profile-btn bx bx-user-circle" ></i> -->
     <div class="dropdown-container">
       <div>
-        <div class="profile-link"><i class="bx bx-user"></i><a href="/admin/admin-profile">Profile</a></div>
-        <div class="logout-link"><i class="bx bx-log-out"></i><a href="#" (click)="onLogout()">Logout</a></div>
+        <div class="profile-link"><i class="bx bx-user"></i>&nbsp;&nbsp;<a routerLink="/admin/admin-profile">Profile</a></div>
+        <div class="logout-link"><i class="bx bx-log-out"></i>&nbsp;&nbsp;<a (click)="onLogout()">Logout</a></div>
       </div>
     </div>
   </div>
@@ -18,13 +25,13 @@
 
 <nav class="navbar">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">{{ pageName }}</span>
+    <!-- <span class="navbar-brand mb-0 h1">{{ pageTitle }}</span> -->
   </div>
 </nav>
 
 <div class="sidebar">
   <div class="logo_details">
-    <img class="logo" [src]="imageUrl" alt="My Image" />
+    <img class="logo" src="../../assets/images/logo.png" alt="My Image" />
     <div class="logo_name">CICT-Exoms</div>
     <i class="bx bx-menu" id="btn"></i>
   </div>
@@ -37,7 +44,7 @@
       <span class="tooltip">Dashboard</span>
     </li>
     <li>
-      <a href="/admin/program-management">
+      <a routerLink="/admin/program-management">
         <i>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
             <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -51,7 +58,7 @@
       <span class="tooltip">Program Management</span>
     </li>
     <li>
-      <a href="/admin/partner-management">
+      <a routerLink="/admin/partner-management">
         <i>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
             <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -65,21 +72,21 @@
       <span class="tooltip">Partner Management</span>
     </li>
     <li>
-      <a href="/admin/account-management">
+      <a routerLink="/admin/account-management">
         <i class="bx bxs-user-account"></i>
         <span class="link_name">Accounts</span>
       </a>
       <span class="tooltip">Accounts Management</span>
     </li>
     <li>
-      <a href="/admin/reports">
+      <a routerLink="/admin/reports">
         <i class="bx bxs-report"></i>
         <span class="link_name">Reports</span>
       </a>
       <span class="tooltip">Reports</span>
     </li>
     <li class="profile-link">
-      <a href="/admin/admin-profile">
+      <a routerLink="/admin/admin-profile">
         <i class="bx bx-user"></i>
         <span class="link_name">Profile</span>
       </a>
@@ -87,21 +94,21 @@
     </li>
     <li class="profile">
       <div class="profile_details">
-        <img src="profile.jpeg" alt="profile image" />
+        <img [src]="imageUrl" alt="profile image" />
 
         <div class="profile_content">
-          <div class="name">{{ authenticatedUserInfo.firstName }}</div>
-          <div class="designation">{{ authenticatedUserInfo.role }}</div>
+          <div class="name">{{ firstName }}</div>
+          <div class="designation">{{ role }}</div>
         </div>
       </div>
       <i class="bx bx-log-out" id="log_out" (click)="onLogout()"></i>
     </li>
   </ul>
   <div class="cict-logo">
-    <img class="logo" [src]="imageUrl" alt="My Image" />
+    <img class="logo" src="../../assets/images/logo.png" alt="My Image" />
   </div>
 </div>
 
-<div class="home-section">
+<div class="home-section" #homeSection>
   <router-outlet></router-outlet>
 </div>

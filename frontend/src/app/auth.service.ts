@@ -26,7 +26,6 @@ export class AuthService {
         localStorage.setItem('firstName', response.user.fname);
         localStorage.setItem('role', response.user.role);
         localStorage.setItem('user_id', response.user.user_id);
-
       }),
       catchError((error) => {
         console.log(error);
@@ -47,7 +46,6 @@ export class AuthService {
       tap((response) => {
         localStorage.setItem('email', response.email);
         return response;
-
       }),
       catchError((error) => {
         console.log(error);
@@ -77,6 +75,11 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('firstName');
     localStorage.removeItem('role');
+    localStorage.removeItem('month');
+    localStorage.removeItem('password');
+    localStorage.removeItem('email');
+    localStorage.removeItem('quote');
+    localStorage.removeItem('author');
     this.router.navigate(['/login']);
   }
 

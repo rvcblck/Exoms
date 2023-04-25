@@ -58,37 +58,48 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'dashboard',
+        data: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'program-management',
         component: ProgramManagementComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'Program Management' }
       },
       {
         path: 'partner-management',
         component: PartnerManagementComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'Partner Management' }
       },
       {
         path: 'account-management',
         component: AccountManagementComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'Account Management' }
       },
       {
         path: 'reports',
         component: ReportsComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'Reports' }
       },
       {
         path: 'admin-profile',
         component: AdminProfileComponent,
-        canActivate: [AuthGuard, AdminGuard]
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'Profile' }
       }
     ]
   },

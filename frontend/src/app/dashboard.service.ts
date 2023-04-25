@@ -51,5 +51,29 @@ export class DashboardService {
     );
   }
 
-  
+  getUserDashboard(user_id: string): Observable<ResponseData> {
+    const headers = this.getHeaders();
+    return this.http.get<ResponseData>(`${this.apiUrl}/user-dashboard/${user_id}`, { headers }).pipe(
+      tap((response) => {
+        console.log('dashboard retrieved successfully');
+      }),
+      catchError((error) => {
+        console.error('Error retrieving dashboard:', error);
+        return throwError('Error retrieving dashboard. Please try again later.');
+      })
+    );
+  }
+
+  getUserProgramChart(userChart: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/user-dashboard-chart`, userChart, { headers }).pipe(
+      tap((response) => {
+        console.log('dashboard retrieved successfully');
+      }),
+      catchError((error) => {
+        console.error('Error retrieving dashboard:', error);
+        return throwError('Error retrieving dashboard. Please try again later.');
+      })
+    );
+  }
 }

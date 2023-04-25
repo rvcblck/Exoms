@@ -220,6 +220,155 @@ class DashboardController extends Controller
     }
 
 
+    public function userDashboardChart($user_id){
+        $now = Carbon::now('Asia/Manila');
+        $userData = [];
+
+        $user = User::with('programs')->where('user_id',$user_id)->first();
+
+
+            $programs = $user->programs()->get();
+            $ongoing = 0;
+            $upcoming = 0;
+            $previous = 0;
+
+            foreach($programs as $program){
+                $endDate = Carbon::parse($program->end_date);
+                $startDate = Carbon::parse($program->start_date);
+                if($endDate->lt($now)){
+                    $previous++;
+                }else if($startDate->gt($now)){
+                    $upcoming++;
+                }else{
+                    $ongoing++;
+                }
+            }
+
+            $allPrograms = $user->programs()->get();
+
+            $allOngoing = 0;
+            $allUpcoming = 0;
+            $allPrevious = 0;
+
+
+            foreach($allPrograms as $allProgram){
+
+                $endDate = Carbon::parse($allProgram->end_date);
+                $startDate = Carbon::parse($allProgram->start_date);
+                if($endDate->lt($now)){
+                    $allPrevious++;
+                }else if($startDate->gt($now)){
+                    $allUpcoming++;
+                }else{
+                    $allOngoing++;
+                }
+
+            }
+
+            $programData = [
+                'ongoing' => $allOngoing,
+                'upcoming' => $allUpcoming,
+                'previous' => $allPrevious
+            ];
+
+
+
+
+        $users = User::with('programs')->get();
+
+            foreach($users as $user){
+                $programs = $user->programs()->get();
+                $ongoing = 0;
+                $upcoming = 0;
+                $previous = 0;
+
+                foreach($programs as $program){
+                    $endDate = Carbon::parse($program->end_date);
+                    $startDate = Carbon::parse($program->start_date);
+                    if($endDate->lt($now)){
+                        $previous++;
+                    }else if($startDate->gt($now)){
+                        $upcoming++;
+                    }else{
+                        $ongoing++;
+                    }
+                }
+
+                $total = $ongoing + $upcoming + $previous;
+
+                $fullName = $user->fname.' '.$user->lname;
+
+                $userData [] = [
+                    'user_id' => $user->user_id,
+                    'fullName' => $fullName,
+                    'email' => $user->email,
+                    'total' => $total
+                ];
+            }
+
+            usort($userData, function($a, $b) {
+                return $b['total'] <=> $a['total'];
+            });
+
+            $userData = array_slice($userData, 0, 5);
+
+
+
+            $dashboardData = [
+                'program_count' => $programData,
+                'faculty' => $userData,
+
+            ];
+
+
+
+        return response()->json($dashboardData);
+    }
+
+    public function userProgramChart(Request $request){
+
+
+        $user = User::with('programs')->where('user_id',$request->user_id)->first();
+
+
+        $year = date('Y'); // get the current year using now()
+
+        // create a date object from the $month parameter
+        $date = date_create_from_format('n', $request->month);
+
+        // get the month in the format you need
+        $month = date_format($date, 'm');
+
+        // get the number of days in the given month and year
+        $numDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+        $dataPoints = [];
+
+        // loop through each day of the month
+        for ($day = 1; $day <= $numDays; $day++) {
+            // check if the day is odd
+            if ($day % 2 != 0) {
+                // format the date string as "Y-m-d"
+                $dateString = sprintf('%04d-%02d-%02d', $year, $month, $day);
+                // count the number of programs on that day (replace this with your own query)
+                $programCount = $user->programs()->whereDate('start_date', '<=', $dateString)
+                ->whereDate('end_date', '>=', $dateString)
+                ->count();;
+                // $programCount = Program::whereDate('start_date', '<=', $dateString)
+                //                     ->whereDate('end_date', '>=', $dateString)
+                //                     ->count();
+                // add the data point to the array
+                $dataPoints[] = [
+                    'x' => $dateString,
+                    'y' => $programCount
+                ];
+            }
+        }
+
+        return response()->json($dataPoints);
+    }
+
+
 
 
 }

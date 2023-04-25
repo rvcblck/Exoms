@@ -54,7 +54,7 @@ export class AdminProfileComponent implements OnInit {
       this.profileService.getUserInfo(user_id).subscribe(
         (user) => {
           this.user = user;
-          // console.log(this.user);
+          console.log(this.user);
 
           const address = user.address;
           if (address) {
@@ -141,7 +141,7 @@ export class AdminProfileComponent implements OnInit {
   }
   openConfirmationDialog(): void {
     const message = 'Are you sure you want to submit the form?';
-    const header = 'Creating new partner';
+    const header = 'Updating Profile';
     const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {

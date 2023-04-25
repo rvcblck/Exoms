@@ -56,11 +56,17 @@
 
 .message {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   height: 70%;
+}
+
+.dateTime {
+  display: flex;
+  flex-direction: column;
 }
 
 .date {
@@ -81,14 +87,14 @@
   justify-content: center;
 }
 
-.date div:nth-child(2) {
+.dateTime div:nth-child(1) {
   line-height: 60px;
   height: min-content;
   font-size: 50px;
   font-weight: bolder;
 }
 
-.date div:nth-child(3) {
+.dateTime div:nth-child(2) {
   line-height: 25px;
   font-size: 20px;
   font-weight: 800;
@@ -347,30 +353,33 @@
   border-radius: 10px;
 }
 
-.chart-wrapper div:nth-child(2) {
+.chart-btn-mobile {
+  display: none;
+}
+
+.chart-wrapper .progchart {
   width: 80%;
   min-height: calc(40vh + 60px);
   padding: 30px;
 }
-.chart-wrapper div:nth-child(1) {
+.chart-wrapper .nxt-div {
   width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #fff;
-  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-  border-radius: 10px;
-  padding: 30px; */
 }
-.chart-wrapper div:nth-child(3) {
+.chart-wrapper .pre-div {
   width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #fff;
-  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-  border-radius: 10px;
-  padding: 30px; */
+}
+
+.previous-wrapper,
+.next-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pie-wrapper div {
@@ -454,7 +463,7 @@
 }
 
 /* Tablet screens */
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
+@media only screen and (min-width: 540px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
   .cont-faculty {
     display: none;
@@ -475,7 +484,7 @@
     width: 65%;
   }
 
-  .date div:nth-child(2) {
+  /* .date div:nth-child(2) {
     line-height: 40px;
     height: min-content;
     font-size: 30px;
@@ -486,15 +495,21 @@
     line-height: 20px;
     font-size: 18px;
     font-weight: 600;
-  }
+  } */
 
-  .cont-faculty.second {
+  /* .cont-faculty.second {
     display: block;
+  } */
+
+  .cont-faculty-mobile {
+    display: block;
+    width: 100% !important;
+    padding: 20px;
   }
 }
 
 /* Phone screens */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 540px) {
   /* Styles for phone screens go here */
   .cont-faculty {
     display: none;
@@ -503,20 +518,78 @@
     width: 100%;
   }
 
+  .date {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px 0px 20px;
+  }
+
+  .date div:nth-child(1) {
+    width: 40%;
+  }
+  .dateTime {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    min-height: 100%;
+    flex: 1;
+  }
+
+  .date img {
+    aspect-ratio: 1/1;
+    width: 100%;
+    flex: 1;
+  }
+
+  .dateTime div:nth-child(1) {
+    line-height: 20px;
+    height: min-content;
+    font-size: 30px;
+    font-weight: bolder;
+    margin-bottom: 0;
+  }
+
+  .dateTime div:nth-child(2) {
+    line-height: 20px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .qoute {
+    padding: 0px 20px 20px 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .pie-wrapper {
     width: 100%;
+    /* margin: 10px 0px; */
+    padding: 10px 0;
   }
   .partner-wrapper {
     width: 100%;
   }
 
-  .chart-wrapper div:nth-child(3),
-  .chart-wrapper div:nth-child(1) {
-    width: 5%;
-  }
-  .chart-wrapper div:nth-child(2) {
-    width: 90%;
+  .prog-status {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .icon.upcoming {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .prog-status .count {
+    flex-direction: column-reverse;
   }
 
   .prog-status div img {
@@ -531,9 +604,6 @@
   .prog-status .count div:nth-child(2) {
     font-size: 20px;
   }
-  .prog-status {
-    padding: 10px;
-  }
 
   .qoute div:nth-child(1) {
     line-height: 30px;
@@ -542,40 +612,23 @@
   }
 
   .qoute div:nth-child(2) {
-    line-height: 18px;
+    line-height: 15px;
     font-size: 15px;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 0;
   }
 
   .qoute div:nth-child(3) {
-    line-height: 18px;
+    line-height: 15px;
     font-size: 15px;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 0px;
+    padding: 5px;
   }
 
   .qoute div:nth-child(4) {
     line-height: 18px;
     font-size: 15px;
     padding: 10px;
-  }
-  .date img {
-    aspect-ratio: 1/1;
-    width: 80%;
-  }
-
-  .date div:nth-child(2) {
-    line-height: 40px;
-    height: min-content;
-    font-size: 30px;
-    font-weight: bolder;
-  }
-
-  .date div:nth-child(3) {
-    line-height: 20px;
-    font-size: 18px;
-    font-weight: 600;
   }
 
   .cont-faculty-mobile {
@@ -587,8 +640,72 @@
   .cont {
     display: flex;
     flex-wrap: wrap;
-    width: 96%;
-    margin-left: 2%;
+    width: 100%;
+    /* margin-left: 1%; */
+    margin: 0;
     flex-direction: row;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    height: 50vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+  }
+
+  .pre-div,
+  .nxt-div {
+    display: none !important;
+  }
+
+  .chart-btn-mobile {
+    display: flex;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    margin: 0;
+  }
+
+  .chart-btn-mobile div:nth-child(1) {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .chart-btn-mobile div:nth-child(2) {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .previous-wrapper {
+    height: 100%;
+  }
+  .next-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end !important;
+  }
+
+  ::ng-deep .canvasjs-chart-canvas {
+    height: 40vh !important;
+    width: 100%;
+  }
+
+  ::ng-deep .canvasjs-chart-credit {
+    display: none !important;
+  }
+  .progchart {
+    width: 100% !important;
+    padding: 5px !important;
+  }
+
+  .partner-wrapper {
+    padding: 10px 0;
+  }
+
+  .cont-faculty-mobile {
+    padding: 10px 0;
   }
 }

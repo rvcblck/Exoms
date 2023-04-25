@@ -101,7 +101,7 @@
         <div>
           <button (click)="closeDialog()">Close</button>
         </div>
-        <div>
+        <div *ngIf="isAdmin()">
           <button (click)="editProgram(data.program.program_id)">Edit</button>
         </div>
       </div>

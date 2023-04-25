@@ -105,21 +105,33 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserLayoutComponent,
+    component: AdminLayoutComponent,
     children: [
       {
-        path: 'dashboard',
-        component: UserDashboardComponent,
-        canActivate: [AuthGuard, UserGuard]
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+        data: {
+          title: 'Dashboard'
+        }
       },
       {
-        path: 'my-extension',
-        component: ExtensionComponent,
-        canActivate: [AuthGuard, UserGuard]
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard, UserGuard],
+        data: {
+          title: 'Dashboard'
+        }
+      },
+      {
+        path: 'program-management',
+        component: ProgramManagementComponent,
+        canActivate: [AuthGuard, UserGuard],
+        data: { title: 'Program Management' }
       },
       {
         path: 'user-profile',
-        component: UserProfileComponent,
+        component: AdminProfileComponent,
         canActivate: [AuthGuard, UserGuard]
       }
     ]

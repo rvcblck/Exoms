@@ -10,6 +10,8 @@ import { PartnerService } from 'src/app/partner.service';
 import { Accounts } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
+import { AuthService } from 'src/app/auth.service';
+import { AttendanceComponent } from 'src/app/user/attendance/attendance.component';
 
 @Component({
   selector: 'app-program-management',
@@ -37,25 +39,47 @@ export class ProgramManagementComponent implements OnInit {
     private partnerService: PartnerService,
     private accountService: AccountService,
     private adminLayout: AdminLayoutComponent,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     // this.adminLayout.pageTitle = 'Program Management';
     // this.cdr.detectChanges();
+    const isAdmin = this.authService.isAdmin();
+    console.log('Is admin:', isAdmin);
     this.getPrograms();
   }
 
   getPrograms(): void {
-    this.programService.getPrograms().subscribe(
-      (programs) => {
-        this.programs = programs;
-        console.log('Programs retrieved successfully');
-      },
-      (error) => {
-        console.error('Error retrieving programs:', error);
+    if (this.isAdmin()) {
+      this.programService.getPrograms().subscribe(
+        (programs) => {
+          this.programs = programs;
+          console.log('Programs retrieved successfully');
+        },
+        (error) => {
+          console.error('Error retrieving programs:', error);
+        }
+      );
+    } else {
+      const user_id = localStorage.getItem('user_id');
+      if (user_id) {
+        this.programService.getUserPrograms(user_id).subscribe(
+          (programs) => {
+            this.programs = programs;
+            console.log('Programs retrieved successfully');
+          },
+          (error) => {
+            console.error('Error retrieving programs:', error);
+          }
+        );
       }
-    );
+    }
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 
   collapseSearch() {
@@ -106,6 +130,22 @@ export class ProgramManagementComponent implements OnInit {
           maxWidth: '90%',
           minWidth: '60%',
           maxHeight: '80vh'
+        });
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+  }
+
+  onAttendanceClick(event: Event, programId: string) {
+    // program_id.stopPropagation();
+    event.stopPropagation();
+    this.programService.getAttendance(programId).subscribe(
+      (attendance) => {
+        const dialogRef = this.dialog.open(AttendanceComponent, {
+          data: { attendance: attendance },
+          width: '80%'
         });
       },
       (error) => {

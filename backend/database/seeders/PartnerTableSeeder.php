@@ -22,7 +22,7 @@ class PartnerTableSeeder extends Seeder
 
 
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Partner::create([
                 'partner_id' => $this->generatePartnerId(),
                 'company_name' => $faker->company,

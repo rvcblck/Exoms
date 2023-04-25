@@ -269,4 +269,42 @@ class ProfileController extends Controller
         }
         return $password_id;
     }
+
+
+
+    public function usersProfileImages(Request $request){
+        $userIds = $request->input('user_ids');
+
+        $images = [];
+
+        foreach ($userIds as $id) {
+            $user = User::where('user_id', $id)->first();
+            $file_path = $user->profile_pic;
+
+            if ($file_path) {
+                $path = storage_path('app\public\\'.$file_path);
+                if (File::exists($path)) {
+                    $data = base64_encode(file_get_contents($path));
+                    $images[] = $data;
+                }
+            }else{
+                $path = storage_path('app\public\images\profile-default.png');
+                if (File::exists($path)) {
+                $data = base64_encode(file_get_contents($path));
+                $images[] = $data;
+            }
+            }
+        }
+
+        // if (empty($images)) {
+        //     $path = storage_path('app\public\images\profile-default.png');
+        //     if (File::exists($path)) {
+        //         $data = base64_encode(file_get_contents($path));
+        //         $images[] = $data;
+        //     }
+        // }
+
+        return $images;
+    }
+
 }

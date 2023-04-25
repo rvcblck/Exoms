@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -7,6 +7,8 @@ import { ImageService } from 'src/app/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-layout',
@@ -15,9 +17,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdminLayoutComponent implements OnInit {
   authService: AuthService;
-  authenticatedUserInfo: any;
   showSideNav = false;
   pageName!: string;
+  pageTitle = '';
+  firstName = '';
+  role = '';
+
   // imageUrl!: string;
 
   private apiUrl = 'http://localhost:8000/api';
@@ -26,42 +31,69 @@ export class AdminLayoutComponent implements OnInit {
 
   // handshakeIcon = HandshakeOutlinedIcon;
 
+  @ViewChild('homeSection') homeSection!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent): void {
+    if (this.homeSection.nativeElement.contains(event.target)) {
+      // Close the sidebar
+      const sidebar = document.querySelector('.sidebar');
+
+      const burgerMenu = document.querySelector('.burger-menu');
+      const closeBtn = document.querySelector('#btn');
+      const navList = document.querySelector('.nav-list');
+      const logo = document.querySelector('.cict-logo');
+      const profile = document.querySelector('.dropdown-container');
+
+      sidebar?.classList.remove('open');
+      burgerMenu?.classList.remove('open');
+      navList?.classList.remove('open');
+      logo?.classList.remove('open');
+      profile?.classList.remove('show');
+    }
+  }
+
   constructor(
     private _authService: AuthService,
     public imageService: ImageService,
     private sanitizer: DomSanitizer,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {
     this.authService = _authService;
   }
 
   getImage() {
-    const filename = 'logo.png';
-    return this.http.get(`${this.apiUrl}/images/${filename}`, { responseType: 'blob' });
+    const user_id = localStorage.getItem('user_id');
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
   }
 
   ngOnInit() {
-    this.authenticatedUserInfo = this.authService.getAuthenticatedUserInfo();
-
-    if (this.authenticatedUserInfo.role === 'user') {
-      this.authenticatedUserInfo.role = 'faculty';
-    }
+    // this.pageTitle = 'Dashboard';
+    // this.cdr.detectChanges();
+    // this.authenticatedUserInfo = this.authService.getAuthenticatedUserInfo();
 
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
+
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     });
 
-    if (this.route.firstChild) {
-      this.route.firstChild.url.subscribe((url) => {
-        const pageName = url[url.length - 1].path;
-        this.pageName = this.capitalizeFirstLetter(pageName);
-      });
+    // if (this.authenticatedUserInfo.role === 'user') {
+    //   this.authenticatedUserInfo.role = 'faculty';
+    // }
+    const fname = localStorage.getItem('firstName');
+    const role = localStorage.getItem('role');
+    if (fname) {
+      this.firstName = fname;
     }
-
-    console.log(this.pageName, 'eto yun');
+    if (role) {
+      this.role = role;
+    }
   }
+
   ngAfterViewInit() {
     const sidebar = document.querySelector('.sidebar');
     const burgerMenu = document.querySelector('.burger-menu');
@@ -83,7 +115,6 @@ export class AdminLayoutComponent implements OnInit {
         burgerMenu.classList.toggle('open');
         navList?.classList.toggle('open');
         logo?.classList.toggle('open');
-
       });
     }
 
@@ -105,14 +136,37 @@ export class AdminLayoutComponent implements OnInit {
     }
   }
 
-  profile(event: Event) {}
+  profile(event: Event) {
+    const profile = document.querySelector('.dropdown-container');
+    if (profile) {
+      profile?.classList.toggle('show');
+    }
+  }
 
   onLogout() {
-    this.authService.logout();
+    this.openConfirmationDialog();
   }
 
   capitalizeFirstLetter(str: string): string {
     str = str.replace(/-/g, ' '); // Replace all occurrences of '-' with ' '
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  openConfirmationDialog(): void {
+    const message = 'Are you sure you want to logout?';
+    const header = 'Logout';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.authService.logout();
+      }
+    });
   }
 }

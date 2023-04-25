@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ProgramService } from 'src/app/program.service';
 import { Program } from 'src/app/program.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { PartnerService } from 'src/app/partner.service';
 import { Accounts } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
+import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-program-management',
@@ -34,10 +35,14 @@ export class ProgramManagementComponent implements OnInit {
     private programService: ProgramService,
     private dialog: MatDialog,
     private partnerService: PartnerService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private adminLayout: AdminLayoutComponent,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    // this.adminLayout.pageTitle = 'Program Management';
+    // this.cdr.detectChanges();
     this.getPrograms();
   }
 

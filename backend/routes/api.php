@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\File;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +85,7 @@ Route::post('/changePass', [ProfileController::class, 'changePass']);
 Route::post('/changeProfilePic', [ProfileController::class, 'changeProfilePic']);
 
 Route::get('/profile-image/{id}', [ProfileController::class, 'profileImage']);
+Route::post('/users-profile-images', [ProfileController::class, 'usersProfileImages']);
 
 
 
@@ -109,6 +112,12 @@ Route::post('/file',[ImageController::class, 'getUserFiles'])->middleware('cors'
 Route::get('/view-file/{filePath}',[ImageController::class, 'viewUserFiles']);
 
 Route::post('/program-file',[ImageController::class,'getProgramFiles'])->middleware('cors');
+
+Route::get('/dashboard',[DashboardController::class, 'index']);
+Route::get('/dashboard-chart/{month}',[DashboardController::class, 'dashboardChart']);
+
+
+
 
 
 

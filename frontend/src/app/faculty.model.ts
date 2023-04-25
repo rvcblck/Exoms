@@ -45,3 +45,4 @@ export interface FacultyProgram {
     moa_file: string;
   }[];
 }
+

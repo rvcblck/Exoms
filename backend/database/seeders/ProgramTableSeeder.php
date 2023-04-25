@@ -15,24 +15,25 @@ class ProgramTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $faker = Faker::create('Asia/Manila');
+{
+    $faker = Faker::create('Asia/Manila');
 
 
-
-        for ($i = 0; $i < 50; $i++) {
-            $program = new Program;
-            $program->program_id = $this->generateProgramId();
-            $program->title = 'Sample Program '.$i;
-            $startDate = $program->start_date = $faker->dateTimeBetween('-1 year', '+1 year');
-            $endDate = clone $startDate;
-            $endDate->modify('+' . random_int(1, 3) . ' months');
-            $program->end_date = $endDate;
-            $program->place = $faker->address;
-            $program->details = $faker->paragraph(2);
-            $program->save();
-        }
+    for ($i = 0; $i < 100; $i++) {
+        $program = new Program;
+        $program->program_id = $this->generateProgramId();
+        $program->title = 'Sample Program '.$i;
+        $startDate = $faker->dateTimeBetween('2023-02-01', '2023-07-31');
+        $program->start_date = $startDate;
+        $endDate = clone $startDate;
+        $endDate->modify('+' . random_int(3, 5) . ' weeks');
+        $program->end_date = $endDate;
+        $program->place = $faker->address;
+        $program->details = $faker->paragraph(2);
+        $program->save();
+        $startDate = $endDate->modify('+1 day'); // set the next start date to be the day after the current end date
     }
+}
 
     public function generateProgramId() {
         $program_id = 'PROG-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);

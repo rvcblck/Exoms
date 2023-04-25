@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ProfileService } from 'src/app/profile.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Profile } from 'src/app/profile.model';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChangeEmailComponent } from '../modal/change-email/change-email.component';
 import { ChangePasswordComponent } from '../modal/change-password/change-password.component';
 import { EditImgComponent } from '../modal/edit-img/edit-img.component';
+import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-admin-profile',
@@ -31,7 +32,9 @@ export class AdminProfileComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private dialog: MatDialog // private profileService: ProfileService // public dialogRef: MatDialogRef<AdminProfileComponent>, // @Inject(MAT_DIALOG_DATA) public data: { partner: ViewPartner }, // public user!: Profile
+    private adminLayout: AdminLayoutComponent,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.profileForm = this.formBuilder.group({
       fname: ['', Validators.required],
@@ -85,14 +88,16 @@ export class AdminProfileComponent implements OnInit {
   }
 
   getImage() {
-    // const filename = 'samplepic.jpg';
     const user_id = localStorage.getItem('user_id');
     return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
   }
 
   ngOnInit(): void {
+    // this.adminLayout.pageTitle = 'Profile';
+    // this.cdr.detectChanges();
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
+
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     });
 

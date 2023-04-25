@@ -219,6 +219,7 @@ input::placeholder {
   width: 100%;
   border-radius: 5px;
   height: 40px;
+  color: #fff !important;
 }
 
 .upload-wrapper .moa-label {

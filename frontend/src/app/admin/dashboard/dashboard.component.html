@@ -1,5 +1,141 @@
-
-  <h1>Welcome to the Dashboard</h1>
-  <p>This is the main content for the dashboard.</p>
-
-
+<div *ngIf="dashboard" class="dashboard">
+  <div class="cont">
+    <div class="cont-message">
+      <div class="message">
+        <div class="date">
+          <div><img src="../../assets/images/qoute.png" alt="" /></div>
+          <div>
+            {{ currentDate | date : 'h:mm' }} &nbsp; <span style="font-size: 20px">{{ currentDate | date : 'a' }}</span>
+          </div>
+          <div>{{ currentDate | date : 'MMMM d,  y' }}</div>
+        </div>
+        <div class="qoute">
+          <div>Good {{ timeOfDay === 'morning' ? 'Morning' : timeOfDay === 'afternoon' ? 'Afternoon' : 'Evening' }}!</div>
+          <div><i class="fa-solid fa-quote-right"></i></div>
+          <div>{{ quote }}</div>
+          <div><i class="fa-solid fa-window-minimize"></i>&nbsp;&nbsp;{{ author }}</div>
+        </div>
+      </div>
+      <div class="prog-status-wrapper">
+        <div class="prog-status">
+          <div class="icon upcoming">
+            <img src="../../assets/images/upcoming.png" alt="" />
+          </div>
+          <div class="count upcoming">
+            <div>UPCOMING</div>
+            <div>{{ dashboard.program_count.upcoming }}</div>
+          </div>
+        </div>
+        <div class="prog-status">
+          <div class="icon ongoing">
+            <img src="../../assets/images/ongoing.png" alt="" />
+          </div>
+          <div class="count ongoing">
+            <div>ONGOING</div>
+            <div>{{ dashboard.program_count.ongoing }}</div>
+          </div>
+        </div>
+        <div class="prog-status">
+          <div class="icon previous">
+            <img src="../../assets/images/previous.png" alt="" />
+          </div>
+          <div class="count previous">
+            <div>PREVIOUS</div>
+            <div>{{ dashboard.program_count.previous }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cont-faculty">
+      <div class="faculty">
+        <label for="">Top 5 Faculty</label>
+        <div class="list-wrapper">
+          <div class="list" *ngFor="let faculty of dashboard.faculty; let i = index">
+            <div class="profile-pic">
+              <div class="image-wrapper" *ngIf="images">
+                <img [src]="images[i]" alt="" />
+              </div>
+            </div>
+            <div class="name">
+              <div>{{ faculty.fullName }}</div>
+              <div>{{ faculty.email }}</div>
+            </div>
+            <div class="prog-no">
+              <div>{{ faculty.total }}</div>
+              <div>PROGRAMS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cont">
+    <div class="chart-wrapper">
+      <div>
+        <div matRipple (click)="previous()" class="previous-wrapper">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+      </div>
+      <div>
+        <canvasjs-chart *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
+      </div>
+      <div>
+        <div matRipple (click)="next()" class="next-wrapper"><i class="fa-solid fa-chevron-right"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="cont">
+    <div class="pie-wrapper">
+      <div>
+        <canvasjs-chart [options]="userChartOptions"></canvasjs-chart>
+      </div>
+    </div>
+    <div class="partner-wrapper">
+      <div class="partner">
+        <label for="">Expiring Contracts</label>
+        <div class="contract-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">PARTNER NAME</th>
+                <th scope="col" class="text-center">EXPIRATION DATE</th>
+                <th scope="col" class="text-center">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let partner of dashboard.expire_data">
+                <td>{{ partner.partner_name }}</td>
+                <td class="text-center">{{ formatDate(partner.end_date) }}</td>
+                <td class="text-center"><button class="extend-btn" (click)="ViewPartner(partner.partner_id)">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cont">
+    <div class="cont-faculty-mobile">
+      <div class="faculty">
+        <label for="">Top 5 Faculty</label>
+        <div class="list-wrapper">
+          <div class="list" *ngFor="let faculty of dashboard.faculty; let i = index">
+            <div class="profile-pic">
+              <div class="image-wrapper" *ngIf="images">
+                <img [src]="images[i]" alt="" />
+              </div>
+            </div>
+            <div class="name">
+              <div>{{ faculty.fullName }}</div>
+              <div>{{ faculty.email }}</div>
+            </div>
+            <div class="prog-no">
+              <div>{{ faculty.total }}</div>
+              <div>PROGRAMS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

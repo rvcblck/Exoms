@@ -1,0 +1,102 @@
+.footer {
+  margin: 0;
+  padding: 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.footer div:nth-child(1),
+.footer div:nth-child(2) {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .no {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #51354b;
+  width: 80%;
+}
+
+.footer .yes {
+  background-color: #ff5a2f;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #ffffff;
+  width: 80%;
+}
+
+p {
+  text-align: center;
+}
+/* .footer div:first-child {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.footer div:first-child button {
+  background-color: #ffffff;
+  border: 3px solid #ffeeea;
+  border-radius: 5px;
+  padding: 10px;
+  color: #51354b;
+  width: 60%;
+  outline: none;
+  color: #ff5a2f;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.footer div:nth-child(2) {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.footer div:nth-child(2) div:first-child {
+  width: 50%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer div:nth-child(2) div:first-child button {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #51354b;
+  width: 80%;
+}
+
+.footer div:nth-child(2) div:nth-child(2) button {
+  background-color: #ff5a2f;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  padding: 10px;
+  color: #ffffff;
+  width: 80%;
+}
+
+.footer div:nth-child(2) div:nth-child(2) {
+  width: 50%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */

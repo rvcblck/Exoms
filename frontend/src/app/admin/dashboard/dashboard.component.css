@@ -64,6 +64,11 @@
   height: 70%;
 }
 
+.dateTime {
+  display: flex;
+  flex-direction: column;
+}
+
 .date {
   padding: 20px;
   width: 50%;
@@ -82,14 +87,14 @@
   justify-content: center;
 }
 
-.date div:nth-child(2) {
+.dateTime div:nth-child(1) {
   line-height: 60px;
   height: min-content;
   font-size: 50px;
   font-weight: bolder;
 }
 
-.date div:nth-child(3) {
+.dateTime div:nth-child(2) {
   line-height: 25px;
   font-size: 20px;
   font-weight: 800;
@@ -348,24 +353,34 @@
   border-radius: 10px;
 }
 
-/* .chart-wrapper div:nth-child(2) {
+.chart-btn-mobile {
+  display: none;
+}
+
+.chart-wrapper .progchart {
   width: 80%;
   min-height: calc(40vh + 60px);
   padding: 30px;
 }
-.chart-wrapper div:nth-child(1) {
+.chart-wrapper .nxt-div {
   width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-.chart-wrapper div:nth-child(3) {
+.chart-wrapper .pre-div {
   width: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-} */
+}
+
+.previous-wrapper,
+.next-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .pie-wrapper div {
   width: 100%;
@@ -448,7 +463,7 @@
 }
 
 /* Tablet screens */
-@media only screen and (min-width: 768px) and (max-width: 1199px) {
+@media only screen and (min-width: 540px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
   .cont-faculty {
     display: none;
@@ -469,7 +484,7 @@
     width: 65%;
   }
 
-  .date div:nth-child(2) {
+  /* .date div:nth-child(2) {
     line-height: 40px;
     height: min-content;
     font-size: 30px;
@@ -480,7 +495,7 @@
     line-height: 20px;
     font-size: 18px;
     font-weight: 600;
-  }
+  } */
 
   /* .cont-faculty.second {
     display: block;
@@ -494,7 +509,7 @@
 }
 
 /* Phone screens */
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 540px) {
   /* Styles for phone screens go here */
   .cont-faculty {
     display: none;
@@ -544,38 +559,6 @@
     font-weight: 600;
   }
 
-  /* .date {
-    padding: 20px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  } */
-
-  /* .date img {
-    aspect-ratio: 1/1;
-    width: 100%;
-  }
-
-  .date div {
-    display: flex;
-    justify-content: center;
-  }
-
-  .date div:nth-child(2) {
-    line-height: 60px;
-    height: min-content;
-    font-size: 50px;
-    font-weight: bolder;
-  }
-
-  .date div:nth-child(3) {
-    line-height: 25px;
-    font-size: 20px;
-    font-weight: 800;
-  } */
-
-  /* warn  */
   .qoute {
     padding: 0px 20px 20px 20px;
     width: 100%;
@@ -591,11 +574,6 @@
   .partner-wrapper {
     width: 100%;
   }
-
-  /* .chart-wrapper div:nth-child(3),
-  .chart-wrapper div:nth-child(1) {
-    width: 5%;
-  } */
 
   .prog-status {
     padding: 10px;
@@ -652,29 +630,6 @@
     font-size: 15px;
     padding: 10px;
   }
-  /*
-  .qoute div:nth-child(4) {
-    line-height: 18px;
-    font-size: 15px;
-    padding: 10px;
-  }
-  .date img {
-    aspect-ratio: 1/1;
-    width: 80%;
-  } */
-  /*
-  .date div:nth-child(2) {
-    line-height: 40px;
-    height: min-content;
-    font-size: 30px;
-    font-weight: bolder;
-  } */
-
-  /* .date div:nth-child(3) {
-    line-height: 20px;
-    font-size: 18px;
-    font-weight: 600;
-  } */
 
   .cont-faculty-mobile {
     display: block;
@@ -702,7 +657,7 @@
 
   .pre-div,
   .nxt-div {
-    display: none;
+    display: none !important;
   }
 
   .chart-btn-mobile {
@@ -710,7 +665,7 @@
     justify-content: space-between;
     display: flex;
     flex-direction: row;
-    height: 60px;
+    height: 40px;
     margin: 0;
   }
 
@@ -735,10 +690,15 @@
 
   ::ng-deep .canvasjs-chart-canvas {
     height: 40vh !important;
+    width: 100%;
   }
 
   ::ng-deep .canvasjs-chart-credit {
     display: none !important;
+  }
+  .progchart {
+    width: 100% !important;
+    padding: 5px !important;
   }
 
   .partner-wrapper {

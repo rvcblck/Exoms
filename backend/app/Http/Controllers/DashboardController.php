@@ -226,7 +226,7 @@ class DashboardController extends Controller
 
         $user = User::with('programs')->where('user_id',$user_id)->first();
 
-        // foreach($users as $user){
+
             $programs = $user->programs()->get();
             $ongoing = 0;
             $upcoming = 0;
@@ -244,146 +244,81 @@ class DashboardController extends Controller
                 }
             }
 
-            $total = $ongoing + $upcoming + $previous;
+            $allPrograms = $user->programs()->get();
 
-            $fullName = $user->fname.' '.$user->lname;
-
-            $userData [] = [
-                'user_id' => $user->user_id,
-                'fullName' => $fullName,
-                'email' => $user->email,
-                'total' => $total
-            ];
-        // }
-
-        usort($userData, function($a, $b) {
-            return $b['total'] <=> $a['total'];
-        });
-
-        $userData = array_slice($userData, 0, 5);
+            $allOngoing = 0;
+            $allUpcoming = 0;
+            $allPrevious = 0;
 
 
+            foreach($allPrograms as $allProgram){
 
+                $endDate = Carbon::parse($allProgram->end_date);
+                $startDate = Carbon::parse($allProgram->start_date);
+                if($endDate->lt($now)){
+                    $allPrevious++;
+                }else if($startDate->gt($now)){
+                    $allUpcoming++;
+                }else{
+                    $allOngoing++;
+                }
 
-
-
-        $allPrograms = $user->programs()->get();
-
-        $allOngoing = 0;
-        $allUpcoming = 0;
-        $allPrevious = 0;
-
-
-        foreach($allPrograms as $allProgram){
-
-            $endDate = Carbon::parse($allProgram->end_date);
-            $startDate = Carbon::parse($allProgram->start_date);
-            if($endDate->lt($now)){
-                $allPrevious++;
-            }else if($startDate->gt($now)){
-                $allUpcoming++;
-            }else{
-                $allOngoing++;
             }
 
-        }
-
-        $programData = [
-            'ongoing' => $allOngoing,
-            'upcoming' => $allUpcoming,
-            'previous' => $allPrevious
-        ];
+            $programData = [
+                'ongoing' => $allOngoing,
+                'upcoming' => $allUpcoming,
+                'previous' => $allPrevious
+            ];
 
 
 
 
+        $users = User::with('programs')->get();
+
+            foreach($users as $user){
+                $programs = $user->programs()->get();
+                $ongoing = 0;
+                $upcoming = 0;
+                $previous = 0;
+
+                foreach($programs as $program){
+                    $endDate = Carbon::parse($program->end_date);
+                    $startDate = Carbon::parse($program->start_date);
+                    if($endDate->lt($now)){
+                        $previous++;
+                    }else if($startDate->gt($now)){
+                        $upcoming++;
+                    }else{
+                        $ongoing++;
+                    }
+                }
+
+                $total = $ongoing + $upcoming + $previous;
+
+                $fullName = $user->fname.' '.$user->lname;
+
+                $userData [] = [
+                    'user_id' => $user->user_id,
+                    'fullName' => $fullName,
+                    'email' => $user->email,
+                    'total' => $total
+                ];
+            }
+
+            usort($userData, function($a, $b) {
+                return $b['total'] <=> $a['total'];
+            });
+
+            $userData = array_slice($userData, 0, 5);
 
 
 
-        // $approve = 0;
-        // $rejected = 0;
-        // $pending = 0;
-        // $disapprove = 1;
+            $dashboardData = [
+                'program_count' => $programData,
+                'faculty' => $userData,
 
-        // $statusUsers = User::get();
-
-        // foreach($statusUsers as $statusUser){
-        //     if($statusUser->status === 'approve'){
-        //         $approve++;
-        //     }elseif($statusUser->status === 'pending'){
-        //         $pending++;
-        //     }else{
-        //         $rejected++;
-        //     }
-
-
-
-        // }
-
-
-
-        // $statusData = [
-        //     'approved' => $approve,
-        //     'pending' => $pending,
-        //     'disapproved' => $rejected,
-        // ];
-
-        // $statusDataTransformed = array_map(function($key, $value) {
-        //     return ['y' => $value, 'name' => ucfirst($key)];
-        // }, array_keys($statusData), $statusData);
-
-
-        //where('end_date','2023-05-05')->
-        // $contracts = Contract::get();
-
-        // $expireData = [];
-
-        // foreach ($contracts as $contract) {
-        //     $endDate1 = Carbon::parse($contract->end_date);
-        //     $endDate2 = Carbon::parse($contract->end_date);
-
-
-        //     $beforeEndDate = $endDate1->subMonth(1);
-
-
-
-
-        //     if (($beforeEndDate->lt(now('Asia/Manila')) == true) && ($endDate2->gt(now('Asia/Manila')) == true)) {
-
-
-        //         $partner = Partner::where('partner_id',$contract->partner_id)->first();
-
-        //         $expireData [] = [
-        //             'partner_id' => $partner->partner_id,
-        //             'partner_name' => $partner->company_name,
-        //             'end_date' => $contract->end_date
-        //         ];
-        //     }
-
-
-        // }
-
-
-
-
-
-        $dashboardData = [
-            'program_count' => $programData,
-            'faculty' => $userData,
-            // 'user_status' => $statusDataTransformed,
-            // 'expire_data' => $expireData
-
-        ];
-
-
-
-
-
-
-
-
-
-
+            ];
 
 
 

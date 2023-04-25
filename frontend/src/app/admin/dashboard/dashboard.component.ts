@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
       if(author){
         this.author = author;
       }
-      
+
     }
 
     this.getDashboard();

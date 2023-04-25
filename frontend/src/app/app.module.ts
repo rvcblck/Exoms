@@ -62,7 +62,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ChangeEmailComponent } from './admin/modal/change-email/change-email.component';
 import { ChangePasswordComponent } from './admin/modal/change-password/change-password.component';
 import { EditImgComponent } from './admin/modal/edit-img/edit-img.component';
-import { NgChartsModule } from 'ng2-charts';
+// import { NgChartsModule } from 'ng2-charts';
 
 // import { ChartsModule } from 'ng2-charts';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -137,7 +137,7 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     MatChipsModule,
     MatProgressBarModule,
     MatStepperModule,
-    NgChartsModule
+    // NgChartsModule
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],
   entryComponents: [AccountInfoComponent],

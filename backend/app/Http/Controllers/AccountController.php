@@ -103,7 +103,7 @@ class AccountController extends Controller
         $accountIds = $request->input('accountIds');
         foreach ($accountIds as $accountId) {
         $account = User::find($accountId);
-        $account->status = 'approved';
+        $account->status = 'approve';
         $account->save();
         }
         return response()->json(['message' => 'Accounts approved successfully']);
@@ -118,7 +118,7 @@ class AccountController extends Controller
         if($accountIds){
             foreach ($accountIds as $accountId) {
                 $account = User::find($accountId);
-                $account->status = 'disapproved';
+                $account->status = 'rejected';
                 $account->save();
             }
         }else{

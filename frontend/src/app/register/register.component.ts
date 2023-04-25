@@ -12,23 +12,27 @@ export class RegisterComponent implements OnInit {
   errors: any = [];
   submitted = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      fname: ['', [Validators.required]],
-      lname: ['', [Validators.required]],
-      mname: [''],
-      suffix: [''],
-      gender: ['', [Validators.required]],
-      bday: ['', [Validators.required]],
-      mobile_no: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password_confirmation: ['', Validators.required],
-      city: ['', [Validators.required]],
-      province: ['', [Validators.required]],
-    }, { validators: [this.passwordMatchValidator] });
+    this.registerForm = this.fb.group(
+      {
+        fname: ['', [Validators.required]],
+        lname: ['', [Validators.required]],
+        mname: [''],
+        suffix: [''],
+        gender: ['', [Validators.required]],
+        bday: ['', [Validators.required]],
+        mobile_no: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        password_confirmation: ['', Validators.required],
+        barangay: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        province: ['', [Validators.required]]
+      },
+      { validators: [this.passwordMatchValidator] }
+    );
   }
 
   onSubmit(): void {
@@ -36,7 +40,6 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-
 
     const formattedData = {
       fname: this.registerForm.get('fname')?.value,
@@ -48,8 +51,8 @@ export class RegisterComponent implements OnInit {
       mobile_no: this.registerForm.get('mobile_no')?.value,
       email: this.registerForm.get('email')?.value,
       password: this.registerForm.get('password')?.value,
-      address : this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
-
+      address:
+        this.registerForm.get('barangay')?.value + ', ' + this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
     };
 
     this.authService.register(formattedData).subscribe(
@@ -69,8 +72,8 @@ export class RegisterComponent implements OnInit {
     const password_confirmation = control.get('password_confirmation');
 
     if (password && password_confirmation && password.value !== password_confirmation.value) {
-      password_confirmation.setErrors({ 'passwordMismatch': true });
-      return { 'passwordMismatch': true };
+      password_confirmation.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
     } else {
       if (password_confirmation) {
         // remove the passwordMismatch error

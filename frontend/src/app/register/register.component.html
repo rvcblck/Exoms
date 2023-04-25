@@ -1,37 +1,37 @@
-
 <div class="container">
   <div class="content">
-    <div class="line">
-
-    </div>
+    <div class="line"></div>
     <h1>Register</h1>
     <mat-stepper #stepper>
-      <mat-step [stepControl]="registerForm" >
+      <mat-step [stepControl]="registerForm">
         <ng-template matStepLabel>Page 1</ng-template>
         <form [formGroup]="registerForm">
           <div class="user-info row">
             <div class="form-group col-sm">
               <label for="fname">First Name</label>
-              <input type="text" class="form-control" id="fname" formControlName="fname">
-              <div *ngIf="submitted && registerForm.controls['fname'].errors?.['required']" class="text-danger">First name is required.</div>
+              <input type="text" class="form-control" id="fname" formControlName="fname" />
+              <mat-error *ngIf="submitted && registerForm.controls['fname'].errors?.['required']" class="text-danger"
+                >First name is required.</mat-error
+              >
+            </div>
+            <div class="form-group col-sm">
+              <label for="mname">Middle Initial</label>
+              <input type="text" class="form-control" id="mname" formControlName="mname" />
             </div>
             <div class="form-group col-sm">
               <label for="lname">Last Name</label>
-              <input type="text" class="form-control" id="lname" formControlName="lname">
-              <div *ngIf="submitted && registerForm.controls['lname'].errors?.['required']" class="text-danger">Last name is required.</div>
+              <input type="text" class="form-control" id="lname" formControlName="lname" />
+              <mat-error *ngIf="submitted && registerForm.controls['lname'].errors?.['required']" class="text-danger"
+                >Last name is required.</mat-error
+              >
             </div>
-  
-            <div class="form-group col-sm">
-              <label for="mname">Middle Name</label>
-              <input type="text" class="form-control" id="mname" formControlName="mname">
-            </div>
-  
+
             <div class="form-group col-sm-2">
               <label for="suffix">Suffix</label>
-              <input type="text" class="form-control" id="suffix" formControlName="suffix">
+              <input type="text" class="form-control" id="suffix" formControlName="suffix" />
             </div>
           </div>
-          
+
           <div class="user-info row">
             <div class="form-group col-sm">
               <label for="gender">Gender</label>
@@ -40,79 +40,93 @@
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
-              <div *ngIf="submitted && registerForm.controls['gender'].errors?.['required']" class="text-danger">Gender is required.</div>
+              <mat-error *ngIf="submitted && registerForm.controls['gender'].errors?.['required']" class="text-danger">Gender is required.</mat-error>
             </div>
             <div class="form-group col-sm">
               <label for="bday">Birthday</label>
-              <input type="date" class="form-control" id="bday" formControlName="bday">
-              <div *ngIf="submitted && registerForm.controls['bday'].errors?.['required']" class="text-danger">Birthday is required.</div>
+              <input type="date" class="form-control bday" id="bday" formControlName="bday" />
+              <mat-error *ngIf="submitted && registerForm.controls['bday'].errors?.['required']" class="text-danger">Birthday is required.</mat-error>
             </div>
-  
+
             <div class="form-group col-sm">
               <label for="mobile_no">Mobile Number</label>
-              <input type="text" class="form-control" id="mobile_no" formControlName="mobile_no">
-              <div *ngIf="submitted && registerForm.controls['mobile_no'].errors?.['required']" class="text-danger">Mobile Number is required.</div>
+              <input type="text" class="form-control" id="mobile_no" formControlName="mobile_no" />
+              <mat-error *ngIf="submitted && registerForm.controls['mobile_no'].errors?.['required']" class="text-danger"
+                >Mobile Number is required.</mat-error
+              >
             </div>
           </div>
 
           <div class="user-info row">
             <div class="form-group col-sm">
-              <label for="city">City</label>
-              <input type="text" class="form-control" id="city" formControlName="city">
-              <div *ngIf="submitted && registerForm.controls['city'].errors?.['required']">City is required.</div>
+              <label for="barangay">Barangay</label>
+              <input type="text" class="form-control" id="barangay" formControlName="barangay" />
+              <mat-error *ngIf="submitted && registerForm.controls['barangay'].errors?.['required']">Barangay is required.</mat-error>
             </div>
-  
+
+            <div class="form-group col-sm">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" formControlName="city" />
+              <mat-error *ngIf="submitted && registerForm.controls['city'].errors?.['required']">City is required.</mat-error>
+            </div>
+
             <div class="form-group col-sm">
               <label for="address">Province</label>
-              <input type="text" class="form-control" id="province" formControlName="province">
-              <div *ngIf="submitted && registerForm.controls['province'].errors?.['required']">Address is required.</div>
+              <input type="text" class="form-control" id="province" formControlName="province" />
+              <mat-error *ngIf="submitted && registerForm.controls['province'].errors?.['required']">Province is required.</mat-error>
             </div>
           </div>
           <button matStepperNext>Next</button>
         </form>
       </mat-step>
 
-      <mat-step [stepControl]="registerForm" >
+      <mat-step [stepControl]="registerForm">
         <ng-template matStepLabel>Page 2</ng-template>
         <div class="user-info row">
           <div class="col-sm">
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" formControlName="email">
-                <div *ngIf="submitted && registerForm.controls['email'].errors?.['required']" class="text-danger">Email is required.</div>
-                <div *ngIf="submitted && registerForm.controls['email'].errors?.['email']" class="text-danger">Invalid email address.</div>
-                <div *ngIf="errors.length > 0 && errors[0] === 'Email is already registered'" class="text-danger">Email is already registered.</div>
+                <input type="email" class="form-control" id="email" formControlName="email" />
+                <mat-error *ngIf="submitted && registerForm.controls['email'].errors?.['required']" class="text-danger">Email is required.</mat-error>
+                <mat-error *ngIf="submitted && registerForm.controls['email'].errors?.['email']" class="text-danger"
+                  >Invalid email address.</mat-error
+                >
+                <mat-error *ngIf="errors.length > 0 && errors[0] === 'Email is already registered'" class="text-danger"
+                  >Email is already registered.</mat-error
+                >
               </div>
-      
+
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" formControlName="password" required minlength="6">
+                <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" />
                 <div *ngIf="submitted && registerForm.controls['password'].errors">
-                  <div *ngIf="registerForm.controls['password'].errors['required']">Password is required</div>
-                  <div *ngIf="registerForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</div>
+                  <mat-error *ngIf="registerForm.controls['password'].errors['required']">Password is required</mat-error>
+                  <mat-error *ngIf="registerForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</mat-error>
                 </div>
               </div>
-      
+
               <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required>
-      
-                <div *ngIf="(submitted || registerForm.get('password_confirmation')?.touched) && registerForm.hasError('passwordMismatch')" class="text-danger">
-                  <div *ngIf="registerForm.get('password_confirmation')?.hasError('required')">Please confirm your password</div>
-                  <div *ngIf="registerForm.get('password_confirmation')?.hasError('passwordMismatch')">Passwords do not match</div>
+                <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required />
+
+                <div
+                  *ngIf="(submitted || registerForm.get('password_confirmation')?.touched) && registerForm.hasError('passwordMismatch')"
+                  class="text-danger"
+                >
+                  <mat-error *ngIf="registerForm.get('password_confirmation')?.hasError('required')">Please confirm your password</mat-error>
+                  <mat-error *ngIf="registerForm.get('password_confirmation')?.hasError('passwordMismatch')">Passwords do not match</mat-error>
                 </div>
               </div>
               <button matStepperPrevious>Back</button>
-              <button type="submit" >Register</button>
+              <button type="submit">Register</button>
             </form>
-          </div>     
+          </div>
           <div class="col-sm bg-image">
-            <img src="../../assets/images/files_1299260_1248477_creativity_pana-fcda71bf0ffda1000253c3a458cdfc1b.png" alt="">
+            <img src="../../assets/images/files_1299260_1248477_creativity_pana-fcda71bf0ffda1000253c3a458cdfc1b.png" alt="" />
           </div>
         </div>
       </mat-step>
     </mat-stepper>
   </div>
 </div>
-

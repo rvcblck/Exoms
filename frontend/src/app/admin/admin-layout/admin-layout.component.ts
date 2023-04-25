@@ -169,4 +169,8 @@ export class AdminLayoutComponent implements OnInit {
       }
     });
   }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 }

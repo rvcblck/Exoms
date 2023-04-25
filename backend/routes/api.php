@@ -115,6 +115,8 @@ Route::post('/program-file',[ImageController::class,'getProgramFiles'])->middlew
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
 Route::get('/dashboard-chart/{month}',[DashboardController::class, 'dashboardChart']);
+Route::get('/user-dashboard/{user_id}',[DashboardController::class, 'userDashboardChart']);
+Route::post('/user-dashboard-chart',[DashboardController::class, 'userProgramChart']);
 
 
 

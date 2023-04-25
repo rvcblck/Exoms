@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="add-new">
+    <div class="add-new" *ngIf="isAdmin()">
       <button (click)="addProgram()">Add New</button>
     </div>
   </div>
@@ -44,6 +44,9 @@
 <div class="program-list">
   <div class="program-card" matRipple *ngFor="let program of filteredPrograms()" (click)="viewProgram(program.program_id)">
     <div>
+      <div *ngIf="!isAdmin()" class="btn-attendance" matRippleDisabled>
+        <button (click)="onAttendanceClick($event, program.program_id)"><i class="fa-solid fa-user-check"></i>&nbsp;Attendance</button>
+      </div>
       <div class="title">{{ program.title }}</div>
       <div class="subtitle" [ngStyle]="{ color: program.status === 'Ongoing' ? '#00c519' : '#ff5a2f' }">
         <i class="bx bx-loader-circle"></i>&nbsp;&nbsp;{{ program.status }}

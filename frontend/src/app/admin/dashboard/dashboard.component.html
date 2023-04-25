@@ -4,10 +4,12 @@
       <div class="message">
         <div class="date">
           <div><img src="../../assets/images/qoute.png" alt="" /></div>
-          <div>
-            {{ currentDate | date : 'h:mm' }} &nbsp; <span style="font-size: 20px">{{ currentDate | date : 'a' }}</span>
+          <div class="dateTime">
+            <div>
+              {{ currentDate | date : 'h:mm' }} &nbsp; <span style="font-size: 20px">{{ currentDate | date : 'a' }}</span>
+            </div>
+            <div>{{ currentDate | date : 'MMMM d,  y' }}</div>
           </div>
-          <div>{{ currentDate | date : 'MMMM d,  y' }}</div>
         </div>
         <div class="qoute">
           <div>Good {{ timeOfDay === 'morning' ? 'Morning' : timeOfDay === 'afternoon' ? 'Afternoon' : 'Evening' }}!</div>
@@ -71,20 +73,26 @@
   </div>
   <div class="cont">
     <div class="chart-wrapper">
-      <div>
-        <div matRipple (click)="previous()" class="previous-wrapper">
-          <i class="fa-solid fa-chevron-left"></i>
+      <div class="chart-btn-mobile">
+        <div>
+          <div matRipple (click)="previous()" class="previous-wrapper"><i class="fa-solid fa-chevron-left"></i></div>
         </div>
+        <div>
+          <div matRipple (click)="next()" class="next-wrapper"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+      </div>
+      <div class="pre-div">
+        <div matRipple (click)="previous()" class="previous-wrapper"><i class="fa-solid fa-chevron-left"></i></div>
       </div>
       <div>
         <canvasjs-chart *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
       </div>
-      <div>
+      <div class="nxt-div">
         <div matRipple (click)="next()" class="next-wrapper"><i class="fa-solid fa-chevron-right"></i></div>
       </div>
     </div>
   </div>
-  <div class="cont">
+  <div *ngIf="isAdmin()" class="cont">
     <div class="pie-wrapper">
       <div>
         <canvasjs-chart [options]="userChartOptions"></canvasjs-chart>
@@ -114,7 +122,7 @@
       </div>
     </div>
   </div>
-  <div class="cont">
+  <div *ngIf="isAdmin()" class="cont">
     <div class="cont-faculty-mobile">
       <div class="faculty">
         <label for="">Top 5 Faculty</label>

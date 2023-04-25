@@ -343,4 +343,19 @@ input::placeholder {
     align-items: center;
     width: 100%;
   }
+
+  .extend .date .start-date {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .extend .date .end-date {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .extend .date .date-btn {
+    width: 100%;
+    padding: 10px;
+  }
 }

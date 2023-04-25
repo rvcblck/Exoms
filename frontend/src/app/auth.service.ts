@@ -80,6 +80,7 @@ export class AuthService {
     localStorage.removeItem('email');
     localStorage.removeItem('quote');
     localStorage.removeItem('author');
+    localStorage.removeItem('user_id');
     this.router.navigate(['/login']);
   }
 

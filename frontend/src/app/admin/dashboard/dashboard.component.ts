@@ -15,6 +15,7 @@ import { Observable, map } from 'rxjs';
 import { PartnerService } from 'src/app/partner.service';
 import { ViewPartnerComponent } from '../modal/view-partner/view-partner.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +31,8 @@ export class DashboardComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private dialog: MatDialog,
-    private partnerService: PartnerService
+    private partnerService: PartnerService,
+    private authService: AuthService
   ) {
     // Chart.register(Annotation);
   }
@@ -76,14 +78,13 @@ export class DashboardComponent implements OnInit {
     } else {
       // console.log(meron)
       const quote = localStorage.getItem('quote');
-      if(quote){
+      if (quote) {
         this.quote = quote;
       }
       const author = localStorage.getItem('author');
-      if(author){
+      if (author) {
         this.author = author;
       }
-      
     }
 
     this.getDashboard();
@@ -130,34 +131,73 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboard(): void {
-    this.dashboardService.getDashboard().subscribe(
-      (programs) => {
-        this.dashboard = programs;
-        console.log('Programs retrieved successfully');
-        this.getImages();
-        this.getChart();
-        this.getUserChart();
-      },
-      (error) => {
-        console.error('Error retrieving programs:', error);
-      }
-    );
-  }
-  getChart(): void {
-    const month = localStorage.getItem('month');
-    console.log(month);
-    if (month) {
-      this.dashboardService.getProgramChart(month).subscribe(
+    if (this.isAdmin()) {
+      this.dashboardService.getDashboard().subscribe(
         (programs) => {
-          this.programChart = programs;
-          console.log(programs);
-          this.getProgramChart();
+          this.dashboard = programs;
           console.log('Programs retrieved successfully');
+          this.getImages();
+          this.getChart();
+          this.getUserChart();
         },
         (error) => {
           console.error('Error retrieving programs:', error);
         }
       );
+    } else {
+      const user_id = localStorage.getItem('user_id');
+      if (user_id) {
+        this.dashboardService.getUserDashboard(user_id).subscribe(
+          (programs) => {
+            this.dashboard = programs;
+            console.log('Programs retrieved successfully');
+            this.getImages();
+            this.getChart();
+            this.getUserChart();
+          },
+          (error) => {
+            console.error('Error retrieving programs:', error);
+          }
+        );
+      }
+    }
+  }
+  getChart(): void {
+    const month = localStorage.getItem('month');
+    console.log(month);
+    if (this.isAdmin()) {
+      if (month) {
+        this.dashboardService.getProgramChart(month).subscribe(
+          (programs) => {
+            this.programChart = programs;
+            console.log(programs);
+            this.getProgramChart();
+            console.log('Programs retrieved successfully');
+          },
+          (error) => {
+            console.error('Error retrieving programs:', error);
+          }
+        );
+      }
+    } else {
+      const user_id = localStorage.getItem('user_id');
+      if (user_id) {
+        const userChart = {
+          user_id: user_id,
+          month: month
+        };
+        this.dashboardService.getUserProgramChart(userChart).subscribe(
+          (programs) => {
+            this.programChart = programs;
+            console.log(programs);
+            this.getProgramChart();
+            console.log('Programs retrieved successfully');
+          },
+          (error) => {
+            console.error('Error retrieving programs:', error);
+          }
+        );
+      }
     }
   }
 
@@ -266,5 +306,9 @@ export class DashboardComponent implements OnInit {
         console.log('Error:', error);
       }
     );
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }

@@ -33,37 +33,31 @@ export class ViewPartnerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.data.partner);
-    this.viewFiles();
-  }
+  ngOnInit(): void {}
 
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.moaFileName && this.moaFileSize) {
+        this.moaFileName.nativeElement.innerHTML = this.data.partner.moaFile_content.fileName;
+        this.moaFileSize.nativeElement.innerHTML = (this.data.partner.moaFile_content.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
+        console.log('tae', this.data.partner);
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
-
-  editProgram(partner_id: string) {
-    this.dialogRef.close();
-    this.partnerService.getPartnerInfo(partner_id).subscribe(
-      (partner) => {
-        const dialogRef = this.dialog.open(CreatePartnerComponent, {
-          data: { partner: partner },
-          maxWidth: '90%',
-          minWidth: '40%'
-        });
-      },
-      (error) => {
-        console.log('Error:', error);
+        const extension = this.data.partner.moaFile_content.fileExt;
+        const invIcon = document.getElementById('moaIcon');
+        if (invIcon) {
+          if (extension === 'pdf') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f;"></i>';
+          } else if (extension === 'docx') {
+            invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f;"></i>';
+          } else {
+            invIcon.innerHTML = '';
+          }
+        }
       }
-    );
-
-    // call the edit page
+    }, 0);
   }
+
+  viewFiles() {}
 
   dlMoa() {
     this.imageService.downloadMoaFile(this.data.partner.partner_id).subscribe((response) => {
@@ -77,26 +71,9 @@ export class ViewPartnerComponent implements OnInit {
     });
   }
 
-  viewFiles() {
-    setTimeout(() => {
-      this.moaFileName.nativeElement.innerHTML = this.data.partner.moaFile_content.fileName;
-    }, 0);
-    setTimeout(() => {
-      this.moaFileSize.nativeElement.innerHTML = (this.data.partner.moaFile_content.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
-    }, 0);
-    setTimeout(() => {
-      const extension = this.data.partner.moaFile_content.fileExt;
-      const invIcon = document.getElementById('moaIcon');
-      if (invIcon) {
-        if (extension === 'pdf') {
-          invIcon.innerHTML = '<i class="fa-regular fa-file-pdf" style="color: #ff5a2f;"></i>';
-        } else if (extension === 'docx') {
-          invIcon.innerHTML = '<i class="fa-regular fa-file-word" style="color: #ff5a2f;"></i>';
-        } else {
-          invIcon.innerHTML = '';
-        }
-      }
-    }, 0);
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
   }
 
   onSubmit(): void {
@@ -143,5 +120,27 @@ export class ViewPartnerComponent implements OnInit {
         // TODO: Handle error
       }
     );
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  editProgram(partner_id: string) {
+    this.dialogRef.close();
+    this.partnerService.getPartnerInfo(partner_id).subscribe(
+      (partner) => {
+        const dialogRef = this.dialog.open(CreatePartnerComponent, {
+          data: { partner: partner },
+          maxWidth: '90%',
+          minWidth: '40%'
+        });
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
+
+    // call the edit page
   }
 }

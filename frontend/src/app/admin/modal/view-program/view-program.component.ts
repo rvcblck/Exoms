@@ -7,6 +7,7 @@ import { ProgramService } from 'src/app/program.service';
 import { CreateProgramComponent } from '../create-program/create-program.component';
 import { forkJoin } from 'rxjs';
 import { ImageService } from 'src/app/image.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-view-program',
@@ -25,7 +26,8 @@ export class ViewProgramComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { program: ViewProgram },
     private programService: ProgramService,
     private dialog: MatDialog,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +81,6 @@ export class ViewProgramComponent implements OnInit {
       }
     }, 0);
   }
-
 
   downloadInvitation() {
     this.imageService.downloadFile(this.data.program.program_id).subscribe((response) => {
@@ -142,5 +143,9 @@ export class ViewProgramComponent implements OnInit {
         console.log('Error:', error);
       }
     );
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }

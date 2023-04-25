@@ -343,6 +343,36 @@
   overflow: hidden; /* Hides overflow */
 }
 
+.btn-attendance {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+
+.btn-attendance button {
+  width: 87px;
+  height: 23px;
+  border: none;
+  border-radius: 2px;
+  fill: #3689ff;
+  font-family: Assistant;
+  font-size: 12px;
+  margin-left: 5px;
+  color: #3689ff;
+  text-decoration: none solid rgb(54, 137, 255);
+  text-align: right;
+}
+.btn-attendance button:hover {
+  background-color: #ff5a2f;
+  color: white;
+  transition: 0.5s;
+}
+.btn-attendance button i {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+}
+
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
   .program-card {

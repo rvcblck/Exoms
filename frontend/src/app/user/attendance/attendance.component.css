@@ -42,6 +42,9 @@ form button{
   color: white;
   margin: 10px 5px;
   float: right;
+  border-radius: 10px;
+  padding: 2px 10px;
+  width: 100%;
 }
 .btn-save {
   width: 130px;
@@ -217,18 +220,16 @@ form input{
   .filter{
     margin-right: 20px;
   }
-  .container{
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    overflow: auto;
-  }
   .sort .filter, .sort .search{
     display: none;
   }
   table{
     margin-top: 45px;
     box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    overflow: auto;
   }
   td{
     white-space: nowrap;
@@ -238,7 +239,58 @@ form input{
   }
   .form{
     position: absolute;
-    top: 155px;
-    left: 87px;
+    top: 125px;
+    left: 76px;
+    width: 60%;
+  }
+  .form form{
+    position: relative;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+  }
+  form button{
+    background-color: #ff5a2f;
+    border: 2px solid  #ff5a2f;
+    color: white;
+    margin: 10px 5px;
+    float: right;
+    padding: 0px;
   }
 }
+@media only screen and (max-width: 500px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  .form{
+    position: absolute;
+    top: 155px;
+    left: 76px;
+    width: 60%;
+  }
+  .form form{
+    position: relative;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  .form{
+    position: absolute;
+    top: 130px;
+    left: 76px;
+    width: 60%;
+  }
+  .form form{
+    position: relative;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+  }
+}
+
+

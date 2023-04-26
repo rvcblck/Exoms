@@ -49,13 +49,13 @@
     <!-- Add Column Button Column -->
     <ng-container matColumnDef="add">
       <th mat-header-cell *matHeaderCellDef >
-        <div *ngIf="showAddDateForm">
-          <form (ngSubmit)="addDate()" class="form">
+        <div *ngIf="showAddDateForm" class="form">
+          <form (ngSubmit)="addDate()" >
             <div class="datePick">
               <input matInput type="date" name="newDate" [(ngModel)]="newDate" />
             </div>
-            <button mat-raised-button type="submit">Add</button>
-            <button mat-raised-button (click)="showAddDateForm = false; showAddButton = true">Cancel</button>
+            <button  type="submit">Add</button>
+            <button  (click)="showAddDateForm = false; showAddButton = true">Cancel</button>
           </form>
         </div>
       </th>

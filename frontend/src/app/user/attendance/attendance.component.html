@@ -28,6 +28,17 @@
       <ng-container *ngIf="showAddButton">
         <button mat-raised-button (click)="showAddDateForm = true; showAddButton = false">Add Column</button>
       </ng-container>
+
+      <div class="btn-add" *ngIf="!showAddButton">
+        <form (ngSubmit)="addDate()" >
+          <div class="datePick">
+            <input matInput type="date" name="newDate" [(ngModel)]="newDate" />
+          </div>
+          <button  type="submit">Add</button>
+          <button  (click)="showAddDateForm = false; showAddButton = true">Cancel</button>
+        </form>
+        
+      </div>
     </div>
   </div>
 
@@ -49,15 +60,15 @@
     <!-- Add Column Button Column -->
     <ng-container matColumnDef="add">
       <th mat-header-cell *matHeaderCellDef >
-        <div *ngIf="showAddDateForm" class="form">
+        <!-- <div *ngIf="showAddDateForm" class="form">
           <form (ngSubmit)="addDate()" >
             <div class="datePick">
               <input matInput type="date" name="newDate" [(ngModel)]="newDate" />
             </div>
-            <button  type="submit">Add</button>
-            <button  (click)="showAddDateForm = false; showAddButton = true">Cancel</button>
           </form>
-        </div>
+          <button  type="submit">Add</button>
+          <button  (click)="showAddDateForm = false; showAddButton = true">Cancel</button>
+        </div> -->
       </th>
       <td mat-cell *matCellDef="let row"></td>
     </ng-container>

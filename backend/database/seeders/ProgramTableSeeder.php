@@ -26,7 +26,7 @@ class ProgramTableSeeder extends Seeder
         $startDate = $faker->dateTimeBetween('2023-02-01', '2023-07-31');
         $program->start_date = $startDate;
         $endDate = clone $startDate;
-        $endDate->modify('+' . random_int(3, 5) . ' weeks');
+        $endDate->modify('+' . random_int(0,2) . ' days');
         $program->end_date = $endDate;
         $program->place = $faker->address;
         $program->details = $faker->paragraph(2);

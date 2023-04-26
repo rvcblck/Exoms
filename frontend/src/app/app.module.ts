@@ -69,6 +69,7 @@ import { EditImgComponent } from './admin/modal/edit-img/edit-img.component';
 // import { StepperProgressBarModule } from 'stepper-progress-bar'
 
 import * as CanvasJSAngularChart from '../assets/js/canvasjs/canvasjs.angular.component';
+import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -105,7 +106,8 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     ChangeEmailComponent,
     ChangePasswordComponent,
     EditImgComponent,
-    CanvasJSChart
+    CanvasJSChart,
+    ProgTopicComponent
   ],
   imports: [
     BrowserModule,

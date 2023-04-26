@@ -39,5 +39,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ParticipantTableSeeder::class);
         $this->call(LeaderSeeder::class);
         $this->call(AdminAccountSeeder::class);
+        $this->call(TopicTableSeeder::class);
+        $this->call(FlowTableSeeder::class);
+        $this->call(PositionTableSeeder::class);
+        $this->call(AttendanceTableSeeder::class);
     }
 }

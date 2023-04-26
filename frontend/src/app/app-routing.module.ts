@@ -19,6 +19,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ExtensionComponent } from './user/extension/extension.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { ProgFlowComponent } from './user/prog-flow/prog-flow.component';
+import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 
 const routes: Routes = [
   {
@@ -132,6 +134,16 @@ const routes: Routes = [
       {
         path: 'user-profile',
         component: AdminProfileComponent,
+        canActivate: [AuthGuard, UserGuard]
+      },
+      {
+        path: 'program-flow',
+        component: ProgFlowComponent,
+        canActivate: [AuthGuard, UserGuard]
+      },
+      {
+        path: 'program-topic',
+        component: ProgTopicComponent,
         canActivate: [AuthGuard, UserGuard]
       }
     ]

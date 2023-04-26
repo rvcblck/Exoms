@@ -159,8 +159,13 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
 .container-2:hover .icon{
   color: #93a2ad;
 }
+.add-col{
+  display: flex;
+  justify-content:end;
+  width: 100%;
+}
 .add-col button{
-  width: 130px;
+  width: 50%;
   height: 35px;
   border-radius: 5px;
   background-color: #ff5a2f;
@@ -170,8 +175,28 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
   color: #ffffff;
   text-decoration: none solid rgb(255, 255, 255);
   text-align: center;
-  flex:4;
-
+}
+.btn-add{
+  display: flex;
+  width: 100%;
+}
+.btn-add form{
+  padding: 0px;
+  flex: 1;
+  margin: auto;
+}
+.btn-add button{
+  flex: 1;
+  height: 35px;
+  border-radius: 5px;
+  background-color: #ff5a2f;
+  border: 2px solid  #ff5a2f;
+  background-size: cover;
+  font-family: Assistant;
+  color: #ffffff;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+  margin: auto 5px; 
 }
 
 form{
@@ -196,11 +221,15 @@ form input{
   padding: 8px 10px;
 }
 .datePick{
-  margin-top: 12px;
-  margin-right: 10px;
+  margin: auto;
 }
 
-
+td,th{
+  white-space: nowrap;
+}
+th.mat-header-cell{
+  text-align: center;
+}
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -217,80 +246,10 @@ form input{
   ::ng-deep .mat-paginator-page-size {
     display: none !important;
   }
-  .filter{
-    margin-right: 20px;
-  }
-  .sort .filter, .sort .search{
+  .filter, .search{
     display: none;
   }
-  table{
-    margin-top: 45px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    overflow: auto;
-  }
-  td{
-    white-space: nowrap;
-  }
-  .mat-checkbox {
-    margin: 0px 50px;
-  }
-  .form{
-    position: absolute;
-    top: 125px;
-    left: 76px;
-    width: 60%;
-  }
-  .form form{
-    position: relative;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-  }
-  form button{
-    background-color: #ff5a2f;
-    border: 2px solid  #ff5a2f;
-    color: white;
-    margin: 10px 5px;
-    float: right;
-    padding: 0px;
-  }
 }
-@media only screen and (max-width: 500px) {
-  ::ng-deep .mat-paginator-page-size {
-    display: none !important;
-  }
-  .form{
-    position: absolute;
-    top: 155px;
-    left: 76px;
-    width: 60%;
-  }
-  .form form{
-    position: relative;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-  }
-}
-@media only screen and (max-width: 400px) {
-  ::ng-deep .mat-paginator-page-size {
-    display: none !important;
-  }
-  .form{
-    position: absolute;
-    top: 130px;
-    left: 76px;
-    width: 60%;
-  }
-  .form form{
-    position: relative;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-  }
-}
+
 
 

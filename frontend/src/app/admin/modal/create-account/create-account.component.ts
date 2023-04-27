@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AccountService } from 'src/app/account.service';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
 
 @Component({
   selector: 'app-create-account',
@@ -92,12 +94,30 @@ export class CreateAccountComponent implements OnInit {
       (response) => {
         console.log(response);
         this.dialogRef.close();
+        const message = 'Success';
+        const header = 'Creating Account';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         console.log(error);
         if (error.error.error === 'Email is already registered') {
           this.emailError = 'Email is already registered';
         }
+        const message = 'Error : There is something wrong';
+        const header = 'Creating Account';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

@@ -70,6 +70,8 @@ import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 import { SelectProgramComponent } from './user/modal/select-program/select-program.component';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { SuccessComponent } from './dialog/success/success.component';
+import { ErrorComponent } from './dialog/error/error.component';
 
 @NgModule({
   declarations: [
@@ -108,7 +110,9 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     CanvasJSChart,
     ProgTopicComponent,
     SelectProgramComponent,
-    ProgFlowComponent
+    ProgFlowComponent,
+    SuccessComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

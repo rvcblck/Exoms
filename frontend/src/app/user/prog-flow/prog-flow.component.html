@@ -16,8 +16,14 @@
                 <th scope="col" class="text-center">ACTION</th> -->
               </tr>
             </thead>
-            <tbody>
+            <!-- <tbody>
               <tr *ngFor="let flow of programFlow">
+                <td>{{ flow.flow }}</td>
+                <td>{{ flow.description }}</td>
+              </tr>
+            </tbody> -->
+            <tbody mwlDroppable (drop)="onDrop($event)">
+              <tr *ngFor="let flow of programFlow" mwlDraggable (dragEnd)="onDragEnd(flow)">
                 <td>{{ flow.flow }}</td>
                 <td>{{ flow.description }}</td>
               </tr>

@@ -3,9 +3,8 @@ import { ProgramService } from 'src/app/program.service';
 import { SelectProgramComponent } from '../modal/select-program/select-program.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Program, ProgramFlow } from 'src/app/program.model';
-import { DragulaService } from 'ng2-dragula';
-import { DragulaModule } from 'ng2-dragula';
-
+// import { DraggableModule } from 'angular-draggable-droppable';
+import { DragAndDropModule } from 'angular-draggable-droppable';
 
 @Component({
   selector: 'app-prog-flow',
@@ -53,5 +52,16 @@ export class ProgFlowComponent implements OnInit {
         }
       );
     }
+  }
+  onDragEnd(draggedFlow: ProgramFlow) {
+    // Update the arrangement property of the dragged row
+    // and save the changes to the database
+    // ...
+  }
+
+  onDrop(event: any) {
+    // Update the arrangement property of the dropped row
+    // and save the changes to the database
+    // ...
   }
 }

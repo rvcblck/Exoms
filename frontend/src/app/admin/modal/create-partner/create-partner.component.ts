@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fileValidator } from 'src/app/file-type.validator';
 import { DatePipe } from '@angular/common';
 import { PartnerService } from 'src/app/partner.service';
-import { FileUploader } from 'ng2-file-upload';
-import { FileItem } from 'ng2-file-upload';
+// import { FileUploader } from 'ng2-file-upload';
+// import { FileItem } from 'ng2-file-upload';
+// import
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ViewPartner } from 'src/app/partner.model';

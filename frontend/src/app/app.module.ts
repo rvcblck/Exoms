@@ -69,7 +69,6 @@ import * as CanvasJSAngularChart from '../assets/js/canvasjs/canvasjs.angular.co
 import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 import { SelectProgramComponent } from './user/modal/select-program/select-program.component';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
-// import { DragulaService } from 'ng2-dragula';
 import { DragAndDropModule } from 'angular-draggable-droppable';
 
 @NgModule({
@@ -142,8 +141,7 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     MatProgressBarModule,
     MatStepperModule,
     MatTabsModule,
-    // DragulaModule
-    // NgChartsModule
+    DragAndDropModule
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],
   entryComponents: [AccountInfoComponent],

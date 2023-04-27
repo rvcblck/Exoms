@@ -6,6 +6,7 @@ use App\Models\Attendance;
 use App\Models\Program;
 use App\Models\Participant;
 use App\Models\Member;
+use App\Models\Flow;
 use App\Models\User;
 use App\Models\Partner;
 use App\Models\Relation;
@@ -21,6 +22,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use SendinBlue\Client\Model\Contact;
+
+
 
 class ProgramController extends Controller
 {
@@ -803,6 +806,26 @@ class ProgramController extends Controller
         }
 
     }
+
+
+    public function programFlow($program_id){
+        $flows = Flow::where('program_id',$program_id)->get();
+
+        $flowData = [];
+        foreach($flows as $flow){
+            $flowData []=[
+                'flow_id' => $flow->flow_id,
+                'flow' => $flow->flow,
+                'description' => $flow->description,
+                'arrangement' => $flow->arrangement
+            ];
+        }
+
+
+        return response()->json($flowData);
+
+    }
+
 
 
 

@@ -118,6 +118,8 @@ Route::get('/dashboard-chart/{month}',[DashboardController::class, 'dashboardCha
 Route::get('/user-dashboard/{user_id}',[DashboardController::class, 'userDashboardChart']);
 Route::post('/user-dashboard-chart',[DashboardController::class, 'userProgramChart']);
 
+Route::get('/program-flow/{program_id}', [ProgramController::class, 'programFlow']);
+
 
 
 

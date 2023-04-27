@@ -10,6 +10,7 @@ import { FacultyProgram } from './faculty.model';
 import { ViewProgram } from './program.model';
 import { AutoComplete } from './program.model';
 import { Attendance } from './attendance.model';
+import { ProgramFlow } from './program.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,19 @@ export class ProgramService {
   getUserPrograms(user_id: string): Observable<Program[]> {
     const headers = this.getHeaders();
     return this.http.get<Program[]>(`${this.apiUrl}/userPrograms/${user_id}`, { headers }).pipe(
+      tap((response) => {
+        console.log('Programs retrieved successfully');
+      }),
+      catchError((error) => {
+        console.error('Error retrieving programs:', error);
+        return throwError('Error retrieving programs. Please try again later.');
+      })
+    );
+  }
+
+  getProgramFlow(user_id: string): Observable<ProgramFlow[]> {
+    const headers = this.getHeaders();
+    return this.http.get<ProgramFlow[]>(`${this.apiUrl}/program-flow/${user_id}`, { headers }).pipe(
       tap((response) => {
         console.log('Programs retrieved successfully');
       }),

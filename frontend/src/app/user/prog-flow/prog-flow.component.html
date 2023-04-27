@@ -1,1 +1,33 @@
-<p>prog-flow works!</p>
+<label for="">Pogram: </label>
+<div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
+<div><button (click)="selectProgram()">Select Program</button></div>
+
+<mat-tab-group *ngIf="programFlow" dynamicHeight>
+  <mat-tab label="Short tab">
+    <div class="partner-wrapper">
+      <div class="partner">
+        <!-- <label for="">Expiring Contracts</label> -->
+        <div class="contract-wrapper">
+          <table class="table">
+            <thead>
+              <tr colspan="2">
+                <th scope="col">Program Flow</th>
+                <!-- <th scope="col" class="text-center">EXPIRATION DATE</th>
+                <th scope="col" class="text-center">ACTION</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let flow of programFlow">
+                <td>{{ flow.flow }}</td>
+                <td>{{ flow.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Long tab">
+    <div class="example-large-box mat-elevation-z4">Large content</div>
+  </mat-tab>
+</mat-tab-group>

@@ -224,10 +224,10 @@ class DashboardController extends Controller
         $now = Carbon::now('Asia/Manila');
         $userData = [];
 
-        $user = User::with('programs')->where('user_id',$user_id)->first();
+        $user1 = User::with('programs')->where('user_id',$user_id)->first();
 
 
-            $programs = $user->programs()->get();
+            $programs = $user1->programs()->get();
             $ongoing = 0;
             $upcoming = 0;
             $previous = 0;
@@ -244,7 +244,7 @@ class DashboardController extends Controller
                 }
             }
 
-            $allPrograms = $user->programs()->get();
+            $allPrograms = $user1->programs()->get();
 
             $allOngoing = 0;
             $allUpcoming = 0;

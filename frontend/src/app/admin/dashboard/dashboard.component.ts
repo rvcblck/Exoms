@@ -237,7 +237,8 @@ export class DashboardComponent implements OnInit {
 
   getUserChart() {
     // console.log(this.dashboard.user_status);
-    const totalUsers = this.dashboard.user_status.reduce((total, status) => total + status.y, 0);
+    if(this.dashboard.user_status){
+      const totalUsers = this.dashboard.user_status.reduce((total, status) => total + status.y, 0);
     this.userChartOptions = {
       animationEnabled: true,
       title: {
@@ -267,6 +268,8 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+    }
+
   }
 
   previous(): void {

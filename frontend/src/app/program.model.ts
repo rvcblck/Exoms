@@ -100,3 +100,10 @@ export interface Ac_Partners {
   partner_id: string;
   name: string;
 }
+
+export interface ProgramFlow {
+  flow_id: string;
+  flow: string;
+  description: string;
+  arrangement: string;
+}

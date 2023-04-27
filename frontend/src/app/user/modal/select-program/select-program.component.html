@@ -1,0 +1,45 @@
+<div class="partner-management">
+  <div class="filter">
+    <div class="search">
+      <span><i class="fa-solid fa-magnifying-glass"></i></span><input (keyup)="applyFilter($event)" placeholder="Search" #input />
+    </div>
+    <!-- <button (click)="createAccount()">Add Partner</button> -->
+  </div>
+  <div class="tablewrapper">
+    <table mat-table [dataSource]="dataSource" matSort #sort="matSort" class="mat-elevation-z8">
+      <!-- Company Name Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Partner Name</th>
+        <td mat-cell *matCellDef="let dataSource">{{ dataSource.title }}</td>
+      </ng-container>
+
+      <!-- Contact Number Column -->
+      <ng-container matColumnDef="place">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let dataSource">{{ dataSource.place }}</td>
+      </ng-container>
+
+      <!-- Contract Dates Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>DATE</th>
+        <td mat-cell *matCellDef="let dataSource">
+          {{ formatDate(dataSource.start_date) }} -
+          {{ formatDate(dataSource.end_date) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="text-center">ACTION</th>
+        <td mat-cell *matCellDef="let dataSource" class="text-center">
+          <button matRipple class="view-button" [mat-dialog-close]="{ program_id: dataSource.program_id, title: dataSource.title }">Select</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter</td>
+      </tr>
+    </table>
+  </div>
+</div>

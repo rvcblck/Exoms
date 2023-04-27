@@ -1,0 +1,56 @@
+.example-small-box,
+.example-large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.example-small-box {
+  height: 100px;
+  width: 100px;
+}
+
+.example-large-box {
+  height: 300px;
+  width: 300px;
+}
+
+.partner-wrapper {
+  width: 60%;
+  height: auto;
+  padding: 20px;
+}
+
+.partner-wrapper .partner {
+  background-color: #fff;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.partner label {
+  font-size: 25px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.extend-btn {
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #ff5a2f !important;
+  padding: 5px 20px;
+  background-color: #ff592f3c;
+}
+
+.contract-wrapper .table tr th {
+  color: #8a8a8b;
+}
+
+.contract-wrapper .table tbody td {
+  font-weight: 700;
+}

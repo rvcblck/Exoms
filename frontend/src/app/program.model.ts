@@ -102,8 +102,28 @@ export interface Ac_Partners {
 }
 
 export interface ProgramFlow {
-  flow_id: string;
   flow: string;
   description: string;
-  arrangement: string;
+}
+
+export interface ProgramTopic {
+  col_1: string;
+  col_2: string;
+  col_3: string;
+}
+
+export interface ProgramPosition {
+  name: string;
+  position: string;
+}
+
+export interface ProgramMembers {
+  name: string;
+}
+
+export interface OtherDetails {
+  flow: ProgramFlow[];
+  topic: ProgramTopic[];
+  position: ProgramPosition[];
+  members: ProgramMembers[];
 }

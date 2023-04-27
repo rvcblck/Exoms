@@ -33,7 +33,8 @@ class PositionTableSeeder extends Seeder
                 Position::create([
                     'position_id' => $this->generatePostionId(),
                     'program_id' => $program->program_id,
-                    'position' => $fullName . ' -' . $faker->randomElement(['technical', 'moderator', 'speaker', 'invitation/report']),
+                    'name' => $fullName,
+                    'position' => $faker->randomElement(['technical', 'moderator', 'speaker', 'invitation/report']),
                     'archived' => false,
                 ]);
             }

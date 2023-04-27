@@ -13,7 +13,7 @@ class Topic extends Model
     public $incrementing = false;
 
 
-    protected $fillable = ['topic_id', 'program_id', 'col_1', 'col_2', 'col_3', 'arrangement', 'position', 'archived'];
+    protected $fillable = ['topic_id', 'program_id', 'col_1', 'col_2', 'col_3', 'position', 'archived'];
 
 
 

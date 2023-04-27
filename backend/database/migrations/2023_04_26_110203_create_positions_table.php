@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('position_id')->unique();
             $table->string('program_id');
             $table->foreign('program_id')->references('program_id')->on('programs');
+            $table->string('name')->nullable();
             $table->string('position')->nullable();
             $table->boolean('archived')->default(false);
 

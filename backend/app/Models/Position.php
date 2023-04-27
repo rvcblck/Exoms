@@ -13,7 +13,7 @@ class Position extends Model
     public $incrementing = false;
 
 
-    protected $fillable = ['position_id', 'program_id', 'position', 'archived'];
+    protected $fillable = ['position_id', 'program_id', 'position', 'name', 'archived'];
 
 
 

@@ -26,7 +26,6 @@ class TopicTableSeeder extends Seeder
                 'col_1' => 'Look and Plan',
                 'col_2' => 'A day in life of an online student',
                 'col_3' => 'wake up, eat breakfast, get ready for an awesome day',
-                'arrangement' => '1',
                 'archived' => false,
             ]);
 
@@ -36,7 +35,6 @@ class TopicTableSeeder extends Seeder
                 'col_1' => 'Setup',
                 'col_2' => 'Set up your classroom environment',
                 'col_3' => 'blend your physicsl classroom and your virtual classrom',
-                'arrangement' => '2',
                 'archived' => false,
             ]);
 
@@ -46,7 +44,6 @@ class TopicTableSeeder extends Seeder
                 'col_1' => 'Set the tone',
                 'col_2' => 'Meet with you students',
                 'col_3' => 'Teams meeting tips for the best online experience increase effectiveness',
-                'arrangement' => '3',
                 'archived' => false,
             ]);
         }

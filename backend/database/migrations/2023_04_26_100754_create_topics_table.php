@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('col_1')->nullable();
             $table->string('col_2')->nullable();
             $table->string('col_3')->nullable();
-            $table->string('arrangement')->nullable();
             $table->boolean('archived')->default(false);
             $table->timestamps();
         });

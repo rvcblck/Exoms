@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Program } from './program.model';
+import { OtherDetails, Program } from './program.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -57,9 +57,9 @@ export class ProgramService {
     );
   }
 
-  getProgramFlow(user_id: string): Observable<ProgramFlow[]> {
+  getProgramFlow(user_id: string): Observable<OtherDetails> {
     const headers = this.getHeaders();
-    return this.http.get<ProgramFlow[]>(`${this.apiUrl}/program-flow/${user_id}`, { headers }).pipe(
+    return this.http.get<OtherDetails>(`${this.apiUrl}/program-flow/${user_id}`, { headers }).pipe(
       tap((response) => {
         console.log('Programs retrieved successfully');
       }),
@@ -157,6 +157,48 @@ export class ProgramService {
         console.error('Error Creating Program:', error);
         console.error('Error Message:', error.message);
         return throwError('Error Creating Program. Please try again later.');
+      })
+    );
+  }
+
+  updateProgramFlow(programFlow: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/update-program-flow`, programFlow, { headers }).pipe(
+      tap((response) => {
+        console.log('Program Updated successfully');
+      }),
+      catchError((error) => {
+        console.error('Error Updated Program:', error);
+        console.error('Error Message:', error.message);
+        return throwError('Error Updated Program. Please try again later.');
+      })
+    );
+  }
+
+  updateProgramTopic(programTopic: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/update-program-topic`, programTopic, { headers }).pipe(
+      tap((response) => {
+        console.log('Program Updated successfully');
+      }),
+      catchError((error) => {
+        console.error('Error Updated Program:', error);
+        console.error('Error Message:', error.message);
+        return throwError('Error Updated Program. Please try again later.');
+      })
+    );
+  }
+
+  updateProgramPosition(programPosition: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post<any>(`${this.apiUrl}/update-program-position`, programPosition, { headers }).pipe(
+      tap((response) => {
+        console.log('Program Updated successfully');
+      }),
+      catchError((error) => {
+        console.error('Error Updated Program:', error);
+        console.error('Error Message:', error.message);
+        return throwError('Error Updated Program. Please try again later.');
       })
     );
   }

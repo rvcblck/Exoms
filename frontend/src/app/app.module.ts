@@ -72,6 +72,7 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { SuccessComponent } from './dialog/success/success.component';
 import { ErrorComponent } from './dialog/error/error.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { ErrorComponent } from './dialog/error/error.component';
     MatProgressBarModule,
     MatStepperModule,
     MatTabsModule,
-    DragAndDropModule
+    DragAndDropModule,
+    DragDropModule
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],
   entryComponents: [AccountInfoComponent],

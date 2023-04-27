@@ -13,7 +13,7 @@ class Flow extends Model
     public $incrementing = false;
 
 
-    protected $fillable = ['flow_id', 'program_id', 'flow', 'description', 'arrangement', 'archived'];
+    protected $fillable = ['flow_id', 'program_id', 'flow', 'description', 'archived'];
 
 
 

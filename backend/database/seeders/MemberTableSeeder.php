@@ -35,6 +35,7 @@ class MemberTableSeeder extends Seeder
 
                 $programMember->program_id = $member;
                 $programMember->user_id = $users[$sampleProgramId];
+                $programMember->position = $faker->randomElement(['technical', 'moderator', 'speaker', 'invitation/report',null]);
                 $programMember->save();
             }
         }

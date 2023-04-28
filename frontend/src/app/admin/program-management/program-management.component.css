@@ -112,6 +112,10 @@
   display: block;
 }
 
+.date i {
+  color: #ff5a2f;
+}
+
 .start-date {
   display: flex;
   align-items: center;

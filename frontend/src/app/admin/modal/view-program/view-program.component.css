@@ -64,6 +64,10 @@
   padding: 5px;
 }
 
+.date i {
+  color: #ff5a2f;
+}
+
 .view-program .detail {
   padding: 10px 5px;
   margin-top: 20px;

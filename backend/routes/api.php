@@ -120,7 +120,11 @@ Route::post('/user-dashboard-chart',[DashboardController::class, 'userProgramCha
 
 Route::get('/program-flow/{program_id}', [ProgramController::class, 'programFlow']);
 
+Route::post('/update-program-flow', [ProgramController::class, 'updateProgramFlow']);
 
+Route::post('/update-program-topic', [ProgramController::class, 'updateProgramTopic']);
+
+Route::post('/update-program-position', [ProgramController::class, 'updateProgramPosition']);
 
 
 

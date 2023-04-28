@@ -140,7 +140,9 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         participant: [''],
         partner_id: [''],
         invitation: [''],
-        certificate: ['']
+        certificate: [''],
+        start_time: [data.program.start_time],
+        end_time: [data.program.end_time]
       });
     } else {
       this.programForm = this.formBuilder.group({
@@ -157,7 +159,9 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         participant: [''],
         partner_id: [''],
         invitation: [''],
-        certificate: ['']
+        certificate: [''],
+        start_time: [''],
+        end_time: ['']
       });
     }
   }
@@ -668,16 +672,13 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const startDate = this.datePipe.transform(this.programForm.get('start_date')?.value, 'yyyy-MM-dd');
-    const endDate = this.datePipe.transform(this.programForm.get('end_date')?.value, 'yyyy-MM-dd');
-
     const formData = new FormData();
     formData.append('title', this.programForm.get('title')?.value);
     formData.append('details', this.programForm.get('details')?.value);
-    if (startDate && endDate) {
-      formData.append('start_date', this.programForm.get('end_date')?.value);
-      formData.append('end_date', this.programForm.get('end_date')?.value);
-    }
+
+    formData.append('start_date', this.programForm.get('start_date')?.value);
+    formData.append('end_date', this.programForm.get('end_date')?.value);
+
     if (this.data.program) {
       formData.append('program_id', this.data.program.program_id);
     }
@@ -686,6 +687,8 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     const joinedPartnerIds = this.selectedPartners.map((partner) => partner.partner_id).join(',');
     const joineParticipantIds = this.participants.join(',');
 
+    formData.append('start_time', this.programForm.get('start_time')?.value);
+    formData.append('end_time', this.programForm.get('end_time')?.value);
     formData.append('leader_id', LeaderId);
     formData.append('member_id', joinedMemberIds);
     formData.append('partner_id', joinedPartnerIds);

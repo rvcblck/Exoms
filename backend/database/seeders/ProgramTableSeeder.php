@@ -20,6 +20,9 @@ class ProgramTableSeeder extends Seeder
 
 
     for ($i = 0; $i < 100; $i++) {
+        // $start_time = $faker->randomElement(['rejected', 'approve', 'pending']);
+
+
         $program = new Program;
         $program->program_id = $this->generateProgramId();
         $program->title = 'Sample Program '.$i;

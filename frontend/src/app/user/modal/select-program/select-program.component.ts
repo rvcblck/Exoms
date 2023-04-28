@@ -19,7 +19,7 @@ export class SelectProgramComponent implements OnInit {
   displayedColumns: string[] = ['title', 'date', 'place', 'action'];
 
   ngOnInit(): void {
-    console.log(this.data.programs);
+    // console.log(this.data.programs);
     this.dataSource.data = this.data.programs;
   }
 

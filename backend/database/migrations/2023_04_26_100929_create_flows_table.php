@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreign('program_id')->references('program_id')->on('programs');
             $table->string('flow')->nullable();
             $table->string('description')->nullable();
-            $table->string('arrangement')->nullable();
             $table->boolean('archived')->default(false);
             $table->timestamps();
         });

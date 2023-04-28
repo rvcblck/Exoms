@@ -1,3 +1,5 @@
+import { Time } from '@angular/common';
+
 export interface Leader {
   user_id: string;
   fullName: string;
@@ -67,6 +69,8 @@ export interface ViewProgram {
   place: string;
   start_date: string;
   end_date: string;
+  start_time: string;
+  end_time: string;
   status: string;
   certificate: string;
   invitation: string;
@@ -102,8 +106,28 @@ export interface Ac_Partners {
 }
 
 export interface ProgramFlow {
-  flow_id: string;
   flow: string;
   description: string;
-  arrangement: string;
+}
+
+export interface ProgramTopic {
+  col_1: string;
+  col_2: string;
+  col_3: string;
+}
+
+export interface ProgramPosition {
+  name: string;
+  position: string;
+}
+
+export interface ProgramMembers {
+  name: string;
+  position: string;
+}
+
+export interface OtherDetails {
+  flow: ProgramFlow[];
+  topic: ProgramTopic[];
+  position: ProgramPosition[];
 }

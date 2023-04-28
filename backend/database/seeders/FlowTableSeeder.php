@@ -25,7 +25,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'Invocation',
                 'description' => 'Audio Visual Presentation',
-                'arrangement' => '1',
                 'archived' => false,
             ]);
 
@@ -34,7 +33,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'National Anthem',
                 'description' => 'Audio Visual Presentation',
-                'arrangement' => '2',
                 'archived' => false,
             ]);
             Flow::create([
@@ -42,7 +40,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'BulSU Hymn',
                 'description' => 'Audio Visual Presentation',
-                'arrangement' => '3',
                 'archived' => false,
             ]);
 
@@ -51,7 +48,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'Opening Remarks',
                 'description' => 'Ms.Lourdes M. Tiongson, CICT CESU Head',
-                'arrangement' => '4',
                 'archived' => false,
             ]);
             Flow::create([
@@ -59,7 +55,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'Recognition of Attendees',
                 'description' => 'Moderator',
-                'arrangement' => '5',
                 'archived' => false,
             ]);
 
@@ -68,7 +63,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'Introducation of Speaker',
                 'description' => 'Ms. Desserie Rose Jinco',
-                'arrangement' => '6',
                 'archived' => false,
             ]);
 
@@ -77,7 +71,6 @@ class FlowTableSeeder extends Seeder
                 'program_id' => $program->program_id,
                 'flow' => 'Session Paper',
                 'description' => 'Mr. Jhon Michael Calizon',
-                'arrangement' => '7',
                 'archived' => false,
             ]);
         }

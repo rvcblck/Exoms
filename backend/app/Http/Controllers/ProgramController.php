@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\Partner;
 use App\Models\Relation;
 use App\Models\Contract;
+use App\Models\Position;
+use App\Models\Topic;
 use Attribute;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -209,6 +211,8 @@ class ProgramController extends Controller
                 'place' => $program->place,
                 'start_date' => $program->start_date,
                 'end_date' => $program->end_date,
+                'start_time' => $program->start_time,
+                'end_time' => $program->end_time,
                 'status' => $status,
                 'certificate' => $program->certificate,
                 'invitation' => $program->invitation,
@@ -252,6 +256,8 @@ class ProgramController extends Controller
             'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
         ];
 
         $messages = [
@@ -288,6 +294,18 @@ class ProgramController extends Controller
         $program_id = $this->generateProgramId();
         // $member_id = $this->generateMemberId();
 
+        $start_time ='';
+        if($request->input('start_time')){
+            $start_timeString = $request->input('start_time');
+            $start_time = Carbon::parse($start_timeString)->toTimeString();
+        }
+        $end_time = '';
+        if($request->input('end_time')){
+            $end_timeString = $request->input('end_time');
+            $end_time = Carbon::parse($end_timeString)->toTimeString();
+        }
+
+
 
 
         Storage::makeDirectory('public/program/' . $program_id);
@@ -319,6 +337,8 @@ class ProgramController extends Controller
             'title' => $title,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
             'place' => $address,
             'details' =>  $details,
             'certificate' =>$path_certificate,
@@ -421,6 +441,9 @@ class ProgramController extends Controller
             'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+
         ];
 
         $messages = [
@@ -453,9 +476,17 @@ class ProgramController extends Controller
 
         $end_dateString = $request->input('end_date');
         $end_date = Carbon::parse($end_dateString)->toDateString();
-        //create path
-        // $program_id = $this->generateProgramId();
-        // $member_id = $this->generateMemberId();
+
+        $start_time ='';
+        if($request->input('start_time')){
+            $start_timeString = $request->input('start_time');
+            $start_time = Carbon::parse($start_timeString)->toTimeString();
+        }
+        $end_time = '';
+        if($request->input('end_time')){
+            $end_timeString = $request->input('end_time');
+            $end_time = Carbon::parse($end_timeString)->toTimeString();
+        }
 
         $invitation = $request->file('invitation');
         $certificate = $request->file('certificate');
@@ -517,6 +548,8 @@ class ProgramController extends Controller
             'title' => $title,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
             'place' => $address,
             'details' => $details,
         ];
@@ -814,34 +847,162 @@ class ProgramController extends Controller
         $flowData = [];
         foreach($flows as $flow){
             $flowData []=[
-                'flow_id' => $flow->flow_id,
                 'flow' => $flow->flow,
                 'description' => $flow->description,
-                'arrangement' => $flow->arrangement
             ];
         }
 
 
-        return response()->json($flowData);
+        $topics = Topic::where('program_id',$program_id)->get();
 
+        $topicData = [];
+        foreach($topics as $topic){
+            $topicData []=[
+                'col_1' => $topic->col_1,
+                'col_2' => $topic->col_2,
+                'col_3' => $topic->col_3,
+            ];
+        }
+
+
+        // $positions = Position::where('program_id',$program_id)->get();
+
+        // $positionData = [];
+        // foreach($positions as $position){
+        //     $positionData []=[
+        //         'name' => $position->name,
+        //         'position' => $position->position,
+        //     ];
+        // }
+
+
+
+        $program = Program::with('users','members',)->where('program_id',$program_id)->first();
+        $users = $program->users()->withPivot('position')->get();
+        $userData = [];
+        foreach($users as $user){
+
+            $userData[] = [
+                'name' => $user->fname.' '.$user->mname.' '.$user->lname.'  '.$user->suffix,
+                'position' => $user->pivot->position
+            ];
+        }
+
+
+
+        $otherDetails= [
+            'flow' => $flowData,
+            'topic' => $topicData,
+            'position' => $userData
+        ];
+
+
+
+
+
+
+        return response()->json($otherDetails);
+
+    }
+
+    public function updateProgramFlow(Request $request){
+        $programId = $request->program_id;
+
+        // delete all data in the "flow" table with the given program_id
+        Flow::where('program_id', $programId)->delete();
+
+        // insert new records for each item in the "data" array
+        foreach($request->data as $item) {
+            Flow::create([
+                'program_id' => $programId,
+                'flow_id' => $this->generateflowId(),
+                'flow' => $item['flow'],
+                'description' => $item['description'],
+            ]);
+        }
+
+        return response()->json(['message' => 'Program flow updated successfully.']);
+
+    }
+
+    public function updateProgramTopic(Request $request){
+        $programId = $request->program_id;
+
+        // delete all data in the "flow" table with the given program_id
+        Topic::where('program_id', $programId)->delete();
+
+        // insert new records for each item in the "data" array
+        foreach($request->data as $item) {
+            Topic::create([
+                'topic_id' => $this->generateTopicId(),
+                'program_id' => $programId,
+                'col_1' => $item['col_1'],
+                'col_2' => $item['col_2'],
+                'col_3' => $item['col_3'],
+            ]);
+        }
+
+        return response()->json(['message' => 'Program topic updated successfully.']);
+    }
+
+    // public function updateProgramPosition(Request $request){
+    //     $programId = $request->program_id;
+
+    //     // delete all data in the "flow" table with the given program_id
+    //     Position::where('program_id', $programId)->delete();
+
+    //     // insert new records for each item in the "data" array
+    //     foreach($request->data as $item) {
+    //         Position::create([
+    //             'position_id' => $this->generatePostionId(),
+    //             'program_id' => $programId,
+    //             'name' => $item['name'],
+    //             'position' => $item['position'],
+
+    //         ]);
+    //     }
+
+    //     return response()->json(['message' => 'Program position updated successfully.']);
+    // }
+
+
+
+    public function generateTopicId()
+    {
+        $program_id = 'TPC-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        $existing_program_id = Topic::where('topic_id', $program_id)->first();
+        while ($existing_program_id) {
+            $program_id = 'TPC-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+            $existing_program_id = Topic::where('topic_id', $program_id)->first();
+        }
+        return $program_id;
     }
 
 
 
+    // public function generatePostionId()
+    // {
+    //     $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+    //     $existing_program_id = Position::where('position_id', $program_id)->first();
+    //     while ($existing_program_id) {
+    //         $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+    //         $existing_program_id = Position::where('position_id', $program_id)->first();
+    //     }
+    //     return $program_id;
+    // }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public function generateflowId()
+    {
+        $program_id = 'FLOW-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        $existing_program_id = Flow::where('flow_id', $program_id)->first();
+        while ($existing_program_id) {
+            $program_id = 'FLOW-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+            $existing_program_id = Flow::where('flow_id', $program_id)->first();
+        }
+        return $program_id;
+    }
 
 
 
@@ -858,15 +1019,6 @@ class ProgramController extends Controller
         return $program_id;
     }
 
-    // public function generateMemberId() {
-    //     $member_id = 'MBR-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-    //     $existing_member_id = Program::where('member_id', $member_id)->first();
-    //     while($existing_member_id) {
-    //         $member_id = 'MBR-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-    //         $existing_member_id = Program::where('member_id', $member_id)->first();
-    //     }
-    //     return $member_id;
-    // }
 
     public function generateParticipantId() {
         $participant_id = 'PART-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);

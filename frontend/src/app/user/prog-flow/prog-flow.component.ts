@@ -29,9 +29,11 @@ export class ProgFlowComponent implements OnInit {
   program_id!: string;
   flowForm: FormGroup = new FormGroup({});
   topicForm: FormGroup = new FormGroup({});
-  positionForm: FormGroup = new FormGroup({});
+  // positionForm: FormGroup = new FormGroup({});
   submitted = false;
-  positionEmpty = false;
+  topic_submitted = false;
+  position_submitted = false;
+  inputPositionEmpty = false;
 
   positionControl!: FormControl[];
 
@@ -52,10 +54,10 @@ export class ProgFlowComponent implements OnInit {
       col_3: ['', Validators.required]
     });
 
-    this.positionForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      position: ['', Validators.required]
-    });
+    // this.positionForm = this.formBuilder.group({
+    //   name: ['', Validators.required],
+    //   position: ['', Validators.required]
+    // });
   }
 
   ngOnInit(): void {}
@@ -79,12 +81,8 @@ export class ProgFlowComponent implements OnInit {
               this.programService.getProgramFlow(result.program_id).subscribe(
                 (programs) => {
                   this.programFlow = programs;
-                  if (this.programFlow.position.length) {
-                    this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
-                  } else {
-                    this.positionControl = this.programFlow.members.map(() => new FormControl(''));
-                    this.positionEmpty = true;
-                  }
+
+                  this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
 
                   console.log(this.programFlow);
                 },
@@ -178,7 +176,7 @@ export class ProgFlowComponent implements OnInit {
   }
 
   onTopicSubmit(): void {
-    this.submitted = true;
+    this.topic_submitted = true;
     if (this.topicForm.invalid) {
       return;
     }
@@ -239,19 +237,16 @@ export class ProgFlowComponent implements OnInit {
   }
 
   dropPosition(event: CdkDragDrop<string[]>) {
-    if (!this.positionEmpty) {
-      moveItemInArray(this.programFlow.position, event.previousIndex, event.currentIndex);
-      moveItemInArray(this.positionControl, event.previousIndex, event.currentIndex);
-    } else {
-      moveItemInArray(this.programFlow.members, event.previousIndex, event.currentIndex);
-      moveItemInArray(this.positionControl, event.previousIndex, event.currentIndex);
-    }
-
-    // update the arrangement property based on new position
+    moveItemInArray(this.programFlow.position, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.positionControl, event.previousIndex, event.currentIndex);
   }
 
   updatePosition() {
+    console.log('nandito 1');
+    this.position_submitted = true;
     if (this.positionControl.some((control) => !control.value)) {
+      console.log('nandito 2');
+      this.inputPositionEmpty = true;
       return; // return if any of the controls is empty
     }
 
@@ -263,29 +258,16 @@ export class ProgFlowComponent implements OnInit {
     }
 
     const updatedMembers = [];
-    if ((this.positionEmpty = true)) {
-      for (let i = 0; i < this.programFlow.members.length; i++) {
-        const member = this.programFlow.members[i];
-        const position = positions[i];
 
-        if (position) {
-          const updatedMember = Object.assign({}, member, { position: position });
-          updatedMembers.push(updatedMember);
-        } else {
-          updatedMembers.push(member);
-        }
-      }
-    } else {
-      for (let i = 0; i < this.programFlow.members.length; i++) {
-        const member = this.programFlow.position[i];
-        const position = positions[i];
+    for (let i = 0; i < this.programFlow.position.length; i++) {
+      const member = this.programFlow.position[i];
+      const position = positions[i];
 
-        if (position) {
-          const updatedMember = Object.assign({}, member, { position: position });
-          updatedMembers.push(updatedMember);
-        } else {
-          updatedMembers.push(member);
-        }
+      if (position) {
+        const updatedMember = Object.assign({}, member, { position: position });
+        updatedMembers.push(updatedMember);
+      } else {
+        updatedMembers.push(member);
       }
     }
 

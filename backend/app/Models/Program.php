@@ -14,6 +14,8 @@ class Program extends Model
         'title',
         'start_date',
         'end_date',
+        'start_time',
+        'end_time',
         'place',
         'details',
         'certificate',
@@ -46,7 +48,7 @@ class Program extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'members','program_id','user_id')->withPivot('leader');
+        return $this->belongsToMany(User::class, 'members','program_id','user_id')->withPivot('leader')->withPivot('position');
     }
 
 

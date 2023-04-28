@@ -19,6 +19,8 @@ class CreateProgramsTable extends Migration
             $table->string('title');
             $table->date('start_date');
             $table->date('end_date');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->string('place');
             $table->text('details');
             $table->string('certificate')->nullable();

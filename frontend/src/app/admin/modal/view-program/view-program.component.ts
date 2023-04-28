@@ -148,4 +148,12 @@ export class ViewProgramComponent implements OnInit {
   isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  formatTime(timeString: string): string {
+    const [hours, minutes] = timeString.split(':');
+    const time = new Date();
+    time.setHours(parseInt(hours, 10));
+    time.setMinutes(parseInt(minutes, 10));
+    return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  }
 }

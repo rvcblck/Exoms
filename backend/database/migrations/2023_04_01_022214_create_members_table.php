@@ -20,6 +20,7 @@ class CreateMembersTable extends Migration
             $table->string('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->boolean('leader')->nullable();
+            $table->string('position')->nullable();
             $table->timestamps();
         });
     }

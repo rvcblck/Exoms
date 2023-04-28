@@ -1,1 +1,100 @@
-<p>reports works!</p>
+<label for="">Pogram: </label>
+<div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
+<div><button (click)="selectProgram()">Select Program</button></div>
+
+<mat-tab-group *ngIf="program && programFlow">
+  <mat-tab label="Terminal Report">
+    <label for=""></label>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr class="main-title">
+            <th colspan="2">EXTENSION COMMUNITY INVOLVEMENT TERMINAL REPORT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr class="program-name">
+            <td class="flex-fill"><strong>Name of Activity / Project :</strong></td>
+            <td>{{ program.title }}</td>
+          </tr>
+          <tr>
+            <td class="flex-fill"><strong>Date and Place Conducted :</strong></td>
+            <td>
+              {{ program.place }} - <span *ngIf="program.start_date == program.end_date">{{ program.start_date | date : 'longDate' }}</span
+              ><span *ngIf="program.start_date != program.end_date"></span> {{ program.start_date | date : 'longDate' }} -
+              {{ program.end_date | date : 'longDate' }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Faculty Involved : </strong></td>
+          </tr>
+          <!-- list of members  -->
+          <tr *ngFor="let item of programFlow.position; let i = index">
+            <td class="text-end">{{ [i + 1] }}.</td>
+            <td class="text-start">{{ item.name }} - {{ item.position }}</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong> BeneFiciaries :</strong></td>
+          </tr>
+          <!-- list of Partner  -->
+          <tr *ngFor="let item of program.partners">
+            <td colspan="2" class="text-center">
+              <strong>{{ item.name }}</strong>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Report on the flow of the Activity / Project Conducted :</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="d-flex justify-content-center">
+              <textarea
+                class="border-0 w-80"
+                name=""
+                id=""
+                cols="30"
+                rows="5"
+                placeholder="As part of the University Extension Services, the CICT participated in the annual SAMBALARAN: ONLINE CAMP PROJECT on its sixth year with the theme: 'Educating the Educators 2.0: Empowering Teachers for the Adversities in the NOW Normal Education'. "
+              ></textarea>
+              <quill-editor [(ngModel)]="content"></quill-editor>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              This event happen on {{ program.start_date | date : 'longDate' }}
+              <span *ngIf="program.start_time && program.end_time">from {{ program.start_time }} - {{ program.end_time }}</span> .The program flow is
+              as follows:
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="2">Program Flow</td>
+          </tr>
+          <!-- list of program flow  -->
+          <tr *ngFor="let item of programFlow.flow">
+            <td>{{ item.flow }}</td>
+            <td>{{ item.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Partner Report"> Partner Report </mat-tab>
+  <mat-tab label="Faculty Report"> Faculty Report </mat-tab>
+</mat-tab-group>

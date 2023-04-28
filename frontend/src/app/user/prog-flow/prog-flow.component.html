@@ -126,7 +126,7 @@
     <div class="partner-wrapper">
       <div class="partner">
         <div class="contract-wrapper">
-          <table class="table" *ngIf="!positionEmpty">
+          <table class="table">
             <thead>
               <tr colspan="2">
                 <th scope="col">Program Roles</th>
@@ -136,34 +136,13 @@
               <tr class="example-box" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
                 <td>{{ position.name }}</td>
                 <td>
-                  <!-- i want to create here a mat-auto-complete but the initial value is {{position.position}} -->
                   <mat-form-field appearance="fill">
                     <mat-label required>Position</mat-label>
                     <input type="text" matInput [formControl]="positionControl[i]" [matAutocomplete]="auto" required />
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPosition">
                       <mat-option *ngFor="let option of positionOptions" [value]="option">{{ option }}</mat-option>
                     </mat-autocomplete>
-                  </mat-form-field>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table class="table" *ngIf="positionEmpty">
-            <thead>
-              <tr colspan="2">
-                <th scope="col">Program Roles</th>
-              </tr>
-            </thead>
-            <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
-              <tr class="example-box" *ngFor="let members of programFlow.members; let i = index" cdkDrag cdkDragExit>
-                <td>{{ members.name }}</td>
-                <td>
-                  <mat-form-field appearance="fill">
-                    <mat-label required>Position</mat-label>
-                    <input type="text" matInput [formControl]="positionControl[i]" [matAutocomplete]="auto" required />
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let option of positionOptions" [value]="option">{{ option }}</mat-option>
-                    </mat-autocomplete>
+                    <mat-error *ngIf="inputPositionEmpty && position_submitted"> Position is required </mat-error>
                   </mat-form-field>
                 </td>
               </tr>

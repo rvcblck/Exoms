@@ -5,10 +5,31 @@
   <div mat-dialog-content class="view-program">
     <div>
       <div class="title">{{ data.program.title }}</div>
-      <div class="status" [ngStyle]="{ color: data.program.status === 'Ongoing' ? '#00c519' : '#ff5a2f' }">
-        <i class="bx bx-loader-circle"></i>&nbsp;&nbsp;{{ data.program.status }}
+      <div
+        class="status"
+        [ngStyle]="{
+          color: data.program.status === 'Ongoing' ? '#00c519' : data.program.status === 'Upcoming' ? '#0e8ce6' : '#ff5a2f'
+        }"
+      >
+        <i
+          class="bx bx-loader-circle"
+          [ngStyle]="{
+            color: data.program.status === 'Ongoing' ? '#00c519' : data.program.status === 'Upcoming' ? '#0e8ce6' : '#ff5a2f'
+          }"
+        ></i
+        >&nbsp;&nbsp;{{ data.program.status }}
       </div>
-      <div class="date"><i class="bx bx-calendar-week"></i>&nbsp;&nbsp;{{ data.program.start_date }} - {{ data.program.end_date }}</div>
+      <div class="date">
+        <i class="bx bx-calendar-week"></i>&nbsp;&nbsp;{{ data.program.start_date | date : 'longDate' }} -
+        {{ data.program.end_date | date : 'longDate' }}
+      </div>
+      <!-- <div class="date">
+        <i class="fa-regular fa-clock"></i>&nbsp;&nbsp;{{ data.program.start_time | date : 'shortTime' }} -
+        {{ data.program.end_time | date : 'shortTime' }}
+      </div> -->
+      <div class="date">
+        <i class="fa-regular fa-clock"></i>&nbsp;&nbsp;{{ formatTime(data.program.start_time) }} - {{ formatTime(data.program.end_time) }}
+      </div>
     </div>
     <div class="detail">
       {{ data.program.details }}

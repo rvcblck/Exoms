@@ -211,6 +211,8 @@ class ProgramController extends Controller
                 'place' => $program->place,
                 'start_date' => $program->start_date,
                 'end_date' => $program->end_date,
+                'start_time' => $program->start_time,
+                'end_time' => $program->end_time,
                 'status' => $status,
                 'certificate' => $program->certificate,
                 'invitation' => $program->invitation,
@@ -254,6 +256,8 @@ class ProgramController extends Controller
             'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
         ];
 
         $messages = [
@@ -290,6 +294,18 @@ class ProgramController extends Controller
         $program_id = $this->generateProgramId();
         // $member_id = $this->generateMemberId();
 
+        $start_time ='';
+        if($request->input('start_time')){
+            $start_timeString = $request->input('start_time');
+            $start_time = Carbon::parse($start_timeString)->toTimeString();
+        }
+        $end_time = '';
+        if($request->input('end_time')){
+            $end_timeString = $request->input('end_time');
+            $end_time = Carbon::parse($end_timeString)->toTimeString();
+        }
+
+
 
 
         Storage::makeDirectory('public/program/' . $program_id);
@@ -321,6 +337,8 @@ class ProgramController extends Controller
             'title' => $title,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
             'place' => $address,
             'details' =>  $details,
             'certificate' =>$path_certificate,
@@ -423,6 +441,9 @@ class ProgramController extends Controller
             'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
+            'start_time' => 'nullable',
+            'end_time' => 'nullable',
+
         ];
 
         $messages = [
@@ -455,9 +476,17 @@ class ProgramController extends Controller
 
         $end_dateString = $request->input('end_date');
         $end_date = Carbon::parse($end_dateString)->toDateString();
-        //create path
-        // $program_id = $this->generateProgramId();
-        // $member_id = $this->generateMemberId();
+
+        $start_time ='';
+        if($request->input('start_time')){
+            $start_timeString = $request->input('start_time');
+            $start_time = Carbon::parse($start_timeString)->toTimeString();
+        }
+        $end_time = '';
+        if($request->input('end_time')){
+            $end_timeString = $request->input('end_time');
+            $end_time = Carbon::parse($end_timeString)->toTimeString();
+        }
 
         $invitation = $request->file('invitation');
         $certificate = $request->file('certificate');
@@ -519,6 +548,8 @@ class ProgramController extends Controller
             'title' => $title,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
             'place' => $address,
             'details' => $details,
         ];
@@ -834,24 +865,26 @@ class ProgramController extends Controller
         }
 
 
-        $positions = Position::where('program_id',$program_id)->get();
+        // $positions = Position::where('program_id',$program_id)->get();
 
-        $positionData = [];
-        foreach($positions as $position){
-            $positionData []=[
-                'name' => $position->name,
-                'position' => $position->position,
-            ];
-        }
+        // $positionData = [];
+        // foreach($positions as $position){
+        //     $positionData []=[
+        //         'name' => $position->name,
+        //         'position' => $position->position,
+        //     ];
+        // }
+
+
 
         $program = Program::with('users','members',)->where('program_id',$program_id)->first();
-        //getting members
-        $users = $program->users()->wherePivot('leader',null)->get();
+        $users = $program->users()->withPivot('position')->get();
         $userData = [];
         foreach($users as $user){
 
             $userData[] = [
                 'name' => $user->fname.' '.$user->mname.' '.$user->lname.'  '.$user->suffix,
+                'position' => $user->pivot->position
             ];
         }
 
@@ -860,8 +893,7 @@ class ProgramController extends Controller
         $otherDetails= [
             'flow' => $flowData,
             'topic' => $topicData,
-            'position' => $positionData,
-            'members' => $userData,
+            'position' => $userData
         ];
 
 
@@ -913,25 +945,25 @@ class ProgramController extends Controller
         return response()->json(['message' => 'Program topic updated successfully.']);
     }
 
-    public function updateProgramPosition(Request $request){
-        $programId = $request->program_id;
+    // public function updateProgramPosition(Request $request){
+    //     $programId = $request->program_id;
 
-        // delete all data in the "flow" table with the given program_id
-        Position::where('program_id', $programId)->delete();
+    //     // delete all data in the "flow" table with the given program_id
+    //     Position::where('program_id', $programId)->delete();
 
-        // insert new records for each item in the "data" array
-        foreach($request->data as $item) {
-            Position::create([
-                'position_id' => $this->generatePostionId(),
-                'program_id' => $programId,
-                'name' => $item['name'],
-                'position' => $item['position'],
+    //     // insert new records for each item in the "data" array
+    //     foreach($request->data as $item) {
+    //         Position::create([
+    //             'position_id' => $this->generatePostionId(),
+    //             'program_id' => $programId,
+    //             'name' => $item['name'],
+    //             'position' => $item['position'],
 
-            ]);
-        }
+    //         ]);
+    //     }
 
-        return response()->json(['message' => 'Program position updated successfully.']);
-    }
+    //     return response()->json(['message' => 'Program position updated successfully.']);
+    // }
 
 
 
@@ -948,16 +980,16 @@ class ProgramController extends Controller
 
 
 
-    public function generatePostionId()
-    {
-        $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-        $existing_program_id = Position::where('position_id', $program_id)->first();
-        while ($existing_program_id) {
-            $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-            $existing_program_id = Position::where('position_id', $program_id)->first();
-        }
-        return $program_id;
-    }
+    // public function generatePostionId()
+    // {
+    //     $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+    //     $existing_program_id = Position::where('position_id', $program_id)->first();
+    //     while ($existing_program_id) {
+    //         $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+    //         $existing_program_id = Position::where('position_id', $program_id)->first();
+    //     }
+    //     return $program_id;
+    // }
 
 
 

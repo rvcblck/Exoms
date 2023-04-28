@@ -3,25 +3,52 @@
   padding-bottom: 200px;
 }
 
+.terminal {
+  position: relative;
+}
+
 .btn-cont {
   width: 100%;
   padding: 10px;
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: row;
   /* justify-content: space-around; */
 }
 .btn-cont div:nth-child(1) {
-  width: 150px;
-  font-weight: bolder;
-}
-.btn-cont div:nth-child(2) {
-  min-width: 200px;
-  font-weight: bolder;
-  border-bottom: 1px solid;
-}
-.btn-cont div:nth-child(1) {
+  display: flex;
+  align-items: center;
   width: auto;
   font-weight: bolder;
+  padding: 10px 10px;
+}
+.btn-cont div:nth-child(2) {
+  width: 200px;
+  height: 40px;
+  font-weight: bolder;
+  border: 1px solid #ff5a2f;
+  border-radius: 5px 0px 0px 5px;
+  background-color: white;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* background-color: red; */
+}
+.btn-cont div:nth-child(3) {
+  width: auto;
+  height: 40px;
+  font-weight: bolder;
+}
+
+.btn-cont button {
+  height: 40px;
+  border: 1px solid #ff5a2f;
+  border-radius: 0px 5px 5px 0px;
+  color: white;
+  background-color: #ff5a2f;
+  padding: 5px 10px;
 }
 
 tr td {
@@ -95,20 +122,38 @@ table .img-container {
   font-size: 10px;
 }
 
-@media screen and (min-width: 768px) {
-  .prog-flow {
-    width: 210mm; /* Set to A4 size */
-    max-width: 100%;
-    margin: 0 auto;
-  }
+.dl-cont {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-@media screen and (max-width: 767px) {
-  .prog-flow {
-    width: 100%; /* Set to full width */
-    max-width: 100%;
-    margin: 0;
-  }
+.downloadbtn {
+  width: 200px;
+  background-color: #ff5a2f;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  text-align: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.downloadbtn i {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.downloadbtn button {
+  border: none;
+  color: #fff;
+  background-color: #ffffff00;
+}
+
+.topic-p input {
+  border: none;
+  border-bottom: 0.5px solid;
 }
 
 /* tr {

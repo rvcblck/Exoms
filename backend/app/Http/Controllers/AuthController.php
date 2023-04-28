@@ -54,8 +54,8 @@ class AuthController extends Controller
 
         //email valid or not
         $emailValid =  User::where('email', $request->email)
-                ->whereNotNull('email_verified_at')
-                ->first();
+            ->whereNotNull('email_verified_at')
+            ->first();
         if (!$emailValid) {
             return response()->json([
                 'success' => false,
@@ -66,7 +66,7 @@ class AuthController extends Controller
 
         //check password
         $passwordChange = $user->passwordChanges()->latest()->first();
-        if($passwordChange){
+        if ($passwordChange) {
             if (!Hash::check($request->password, $passwordChange->password)) {
                 return response()->json([
                     'success' => false,
@@ -163,7 +163,6 @@ class AuthController extends Controller
         $user->notify(new VerifyEmail($code));
 
         return response()->json(['message' => 'Verification code has been sent to your email.'], 200);
-
     }
 
     public function forgotPassword(Request $request)
@@ -180,10 +179,10 @@ class AuthController extends Controller
 
             $resetToken = $this->generateUniqueToken();
 
-            PasswordChange::where('user_id',$user->user_id)->latest()
-                            ->update([
-                                'reset_token' => $resetToken,
-                            ]);
+            PasswordChange::where('user_id', $user->user_id)->latest()
+                ->update([
+                    'reset_token' => $resetToken,
+                ]);
 
             $user->notify(new ResetPassword($resetToken));
 
@@ -226,22 +225,22 @@ class AuthController extends Controller
             return response()->json(['success' => false, 'message' => 'Invalid reset token'], 400);
         }
 
-        $user_id = User::where('email',$request->email)->first();
+        $user_id = User::where('email', $request->email)->first();
 
 
         $password_id = $this->generatePasswordId();
         PasswordChange::create([
-                'password_id' => $password_id,
-                'user_id' => $user_id->user_id,
-                'password' => bcrypt($request->password),
-                'change_date'=> now('Asia/Manila'),
-            ]);
+            'password_id' => $password_id,
+            'user_id' => $user_id->user_id,
+            'password' => bcrypt($request->password),
+            'change_date' => now('Asia/Manila'),
+        ]);
 
-        if(!$user_id->email_verified_at){
-            User::where('user_id',$user_id->user_id)
-            ->update([
-                'email_verified_at' => now('Asia/Manila')
-            ]);
+        if (!$user_id->email_verified_at) {
+            User::where('user_id', $user_id->user_id)
+                ->update([
+                    'email_verified_at' => now('Asia/Manila')
+                ]);
         }
         return response()->json(['success' => true, 'message' => 'Password reset successfully']);
     }
@@ -263,30 +262,33 @@ class AuthController extends Controller
     }
 
 
-    public function generatePasswordId() {
+    public function generatePasswordId()
+    {
         $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
-        while($existing_password_id) {
+        while ($existing_password_id) {
             $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
         }
         return $password_id;
     }
 
-    public function generateUserId() {
+    public function generateUserId()
+    {
         $user_id = 'USER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_user_id = User::where('user_id', $user_id)->first();
-        while($existing_user_id) {
+        while ($existing_user_id) {
             $user_id = 'USER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_user_id = User::where('user_id', $user_id)->first();
         }
         return $user_id;
     }
 
-    public function generateVerifyId() {
+    public function generateVerifyId()
+    {
         $verify_id = 'VER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_verify_id = VerificationCode::where('verify_id', $verify_id)->first();
-        while($existing_verify_id) {
+        while ($existing_verify_id) {
             $verify_id = 'VER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_verify_id = VerificationCode::where('verify_id', $verify_id)->first();
         }
@@ -307,17 +309,4 @@ class AuthController extends Controller
 
         return $resetToken;
     }
-
-
-
-
-
-
-
-
-
-
-
 }
-
-

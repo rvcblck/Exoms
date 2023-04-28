@@ -29,27 +29,28 @@ use SendinBlue\Client\Model\Contact;
 
 class ProgramController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
 
         $now = Carbon::now('Asia/Manila');
 
         $programData = [];
 
-        $programs = Program::with('participants','users','members')->get();
+        $programs = Program::with('participants', 'users', 'members')->get();
 
-        foreach($programs as $program){
+        foreach ($programs as $program) {
 
             //participants numbers
             $participantCount = $program->participants()->count();
 
 
             // getting leader
-            $leader = $program->members()->wherePivot('leader',true)->first();
-            if($leader){
+            $leader = $program->members()->wherePivot('leader', true)->first();
+            if ($leader) {
                 $leaderData = [
                     'user_id' => $leader->user_id,
-                    'fullName' => $leader->fname.' '.$leader->lname,
+                    'fullName' => $leader->fname . ' ' . $leader->lname,
                 ];
             }
 
@@ -58,16 +59,16 @@ class ProgramController extends Controller
             $endDate = Carbon::parse($program->end_date);
             $startDate = Carbon::parse($program->start_date);
             $status = '';
-            if($endDate->lt($now)){
+            if ($endDate->lt($now)) {
                 $status = 'Previous';
-            }else if($startDate->gt($now)){
+            } else if ($startDate->gt($now)) {
                 $status = 'Upcoming';
-            }else{
+            } else {
                 $status = 'Ongoing';
             }
 
 
-            $programData [] = [
+            $programData[] = [
                 'program_id' => $program->program_id,
                 'title' => $program->title,
                 'details' => $program->details,
@@ -79,93 +80,90 @@ class ProgramController extends Controller
                 'leader' => $leaderData
 
             ];
-
         }
 
         return response()->json($programData);
-
-
-
-
     }
-    public function programInfo($id){
+    public function programInfo($id)
+    {
 
         $now = Carbon::now('Asia/Manila');
 
         $programData = [];
 
-        $program = Program::with('participants','users','members','partners')->where('program_id',$id)->first();
+        $program = Program::with('participants', 'users', 'members', 'partners')->where('program_id', $id)->first();
 
-            $participantCount = $program->participants()->count();
+        $participantCount = $program->participants()->count();
 
-            //participants numbers
-            $participantData = [];
-            $participants = $program->participants()->get();
-            foreach($participants as $participant){
+        //participants numbers
+        $participantData = [];
+        $participants = $program->participants()->get();
+        foreach ($participants as $participant) {
 
-                $participantData [] = [
-                    'participant_id' => $participant->participant_id,
-                    'name' => $participant->name,
-                ];
-            }
-
-
-            //getting members
-            $users = $program->users()->wherePivot('leader',null)->get();
-            $userData = [];
-            foreach($users as $user){
-
-                $userData[] = [
-                    'user_id' => $user->user_id,
-                    'fullName' => $user->fname.' '.$user->mname.' '.$user->lname.'  '.$user->suffix,
-
-                ];
-            }
-
-            //getting leader
-            $leader = $program->members()->wherePivot('leader',true)->first();
-            $leaderData = [
-                'user_id' => $leader->user_id,
-                'fullName' => $leader->fname.' '.$leader->mname.' '.$leader->lname.' '.$leader->suffix,
+            $participantData[] = [
+                'participant_id' => $participant->participant_id,
+                'name' => $participant->name,
             ];
+        }
+
+
+        //getting members
+        $users = $program->users()->wherePivot('leader', null)->get();
+        $userData = [];
+        foreach ($users as $user) {
+
+            $userData[] = [
+                'user_id' => $user->user_id,
+                'fullName' => $user->fname . ' ' . $user->mname . ' ' . $user->lname . '  ' . $user->suffix,
+
+            ];
+        }
+
+        //getting leader
+        $leader = $program->members()->wherePivot('leader', true)->first();
+        $leaderData = [
+            'user_id' => $leader->user_id,
+            'fullName' => $leader->fname . ' ' . $leader->mname . ' ' . $leader->lname . ' ' . $leader->suffix,
+        ];
 
 
 
-            //getting partner
-            $partnerData = [];
-            $partners =$program->partners()->get();
-            foreach($partners as $partner){
+        //getting partner
+        $partnerData = [];
+        $partners = $program->partners()->get();
+        foreach ($partners as $partner) {
 
-                $contracts = Contract::where('partner_id',$partner->partner_id)->get();
-                $contractData = [];
-                foreach($contracts as $contract){
-                    $contractData [] = [
-                        'contract_id' => $contract->contract_id,
-                        'start_date' => $contract->start_date,
-                        'end_date' => $contract->end_date
-                    ];
-                }
-
-
-                $partnerData[] = [
-                    'partner_id' => $partner->partner_id,
-                    'name' => $partner->company_name,
-                    'address' => $partner->address,
-                    'contact_no' => $partner->contact_no,
-                    'contact_person' => $partner->contact_person,
-                    'moa_file' => $partner->moa_file,
-                    'contract' => $contractData
+            $contracts = Contract::where('partner_id', $partner->partner_id)->get();
+            $contractData = [];
+            foreach ($contracts as $contract) {
+                $contractData[] = [
+                    'contract_id' => $contract->contract_id,
+                    'start_date' => $contract->start_date,
+                    'end_date' => $contract->end_date
                 ];
             }
 
 
-            $invViewFile = [];
-            if($program->invitation){
-                $invpath = storage_path('app\public\\'.$program->invitation);
+            $partnerData[] = [
+                'partner_id' => $partner->partner_id,
+                'name' => $partner->company_name,
+                'address' => $partner->address,
+                'contact_no' => $partner->contact_no,
+                'contact_person' => $partner->contact_person,
+                'moa_file' => $partner->moa_file,
+                'contract' => $contractData
+            ];
+        }
+
+
+        $invViewFile = [];
+        if ($program->invitation) {
+            $invpath = storage_path('app\public\\' . $program->invitation);
             if (!File::exists($invpath)) {
                 abort(404);
             }
 
+<<<<<<< Updated upstream
                 $invViewFile = [
                     'fileName' => basename($invpath),
                     'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
@@ -226,7 +224,67 @@ class ProgramController extends Controller
 
 
 
+=======
+            $invViewFile = [
+                'fileName' => basename($invpath),
+                'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
+                'fileSize' => filesize($invpath),
+>>>>>>> Stashed changes
             ];
+        }
+
+
+        $certViewFile = [];
+        if ($program->certificate) {
+            $certpath = storage_path('app\public\\' . $program->certificate);
+            if (!File::exists($certpath)) {
+                abort(404);
+            }
+
+            $certViewFile = [
+                'fileName' => basename($certpath),
+                'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
+                'fileSize' => filesize($certpath),
+            ];
+        }
+
+
+
+
+        //status
+        $endDate = Carbon::parse($program->end_date);
+        $startDate = Carbon::parse($program->start_date);
+        $status = '';
+        if ($endDate->lt($now)) {
+            $status = 'Previous';
+        } else if ($startDate->gt($now)) {
+            $status = 'Upcoming';
+        } else {
+            $status = 'Ongoing';
+        }
+
+
+        $programData[] = [
+            'program_id' => $program->program_id,
+            'title' => $program->title,
+            'details' => $program->details,
+            'place' => $program->place,
+            'start_date' => $program->start_date,
+            'end_date' => $program->end_date,
+            'status' => $status,
+            'certificate' => $program->certificate,
+            'invitation' => $program->invitation,
+            'leader' => $leaderData,
+            'members' => $userData,
+            'partners' => $partnerData,
+            'participants' => $participantData,
+            'participant_count' => $participantCount,
+            'invitation_content' => $invViewFile,
+            'certificate_content' => $certViewFile,
+
+
+
+        ];
 
 
 
@@ -239,7 +297,8 @@ class ProgramController extends Controller
 
 
 
-    public function createProgram(Request $request){
+    public function createProgram(Request $request)
+    {
 
 
 
@@ -314,18 +373,18 @@ class ProgramController extends Controller
         // store file
         $path_invitation = '';
         $invitation = $request->file('invitation');
-        if(!empty($invitation)){
+        if (!empty($invitation)) {
             $filename = $invitation->getClientOriginalName();
             $new_filename = 'Inv_' . $filename;
-            $path_invitation = Storage::putFileAs('program/'.$program_id, $invitation, $new_filename);
+            $path_invitation = Storage::putFileAs('program/' . $program_id, $invitation, $new_filename);
         }
 
         $path_certificate = '';
         $certificate = $request->file('certificate');
-        if(!empty($certificate)){
+        if (!empty($certificate)) {
             $filename = $certificate->getClientOriginalName();
             $new_filename = 'Cert_' . $filename;
-            $path_certificate = Storage::putFileAs('program/'.$program_id, $certificate, $new_filename);
+            $path_certificate = Storage::putFileAs('program/' . $program_id, $certificate, $new_filename);
         }
 
         $title = $request->input('title');
@@ -341,7 +400,7 @@ class ProgramController extends Controller
             'end_time' => $end_time,
             'place' => $address,
             'details' =>  $details,
-            'certificate' =>$path_certificate,
+            'certificate' => $path_certificate,
             'invitation' => $path_invitation,
         ]);
 
@@ -349,11 +408,11 @@ class ProgramController extends Controller
         // for member
 
 
-        if(!empty($request->member_id)) {
+        if (!empty($request->member_id)) {
             // $memberIds = $request->input('member_id');
             $memberIds = explode(',', $request->member_id);
             // dd($memberIds);
-            foreach ($memberIds as $memberId){
+            foreach ($memberIds as $memberId) {
                 Member::create([
                     'program_id' => $program_id,
                     'user_id' => $memberId,
@@ -372,10 +431,10 @@ class ProgramController extends Controller
 
 
 
-        if(!empty($request->participant)) {
+        if (!empty($request->participant)) {
             // $participants = $request->input('participant');
             $participants = explode(',', $request->participant);
-            foreach ($participants as $participant){
+            foreach ($participants as $participant) {
                 $participant_id = $this->generateParticipantId();
                 Participant::create([
                     'participant_id' => $participant_id,
@@ -388,10 +447,10 @@ class ProgramController extends Controller
 
 
 
-        if(!empty($request->partner_id)){
+        if (!empty($request->partner_id)) {
             // $partners = $request->input('partner_id');
             $partners = explode(',', $request->partner_id);
-            foreach($partners as $partner){
+            foreach ($partners as $partner) {
                 Relation::create([
                     'program_id' => $program_id,
                     'partner_id' => $partner
@@ -407,24 +466,13 @@ class ProgramController extends Controller
             'success' => true,
             'message' => 'Program Created'
         ]);
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
 
 
-    public function updateProgram(Request $request){
+    public function updateProgram(Request $request)
+    {
 
 
 
@@ -496,7 +544,7 @@ class ProgramController extends Controller
 
 
         $path_invitation = '';
-        if(!empty($invitation)){
+        if (!empty($invitation)) {
             // Get the program directory
             $programDir = 'program/' . $request->program_id;
 
@@ -512,12 +560,12 @@ class ProgramController extends Controller
 
             $filename = $invitation->getClientOriginalName();
             $new_filename = 'Inv_' . $filename;
-            $path_invitation = Storage::putFileAs('program/'.$request->program_id, $invitation, $new_filename);
+            $path_invitation = Storage::putFileAs('program/' . $request->program_id, $invitation, $new_filename);
         }
 
 
         $path_certificate = '';
-        if(!empty($certificate)){
+        if (!empty($certificate)) {
             // Get the program directory
             $programDir = 'program/' . $request->program_id;
 
@@ -533,9 +581,7 @@ class ProgramController extends Controller
 
             $filename = $certificate->getClientOriginalName();
             $new_filename = 'Cert_' . $filename;
-            $path_certificate = Storage::putFileAs('program/'.$request->program_id, $certificate, $new_filename);
-
-
+            $path_certificate = Storage::putFileAs('program/' . $request->program_id, $certificate, $new_filename);
         }
 
 
@@ -568,16 +614,16 @@ class ProgramController extends Controller
 
         // for member
 
-        if(!empty($request->member_id)){
-            Member::where('program_id',$request->program_id)->delete();
+        if (!empty($request->member_id)) {
+            Member::where('program_id', $request->program_id)->delete();
         }
 
 
-        if(!empty($request->member_id)) {
+        if (!empty($request->member_id)) {
             // $memberIds = $request->input('member_id');
             $memberIds = explode(',', $request->member_id);
             // dd($memberIds);
-            foreach ($memberIds as $memberId){
+            foreach ($memberIds as $memberId) {
                 Member::create([
                     'program_id' => $request->program_id,
                     'user_id' => $memberId,
@@ -594,15 +640,15 @@ class ProgramController extends Controller
         ]);
 
 
-        if(!empty($request->participant)) {
-            Participant::where('program_id',$request->program_id)->delete();
+        if (!empty($request->participant)) {
+            Participant::where('program_id', $request->program_id)->delete();
         }
 
 
-        if(!empty($request->participant)) {
+        if (!empty($request->participant)) {
             // $participants = $request->input('participant');
             $participants = explode(',', $request->participant);
-            foreach ($participants as $participant){
+            foreach ($participants as $participant) {
                 $participant_id = $this->generateParticipantId();
                 Participant::create([
                     'participant_id' => $participant_id,
@@ -613,14 +659,14 @@ class ProgramController extends Controller
             }
         }
 
-        if(!empty($request->participant)) {
-            Relation::where('program_id',$request->program_id)->delete();
+        if (!empty($request->participant)) {
+            Relation::where('program_id', $request->program_id)->delete();
         }
 
-        if(!empty($request->partner_id)){
+        if (!empty($request->partner_id)) {
             // $partners = $request->input('partner_id');
             $partners = explode(',', $request->partner_id);
-            foreach($partners as $partner){
+            foreach ($partners as $partner) {
                 Relation::create([
                     'program_id' => $request->program_id,
                     'partner_id' => $partner
@@ -636,25 +682,14 @@ class ProgramController extends Controller
             'success' => true,
             'message' => 'Program Updated'
         ]);
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
-    public function AutoComplete(){
+    public function AutoComplete()
+    {
         $now = Carbon::now('Asia/Manila');
         $usersData = [];
         $users = User::with('programs')->get();
-        foreach($users as $user){
+        foreach ($users as $user) {
 
 
 
@@ -665,22 +700,21 @@ class ProgramController extends Controller
             $ongoing = 0;
             $upcoming = 0;
             $previous = 0;
-            foreach($programs as $program){
+            foreach ($programs as $program) {
 
                 $endDate = Carbon::parse($program->end_date);
                 $startDate = Carbon::parse($program->start_date);
-                if($endDate->lt($now)){
+                if ($endDate->lt($now)) {
                     $previous++;
-                }else if($startDate->gt($now)){
+                } else if ($startDate->gt($now)) {
                     $upcoming++;
-                }else{
+                } else {
                     $ongoing++;
                 }
-
             }
 
 
-            $usersData [] = [
+            $usersData[] = [
                 'user_id' => $user->user_id,
                 'fname' => $user->fname,
                 'lname' => $user->lname,
@@ -689,14 +723,12 @@ class ProgramController extends Controller
                 'ongoing' => $ongoing,
                 'upcoming' => $upcoming,
             ];
-
-
         }
 
         $partnersData = [];
         $partners = Partner::get();
-        foreach($partners as $partner){
-            $partnersData [] = [
+        foreach ($partners as $partner) {
+            $partnersData[] = [
                 'partner_id' => $partner->partner_id,
                 'name' => $partner->company_name,
             ];
@@ -712,12 +744,13 @@ class ProgramController extends Controller
     }
 
 
-    public function userProgram($id){
+    public function userProgram($id)
+    {
         $now = Carbon::now('Asia/Manila');
 
         $programData = [];
 
-        $user = User::with('programs','members')->where('user_id',$id)->get()->first();
+        $user = User::with('programs', 'members')->where('user_id', $id)->get()->first();
 
 
 
@@ -725,18 +758,18 @@ class ProgramController extends Controller
 
 
 
-        foreach($programs as $program){
+        foreach ($programs as $program) {
 
             //participants numbers
             $participantCount = $program->participants()->count();
 
 
             // getting leader
-            $leader = $program->members()->wherePivot('leader',true)->first();
-            if($leader){
+            $leader = $program->members()->wherePivot('leader', true)->first();
+            if ($leader) {
                 $leaderData = [
                     'user_id' => $leader->user_id,
-                    'fullName' => $leader->fname.' '.$leader->mname.' '.$leader->lname.' '.$leader->suffix,
+                    'fullName' => $leader->fname . ' ' . $leader->mname . ' ' . $leader->lname . ' ' . $leader->suffix,
                 ];
             }
 
@@ -747,16 +780,16 @@ class ProgramController extends Controller
             $endDate = Carbon::parse($program->end_date);
             $startDate = Carbon::parse($program->start_date);
             $status = '';
-            if($endDate->lt($now)){
+            if ($endDate->lt($now)) {
                 $status = 'Previous';
-            }else if($startDate->gt($now)){
+            } else if ($startDate->gt($now)) {
                 $status = 'Upcoming';
-            }else{
+            } else {
                 $status = 'Ongoing';
             }
 
 
-            $programData [] = [
+            $programData[] = [
                 'program_id' => $program->program_id,
                 'title' => $program->title,
                 'details' => $program->details,
@@ -768,26 +801,26 @@ class ProgramController extends Controller
                 'leader' => $leaderData,
 
             ];
-
         }
 
         return response()->json($programData);
     }
 
-    public function attendance($id){
+    public function attendance($id)
+    {
 
 
-        $participants = Participant::with('attendance')->where('program_id',$id)->get();
+        $participants = Participant::with('attendance')->where('program_id', $id)->get();
         $participantData = [];
-        foreach($participants as $participant){
+        foreach ($participants as $participant) {
             $attendanceData = [];
 
-            $attendance = Attendance::where('participant_id',$participant->participant_id)->get();
+            $attendance = Attendance::where('participant_id', $participant->participant_id)->get();
             // $attendance = $participant->attendance()->get();
             // dd($attendance);
-            if(!$attendance->isEmpty()){
-                foreach($attendance as $attendee){
-                    $attendanceData [] = [
+            if (!$attendance->isEmpty()) {
+                foreach ($attendance as $attendee) {
+                    $attendanceData[] = [
                         'attendance_id' => $attendee->attendance_id,
                         'date' => $attendee->date,
                         'status' => $attendee->status
@@ -801,15 +834,14 @@ class ProgramController extends Controller
                 'name' => $participant->name,
                 'attendance' => $attendanceData
             ];
-
         }
 
 
         return response()->json($participantData);
-
     }
 
-    public function storeAttendance(Request $request){
+    public function storeAttendance(Request $request)
+    {
 
         foreach ($request->all() as $participant) {
             foreach ($participant['dates'] as $date) {
@@ -819,15 +851,15 @@ class ProgramController extends Controller
 
 
 
-                $isSet = Attendance::where('participant_id',$participant_id)
-                    ->where('date',$date['date'])->first();
-                    // dd($isSet,$participant_id,$participantDate);
-                if($isSet !== null){
-                    Attendance::where('participant_id',$participant_id)
-                    ->where('date',$date['date'])->update([
-                        'status' => $status
-                    ]);
-                }else{
+                $isSet = Attendance::where('participant_id', $participant_id)
+                    ->where('date', $date['date'])->first();
+                // dd($isSet,$participant_id,$participantDate);
+                if ($isSet !== null) {
+                    Attendance::where('participant_id', $participant_id)
+                        ->where('date', $date['date'])->update([
+                            'status' => $status
+                        ]);
+                } else {
                     Attendance::create([
                         'attendance_id' => $this->generateAttendanceId(),
                         'participant_id' => $participant_id,
@@ -837,7 +869,6 @@ class ProgramController extends Controller
                 }
             }
         }
-
     }
 
 
@@ -1009,10 +1040,11 @@ class ProgramController extends Controller
 
 
 
-    public function generateProgramId() {
+    public function generateProgramId()
+    {
         $program_id = 'PROG-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_program_id = Program::where('program_id', $program_id)->first();
-        while($existing_program_id) {
+        while ($existing_program_id) {
             $program_id = 'PROG-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_program_id = Program::where('program_id', $program_id)->first();
         }
@@ -1020,27 +1052,25 @@ class ProgramController extends Controller
     }
 
 
-    public function generateParticipantId() {
+    public function generateParticipantId()
+    {
         $participant_id = 'PART-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_participant_id = Participant::where('participant_id', $participant_id)->first();
-        while($existing_participant_id) {
+        while ($existing_participant_id) {
             $participant_id = 'PART-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_participant_id = Participant::where('participant_id', $participant_id)->first();
         }
         return $participant_id;
     }
 
-    public function generateAttendanceId() {
+    public function generateAttendanceId()
+    {
         $attendance_id = 'ATT-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_attendance_id = Attendance::where('attendance_id', $attendance_id)->first();
-        while($existing_attendance_id) {
+        while ($existing_attendance_id) {
             $attendance_id = 'ATT-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-            $existing_attendance_id = Attendance ::where('attendance_id', $attendance_id)->first();
+            $existing_attendance_id = Attendance::where('attendance_id', $attendance_id)->first();
         }
         return $attendance_id;
     }
-
-
-
-
 }

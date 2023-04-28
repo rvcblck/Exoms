@@ -22,6 +22,9 @@ export class ReportsComponent implements OnInit {
   content: any;
   currentDate: any;
 
+  inputWidth!: string;
+  inputValue!: string;
+
   adminName: any;
   adminRole: any;
 
@@ -35,7 +38,12 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit(): void {
     // this.adminLayout.pageTitle = 'Reports';
-    // this.cdr.detectChanges();
+    // this.cdr.detectChanges();\
+    if (this.inputValue) {
+      this.inputWidth = this.inputValue.length * 8 + 'px';
+    }
+
+    console.log(this.inputValue);
   }
 
   selectProgram() {
@@ -109,4 +117,13 @@ export class ReportsComponent implements OnInit {
       });
     }
   }
+
+  calculateWidth(): number {
+    if(this.inputValue){
+      return (this.inputValue.length + 1) * 8;
+    }
+    return 100
+    // adjust the multiplier to your preference
+  }
+
 }

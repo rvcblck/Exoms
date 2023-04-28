@@ -12,8 +12,60 @@
       </div>
       <div class="info-container">
         <div class="fname">{{ user?.fname }} {{ user?.mname }} {{ user?.lname }} {{ user?.suffix }}</div>
-        <div class="email">
-          {{ user?.email }}
+        <div class="info-wrapper">
+          <!-- email  -->
+          <div class="info">
+            <div class="info-icon">
+              <div class="icon-cont">
+                <i class="fa-solid fa-at"></i>
+              </div>
+            </div>
+            <div class="info-detail">
+              {{ user?.email }}
+            </div>
+          </div>
+          <!-- mobile no  -->
+          <div class="info">
+            <div class="info-icon">
+              <div class="icon-cont">
+                <i class="fa-solid fa-mobile-screen"></i>
+              </div>
+            </div>
+            <div class="info-detail">{{ user?.mobile_no }}</div>
+          </div>
+          <!-- address -->
+          <div class="info">
+            <div class="info-icon">
+              <div class="icon-cont">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+            </div>
+            <div class="info-detail">{{ user?.address }}</div>
+          </div>
+          <!-- bday -->
+          <div class="info">
+            <div class="info-icon">
+              <div class="icon-cont">
+                <img class="logo" src="../../assets/images/age-icon.png" alt="My Image" />
+              </div>
+            </div>
+            <div class="info-detail" *ngIf="user">{{ getAge(user.bday) }}</div>
+          </div>
+          <!-- gender -->
+          <div class="info">
+            <div class="info-icon">
+              <div class="icon-cont" *ngIf="user?.gender === 'male'">
+                <i class="fa-solid fa-mars"></i>
+              </div>
+              <div class="icon-cont" *ngIf="user?.gender === 'female'">
+                <i class="fa-solid fa-venus"></i>
+              </div>
+            </div>
+            <div class="info-detail" *ngIf="user">{{ user.gender }}</div>
+          </div>
+        </div>
+        <!-- <div class="email">
+
         </div>
         <div class="gender">
           Gender:&nbsp;
@@ -30,7 +82,7 @@
 
         <div class="mobile"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp;&nbsp;&nbsp;{{ user?.mobile_no }}</div>
 
-        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user?.address }}</div>
+        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user?.address }}</div> -->
         <div class="edit-label">Edit Mode</div>
         <div class="edit-toggle">
           <input type="checkbox" id="switch-toggle" class="switch" (change)="toggleAccountInfo()" />

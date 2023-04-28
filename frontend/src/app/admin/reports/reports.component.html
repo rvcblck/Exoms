@@ -1,12 +1,13 @@
 <div class="report-container">
   <div class="btn-cont">
     <div>Pogram:</div>
+    <div class="" *ngIf="!programTitle"></div>
     <div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
     <div><button (click)="selectProgram()">Select Program</button></div>
   </div>
 
   <mat-tab-group *ngIf="program && programFlow">
-    <mat-tab label="Terminal Report">
+    <mat-tab class="terminal" label="Terminal Report">
       <label for=""></label>
       <div class="table-container">
         <div class="table-wrapper">
@@ -113,6 +114,14 @@
           </table>
         </div>
       </div>
+      <!--
+
+
+
+
+
+
+       -->
       <div class="table-container">
         <div class="table-wrapper">
           <table class="prog-flow" id="programTopic">
@@ -122,93 +131,71 @@
               </div>
 
               <tr class="main-title">
-                <th colspan="2" class="text-center">EXTENSION COMMUNITY INVOLVEMENT TERMINAL REPORT</th>
+                <td colspan="2" class="text-center">
+                  <p class="topic-p" style="text-align: left">
+                    The team prepared sufficient and relevant topics for
+                    <input #myInput type="text" [(ngModel)]="inputValue" [style.width.px]="calculateWidth()" />
+
+                    <br />
+                    Below is the outline of all the topics discussed during the learning session
+                  </p>
+                </td>
               </tr>
               <tr class="position-relative">
                 <td colspan="2">&nbsp;</td>
               </tr>
               <tr class="program-name">
-                <td class="flex-fill text-nowrap"><strong>Name of Activity / Project :</strong></td>
-                <td>{{ program.title }}</td>
-              </tr>
-              <tr>
-                <td class="flex-fill text-nowrap"><strong>Date and Place Conducted :</strong></td>
                 <td>
-                  {{ program.place }} - <span *ngIf="program.start_date == program.end_date">{{ program.start_date | date : 'longDate' }}</span
-                  ><span *ngIf="program.start_date != program.end_date"></span> {{ program.start_date | date : 'longDate' }} -
-                  {{ program.end_date | date : 'longDate' }}
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2"><strong>Faculty Involved : </strong></td>
-              </tr>
-              <!-- list of members  -->
-              <tr *ngFor="let item of programFlow.position; let i = index">
-                <td class="text-end w-45">{{ [i + 1] }}.</td>
-                <td class="text-start w-55">{{ item.name }} - {{ item.position }}</td>
-              </tr>
-              <tr>
-                <td colspan="2"><strong> Beneficiaries :</strong></td>
-              </tr>
-              <!-- list of Partner  -->
-              <tr *ngFor="let item of program.partners">
-                <td colspan="2" class="text-center">
-                  <strong>{{ item.name }}</strong>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="flex-fill text-nowrap"><strong>Report on the flow of the Activity / Project Conducted :</strong></td>
-              </tr>
-              <tr>
-                <td colspan="2">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="ps-4 pe-4">
-                  <textarea
-                    class="border-0 w-100 p-4"
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="3"
-                    placeholder="As part of the University Extension Services, the CICT participated in the annual SAMBALARAN: ONLINE CAMP PROJECT on its sixth year with the theme: 'Educating the Educators 2.0: Empowering Teachers for the Adversities in the NOW Normal Education'. "
-                  ></textarea>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  This event happen on {{ program.start_date | date : 'longDate' }}
-                  <span *ngIf="program.start_time && program.end_time">from {{ program.start_time }} - {{ program.end_time }}</span> .The program flow
-                  is as follows:
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="2" class="px-5">
-                  <table class="table border">
-                    <thead>
-                      <tr>
-                        <th colspan="2" class="text-center">Program Flow</th>
-                      </tr>
-                    </thead>
+                  <table class="border">
                     <tbody>
-                      <tr *ngFor="let item of programFlow.flow">
-                        <td class="border text-end w-50">{{ item.flow }}</td>
-                        <td class="border text-start w-50">{{ item.description }}</td>
+                      <tr class="border">
+                        <td class="text-center"><strong>Blend Your Classrooms</strong></td>
+                        <td class="text-center"><strong>Links to Slideshow Section</strong></td>
+                        <td class="text-center"><strong>Brief Description</strong></td>
+                      </tr>
+                      <tr class="border" *ngFor="let item of programFlow.topic">
+                        <td>{{ item.col_1 }}</td>
+                        <td>{{ item.col_2 }}</td>
+                        <td>{{ item.col_3 }}</td>
                       </tr>
                     </tbody>
                   </table>
                 </td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2"><strong>Prepared by : </strong></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <table class="border">
+                    <tbody>
+                      <tr class="border">
+                        <td class="text-center">
+                          <strong>Name</strong>
+                        </td>
+                        <td class="text-center">
+                          <strong>Signature</strong>
+                        </td>
+                      </tr>
+                      <tr class="border" *ngFor="let item of programFlow.position">
+                        <td>{{ item.name }}-{{ item.position }}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>Conforme:</td>
+              </tr>
+              <tr>
+                <td><strong>DR. KENO C. PIAD</strong></td>
+              </tr>
+              <tr>
+                <td>Dean, CICT</td>
               </tr>
               <div class="footer">
                 <div>Printed By : {{ adminName }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ adminRole }}</div>
@@ -218,7 +205,9 @@
           </table>
         </div>
       </div>
-      <button (click)="downloadPDF()">Download PDF</button>
+      <div class="dl-cont">
+        <div class="downloadbtn"><i class="fa-solid fa-circle-down"></i><button (click)="downloadPDF()">Download PDF</button></div>
+      </div>
     </mat-tab>
     <mat-tab label="Partner Report"> Partner Report </mat-tab>
     <mat-tab label="Faculty Report"> Faculty Report </mat-tab>

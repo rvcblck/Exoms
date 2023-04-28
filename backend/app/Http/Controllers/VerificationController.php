@@ -50,8 +50,8 @@ class VerificationController extends Controller
         }
 
         $verificationCode = VerificationCode::where('user_id', $user->user_id)
-                                            ->latest()
-                                            ->first();
+            ->latest()
+            ->first();
 
         if (!$verificationCode) {
             return response()->json(['message' => 'User not found.'], 404);
@@ -73,7 +73,8 @@ class VerificationController extends Controller
         return response()->json(['message' => 'Email verified successfully.'], 200);
     }
 
-    public function sendEmail(Request $request){
+    public function sendEmail(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
         ]);
@@ -86,7 +87,7 @@ class VerificationController extends Controller
             ], 401);
         }
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         $code = $this->generateVerificationCode();
 
@@ -115,10 +116,11 @@ class VerificationController extends Controller
         return strval($code);
     }
 
-    public function generateVerifyId() {
+    public function generateVerifyId()
+    {
         $verify_id = 'VER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_verify_id = VerificationCode::where('verify_id', $verify_id)->first();
-        while($existing_verify_id) {
+        while ($existing_verify_id) {
             $verify_id = 'VER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_verify_id = VerificationCode::where('verify_id', $verify_id)->first();
         }

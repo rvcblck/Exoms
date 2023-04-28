@@ -41,7 +41,8 @@ class PartnerController extends Controller
                 $contractsData = [
                     'contract_id' => $contract->contract_id,
                     'start_date' => $contract->start_date,
-                    'end_date' => $contract->end_date,    ];
+                    'end_date' => $contract->end_date,
+                ];
             }
 
 
@@ -66,57 +67,58 @@ class PartnerController extends Controller
     {
         $partnerData = [];
 
-        $partner = Partner::with('contracts', 'programs')->where('partner_id',$id)->first();
+        $partner = Partner::with('contracts', 'programs')->where('partner_id', $id)->first();
 
-            $contractsData = [];
-            $contracts = $partner->contracts()->get();
-                foreach($contracts as $contract){
-                    $contractsData [] = [
-                        'contract_id' => $contract->contract_id,
-                        'start_date' => $contract->start_date,
-                        'end_date' => $contract->end_date,
-                    ];
-                }
-
-            $programData = [];
-            $programs = $partner->programs()->get();
-                foreach($programs as $program){
-                    $programData [] = [
-                        'program_id' => $program->program_id,
-                        'title' => $program->title
-                    ];
-            }
-
-            $path = storage_path('app\public\\'.$partner->moa_file);
-            if (!File::exists($path)) {
-                abort(404);
-            }
-
-            $moaData = [
-                'fileName' => pathinfo($path, PATHINFO_FILENAME),
-                'fileExt' => pathinfo($path, PATHINFO_EXTENSION),
-                'fileSize' => filesize($path),
+        $contractsData = [];
+        $contracts = $partner->contracts()->get();
+        foreach ($contracts as $contract) {
+            $contractsData[] = [
+                'contract_id' => $contract->contract_id,
+                'start_date' => $contract->start_date,
+                'end_date' => $contract->end_date,
             ];
+        }
 
-
-
-            $partnerData = [
-                'partner_id' => $partner->partner_id,
-                'company_name' => $partner->company_name,
-                'address' => $partner->address,
-                'contact_no' => $partner->contact_no,
-                'contact_person' => $partner->contact_person,
-                'moa_file' => $partner->moa_file,
-                'contracts' => $contractsData,
-                'programs' => $programData,
-                'moaFile_content' => $moaData,
+        $programData = [];
+        $programs = $partner->programs()->get();
+        foreach ($programs as $program) {
+            $programData[] = [
+                'program_id' => $program->program_id,
+                'title' => $program->title
             ];
+        }
+
+        $path = storage_path('app\public\\' . $partner->moa_file);
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $moaData = [
+            'fileName' => pathinfo($path, PATHINFO_FILENAME),
+            'fileExt' => pathinfo($path, PATHINFO_EXTENSION),
+            'fileSize' => filesize($path),
+        ];
+
+
+
+        $partnerData = [
+            'partner_id' => $partner->partner_id,
+            'company_name' => $partner->company_name,
+            'address' => $partner->address,
+            'contact_no' => $partner->contact_no,
+            'contact_person' => $partner->contact_person,
+            'moa_file' => $partner->moa_file,
+            'contracts' => $contractsData,
+            'programs' => $programData,
+            'moaFile_content' => $moaData,
+        ];
 
 
         return response()->json($partnerData);
     }
 
-    public function createPartner(Request $request){
+    public function createPartner(Request $request)
+    {
         $rules = [
             'company_name' => 'required',
             'address' => 'required',
@@ -166,10 +168,10 @@ class PartnerController extends Controller
 
         $path_moaFile = '';
         $moa_file = $request->file('moa_file');
-        if(!empty($moa_file)){
+        if (!empty($moa_file)) {
             $filename = $moa_file->getClientOriginalName();
             $new_filename = 'MOA_' . $filename;
-            $path_moaFile = Storage::putFileAs('partner/'.$partner_id, $moa_file, $new_filename);
+            $path_moaFile = Storage::putFileAs('partner/' . $partner_id, $moa_file, $new_filename);
         }
 
 
@@ -202,7 +204,8 @@ class PartnerController extends Controller
     }
 
 
-    public function updatePartner(Request $request){
+    public function updatePartner(Request $request)
+    {
         $rules = [
             'company_name' => 'required',
             'address' => 'required',
@@ -247,7 +250,7 @@ class PartnerController extends Controller
 
 
         $path_moaFile = '';
-        if(!empty($moa_file)){
+        if (!empty($moa_file)) {
             // Get the program directory
             $partnerDir = 'partner/' . $request->partner_id;
 
@@ -263,7 +266,7 @@ class PartnerController extends Controller
 
             $filename = $moa_file->getClientOriginalName();
             $new_filename = 'MOA_' . $filename;
-            $path_moaFile = Storage::putFileAs('partner/'.$request->partner_id, $moa_file, $new_filename);
+            $path_moaFile = Storage::putFileAs('partner/' . $request->partner_id, $moa_file, $new_filename);
         }
 
 
@@ -294,7 +297,8 @@ class PartnerController extends Controller
         ]);
     }
 
-    public function extendPartner(Request $request){
+    public function extendPartner(Request $request)
+    {
         $rules = [
             'start_date' => 'required',
             'end_date' => 'required',
@@ -345,32 +349,27 @@ class PartnerController extends Controller
 
 
 
-    public function generatePartnerId() {
+    public function generatePartnerId()
+    {
         $partner_id = 'PRTNR-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_partner_id = Partner::where('partner_id', $partner_id)->first();
-        while($existing_partner_id) {
+        while ($existing_partner_id) {
             $partner_id = 'PRTNR-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_partner_id = Partner::where('partner_id', $partner_id)->first();
         }
         return $partner_id;
     }
 
-    public function generateContractId() {
+    public function generateContractId()
+    {
         $contract = 'CTRCT-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_contract = Contract::where('contract_id', $contract)->first();
-        while($existing_contract) {
+        while ($existing_contract) {
             $contract = 'CTRCT-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_contract = Contract::where('contract_id', $contract)->first();
         }
         return $contract;
     }
-
-
-
-
-
-
-
 }
 
 

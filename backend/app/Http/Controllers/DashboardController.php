@@ -12,35 +12,36 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $now = Carbon::now('Asia/Manila');
         $userData = [];
 
         $users = User::with('programs')->get();
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $programs = $user->programs()->get();
             $ongoing = 0;
             $upcoming = 0;
             $previous = 0;
 
-            foreach($programs as $program){
+            foreach ($programs as $program) {
                 $endDate = Carbon::parse($program->end_date);
                 $startDate = Carbon::parse($program->start_date);
-                if($endDate->lt($now)){
+                if ($endDate->lt($now)) {
                     $previous++;
-                }else if($startDate->gt($now)){
+                } else if ($startDate->gt($now)) {
                     $upcoming++;
-                }else{
+                } else {
                     $ongoing++;
                 }
             }
 
             $total = $ongoing + $upcoming + $previous;
 
-            $fullName = $user->fname.' '.$user->lname;
+            $fullName = $user->fname . ' ' . $user->lname;
 
-            $userData [] = [
+            $userData[] = [
                 'user_id' => $user->user_id,
                 'fullName' => $fullName,
                 'email' => $user->email,
@@ -48,7 +49,7 @@ class DashboardController extends Controller
             ];
         }
 
-        usort($userData, function($a, $b) {
+        usort($userData, function ($a, $b) {
             return $b['total'] <=> $a['total'];
         });
 
@@ -66,18 +67,17 @@ class DashboardController extends Controller
         $allPrevious = 0;
 
 
-        foreach($allPrograms as $allProgram){
+        foreach ($allPrograms as $allProgram) {
 
             $endDate = Carbon::parse($allProgram->end_date);
             $startDate = Carbon::parse($allProgram->start_date);
-            if($endDate->lt($now)){
+            if ($endDate->lt($now)) {
                 $allPrevious++;
-            }else if($startDate->gt($now)){
+            } else if ($startDate->gt($now)) {
                 $allUpcoming++;
-            }else{
+            } else {
                 $allOngoing++;
             }
-
         }
 
         $programData = [
@@ -99,17 +99,14 @@ class DashboardController extends Controller
 
         $statusUsers = User::get();
 
-        foreach($statusUsers as $statusUser){
-            if($statusUser->status === 'approve'){
+        foreach ($statusUsers as $statusUser) {
+            if ($statusUser->status === 'approve') {
                 $approve++;
-            }elseif($statusUser->status === 'pending'){
+            } elseif ($statusUser->status === 'pending') {
                 $pending++;
-            }else{
+            } else {
                 $rejected++;
             }
-
-
-
         }
 
 
@@ -120,7 +117,7 @@ class DashboardController extends Controller
             'disapproved' => $rejected,
         ];
 
-        $statusDataTransformed = array_map(function($key, $value) {
+        $statusDataTransformed = array_map(function ($key, $value) {
             return ['y' => $value, 'name' => ucfirst($key)];
         }, array_keys($statusData), $statusData);
 
@@ -143,16 +140,14 @@ class DashboardController extends Controller
             if (($beforeEndDate->lt(now('Asia/Manila')) == true) && ($endDate2->gt(now('Asia/Manila')) == true)) {
 
 
-                $partner = Partner::where('partner_id',$contract->partner_id)->first();
+                $partner = Partner::where('partner_id', $contract->partner_id)->first();
 
-                $expireData [] = [
+                $expireData[] = [
                     'partner_id' => $partner->partner_id,
                     'partner_name' => $partner->company_name,
                     'end_date' => $contract->end_date
                 ];
             }
-
-
         }
 
 
@@ -180,10 +175,10 @@ class DashboardController extends Controller
 
 
         return response()->json($dashboardData);
-
     }
 
-    public function dashboardChart($month){
+    public function dashboardChart($month)
+    {
 
         $year = date('Y'); // get the current year using now()
 
@@ -206,8 +201,8 @@ class DashboardController extends Controller
                 $dateString = sprintf('%04d-%02d-%02d', $year, $month, $day);
                 // count the number of programs on that day (replace this with your own query)
                 $programCount = Program::whereDate('start_date', '<=', $dateString)
-                                    ->whereDate('end_date', '>=', $dateString)
-                                    ->count();
+                    ->whereDate('end_date', '>=', $dateString)
+                    ->count();
                 // add the data point to the array
                 $dataPoints[] = [
                     'x' => $dateString,
@@ -220,10 +215,12 @@ class DashboardController extends Controller
     }
 
 
-    public function userDashboardChart($user_id){
+    public function userDashboardChart($user_id)
+    {
         $now = Carbon::now('Asia/Manila');
         $userData = [];
 
+<<<<<<< Updated upstream
         $user1 = User::with('programs')->where('user_id',$user_id)->first();
 
 
@@ -231,104 +228,117 @@ class DashboardController extends Controller
             $ongoing = 0;
             $upcoming = 0;
             $previous = 0;
+=======
+        $user = User::with('programs')->where('user_id', $user_id)->first();
 
-            foreach($programs as $program){
-                $endDate = Carbon::parse($program->end_date);
-                $startDate = Carbon::parse($program->start_date);
-                if($endDate->lt($now)){
-                    $previous++;
-                }else if($startDate->gt($now)){
-                    $upcoming++;
-                }else{
-                    $ongoing++;
-                }
+
+        $programs = $user->programs()->get();
+        $ongoing = 0;
+        $upcoming = 0;
+        $previous = 0;
+>>>>>>> Stashed changes
+
+        foreach ($programs as $program) {
+            $endDate = Carbon::parse($program->end_date);
+            $startDate = Carbon::parse($program->start_date);
+            if ($endDate->lt($now)) {
+                $previous++;
+            } else if ($startDate->gt($now)) {
+                $upcoming++;
+            } else {
+                $ongoing++;
             }
+        }
 
+<<<<<<< Updated upstream
             $allPrograms = $user1->programs()->get();
+=======
+        $allPrograms = $user->programs()->get();
+>>>>>>> Stashed changes
 
-            $allOngoing = 0;
-            $allUpcoming = 0;
-            $allPrevious = 0;
+        $allOngoing = 0;
+        $allUpcoming = 0;
+        $allPrevious = 0;
 
 
-            foreach($allPrograms as $allProgram){
+        foreach ($allPrograms as $allProgram) {
 
-                $endDate = Carbon::parse($allProgram->end_date);
-                $startDate = Carbon::parse($allProgram->start_date);
-                if($endDate->lt($now)){
-                    $allPrevious++;
-                }else if($startDate->gt($now)){
-                    $allUpcoming++;
-                }else{
-                    $allOngoing++;
-                }
-
+            $endDate = Carbon::parse($allProgram->end_date);
+            $startDate = Carbon::parse($allProgram->start_date);
+            if ($endDate->lt($now)) {
+                $allPrevious++;
+            } else if ($startDate->gt($now)) {
+                $allUpcoming++;
+            } else {
+                $allOngoing++;
             }
+        }
 
-            $programData = [
-                'ongoing' => $allOngoing,
-                'upcoming' => $allUpcoming,
-                'previous' => $allPrevious
-            ];
+        $programData = [
+            'ongoing' => $allOngoing,
+            'upcoming' => $allUpcoming,
+            'previous' => $allPrevious
+        ];
 
 
 
 
         $users = User::with('programs')->get();
 
-            foreach($users as $user){
-                $programs = $user->programs()->get();
-                $ongoing = 0;
-                $upcoming = 0;
-                $previous = 0;
+        foreach ($users as $user) {
+            $programs = $user->programs()->get();
+            $ongoing = 0;
+            $upcoming = 0;
+            $previous = 0;
 
-                foreach($programs as $program){
-                    $endDate = Carbon::parse($program->end_date);
-                    $startDate = Carbon::parse($program->start_date);
-                    if($endDate->lt($now)){
-                        $previous++;
-                    }else if($startDate->gt($now)){
-                        $upcoming++;
-                    }else{
-                        $ongoing++;
-                    }
+            foreach ($programs as $program) {
+                $endDate = Carbon::parse($program->end_date);
+                $startDate = Carbon::parse($program->start_date);
+                if ($endDate->lt($now)) {
+                    $previous++;
+                } else if ($startDate->gt($now)) {
+                    $upcoming++;
+                } else {
+                    $ongoing++;
                 }
-
-                $total = $ongoing + $upcoming + $previous;
-
-                $fullName = $user->fname.' '.$user->lname;
-
-                $userData [] = [
-                    'user_id' => $user->user_id,
-                    'fullName' => $fullName,
-                    'email' => $user->email,
-                    'total' => $total
-                ];
             }
 
-            usort($userData, function($a, $b) {
-                return $b['total'] <=> $a['total'];
-            });
+            $total = $ongoing + $upcoming + $previous;
 
-            $userData = array_slice($userData, 0, 5);
+            $fullName = $user->fname . ' ' . $user->lname;
 
-
-
-            $dashboardData = [
-                'program_count' => $programData,
-                'faculty' => $userData,
-
+            $userData[] = [
+                'user_id' => $user->user_id,
+                'fullName' => $fullName,
+                'email' => $user->email,
+                'total' => $total
             ];
+        }
+
+        usort($userData, function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
+
+        $userData = array_slice($userData, 0, 5);
+
+
+
+        $dashboardData = [
+            'program_count' => $programData,
+            'faculty' => $userData,
+
+        ];
 
 
 
         return response()->json($dashboardData);
     }
 
-    public function userProgramChart(Request $request){
+    public function userProgramChart(Request $request)
+    {
 
 
-        $user = User::with('programs')->where('user_id',$request->user_id)->first();
+        $user = User::with('programs')->where('user_id', $request->user_id)->first();
 
 
         $year = date('Y'); // get the current year using now()
@@ -352,8 +362,8 @@ class DashboardController extends Controller
                 $dateString = sprintf('%04d-%02d-%02d', $year, $month, $day);
                 // count the number of programs on that day (replace this with your own query)
                 $programCount = $user->programs()->whereDate('start_date', '<=', $dateString)
-                ->whereDate('end_date', '>=', $dateString)
-                ->count();;
+                    ->whereDate('end_date', '>=', $dateString)
+                    ->count();;
                 // $programCount = Program::whereDate('start_date', '<=', $dateString)
                 //                     ->whereDate('end_date', '>=', $dateString)
                 //                     ->count();
@@ -367,8 +377,4 @@ class DashboardController extends Controller
 
         return response()->json($dataPoints);
     }
-
-
-
-
 }

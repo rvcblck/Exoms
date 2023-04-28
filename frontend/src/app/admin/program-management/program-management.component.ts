@@ -145,7 +145,10 @@ export class ProgramManagementComponent implements OnInit {
       (attendance) => {
         const dialogRef = this.dialog.open(AttendanceComponent, {
           data: { attendance: attendance },
-          width: '80%'
+          minWidth: '50%',
+          maxWidth: '90%'
+          // maxHeight: '40%',
+          // position: { top: '0px' }
         });
       },
       (error) => {

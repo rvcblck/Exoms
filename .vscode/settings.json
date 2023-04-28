@@ -11,5 +11,8 @@
   "bladeFormatter.format.sortHtmlAttributes": "vuejs",
   "bladeFormatter.format.useTabs": true,
   "bladeFormatter.format.noMultipleEmptyLines": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  }
 }

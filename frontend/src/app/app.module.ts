@@ -68,6 +68,7 @@ import { ProgFlowComponent } from './user/prog-flow/prog-flow.component';
 import * as CanvasJSAngularChart from '../assets/js/canvasjs/canvasjs.angular.component';
 import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 import { SelectProgramComponent } from './user/modal/select-program/select-program.component';
+
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { SuccessComponent } from './dialog/success/success.component';
@@ -148,7 +149,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatStepperModule,
     MatTabsModule,
     DragAndDropModule,
-    DragDropModule,
+    DragDropModule
     // QuillModule.forRoot()
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],

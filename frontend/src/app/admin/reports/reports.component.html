@@ -154,9 +154,9 @@
                         <td class="text-center"><strong>Brief Description</strong></td>
                       </tr>
                       <tr class="border" *ngFor="let item of programFlow.topic">
-                        <td>{{ item.col_1 }}</td>
-                        <td>{{ item.col_2 }}</td>
-                        <td>{{ item.col_3 }}</td>
+                        <td class="p-2">{{ item.col_1 }}</td>
+                        <td class="p-2">{{ item.col_2 }}</td>
+                        <td class="p-2">{{ item.col_3 }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -169,24 +169,27 @@
                 <td colspan="2"><strong>Prepared by : </strong></td>
               </tr>
               <tr>
-                <td colspan="2">
-                  <table class="border">
+                <td colspan="2" class="w-100">
+                  <table class="border w-100">
                     <tbody>
                       <tr class="border">
-                        <td class="text-center">
+                        <td class="text-center w-70">
                           <strong>Name</strong>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center w-30">
                           <strong>Signature</strong>
                         </td>
                       </tr>
                       <tr class="border" *ngFor="let item of programFlow.position">
-                        <td>{{ item.name }}-{{ item.position }}</td>
-                        <td></td>
+                        <td class="border text-center w-70">{{ item.name }}-{{ item.position }}</td>
+                        <td class="border w-30"></td>
                       </tr>
                     </tbody>
                   </table>
                 </td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
               </tr>
               <tr>
                 <td>Conforme:</td>

@@ -163,75 +163,69 @@ class ProgramController extends Controller
                 abort(404);
             }
 
-<<<<<<< Updated upstream
-                $invViewFile = [
-                    'fileName' => basename($invpath),
-                    'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
-                    'fileSize' => filesize($invpath),
-                ];
-            }
-
-
-            $certViewFile = [];
-            if($program->certificate){
-                $certpath = storage_path('app\public\\'.$program->certificate);
-                if (!File::exists($certpath)) {
-                    abort(404);
-                }
-
-                $certViewFile = [
-                    'fileName' => basename($certpath),
-                    'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
-                    'fileSize' => filesize($certpath),
-                ];
-            }
-
-
-
-
-            //status
-            $endDate = Carbon::parse($program->end_date);
-            $startDate = Carbon::parse($program->start_date);
-            $status = '';
-            if($endDate->lt($now)){
-                $status = 'Previous';
-            }else if($startDate->gt($now)){
-                $status = 'Upcoming';
-            }else{
-                $status = 'Ongoing';
-            }
-
-
-            $programData [] = [
-                'program_id' => $program->program_id,
-                'title' => $program->title,
-                'details' => $program->details,
-                'place' => $program->place,
-                'start_date' => $program->start_date,
-                'end_date' => $program->end_date,
-                'start_time' => $program->start_time,
-                'end_time' => $program->end_time,
-                'status' => $status,
-                'certificate' => $program->certificate,
-                'invitation' => $program->invitation,
-                'leader' => $leaderData,
-                'members' => $userData,
-                'partners' => $partnerData,
-                'participants' => $participantData,
-                'participant_count' => $participantCount,
-                'invitation_content' => $invViewFile,
-                'certificate_content' => $certViewFile,
-
-
-
-=======
             $invViewFile = [
                 'fileName' => basename($invpath),
                 'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
                 'fileSize' => filesize($invpath),
->>>>>>> Stashed changes
             ];
         }
+
+
+        $certViewFile = [];
+        if ($program->certificate) {
+            $certpath = storage_path('app\public\\' . $program->certificate);
+            if (!File::exists($certpath)) {
+                abort(404);
+            }
+
+            $certViewFile = [
+                'fileName' => basename($certpath),
+                'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
+                'fileSize' => filesize($certpath),
+            ];
+        }
+
+
+
+
+        //status
+        $endDate = Carbon::parse($program->end_date);
+        $startDate = Carbon::parse($program->start_date);
+        $status = '';
+        if ($endDate->lt($now)) {
+            $status = 'Previous';
+        } else if ($startDate->gt($now)) {
+            $status = 'Upcoming';
+        } else {
+            $status = 'Ongoing';
+        }
+
+
+        $programData[] = [
+            'program_id' => $program->program_id,
+            'title' => $program->title,
+            'details' => $program->details,
+            'place' => $program->place,
+            'start_date' => $program->start_date,
+            'end_date' => $program->end_date,
+            'start_time' => $program->start_time,
+            'end_time' => $program->end_time,
+            'status' => $status,
+            'certificate' => $program->certificate,
+            'invitation' => $program->invitation,
+            'leader' => $leaderData,
+            'members' => $userData,
+            'partners' => $partnerData,
+            'participants' => $participantData,
+            'participant_count' => $participantCount,
+            'invitation_content' => $invViewFile,
+            'certificate_content' => $certViewFile,
+
+
+
+
+        ];
+
 
 
         $certViewFile = [];
@@ -353,13 +347,13 @@ class ProgramController extends Controller
         $program_id = $this->generateProgramId();
         // $member_id = $this->generateMemberId();
 
-        $start_time ='';
-        if($request->input('start_time')){
+        $start_time = '';
+        if ($request->input('start_time')) {
             $start_timeString = $request->input('start_time');
             $start_time = Carbon::parse($start_timeString)->toTimeString();
         }
         $end_time = '';
-        if($request->input('end_time')){
+        if ($request->input('end_time')) {
             $end_timeString = $request->input('end_time');
             $end_time = Carbon::parse($end_timeString)->toTimeString();
         }
@@ -525,13 +519,13 @@ class ProgramController extends Controller
         $end_dateString = $request->input('end_date');
         $end_date = Carbon::parse($end_dateString)->toDateString();
 
-        $start_time ='';
-        if($request->input('start_time')){
+        $start_time = '';
+        if ($request->input('start_time')) {
             $start_timeString = $request->input('start_time');
             $start_time = Carbon::parse($start_timeString)->toTimeString();
         }
         $end_time = '';
-        if($request->input('end_time')){
+        if ($request->input('end_time')) {
             $end_timeString = $request->input('end_time');
             $end_time = Carbon::parse($end_timeString)->toTimeString();
         }
@@ -872,23 +866,24 @@ class ProgramController extends Controller
     }
 
 
-    public function programFlow($program_id){
-        $flows = Flow::where('program_id',$program_id)->get();
+    public function programFlow($program_id)
+    {
+        $flows = Flow::where('program_id', $program_id)->get();
 
         $flowData = [];
-        foreach($flows as $flow){
-            $flowData []=[
+        foreach ($flows as $flow) {
+            $flowData[] = [
                 'flow' => $flow->flow,
                 'description' => $flow->description,
             ];
         }
 
 
-        $topics = Topic::where('program_id',$program_id)->get();
+        $topics = Topic::where('program_id', $program_id)->get();
 
         $topicData = [];
-        foreach($topics as $topic){
-            $topicData []=[
+        foreach ($topics as $topic) {
+            $topicData[] = [
                 'col_1' => $topic->col_1,
                 'col_2' => $topic->col_2,
                 'col_3' => $topic->col_3,
@@ -908,20 +903,20 @@ class ProgramController extends Controller
 
 
 
-        $program = Program::with('users','members',)->where('program_id',$program_id)->first();
+        $program = Program::with('users', 'members',)->where('program_id', $program_id)->first();
         $users = $program->users()->withPivot('position')->get();
         $userData = [];
-        foreach($users as $user){
+        foreach ($users as $user) {
 
             $userData[] = [
-                'name' => $user->fname.' '.$user->mname.' '.$user->lname.'  '.$user->suffix,
+                'name' => $user->fname . ' ' . $user->mname . ' ' . $user->lname . '  ' . $user->suffix,
                 'position' => $user->pivot->position
             ];
         }
 
 
 
-        $otherDetails= [
+        $otherDetails = [
             'flow' => $flowData,
             'topic' => $topicData,
             'position' => $userData
@@ -933,17 +928,17 @@ class ProgramController extends Controller
 
 
         return response()->json($otherDetails);
-
     }
 
-    public function updateProgramFlow(Request $request){
+    public function updateProgramFlow(Request $request)
+    {
         $programId = $request->program_id;
 
         // delete all data in the "flow" table with the given program_id
         Flow::where('program_id', $programId)->delete();
 
         // insert new records for each item in the "data" array
-        foreach($request->data as $item) {
+        foreach ($request->data as $item) {
             Flow::create([
                 'program_id' => $programId,
                 'flow_id' => $this->generateflowId(),
@@ -953,17 +948,17 @@ class ProgramController extends Controller
         }
 
         return response()->json(['message' => 'Program flow updated successfully.']);
-
     }
 
-    public function updateProgramTopic(Request $request){
+    public function updateProgramTopic(Request $request)
+    {
         $programId = $request->program_id;
 
         // delete all data in the "flow" table with the given program_id
         Topic::where('program_id', $programId)->delete();
 
         // insert new records for each item in the "data" array
-        foreach($request->data as $item) {
+        foreach ($request->data as $item) {
             Topic::create([
                 'topic_id' => $this->generateTopicId(),
                 'program_id' => $programId,

@@ -40,15 +40,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ParticipantTableSeeder::class);
         $this->call(LeaderSeeder::class);
         $this->call(AdminAccountSeeder::class);
-<<<<<<< Updated upstream
         $this->call(TopicTableSeeder::class);
         $this->call(FlowTableSeeder::class);
 
-=======
-        $this->call(FlowTableSeeder::class);
-        $this->call(PositionTableSeeder::class);
-        $this->call(TopicTableSeeder::class);
->>>>>>> Stashed changes
+
         $this->call(AttendanceTableSeeder::class);
     }
 }

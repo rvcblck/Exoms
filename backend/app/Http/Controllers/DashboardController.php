@@ -220,23 +220,15 @@ class DashboardController extends Controller
         $now = Carbon::now('Asia/Manila');
         $userData = [];
 
-<<<<<<< Updated upstream
-        $user1 = User::with('programs')->where('user_id',$user_id)->first();
+
+        $user1 = User::with('programs')->where('user_id', $user_id)->first();
 
 
-            $programs = $user1->programs()->get();
-            $ongoing = 0;
-            $upcoming = 0;
-            $previous = 0;
-=======
-        $user = User::with('programs')->where('user_id', $user_id)->first();
-
-
-        $programs = $user->programs()->get();
+        $programs = $user1->programs()->get();
         $ongoing = 0;
         $upcoming = 0;
         $previous = 0;
->>>>>>> Stashed changes
+
 
         foreach ($programs as $program) {
             $endDate = Carbon::parse($program->end_date);
@@ -250,11 +242,8 @@ class DashboardController extends Controller
             }
         }
 
-<<<<<<< Updated upstream
-            $allPrograms = $user1->programs()->get();
-=======
-        $allPrograms = $user->programs()->get();
->>>>>>> Stashed changes
+        $allPrograms = $user1->programs()->get();
+
 
         $allOngoing = 0;
         $allUpcoming = 0;

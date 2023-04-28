@@ -5,6 +5,9 @@ import { SelectProgramComponent } from 'src/app/user/modal/select-program/select
 import { MatDialog } from '@angular/material/dialog';
 import { Program, ViewProgram } from 'src/app/program.model';
 import { OtherDetails } from 'src/app/program.model';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reports',
@@ -17,12 +20,17 @@ export class ReportsComponent implements OnInit {
   programTitle!: string;
   program_id!: string;
   content: any;
+  currentDate: any;
+
+  adminName: any;
+  adminRole: any;
 
   constructor(
     private adminLayout: AdminLayoutComponent,
     private cdr: ChangeDetectorRef,
     private programService: ProgramService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +51,13 @@ export class ReportsComponent implements OnInit {
           if (result) {
             this.programTitle = result.title;
             this.program_id = result.program_id;
+
+            this.adminName = localStorage.getItem('fullName');
+            this.adminRole = localStorage.getItem('role');
+            const currentDate = new Date();
+            if (currentDate) {
+              this.currentDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+            }
 
             this.programService.getProgramInfo(result.program_id).subscribe(
               (program) => {
@@ -71,5 +86,27 @@ export class ReportsComponent implements OnInit {
         console.error('Error retrieving programs:', error);
       }
     );
+  }
+
+  downloadPDF() {
+    const table1 = document.getElementById('programFlow');
+    const table2 = document.getElementById('programTopic');
+    if (table1 && table2) {
+      // Check if both tables are defined and not null
+      html2canvas(table1).then((canvas1) => {
+        html2canvas(table2).then((canvas2) => {
+          const imgWidth = 208;
+          const imgHeight = (canvas1.height * imgWidth) / canvas1.width;
+          const contentDataURL1 = canvas1.toDataURL('image/png');
+          const contentDataURL2 = canvas2.toDataURL('image/png');
+          const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+          const position = 0;
+          pdf.addImage(contentDataURL1, 'PNG', 0, position, imgWidth, imgHeight);
+          pdf.addPage(); // Add a second page
+          pdf.addImage(contentDataURL2, 'PNG', 0, position, imgWidth, imgHeight);
+          pdf.save('MYPdf.pdf'); // Generated PDF
+        });
+      });
+    }
   }
 }

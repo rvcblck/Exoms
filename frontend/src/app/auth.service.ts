@@ -24,6 +24,7 @@ export class AuthService {
       tap((response) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('firstName', response.user.fname);
+        localStorage.setItem('fullName', response.user.lname + ', ' + response.user.fname);
         localStorage.setItem('role', response.user.role);
         localStorage.setItem('user_id', response.user.user_id);
       }),

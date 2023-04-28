@@ -14,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageService } from 'src/app/image.service';
 import { FileView } from 'src/app/file.model';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-create-program',
@@ -712,11 +714,28 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programService.createProgram(formData).subscribe(
         (program) => {
           console.log('Program created successfully:', program);
-          // TODO: Handle success
+          const message = 'Program created successfully';
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+          this.dialogRef.close();
         },
         (error) => {
           console.error('Error creating program:', error);
-          // TODO: Handle error
+          const message = 'Error creating program';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         }
       );
     }

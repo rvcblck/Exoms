@@ -94,8 +94,8 @@ export class CreateAccountComponent implements OnInit {
       (response) => {
         console.log(response);
         this.dialogRef.close();
-        const message = 'Success';
-        const header = 'Creating Account';
+        const message = 'Creating Account Successfully';
+        const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
           width: '300px',
           data: {
@@ -109,8 +109,8 @@ export class CreateAccountComponent implements OnInit {
         if (error.error.error === 'Email is already registered') {
           this.emailError = 'Email is already registered';
         }
-        const message = 'Error : There is something wrong';
-        const header = 'Creating Account';
+        const message = 'There is something wrong';
+        const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
           width: '300px',
           data: {

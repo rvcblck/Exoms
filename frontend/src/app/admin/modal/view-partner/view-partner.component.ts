@@ -6,6 +6,8 @@ import { CreatePartnerComponent } from '../create-partner/create-partner.compone
 import { ImageService } from 'src/app/image.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
 
 @Component({
   selector: 'app-view-partner',
@@ -113,11 +115,29 @@ export class ViewPartnerComponent implements OnInit {
     this.partnerService.extend(formattedData).subscribe(
       (program) => {
         console.log('Program created successfully:', program);
+        const message = 'Program created successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
         this.dialogRef.close();
       },
       (error) => {
         console.error('Error creating program:', error);
         // TODO: Handle error
+        const message = 'Error creating program';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

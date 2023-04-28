@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ProfileService } from 'src/app/profile.service';
 import { AuthService } from 'src/app/auth.service';
 import { Router } from '@angular/router';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-change-email',
@@ -84,6 +86,15 @@ export class ChangeEmailComponent implements OnInit {
     this.profileService.changeEmail(formattedData).subscribe(
       (response) => {
         console.log('Email Updated successfully');
+        const message = 'Email Updated successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
 
         this.dialogRef.close();
 
@@ -114,6 +125,15 @@ export class ChangeEmailComponent implements OnInit {
           this.passErrors = error.error.message;
         } else {
           console.log('Something went wrong');
+          const message = 'There is something wrong';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       }
     );

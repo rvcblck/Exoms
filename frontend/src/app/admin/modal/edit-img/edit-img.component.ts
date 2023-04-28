@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ProfileService } from 'src/app/profile.service';
 import { AuthService } from 'src/app/auth.service';
 import { Router } from '@angular/router';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-edit-img',
@@ -97,10 +99,28 @@ export class EditImgComponent implements OnInit {
     this.profileService.updateProfilePic(formData).subscribe(
       (program) => {
         console.log('Program created successfully:', program);
-        this.dialogRef.close();
+          const message = 'Update Successfully';
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+          this.dialogRef.close();
       },
       (error) => {
         console.error('Error creating program:', error);
+        const message = 'Error Updating Image';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

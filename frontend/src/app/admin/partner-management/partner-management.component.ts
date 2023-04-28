@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewPartnerComponent } from '../modal/view-partner/view-partner.component';
 import { CreatePartnerComponent } from '../modal/create-partner/create-partner.component';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-partner-management',
@@ -75,6 +76,15 @@ export class PartnerManagementComponent implements OnInit {
       },
       (error) => {
         console.log('Error:', error);
+        const message = 'Something Wrong Please Try Again';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+        header: header,
+        message: message
+      }
+    });
       }
     );
   }

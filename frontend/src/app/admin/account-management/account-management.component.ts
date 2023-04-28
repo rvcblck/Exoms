@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountInfoComponent } from '../modal/account-info/account-info.component';
 import { CreateAccountComponent } from '../modal/create-account/create-account.component';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-account-management',
@@ -113,11 +115,29 @@ export class AccountManagementComponent implements OnInit {
           // Success handler
           this.selection.clear();
           console.log('Accounts approved successfully');
+          const message = 'Accounts approved successfully';
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
           this.refreshTable();
         },
         (error) => {
           // Error handler
           console.error('Error approving accounts', error);
+          const message = 'Error approving accounts';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         }
       );
     } else {
@@ -134,11 +154,29 @@ export class AccountManagementComponent implements OnInit {
           // Success handler
           this.selection.clear();
           console.log('Accounts disapproved successfully');
+          const message = 'Accounts disapproved successfully';
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
           this.refreshTable();
         },
         (error) => {
           // Error handler
           console.error('Error disapproving accounts', error);
+          const message = 'Error disapproving accounts';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         }
       );
     } else {

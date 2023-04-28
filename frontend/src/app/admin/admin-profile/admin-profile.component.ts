@@ -11,6 +11,8 @@ import { ChangeEmailComponent } from '../modal/change-email/change-email.compone
 import { ChangePasswordComponent } from '../modal/change-password/change-password.component';
 import { EditImgComponent } from '../modal/edit-img/edit-img.component';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-admin-profile',
@@ -228,9 +230,27 @@ export class AdminProfileComponent implements OnInit {
                   mobile_no: [user.mobile_no, Validators.required]
                 });
               }
+                const message = 'Update successfully';
+                const header = 'Success';
+                const dialogRef = this.dialog.open(SuccessComponent, {
+                width: '300px',
+                data: {
+                header: header,
+                message: message
+              }
+            });
             },
             (error) => {
               console.log('Error:', error);
+                const message = 'Something Wrong Please Try Again';
+                const header = 'Error';
+                const dialogRef = this.dialog.open(ErrorComponent, {
+                width: '300px',
+                data: {
+                header: header,
+                message: message
+              }
+            });
             }
           );
         }
@@ -238,6 +258,15 @@ export class AdminProfileComponent implements OnInit {
       (error) => {
         // this.errors.push(error);
         console.log('error updating');
+        const message = 'Error Updating Accounts';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+        header: header,
+        message: message
+      }
+    });
       }
     );
   }

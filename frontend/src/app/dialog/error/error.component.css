@@ -14,15 +14,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0px auto;
 }
 
 .footer .no {
-  background-color: #ffffff;
+  background-color: #f25454;
   border: none;
   border-radius: 5px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   padding: 10px;
-  color: #51354b;
+  color: white;
   width: 80%;
 }
 
@@ -36,7 +37,21 @@
   width: 80%;
 }
 
-p {
+.content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+h2{
+  margin-bottom: 0px;
+}
+p, h2{
   text-align: center;
 }
 
+i{
+  font-size: 58px;
+  color: #f25454;
+  margin: 2px auto;
+}

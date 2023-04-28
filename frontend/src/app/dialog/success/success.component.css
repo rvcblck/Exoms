@@ -14,6 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0px auto;
 }
 
 .footer .no {
@@ -26,17 +27,32 @@
   width: 80%;
 }
 
-.footer .yes {
-  background-color: #ff5a2f;
+.footer button{
+  background-color: #24db52;
   border: none;
   border-radius: 5px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   padding: 10px;
   color: #ffffff;
-  width: 80%;
+  width: 100%;
 }
 
-p {
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+p, h2{
   text-align: center;
+}
+h2{
+  margin-bottom: 0px;
+}
+ i{
+  /* margin-bottom: 10px; */
+  color: #24db52;
+  font-size: 58px;
+  margin: 2px auto;
 }
 

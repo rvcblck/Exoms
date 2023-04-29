@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreateAccountComponent } from 'src/app/admin/modal/create-account/create-account.component';
 import { Attendance, Participant } from 'src/app/attendance.model';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ProgramService } from 'src/app/program.service';
 
 @Component({
@@ -23,6 +26,7 @@ export class AttendanceComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AttendanceComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: { attendance: Participant[] },
     private programService: ProgramService
   ) {}
@@ -89,11 +93,28 @@ export class AttendanceComponent implements OnInit {
     this.programService.storeAttendance(participantAttendance).subscribe(
       (program) => {
         console.log('Program created successfully:', program);
-        // TODO: Handle success
+        this.dialogRef.close();
+        const message = 'Program created successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         console.error('Error creating program:', error);
-        // TODO: Handle error
+        const message = 'There is something wrong';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

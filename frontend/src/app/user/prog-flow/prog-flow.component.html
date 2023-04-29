@@ -1,0 +1,333 @@
+<div class="container">
+  <div class="btn-select">
+    <div class="box">
+      <label for="">Pogram: </label>
+      <div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
+      <div><button (click)="selectProgram()">Select Program</button></div>
+    </div>
+<<<<<<< Updated upstream
+    <div class="cont-img" *ngIf="!programFlow">
+      <img src="../../../assets/images/Search-rafiki.png" alt="">
+    </div>
+  </div>
+      <mat-tab-group *ngIf="programFlow" dynamicHeight>
+        <!-- FLow  -->
+        <mat-tab label="Program Flow">
+          <div class="partner-wrapper">
+            <div class="partner">
+              <div class="contract-wrapper">
+                <div class="form">
+                  <form [formGroup]="flowForm">
+                    <div class="form-field">
+                      <label for="">Flow Title</label>
+                      <input type="text" formControlName="flowTitle" />
+                      <mat-error *ngIf="flowForm.get('flowTitle')?.invalid && (flowForm.get('flowTitle')?.touched || submitted)">
+                        Flow title is required.
+                      </mat-error>
+                    </div>
+
+                    <div class="form-field">
+                      <label for="">Description</label>
+                      <input type="text" formControlName="flowDesc" />
+                      <mat-error *ngIf="flowForm.get('flowDesc')?.invalid && (flowForm.get('flowDesc')?.touched || submitted)">
+                        Flow description is required.
+                      </mat-error>
+                    </div>
+                    <button class="submit" type="submit" (click)="onSubmit()">Add</button>
+                  </form>
+                </div>
+                <div class="table">
+                  <table>
+                    <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                      <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Assign Faculty</th>
+                      </tr>
+                      <tr class="example-box" *ngFor="let flow of programFlow.flow" cdkDrag cdkDragExit>
+                        <td>{{ flow.flow }}</td>
+                        <td>{{ flow.description }}</td>
+                        <td class="removebtn" (click)="removeItem(flow)"><i class="fa-solid fa-circle-xmark"></i></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="btn-update"><button (click)="updateFlow()">update program flow</button></div>
+            </div>
+          </div>
+        </mat-tab>
+        <!--
+=======
+  </div>
+
+  <div class="content">
+    <mat-tab-group *ngIf="programFlow" dynamicHeight>
+      <!-- FLow  -->
+      <mat-tab label="Program Flow">
+        <div class="partner-wrapper">
+          <div class="partner">
+            <div class="contract-wrapper">
+              <div class="form">
+                <form [formGroup]="flowForm">
+                  <div class="form-field">
+                    <label for="">Flow Title</label>
+                    <input type="text" formControlName="flowTitle" />
+                    <mat-error *ngIf="flowForm.get('flowTitle')?.invalid && (flowForm.get('flowTitle')?.touched || submitted)">
+                      Flow title is required.
+                    </mat-error>
+                  </div>
+
+                  <div class="form-field">
+                    <label for="">Description</label>
+                    <input type="text" formControlName="flowDesc" />
+                    <mat-error *ngIf="flowForm.get('flowDesc')?.invalid && (flowForm.get('flowDesc')?.touched || submitted)">
+                      Flow description is required.
+                    </mat-error>
+                  </div>
+                  <button class="submit" type="submit" (click)="onSubmit()">Add</button>
+                </form>
+              </div>
+              <div class="table">
+                <table>
+                  <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <tr>
+                      <th scope="col">Task</th>
+                      <th scope="col">Assign Faculty</th>
+                    </tr>
+                    <tr class="example-box" *ngFor="let flow of programFlow.flow" cdkDrag cdkDragExit>
+                      <td>{{ flow.flow }}</td>
+                      <td>{{ flow.description }}</td>
+                      <td class="removebtn" (click)="removeItem(flow)"><i class="fa-solid fa-circle-xmark"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div><button (click)="updateFlow()">update program flow</button></div>
+      </mat-tab>
+      <!--
+>>>>>>> Stashed changes
+
+
+
+
+
+
+
+<<<<<<< Updated upstream
+         -->
+        <!-- Topic  -->
+        <mat-tab label="Program Topic">
+          <div class="partner-wrapper">
+            <div class="partner">
+              <div class="contract-wrapper">
+                <div class="form">
+                  <form [formGroup]="topicForm">
+                    <!-- col_1 input  -->
+                    <div class="form-field">
+                      <label for="">Flow Title</label>
+                      <input type="text" formControlName="col_1" />
+                      <mat-error *ngIf="flowForm.get('col_1')?.invalid && (flowForm.get('col_1')?.touched || submitted)"> col_1 is required. </mat-error>
+                    </div>
+                    <!--
+
+
+                     -->
+                    <!-- col_2 input  -->
+                    <div class="form-field">
+                      <label for="">Description</label>
+                      <input type="text" formControlName="col_2" />
+                      <mat-error *ngIf="flowForm.get('col_2')?.invalid && (flowForm.get('col_2')?.touched || submitted)">
+                        col_2 description is required.
+                      </mat-error>
+                    </div>
+                    <!--
+
+
+                     -->
+                    <!-- col_3 input  -->
+                    <div class="form-field">
+                      <label for="">Description</label>
+                      <input type="text" formControlName="col_3" />
+                      <!-- <mat-error *ngIf="flowForm.get('col_3')?.invalid && (flowForm.get('col_3')?.touched || submitted)">
+                        description is required.
+                      </mat-error> -->
+                    </div>
+                    <button class="submit" type="submit" (click)="onTopicSubmit()">Add</button>
+                  </form>
+                </div>
+                <div class="table">
+                  <table>
+                    <thead>
+                      <tr colspan="2">
+                        <th scope="col">Program Flow</th>
+                      </tr>
+                    </thead>
+                    <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
+                      <tr class="example-box" *ngFor="let topic of programFlow.topic" cdkDrag cdkDragExit>
+                        <td>{{ topic.col_1 }}</td>
+                        <td>{{ topic.col_2 }}</td>
+                        <td>{{ topic.col_3 }}</td>
+                        <td class="removebtn" (click)="removeTopicItem(topic)"><i class="fa-solid fa-circle-xmark"></i></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="btn-update"><button (click)="updateTopic()">update program flow</button></div>
+            </div>
+          </div>
+        </mat-tab>
+        <!--
+
+
+
+
+
+
+
+         -->
+        <!-- Position  -->
+        <mat-tab label="Assign Roles">
+          <div class="partner-wrapper">
+            <div class="partner">
+              <div class="contract-wrapper">
+                <table class="table">
+                  <thead>
+                    <tr colspan="2">
+                      <th scope="col">Program Roles</th>
+                    </tr>
+                  </thead>
+                  <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
+                    <tr class="example-box" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
+                      <td>{{ position.name }}</td>
+                      <td>
+                        <mat-form-field appearance="fill">
+                          <mat-label required>Position</mat-label>
+                          <input type="text" matInput [formControl]="positionControl[i]" [matAutocomplete]="auto" required />
+                          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPosition">
+                            <mat-option *ngFor="let option of positionOptions" [value]="option">{{ option }}</mat-option>
+                          </mat-autocomplete>
+                          <mat-error *ngIf="inputPositionEmpty && position_submitted"> Position is required </mat-error>
+                        </mat-form-field>
+                      </td>
+=======
+       -->
+      <!-- Topic  -->
+      <mat-tab label="Program Topic">
+        <div class="partner-wrapper">
+          <div class="partner">
+            <div class="contract-wrapper">
+              <div class="form">
+                <form [formGroup]="topicForm">
+                  <!-- col_1 input  -->
+                  <div class="form-field">
+                    <label for="">Flow Title</label>
+                    <input type="text" formControlName="col_1" />
+                    <mat-error *ngIf="flowForm.get('col_1')?.invalid && (flowForm.get('col_1')?.touched || submitted)"> col_1 is required. </mat-error>
+                  </div>
+                  <!--
+
+
+                   -->
+                  <!-- col_2 input  -->
+                  <div class="form-field">
+                    <label for="">Description</label>
+                    <input type="text" formControlName="col_2" />
+                    <mat-error *ngIf="flowForm.get('col_2')?.invalid && (flowForm.get('col_2')?.touched || submitted)">
+                      col_2 description is required.
+                    </mat-error>
+                  </div>
+                  <!--
+
+
+                   -->
+                  <!-- col_3 input  -->
+                  <div class="form-field">
+                    <label for="">Description</label>
+                    <input type="text" formControlName="col_3" />
+                    <!-- <mat-error *ngIf="flowForm.get('col_3')?.invalid && (flowForm.get('col_3')?.touched || submitted)">
+                      description is required.
+                    </mat-error> -->
+                  </div>
+                  <button class="submit" type="submit" (click)="onTopicSubmit()">Add</button>
+                </form>
+              </div>
+              <div class="table">
+                <table>
+                  <thead>
+                    <tr colspan="2">
+                      <th scope="col">Program Flow</th>
+                    </tr>
+                  </thead>
+                  <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
+                    <tr class="example-box" *ngFor="let topic of programFlow.topic" cdkDrag cdkDragExit>
+                      <td>{{ topic.col_1 }}</td>
+                      <td>{{ topic.col_2 }}</td>
+                      <td>{{ topic.col_3 }}</td>
+                      <td class="removebtn" (click)="removeTopicItem(topic)"><i class="fa-solid fa-circle-xmark"></i></td>
+>>>>>>> Stashed changes
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+<<<<<<< Updated upstream
+              <div class="btn-update"><button (click)="updatePosition()">update program roles</button></div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+=======
+            </div>
+          </div>
+        </div>
+        <div><button (click)="updateTopic()">update program flow</button></div>
+      </mat-tab>
+      <!--
+
+
+
+
+
+
+
+       -->
+      <!-- Position  -->
+      <mat-tab label="Assign Roles">
+        <div class="partner-wrapper">
+          <div class="partner">
+            <div class="contract-wrapper">
+              <table class="table">
+                <thead>
+                  <tr colspan="2">
+                    <th scope="col">Program Roles</th>
+                  </tr>
+                </thead>
+                <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
+                  <tr class="example-box" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
+                    <td>{{ position.name }}</td>
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <mat-label required>Position</mat-label>
+                        <input type="text" matInput [formControl]="positionControl[i]" [matAutocomplete]="auto" required />
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPosition">
+                          <mat-option *ngFor="let option of positionOptions" [value]="option">{{ option }}</mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="inputPositionEmpty && position_submitted"> Position is required </mat-error>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div><button (click)="updatePosition()">update program roles</button></div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+>>>>>>> Stashed changes
+</div>

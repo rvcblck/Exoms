@@ -29,6 +29,7 @@ export class ProgramManagementComponent implements OnInit {
   minStartDate: Date | undefined;
   maxEndDate: Date | undefined;
   pageName = 'Program Management';
+  loadDialog = false;
 
   isSearchActive = true;
   datePipe: any;
@@ -107,8 +108,10 @@ export class ProgramManagementComponent implements OnInit {
   }
 
   addProgram() {
+    this.loadDialog = true;
     this.programService.getAutoComplete().subscribe(
       (autocomplete) => {
+        this.loadDialog = false;
         const dialogRef = this.dialog.open(CreateProgramComponent, {
           data: { autocomplete: autocomplete },
           maxWidth: '90%',
@@ -116,15 +119,18 @@ export class ProgramManagementComponent implements OnInit {
         });
       },
       (error) => {
+        this.loadDialog = false;
         console.log('Error:', error);
       }
     );
   }
 
   viewProgram(user_id: string) {
+    this.loadDialog = true;
     this.programService.getProgramInfo(user_id).subscribe(
       (program) => {
         // console.log(program);
+        this.loadDialog = false;
         const dialogRef = this.dialog.open(ViewProgramComponent, {
           data: { program: program },
           maxWidth: '90%',

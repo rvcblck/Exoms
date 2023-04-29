@@ -23,6 +23,7 @@ export class PartnerManagementComponent implements OnInit {
     private adminLayout: AdminLayoutComponent,
     private cdr: ChangeDetectorRef
   ) {}
+  loading = false;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -37,6 +38,7 @@ export class PartnerManagementComponent implements OnInit {
     // this.adminLayout.pageTitle = 'Partner Management';
     // this.cdr.detectChanges();
     this.partnerService.getAllPartners().subscribe((partners) => {
+      this.loading = true;
       this.dataSource.data = partners;
     });
 
@@ -79,12 +81,12 @@ export class PartnerManagementComponent implements OnInit {
         const message = 'Something Wrong Please Try Again';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
-        width: '300px',
-        data: {
-        header: header,
-        message: message
-      }
-    });
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

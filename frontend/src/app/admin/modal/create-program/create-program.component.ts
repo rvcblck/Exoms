@@ -56,6 +56,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
   selectedLeader: any[] = [];
   participants: any[] = [];
   selectedPartners: any[] = [];
+  loadDialog = false;
 
   invitation: File | null = null;
   certificate: File | null = null;
@@ -701,11 +702,10 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       formData.append('certificate', this.certificate);
     }
     if (this.data.program) {
-      // formData.forEach((value, key) => {
-      //   console.log(key, value);
-      // });
+      this.loadDialog = true;
       this.programService.updateProgram(formData).subscribe(
         (program) => {
+          this.loadDialog = false;
           console.log('Program created successfully:', program);
           this.dialogRef.close();
         },
@@ -714,18 +714,20 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         }
       );
     } else {
+      this.loadDialog = true;
       this.programService.createProgram(formData).subscribe(
         (program) => {
+          this.loadDialog = false;
           console.log('Program created successfully:', program);
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
           this.dialogRef.close();
         },
         (error) => {
@@ -733,12 +735,12 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
           const message = 'Error creating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       );
     }

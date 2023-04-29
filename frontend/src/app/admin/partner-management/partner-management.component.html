@@ -1,4 +1,4 @@
-<div class="partner-management">
+<div *ngIf="loading" class="partner-management">
   <div class="filter">
     <div class="search">
       <span><i class="fa-solid fa-magnifying-glass"></i></span><input (keyup)="applyFilter($event)" placeholder="Search" #input />
@@ -51,4 +51,10 @@
   <div class="paginator-wrapper">
     <mat-paginator [pageSizeOptions]="[10, 20, 30]" aria-label="Select page of users"></mat-paginator>
   </div>
+</div>
+<div *ngIf="!loading" class="loading-wave">
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
 </div>

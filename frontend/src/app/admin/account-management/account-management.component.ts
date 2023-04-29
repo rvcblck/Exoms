@@ -24,6 +24,7 @@ export class AccountManagementComponent implements OnInit {
   selection = new SelectionModel<Accounts>(true, []);
   dataToCall: string[] = ['select', 'fname', 'email', 'mobile_no', 'status', 'previous', 'ongoing', 'upcoming', 'total', 'action'];
   showSelectAllButton = false;
+  loading = false;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -43,8 +44,8 @@ export class AccountManagementComponent implements OnInit {
     // this.cdr.detectChanges();
     this.accountService.getAccounts().subscribe((accounts) => {
       this.dataSource.data = accounts;
+      this.loading = true;
     });
-
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -118,12 +119,12 @@ export class AccountManagementComponent implements OnInit {
           const message = 'Accounts approved successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
           this.refreshTable();
         },
         (error) => {
@@ -132,12 +133,12 @@ export class AccountManagementComponent implements OnInit {
           const message = 'Error approving accounts';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       );
     } else {
@@ -157,12 +158,12 @@ export class AccountManagementComponent implements OnInit {
           const message = 'Accounts disapproved successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
           this.refreshTable();
         },
         (error) => {
@@ -171,12 +172,12 @@ export class AccountManagementComponent implements OnInit {
           const message = 'Error disapproving accounts';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       );
     } else {

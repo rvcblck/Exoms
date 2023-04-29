@@ -1,3 +1,10 @@
+<div *ngIf="!programs || loadDialog" class="loading-wave">
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+</div>
+
 <div class="filter-container">
   <div class="filter">
     <div class="search">
@@ -41,7 +48,7 @@
   </div>
 </div>
 
-<div class="program-list">
+<div class="program-list" *ngIf="programs">
   <div class="program-card" matRipple *ngFor="let program of filteredPrograms()" (click)="viewProgram(program.program_id)">
     <div>
       <div *ngIf="!isAdmin()" class="btn-attendance" matRippleDisabled>

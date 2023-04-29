@@ -970,7 +970,8 @@ class ProgramController extends Controller
 
             $userData[] = [
                 'name' => $user->fname . ' ' . $user->mname . ' ' . $user->lname . '  ' . $user->suffix,
-                'position' => $user->pivot->position
+                'position' => $user->pivot->position,
+                'user_id' => $user->user_id
             ];
         }
 
@@ -1029,6 +1030,21 @@ class ProgramController extends Controller
         }
 
         return response()->json(['message' => 'Program topic updated successfully.']);
+    }
+
+
+    public function updateProgramPosition(Request $request)
+    {
+        $program_id = $request->input('program_id');
+        $data = $request->input('data');
+
+        foreach ($data as $member) {
+            Member::where('program_id', $program_id)
+                ->where('user_id', $member['user_id'])
+                ->update(['position' => $member['position']]);
+        }
+
+        return response()->json(['message' => 'Positions updated successfully']);
     }
 
 

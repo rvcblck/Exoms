@@ -123,9 +123,10 @@ export interface ProgramPosition {
   position: string;
 }
 
-export interface ProgramMembers {
+export interface ProgramPosition {
   name: string;
   position: string;
+  user_id: string;
 }
 
 export interface OtherDetails {

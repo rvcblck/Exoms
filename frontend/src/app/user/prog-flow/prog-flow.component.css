@@ -1,24 +1,66 @@
+.container{
+  margin-top:30px;
+}
+
+.partner-wrapper.ng-star-inserted{
+  width:100%;
+  height: auto;
+  padding: 20px;
+}
+ .btn-update button {
+  width:13%;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #ff5a2f;
+  border: 2px solid #ff5a2f;  
+  font-family: Assistant;
+  color: #ffffff;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+  margin-left: 87%;
+}
+.submit{
+  width:100%;
+  height: 35px;
+  border-radius: 5px;
+  background-color: #ff5a2f;
+  border: 2px solid #ff5a2f;
+  background-size: cover;
+  font-family: Assistant;
+  color: #ffffff;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+}
+.btn-select{
+  position: absolute;
+  left: 52%;
+  width: 40%;
+  z-index: 5;
+}
+.btn-select .box{
+  display: flex;
+  float: right;
+}
+.btn-select .box button{
+  width: 100%;
+  background-color: transparent;
+  color: #ff5a2f;
+  height: 35px;
+  border-radius: 5px;
+  border: 2px solid #ff5a2f;
+  background-size: cover;
+  font-family: Assistant;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-align: center;
+}
+.btn-select .box label{
+  margin: auto 15px;
+  font-weight: bold;
+}
+.btn-select .box div{
+  margin: auto 15px;
+}
 /* design ng drag and drop  */
-
-.example-list {
-  width: 500px;
-  max-width: 100%;
-  border: solid 1px #ccc;
-  min-height: 60px;
-  display: block;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.example-box {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  cursor: move;
-  background: white;
-  font-size: 14px;
-}
 
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -34,16 +76,15 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.example-box:last-child {
-  border: none;
-}
-
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .removebtn {
   cursor: pointer;
+  font-size: 18px;
+  color: #f25454;
+
 }
 
 /* design ng drag and drop  */
@@ -80,9 +121,10 @@
 }
 
 .partner label {
-  font-size: 25px;
-  font-weight: bolder;
-  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  color: #51354b;
 }
 
 .extend-btn {
@@ -94,11 +136,107 @@
   padding: 5px 20px;
   background-color: #ff592f3c;
 }
-
-.contract-wrapper .table tr th {
-  color: #8a8a8b;
+.contract-wrapper{
+  display: flex;
+}
+.contract-wrapper .table{
+  flex: 4;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.contract-wrapper .form{
+  flex: 1;
+  padding:30px 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  height: fit-content;
+}
+.contract-wrapper .form input{
+  background: #e9e7e8;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.contract-wrapper .form button{
+  width: 100%;
+}
+table th{
+  color: #51354b;
+  padding-bottom: 5px;
+}
+.contract-wrapper table{
+  width: 100%;
+}
+.contract-wrapper table tbody{
+  width: 100%;
+}
+.contract-wrapper table tr th {
+  width: 50%;
+  font-size: 18px;
 }
 
-.contract-wrapper .table tbody td {
-  font-weight: 700;
+.contract-wrapper table tbody td {
+  font-weight: 400;
+  padding: 15px;
+}
+tr.cdk-drag.example-box.ng-star-inserted{
+  border: none !important;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+  .content{
+    padding-top: 50px;
+  }
+   .btn-select{
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    z-index: 5;
+    border: 1px solid blue;
+  }
+  .btn-select .box{
+    float: left;
+  }
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  ::ng-deep .mat-paginator-page-size {
+    display: none !important;
+  }
+  .content{
+    width: fit-content;
+    padding-top: 50px;
+  }
+  .btn-select{
+    position: absolute;
+    left: 10px;
+    width: 100%;
+    z-index: 5;
+    border: 1px solid blue;
+  }
+  .btn-select .box{
+    float: left;
+  }
+  .btn-select .box label{
+    display: none;
+  }
+  .partner-wrapper.ng-star-inserted{
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    padding: 10px;
+  }
 }

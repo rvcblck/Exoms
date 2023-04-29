@@ -18,7 +18,58 @@ class AccountController extends Controller
         $now = Carbon::now('Asia/Manila');
         $userData = [];
 
-        $users = User::with('programs')->get();
+        $users = User::with('programs')->where('archived', false)->get();
+
+        foreach ($users as $user) {
+
+
+
+            $programs = $user->programs()->get();
+            $ongoing = 0;
+            $upcoming = 0;
+            $previous = 0;
+
+            foreach ($programs as $program) {
+
+                $endDate = Carbon::parse($program->end_date);
+                $startDate = Carbon::parse($program->start_date);
+                if ($endDate->lt($now)) {
+                    $previous++;
+                } else if ($startDate->gt($now)) {
+                    $upcoming++;
+                } else {
+                    $ongoing++;
+                }
+            }
+            $total = $ongoing + $upcoming + $previous;
+
+            $userData[] = [
+                'user_id' => $user->user_id,
+                'fname' => $user->fname,
+                'mname' => $user->mname,
+                'lname' => $user->lname,
+                'suffix' => $user->suffix,
+                'email' => $user->email,
+                'mobile_no' => $user->mobile_no,
+                'status' => $user->status,
+                'previous' => $previous,
+                'ongoing' => $ongoing,
+                'upcoming' => $upcoming,
+                'total' => $total
+            ];
+        }
+
+
+        return response()->json($userData);
+    }
+
+
+    public function getArchives()
+    {
+        $now = Carbon::now('Asia/Manila');
+        $userData = [];
+
+        $users = User::with('programs')->where('archived', true)->get();
 
         foreach ($users as $user) {
 
@@ -233,6 +284,43 @@ class AccountController extends Controller
             ];
         }
         return response()->json($userData);
+    }
+
+
+    public function archiveAccount($user_id)
+    {
+        $user = User::where('user_id', $user_id)->first();
+
+        if ($user) {
+            $user->archived = true;
+            $user->save();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'User ID not found',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User archive successfuly',
+        ]);
+    }
+
+    public function unarchivedAccount(Request $request)
+    {
+        $user_ids = $request->input('user_ids');
+        foreach ($user_ids as $user_id) {
+            $user = User::where('user_id', $user_id)->first();
+            if ($user) {
+                $user->archived = false;
+                $user->save();
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'User unarchived successfully',
+        ]);
     }
 
 

@@ -97,4 +97,42 @@ export class PartnerService {
       })
     );
   }
+
+  unarchive(selectedPartner: Partner[]) {
+    const headers = this.getHeaders();
+    const partner_ids = selectedPartner.map((partner) => partner.partner_id);
+    const requestBody = { partner_ids: partner_ids };
+    console.log(requestBody);
+    return this.http.post(`${this.apiUrl}/unarchived-partner`, requestBody, { headers }).pipe(
+      tap((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+
+  archive(partner_id: string): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get<any>(`${this.apiUrl}/archive-partner/${partner_id}`, { headers }).pipe(
+      tap((response: ViewPartner) => {}),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
+  getAllPartnersArchived(): Observable<Partner[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Partner[]>(`${this.apiUrl}/get-archive-partners`, { headers }).pipe(
+      tap((response) => {
+        console.log('Partner retrieved successfully');
+      }),
+      catchError((error) => {
+        console.error('Error retrieving users:', error);
+        return throwError('Error retrieving programs. Please try again later.');
+      })
+    );
+  }
 }

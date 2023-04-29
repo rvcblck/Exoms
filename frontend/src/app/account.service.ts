@@ -97,4 +97,37 @@ export class AccountService {
       })
     );
   }
+
+  unarchive(selectedAccounts: Accounts[]) {
+    const headers = this.getHeaders();
+    const user_ids = selectedAccounts.map((account) => account.user_id);
+    const requestBody = { user_ids: user_ids };
+    return this.http.post(`${this.apiUrl}/unarchived-account`, requestBody, { headers }).pipe(
+      tap(() => {}),
+      catchError((error) => {
+        // console.error('Error approving accounts:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  archive(user_id: string): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get<any>(`${this.apiUrl}/archive-account/${user_id}`, { headers }).pipe(
+      tap((response: any) => {}),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
+  getAllUserArchived(): Observable<Accounts[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Accounts[]>(`${this.apiUrl}/get-archive-accounts`, { headers }).pipe(
+      tap((response) => {}),
+      catchError((error) => {
+        return throwError('Error retrieving programs. Please try again later.');
+      })
+    );
+  }
 }

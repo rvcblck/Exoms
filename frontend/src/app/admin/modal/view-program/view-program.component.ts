@@ -8,6 +8,9 @@ import { CreateProgramComponent } from '../create-program/create-program.compone
 import { forkJoin } from 'rxjs';
 import { ImageService } from 'src/app/image.service';
 import { AuthService } from 'src/app/auth.service';
+import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-view-program',
@@ -156,8 +159,57 @@ export class ViewProgramComponent implements OnInit {
       time.setHours(parseInt(hours, 10));
       time.setMinutes(parseInt(minutes, 10));
       return time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    }else{
+    } else {
       return '';
     }
+  }
+
+  archive(): void {
+    const message = 'Are you sure you want to archive this Program?';
+    const header = 'Archive Program';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The user confirmed the action, submit the form
+        this.archiveConfirmed();
+      }
+    });
+  }
+
+  archiveConfirmed() {
+    const program_id = this.data.program.program_id;
+    this.programService.archive(program_id).subscribe(
+      (program) => {
+        const message = 'Program archived successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+        this.dialogRef.close();
+      },
+      (error) => {
+        // TODO: Handle error
+        const message = 'Error archiving program';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+      }
+    );
   }
 }

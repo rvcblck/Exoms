@@ -28,7 +28,44 @@ class PartnerController extends Controller
     {
         $partnerData = [];
 
-        $partners = Partner::with('contracts', 'programs')->get();
+        $partners = Partner::with('contracts', 'programs')->where('archived', false)->get();
+
+
+        foreach ($partners as $partner) {
+
+            $contract = $partner->contracts()->latest()->first();
+
+            $contractsData = [];
+
+            if ($contract) {
+                $contractsData = [
+                    'contract_id' => $contract->contract_id,
+                    'start_date' => $contract->start_date,
+                    'end_date' => $contract->end_date,
+                ];
+            }
+
+
+            $partnerData[] = [
+                'partner_id' => $partner->partner_id,
+                'company_name' => $partner->company_name,
+                'address' => $partner->address,
+                'contact_no' => $partner->contact_no,
+                'contact_person' => $partner->contact_person,
+                'moa_file' => $partner->moa_file,
+                'contracts' => $contractsData,
+            ];
+        }
+
+        return response()->json($partnerData);
+    }
+
+
+    public function getArchives()
+    {
+        $partnerData = [];
+
+        $partners = Partner::with('contracts', 'programs')->where('archived', true)->get();
 
 
         foreach ($partners as $partner) {
@@ -331,6 +368,42 @@ class PartnerController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Contract Extended'
+        ]);
+    }
+
+    public function archivePartner($partner_id)
+    {
+        $partner = Partner::where('partner_id', $partner_id)->first();
+
+        if ($partner_id) {
+            $partner->archived = true;
+            $partner->save();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Partner ID not found',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Partner archive successfuly',
+        ]);
+    }
+
+    public function unarchivedPartner(Request $request)
+    {
+        $partner_ids = $request->input('partner_ids');
+        foreach ($partner_ids as $partner_id) {
+            $partner = Partner::where('partner_id', $partner_id)->first();
+            if ($partner) {
+                $partner->archived = false;
+                $partner->save();
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Partners unarchived successfully',
         ]);
     }
 

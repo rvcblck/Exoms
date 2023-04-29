@@ -126,3 +126,18 @@ Route::post('/update-program-flow', [ProgramController::class, 'updateProgramFlo
 Route::post('/update-program-topic', [ProgramController::class, 'updateProgramTopic']);
 
 Route::post('/update-program-position', [ProgramController::class, 'updateProgramPosition']);
+
+
+Route::post('/unarchived-program', [ProgramController::class, 'unarchivedProgram']);
+Route::post('/unarchived-partner', [PartnerController::class, 'unarchivedPartner']);
+Route::post('/unarchived-account', [AccountController::class, 'unarchivedAccount']);
+
+
+Route::get('/archive-partner/{partner_id}', [PartnerController::class, 'archivePartner']);
+Route::get('/archive-account/{user_id}', [AccountController::class, 'archiveAccount']);
+Route::get('/archive-program/{program_id}', [ProgramController::class, 'archiveProgram']);
+
+
+Route::get('/get-archive-partners', [PartnerController::class, 'getArchives']);
+Route::get('/get-archive-programs', [ProgramController::class, 'getArchives']);
+Route::get('/get-archive-accounts', [AccountController::class, 'getArchives']);

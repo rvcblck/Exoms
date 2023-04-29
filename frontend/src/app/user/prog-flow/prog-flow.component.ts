@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ProgramService } from 'src/app/program.service';
 import { SelectProgramComponent } from '../modal/select-program/select-program.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OtherDetails, Program, ProgramFlow, ProgramTopic, ProgramPosition } from 'src/app/program.model';
 // import { DraggableModule } from 'angular-draggable-droppable';
 import { DragAndDropModule } from 'angular-draggable-droppable';
@@ -12,6 +12,9 @@ import { CdkDragEnter, CdkDragExit } from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { SuccessComponent } from 'src/app/dialog/success/success.component';
+import { CreateAccountComponent } from 'src/app/admin/modal/create-account/create-account.component';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 export interface User {
   name: string;
@@ -42,7 +45,11 @@ export class ProgFlowComponent implements OnInit {
   @ViewChild('progFlowTitle') progFlowTitleInput!: ElementRef;
   @ViewChild('progFlowDesc') progFlowDescInput!: ElementRef;
 
-  constructor(private programService: ProgramService, private dialog: MatDialog, private formBuilder: FormBuilder) {
+  constructor(
+    private programService: ProgramService,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    ) {
     this.flowForm = this.formBuilder.group({
       flowTitle: ['', Validators.required],
       flowDesc: ['', Validators.required]
@@ -163,9 +170,27 @@ export class ProgFlowComponent implements OnInit {
     this.programService.updateProgramFlow(flow).subscribe(
       (programs) => {
         console.log('success');
+        const message = 'Update Successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         console.error('Error retrieving programs:', error);
+        const message = 'Error Updating program';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
       }
     );
     // }
@@ -224,9 +249,28 @@ export class ProgFlowComponent implements OnInit {
     this.programService.updateProgramTopic(topic).subscribe(
       (programs) => {
         console.log('success');
+        // this.dialogRef.close();
+        const message = 'Update Successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         console.error('Error retrieving programs:', error);
+        const message = 'Error Updating program';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
       }
     );
     // }
@@ -267,6 +311,7 @@ export class ProgFlowComponent implements OnInit {
       console.log('nandito 2');
       this.inputPositionEmpty = true;
       return; // return if any of the controls is empty
+      
     }
 
     const positions = [];
@@ -298,9 +343,27 @@ export class ProgFlowComponent implements OnInit {
     this.programService.updateProgramPosition(position).subscribe(
       (programs) => {
         console.log('success');
+        const message = 'Update Successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         console.error('Error retrieving programs:', error);
+        const message = 'Error Updating program';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

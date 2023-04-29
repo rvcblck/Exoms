@@ -76,6 +76,7 @@ import { ErrorComponent } from './dialog/error/error.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { SelectFacultyComponent } from './admin/modal/select-faculty/select-faculty.component';
+import { ArchiveComponent } from './admin/archive/archive.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { SelectFacultyComponent } from './admin/modal/select-faculty/select-facu
     ProgFlowComponent,
     SuccessComponent,
     ErrorComponent,
-    SelectFacultyComponent
+    SelectFacultyComponent,
+    ArchiveComponent
   ],
   imports: [
     BrowserModule,

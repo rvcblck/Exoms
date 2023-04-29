@@ -118,20 +118,20 @@ export class ViewPartnerComponent implements OnInit {
         const message = 'Program created successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
-        width: '300px',
-        data: {
-          header: header,
-          message: message
-        }
-      });
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         this.dialogRef.close();
       },
       (error) => {
         console.error('Error creating program:', error);
         // TODO: Handle error
         const message = 'Error creating program';
-          const header = 'Error';
-          const dialogRef = this.dialog.open(ErrorComponent, {
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
           width: '300px',
           data: {
             header: header,
@@ -162,5 +162,56 @@ export class ViewPartnerComponent implements OnInit {
     );
 
     // call the edit page
+  }
+
+  archive(): void {
+    const message = 'Are you sure you want to archive this partner?';
+    const header = 'Archive Partner';
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        header: header,
+        message: message
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The user confirmed the action, submit the form
+        this.archiveConfirmed();
+      }
+    });
+  }
+
+  archiveConfirmed() {
+    const partner_id = this.data.partner.partner_id;
+    this.partnerService.archive(partner_id).subscribe(
+      (program) => {
+        console.log('Program created successfully:', program);
+        const message = 'Program created successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+        this.dialogRef.close();
+      },
+      (error) => {
+        console.error('Error creating program:', error);
+        // TODO: Handle error
+        const message = 'Error creating program';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+      }
+    );
   }
 }

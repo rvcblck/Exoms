@@ -37,7 +37,7 @@ class ProgramController extends Controller
 
         $programData = [];
 
-        $programs = Program::with('participants', 'users', 'members')->get();
+        $programs = Program::with('participants', 'users', 'members')->where('archived', false)->get();
 
         foreach ($programs as $program) {
 
@@ -84,6 +84,66 @@ class ProgramController extends Controller
 
         return response()->json($programData);
     }
+
+    public function getArchives()
+    {
+
+
+        $now = Carbon::now('Asia/Manila');
+
+        $programData = [];
+
+        $programs = Program::with('participants', 'users', 'members')->where('archived', true)->get();
+
+        foreach ($programs as $program) {
+
+            //participants numbers
+            $participantCount = $program->participants()->count();
+
+
+            // getting leader
+            $leader = $program->members()->wherePivot('leader', true)->first();
+            if ($leader) {
+                $leaderData = [
+                    'user_id' => $leader->user_id,
+                    'fullName' => $leader->fname . ' ' . $leader->lname,
+                ];
+            }
+
+
+            //status
+            $endDate = Carbon::parse($program->end_date);
+            $startDate = Carbon::parse($program->start_date);
+            $status = '';
+            if ($endDate->lt($now)) {
+                $status = 'Previous';
+            } else if ($startDate->gt($now)) {
+                $status = 'Upcoming';
+            } else {
+                $status = 'Ongoing';
+            }
+
+
+            $programData[] = [
+                'program_id' => $program->program_id,
+                'title' => $program->title,
+                'details' => $program->details,
+                'place' => $program->place,
+                'start_date' => $program->start_date,
+                'end_date' => $program->end_date,
+                'participant_count' => $participantCount,
+                'status' => $status,
+                'leader' => $leaderData
+
+            ];
+        }
+
+        return response()->json($programData);
+    }
+
+
+
+
     public function programInfo($id)
     {
 
@@ -971,26 +1031,44 @@ class ProgramController extends Controller
         return response()->json(['message' => 'Program topic updated successfully.']);
     }
 
-    // public function updateProgramPosition(Request $request){
-    //     $programId = $request->program_id;
 
-    //     // delete all data in the "flow" table with the given program_id
-    //     Position::where('program_id', $programId)->delete();
 
-    //     // insert new records for each item in the "data" array
-    //     foreach($request->data as $item) {
-    //         Position::create([
-    //             'position_id' => $this->generatePostionId(),
-    //             'program_id' => $programId,
-    //             'name' => $item['name'],
-    //             'position' => $item['position'],
 
-    //         ]);
-    //     }
+    public function archiveProgram($program_id)
+    {
+        $program = Program::where('program_id', $program_id)->first();
 
-    //     return response()->json(['message' => 'Program position updated successfully.']);
-    // }
+        if ($program) {
+            $program->archived = true;
+            $program->save();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Program ID not found',
+            ]);
+        }
 
+        return response()->json([
+            'success' => true,
+            'message' => 'Program archive successfuly',
+        ]);
+    }
+
+    public function unarchivedProgram(Request $request)
+    {
+        $program_ids = $request->input('program_ids');
+        foreach ($program_ids as $program_id) {
+            $program = Program::where('program_id', $program_id)->first();
+            if ($program) {
+                $program->archived = false;
+                $program->save();
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Program unarchived successfully',
+        ]);
+    }
 
 
     public function generateTopicId()

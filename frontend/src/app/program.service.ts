@@ -202,4 +202,36 @@ export class ProgramService {
       })
     );
   }
+
+  unarchive(selectedAccounts: Program[]) {
+    const headers = this.getHeaders();
+    const program_ids = selectedAccounts.map((account) => account.program_id);
+    const requestBody = { program_ids: program_ids };
+    return this.http.post(`${this.apiUrl}/unarchived-program`, requestBody, { headers }).pipe(
+      tap(() => {}),
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+
+  archive(program_id: string): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get<any>(`${this.apiUrl}/archive-program/${program_id}`, { headers }).pipe(
+      tap((response: any) => {}),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
+  getAllProgramsArchived(): Observable<Program[]> {
+    const headers = this.getHeaders();
+    return this.http.get<Program[]>(`${this.apiUrl}/get-archive-programs`, { headers }).pipe(
+      tap((response) => {}),
+      catchError((error) => {
+        return throwError('Error retrieving programs. Please try again later.');
+      })
+    );
+  }
 }

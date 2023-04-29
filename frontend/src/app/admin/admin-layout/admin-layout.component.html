@@ -113,6 +113,13 @@
       </a>
       <span class="tooltip">Reports</span>
     </li>
+    <li *ngIf="isAdmin()">
+      <a routerLink="/admin/archive">
+        <i class="fa-solid fa-box-archive"></i>
+        <span class="link_name">Archives</span>
+      </a>
+      <span class="tooltip">Archives</span>
+    </li>
     <li class="profile-link" *ngIf="isAdmin()">
       <a routerLink="/admin/admin-profile">
         <i class="bx bx-user"></i>

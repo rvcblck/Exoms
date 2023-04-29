@@ -21,6 +21,7 @@ import { ExtensionComponent } from './user/extension/extension.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { ProgFlowComponent } from './user/prog-flow/prog-flow.component';
 import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
+import { ArchiveComponent } from './admin/archive/archive.component';
 
 const routes: Routes = [
   {
@@ -96,6 +97,12 @@ const routes: Routes = [
         component: ReportsComponent,
         canActivate: [AuthGuard, AdminGuard],
         data: { title: 'Reports' }
+      },
+      {
+        path: 'archive',
+        component: ArchiveComponent,
+        canActivate: [AuthGuard, AdminGuard],
+        data: { title: 'archive' }
       },
       {
         path: 'admin-profile',

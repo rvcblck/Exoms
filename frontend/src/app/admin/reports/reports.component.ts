@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Partner } from 'src/app/partner.model';
 import { PartnerService } from 'src/app/partner.service';
-import autoTable from 'jspdf-autotable';
+import autoTable, { Color } from 'jspdf-autotable';
 // import { Program } from 'src/app/program.model';
 
 // import * as jsPDF from 'jspdf';
@@ -21,6 +21,7 @@ import 'jspdf-autotable';
 import { SelectFacultyComponent } from '../modal/select-faculty/select-faculty.component';
 import { Accounts, SelectAccount } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
+
 // import { jsPDFHookData } from 'jspdf-autotable';
 
 @Component({
@@ -38,6 +39,7 @@ export class ReportsComponent implements OnInit {
   user_id!: string;
   content: any;
   currentDate: any;
+  moaStatus: any;
 
   inputWidth!: string;
   inputValue!: string;
@@ -217,6 +219,7 @@ export class ReportsComponent implements OnInit {
     } else {
       this.dataSource.data = this.allPartners;
     }
+    this.moaStatus = filterValue;
   }
 
   downloadPartnerPDF() {
@@ -228,6 +231,18 @@ export class ReportsComponent implements OnInit {
     const role = this.adminRole;
     const totalPages = doc.getNumberOfPages();
     const pageWidth = doc.internal.pageSize.getWidth();
+    let moaStatus = '';
+    let pdfName = '';
+    if (this.moaStatus === 'active') {
+      moaStatus = 'List of Active MOA';
+      pdfName = 'active_MOA';
+    } else if (this.moaStatus === 'expired') {
+      moaStatus = 'List of Expired MOA';
+      pdfName = 'expired_MOA';
+    } else {
+      moaStatus = 'List of all partners';
+      pdfName = 'Partners';
+    }
 
     // Add header row
     const headerRow = [];
@@ -253,14 +268,27 @@ export class ReportsComponent implements OnInit {
       rows.push(row);
     }
 
+    const headerFillColor: Color = [255, 90, 47];
+    const alternateRowFillColor: Color = [255, 240, 227];
+
     // Generate table in PDF
     const tableOptions = {
       head: rows.slice(0, 1),
       body: rows.slice(1),
-      margin: { top: 50 }, // set margin top of the table
+      margin: { top: 60 },
+      headStyles: {
+        fillColor: headerFillColor
+      },
+      alternateRowStyles: {
+        fillColor: alternateRowFillColor
+      },
+
       didDrawPage: function (data: { pageNumber: number }) {
         // add image to the top of every page
         doc.addImage('../../assets/images/pdf-logo.png', 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
+        // doc.setFont('helvetica');
+        doc.setFontSize(12);
+        doc.text(moaStatus, 15, 55); // Add "Faculty Name:" text
         // doc.setFontStyle('bold');
 
         doc.setFontSize(9);
@@ -268,13 +296,6 @@ export class ReportsComponent implements OnInit {
         doc.text(adminName + '  |  ' + role, 30, doc.internal.pageSize.getHeight() - 10);
         doc.text(currentDate, doc.internal.pageSize.getWidth() - 35, doc.internal.pageSize.getHeight() - 10);
         doc.text('Page ' + data.pageNumber, pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
-        // for (let i = 1; i <= totalPages; i++) {
-        //   doc.setPage(i);
-        //   doc.text('Page ' + i + '/' + totalPages, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
-        // }
-
-        // doc.setPage(1);
-        // doc.text('Page ' + data.pageNumber + '/' + totalPages, pageWidth / 2, doc.internal.pageSize.getHeight() - 14, { align: 'center' });
       }
     };
 
@@ -282,7 +303,7 @@ export class ReportsComponent implements OnInit {
     autoTable(doc, tableOptions);
 
     // Save PDF
-    doc.save('partners.pdf');
+    doc.save(`${currentDate}_${pdfName}.pdf`);
   }
 
   downloadFacultyPDF() {
@@ -315,10 +336,19 @@ export class ReportsComponent implements OnInit {
       rows.push(row);
     }
 
+    const headerFillColor: Color = [255, 90, 47];
+    const alternateRowFillColor: Color = [255, 240, 227];
+
     const tableOptions = {
       head: rows.slice(0, 1),
       body: rows.slice(1),
-      margin: { top: 70 }, // set margin top of the table
+      margin: { top: 70 },
+      headStyles: {
+        fillColor: headerFillColor
+      },
+      alternateRowStyles: {
+        fillColor: alternateRowFillColor
+      },
       didDrawPage: function (data: { pageNumber: number }) {
         // add image to the top of every page
         doc.addImage('../../assets/images/pdf-logo.png', 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
@@ -342,7 +372,7 @@ export class ReportsComponent implements OnInit {
     autoTable(doc, tableOptions);
 
     // Save PDF
-    doc.save('faculty.pdf');
+    doc.save(`${FacultyName}_report.pdf`);
   }
 
   selectFaculty() {

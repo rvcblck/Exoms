@@ -63,6 +63,23 @@ export class ProgFlowComponent implements OnInit {
   ngOnInit(): void {}
 
   selectProgram() {
+    // this.programTitle = 'kahit anong title';
+
+    // const program_id = "lagay mo yung id ng program dito";
+
+    // this.programService.getProgramFlow(program_id).subscribe(
+    //   (programs) => {
+    //     this.programFlow = programs;
+
+    //     this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
+
+    //     console.log(this.programFlow);
+    //   },
+    //   (error) => {
+    //     console.error('Error retrieving programs:', error);
+    //   }
+    // );
+
     const user_id = localStorage.getItem('user_id');
     if (user_id) {
       this.programService.getUserPrograms(user_id).subscribe(

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Accounts } from './account.model';
+import { Accounts, SelectAccount } from './account.model';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { ViewAccount } from './account.model';
@@ -27,6 +27,11 @@ export class AccountService {
   getAccounts(): Observable<Accounts[]> {
     const headers = this.getHeaders();
     return this.http.get<Accounts[]>(`${this.apiUrl}/accounts`, { headers });
+  }
+
+  getSelectAccounts(): Observable<SelectAccount[]> {
+    const headers = this.getHeaders();
+    return this.http.get<SelectAccount[]>(`${this.apiUrl}/select-accounts`, { headers });
   }
 
   getAccountInfo(user_id: string): Observable<ViewAccount> {

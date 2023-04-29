@@ -189,35 +189,6 @@ class AccountController extends Controller
         }
 
 
-        // foreach($programs as $program){
-
-
-
-        //     $programData [] = [
-        //         'program_id' => $program->program_id,
-        //         'title' => $program->title,
-        //         // 'start_date' => $program->start_date,
-        //         // 'end_date' => $program->end_date,
-        //         'leader' => $program->pivot->leader,
-
-        //     ];
-
-
-
-        //     $endDate = Carbon::parse($program->end_date);
-        //     $startDate = Carbon::parse($program->start_date);
-        //     if($endDate->lt($now)){
-        //         $previous++;
-        //     }else if($startDate->gt($now)){
-        //         $upcoming++;
-        //     }else{
-        //         $ongoing++;
-        //     }
-        //     // dd('tae');
-        // }
-
-
-
         $userData = [
             'user_id' => $user->user_id,
             'fname' => $user->fname,
@@ -244,6 +215,23 @@ class AccountController extends Controller
 
 
 
+        return response()->json($userData);
+    }
+
+    public function selectAccount()
+    {
+
+        $users = User::get();
+        $userData = [];
+        foreach ($users as $user) {
+
+            $userData[] = [
+                'user_id' => $user->user_id,
+                'fname' =>  $user->fname,
+                'lname' => $user->lname
+
+            ];
+        }
         return response()->json($userData);
     }
 

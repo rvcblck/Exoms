@@ -61,3 +61,9 @@ export interface ProgramUpcoming {
   end_date: string;
   leader: number | null;
 }
+
+export interface SelectAccount {
+  user_id: string;
+  fname: string;
+  lname: string;
+}

@@ -3,7 +3,6 @@
     <div class="search">
       <span><i class="fa-solid fa-magnifying-glass"></i></span><input (keyup)="applyFilter($event)" placeholder="Search" #input />
     </div>
-    <!-- <button (click)="createAccount()">Add Partner</button> -->
   </div>
   <div class="tablewrapper">
     <table mat-table [dataSource]="dataSource" matSort #sort="matSort" class="mat-elevation-z8">

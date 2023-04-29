@@ -76,12 +76,14 @@
   border-radius: 5px;
   font-size: 12px;
 }
-.mat-row:nth-child(even) {
-  background-color: #8a8a8b1a;
-}
+
 
 table {
   width: 100%;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #8a8a8b1a;
 }
 
 ::ng-deep .mat-header-cell {

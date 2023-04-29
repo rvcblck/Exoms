@@ -36,8 +36,8 @@ Route::post('/verify-email', [VerificationController::class, 'verifyEmail']);
 Route::post('/send-email', [VerificationController::class, 'sendEmail']);
 
 
-Route::post('/email/resend-verification-code',[AuthController::class, 'resendCode']);
-Route::post('/forgot-password',[AuthController::class, 'forgotPassword']);
+Route::post('/email/resend-verification-code', [AuthController::class, 'resendCode']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/reset-password/{token}', [AuthController::class, 'checkResetToken']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -47,7 +47,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 
 
-Route::middleware('jwt','verified')->group(function () {
+Route::middleware('jwt', 'verified')->group(function () {
 
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -67,16 +67,17 @@ Route::get('/accountInfo/{id}', [AccountController::class, 'accountInfo']);
 Route::post('/create-programs', [ProgramController::class, 'createProgram']);
 Route::post('/update-programs', [ProgramController::class, 'updateProgram']);
 
-    Route::get('/programInfo/{id}', [ProgramController::class, 'programInfo']);
+Route::get('/programInfo/{id}', [ProgramController::class, 'programInfo']);
 
-    // Route::get('/partners', [PartnerController::class, 'index']);
-    Route::get('/programs', [ProgramController::class, 'index']);
-    Route::get('/partnerInfo/{id}', [PartnerController::class, 'partnerInfo']);
-    Route::get('/partners', [PartnerController::class, 'index']);
-    Route::post('/create-partner', [PartnerController::class, 'createPartner']);
-    Route::post('/extend-partner', [PartnerController::class, 'extendPartner']);
-    Route::post('/update-partner', [PartnerController::class, 'updatePartner']);
-    Route::get('/accounts', [AccountController::class, 'index']);
+// Route::get('/partners', [PartnerController::class, 'index']);
+Route::get('/programs', [ProgramController::class, 'index']);
+Route::get('/partnerInfo/{id}', [PartnerController::class, 'partnerInfo']);
+Route::get('/partners', [PartnerController::class, 'index']);
+Route::post('/create-partner', [PartnerController::class, 'createPartner']);
+Route::post('/extend-partner', [PartnerController::class, 'extendPartner']);
+Route::post('/update-partner', [PartnerController::class, 'updatePartner']);
+Route::get('/accounts', [AccountController::class, 'index']);
+Route::get('/select-accounts', [AccountController::class, 'selectAccount']);
 Route::get('/profileInfo/{id}', [ProfileController::class, 'index']);
 Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
 Route::get('/isEmailAvailable/{email}', [ProfileController::class, 'isEmailAvailable']);
@@ -93,30 +94,30 @@ Route::post('/users-profile-images', [ProfileController::class, 'usersProfileIma
 
 
 Route::get('/userPrograms/{id}', [ProgramController::class, 'userProgram']);
-Route::get('/autoComplete',[ProgramController::class, 'AutoComplete']);
+Route::get('/autoComplete', [ProgramController::class, 'AutoComplete']);
 
 
-Route::get('/attendance/{id}',[ProgramController::class, 'attendance']);
-Route::post('/store-attendance',[ProgramController::class, 'storeAttendance']);
+Route::get('/attendance/{id}', [ProgramController::class, 'attendance']);
+Route::post('/store-attendance', [ProgramController::class, 'storeAttendance']);
 
-Route::get('/images/{filename}',[ImageController::class, 'getImage']);
+Route::get('/images/{filename}', [ImageController::class, 'getImage']);
 
 
-Route::get('/download-file/{id}',[ImageController::class, 'downloadFile'])->middleware('cors');
+Route::get('/download-file/{id}', [ImageController::class, 'downloadFile'])->middleware('cors');
 
-Route::get('/download-certfile/{id}',[ImageController::class, 'downloadCertFile'])->middleware('cors');
-Route::get('/download-moa/{id}',[ImageController::class, 'downloadMoa'])->middleware('cors');
+Route::get('/download-certfile/{id}', [ImageController::class, 'downloadCertFile'])->middleware('cors');
+Route::get('/download-moa/{id}', [ImageController::class, 'downloadMoa'])->middleware('cors');
 
-Route::post('/file',[ImageController::class, 'getUserFiles'])->middleware('cors');
+Route::post('/file', [ImageController::class, 'getUserFiles'])->middleware('cors');
 
-Route::get('/view-file/{filePath}',[ImageController::class, 'viewUserFiles']);
+Route::get('/view-file/{filePath}', [ImageController::class, 'viewUserFiles']);
 
-Route::post('/program-file',[ImageController::class,'getProgramFiles'])->middleware('cors');
+Route::post('/program-file', [ImageController::class, 'getProgramFiles'])->middleware('cors');
 
-Route::get('/dashboard',[DashboardController::class, 'index']);
-Route::get('/dashboard-chart/{month}',[DashboardController::class, 'dashboardChart']);
-Route::get('/user-dashboard/{user_id}',[DashboardController::class, 'userDashboardChart']);
-Route::post('/user-dashboard-chart',[DashboardController::class, 'userProgramChart']);
+Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard-chart/{month}', [DashboardController::class, 'dashboardChart']);
+Route::get('/user-dashboard/{user_id}', [DashboardController::class, 'userDashboardChart']);
+Route::post('/user-dashboard-chart', [DashboardController::class, 'userProgramChart']);
 
 Route::get('/program-flow/{program_id}', [ProgramController::class, 'programFlow']);
 
@@ -125,32 +126,3 @@ Route::post('/update-program-flow', [ProgramController::class, 'updateProgramFlo
 Route::post('/update-program-topic', [ProgramController::class, 'updateProgramTopic']);
 
 Route::post('/update-program-position', [ProgramController::class, 'updateProgramPosition']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,27 @@
+*:not(.fa-solid):not(.fa-regular) {
+  font-family: 'Assistant', sans-serif;
+  /* color: #51354b; */
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
 .report-container {
   padding: 2%;
   padding-bottom: 200px;
@@ -8,7 +32,7 @@
 }
 
 .btn-cont {
-  width: 100%;
+  width: auto;
   padding: 10px;
   display: flex;
   flex-wrap: nowrap;
@@ -136,7 +160,8 @@ table .img-container {
   flex-direction: row;
   padding: 10px;
   text-align: center;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  height: 40px;
 }
 
 .downloadbtn i {
@@ -156,7 +181,76 @@ table .img-container {
   border-bottom: 0.5px solid;
 }
 
-/* tr {
-  position: relative;
-  margin: 0px 50px;
-} */
+.dlpartnerbtn {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+}
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+ */
+::ng-deep .mat-header-cell {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+::ng-deep .mat-sort-header-content {
+  font-weight: 700 !important;
+  color: #a8a5b6;
+  font-size: 15px;
+}
+
+::ng-deep .mat-cell {
+  color: #51354b;
+  font-size: 15px !important;
+}
+
+.mat-row:nth-child(even) {
+  background-color: #8a8a8b1a;
+}
+
+.mat-cell {
+  padding: 16px 16px; /* Adjust padding as needed */
+}
+
+.paginator-wrapper {
+  margin-top: auto;
+}
+
+::ng-deep .cdk-column-company_name {
+  white-space: nowrap;
+}
+
+::ng-deep .cdk-column-contract_dates {
+  white-space: nowrap;
+  padding-left: 20px;
+}
+
+::ng-deep .cdk-column-contact_no {
+  white-space: nowrap;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: #ff5a2f !important;
+  /* background-color: #ff5a2f !important; */
+}
+
+.mat-table {
+  width: 100%;
+}

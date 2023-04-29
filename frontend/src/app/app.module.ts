@@ -74,7 +74,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { SuccessComponent } from './dialog/success/success.component';
 import { ErrorComponent } from './dialog/error/error.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-// import { QuillModule } from 'ngx-quill';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { SelectFacultyComponent } from './admin/modal/select-faculty/select-faculty.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SelectProgramComponent,
     ProgFlowComponent,
     SuccessComponent,
-    ErrorComponent
+    ErrorComponent,
+    SelectFacultyComponent
   ],
   imports: [
     BrowserModule,
@@ -149,8 +151,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatStepperModule,
     MatTabsModule,
     DragAndDropModule,
-    DragDropModule
-    // QuillModule.forRoot()
+    DragDropModule,
+    MatButtonToggleModule
   ],
   exports: [MatTableModule, MatCheckboxModule, CreateProgramComponent],
   entryComponents: [AccountInfoComponent],

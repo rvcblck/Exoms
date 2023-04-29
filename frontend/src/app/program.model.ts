@@ -15,6 +15,8 @@ export interface Program {
   leader: Leader;
   participant_count: number;
   status: string;
+
+  [key: string]: any;
 }
 
 // for view program

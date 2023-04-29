@@ -1,5 +1,6 @@
 .container{
-  margin-top:30px;
+  margin:40px auto;
+  width: 100%;
 }
 
 .partner-wrapper.ng-star-inserted{
@@ -7,17 +8,30 @@
   height: auto;
   padding: 20px;
 }
+.cont-img{
+  width: 100%;
+  height: fit-content;
+}
+.cont-img img{
+  width: 40%;
+  height: 40%;
+  margin-left: 25%;
+}
+.btn-update{
+  display: flex;
+  justify-content: right;
+}
  .btn-update button {
-  width:13%;
+  width: fit-content;
   height: 40px;
   border-radius: 5px;
   background-color: #ff5a2f;
-  border: 2px solid #ff5a2f;  
+  border: 2px solid #ff5a2f;
   font-family: Assistant;
   color: #ffffff;
   text-decoration: none solid rgb(255, 255, 255);
   text-align: center;
-  margin-left: 87%;
+  white-space: nowrap;
 }
 .submit{
   width:100%;
@@ -32,18 +46,17 @@
   text-align: center;
 }
 .btn-select{
-  position: absolute;
-  left: 52%;
-  width: 40%;
-  z-index: 5;
+  width: 100%;
+  margin-bottom: 20px;
 }
 .btn-select .box{
+  width: 100%;
   display: flex;
-  float: right;
 }
 .btn-select .box button{
   width: 100%;
   background-color: transparent;
+  padding: 2px 20px;
   color: #ff5a2f;
   height: 35px;
   border-radius: 5px;
@@ -52,6 +65,13 @@
   font-family: Assistant;
   text-decoration: none solid rgb(255, 255, 255);
   text-align: center;
+  font-weight: bold;
+}
+.btn-select .box button:hover{
+  background-color: #ff5a2f;
+  color: white;
+  border: 2px solid #ff5a2f;
+  transition: 0.5s;
 }
 .btn-select .box label{
   margin: auto 15px;
@@ -196,19 +216,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
-  .content{
-    padding-top: 50px;
-  }
-   .btn-select{
-    position: absolute;
-    left: 10px;
-    width: 100%;
-    z-index: 5;
-    border: 1px solid blue;
-  }
-  .btn-select .box{
-    float: left;
-  }
+
 }
 
 /* Phone screens */
@@ -216,27 +224,14 @@ tr:nth-child(even) {background-color: #f2f2f2;}
   ::ng-deep .mat-paginator-page-size {
     display: none !important;
   }
-  .content{
+  .container{
+    margin-top:30px;
     width: fit-content;
-    padding-top: 50px;
   }
-  .btn-select{
-    position: absolute;
-    left: 10px;
+  .cont-img img{
     width: 100%;
-    z-index: 5;
-    border: 1px solid blue;
-  }
-  .btn-select .box{
-    float: left;
-  }
-  .btn-select .box label{
-    display: none;
-  }
-  .partner-wrapper.ng-star-inserted{
-    width: 100%;
-    height: auto;
-    margin: 0px;
-    padding: 10px;
+    height: 100%;
+    margin: auto;
+    margin-top: 30px;
   }
 }

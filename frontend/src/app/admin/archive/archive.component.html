@@ -1,0 +1,280 @@
+<mat-tab-group>
+  <mat-tab label="Program">
+    <div class="account-management">
+      <div class="filter-container">
+        <div class="filter-cont">
+          <div class="search" [class.show-btns]="this.selection.hasValue()">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span><input matInput (keyup)="applyFilter($event)" placeholder="Search" #input />
+          </div>
+          <!-- <div class="btn-respond" *ngIf="selection.hasValue()">
+            <button class="reject-btn" (click)="disapproveUser()">Reject</button>
+
+            <button class="approve-btn" (click)="approveUser()">Approve</button>
+          </div> -->
+          <div class="btn-add-acc">
+            <button [disabled]="!selection.selected.length" (click)="unarchived()" class="btn-add">Unarchive</button>
+          </div>
+
+          <!-- <div class="buttons">
+
+
+          </div> -->
+          <div class="multiple-message">
+            <p class="counter" *ngIf="selection.selected.length > 0">
+              You are currently selecting {{ selection.selected.length }} programs.
+              <span (click)="selectAllProgram()"
+                ><Button class="link-button">{{ selection.selected.length === dataSource.filteredData.length ? 'Unselect' : 'Select all' }}</Button>
+                {{ dataSource.filteredData.length }} programs?</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tablewrapper">
+        <table mat-table [dataSource]="dataSource" matSort #sort1="matSort" class="mat-elevation-z8">
+          <!-- Checkbox Column -->
+
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? toggleAllRows() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TITLE</th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="place">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>PLACE</th>
+            <td mat-cell *matCellDef="let element">{{ element.place }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="start_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>START DATE</th>
+            <td mat-cell *matCellDef="let element">{{ element.start_date }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="end_date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>END DATE</th>
+            <td mat-cell *matCellDef="let element">{{ element.end_date }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="dataToCall; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: dataToCall" (click)="selection.toggle(row)"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+      </div>
+      <div class="paginator-wrapper">
+        <mat-paginator #paginator1 [pageSizeOptions]="[10, 20, 30]" aria-label="Select page of programs"></mat-paginator>
+      </div>
+    </div>
+    <div *ngIf="!loading" class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </mat-tab>
+  <!--
+
+
+
+
+   -->
+  <mat-tab label="Partner">
+    <div class="account-management">
+      <div class="filter-container">
+        <div class="filter-cont">
+          <div class="search" [class.show-btns]="this.selectionPartner.hasValue()">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span
+            ><input matInput (keyup)="applyFilterPartner($event)" placeholder="Search" #input />
+          </div>
+          <div class="btn-add-acc">
+            <button [disabled]="!selectionPartner.selected.length" (click)="unarchivedPartner()" class="btn-add">Unarchive</button>
+          </div>
+
+          <!-- <div class="buttons">
+
+
+          </div> -->
+          <div class="multiple-message">
+            <p class="counter" *ngIf="selectionPartner.selected.length > 0">
+              You are currently selecting {{ selectionPartner.selected.length }} partners.
+              <span (click)="selectAllPartner()"
+                ><Button class="link-button">{{
+                  selectionPartner.selected.length === dataSourcePartner.filteredData.length ? 'Unselect' : 'Select all'
+                }}</Button>
+                {{ dataSourcePartner.filteredData.length }} partners?</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tablewrapper">
+        <table mat-table [dataSource]="dataSourcePartner" matSort #sort2="matSort" class="mat-elevation-z8">
+          <!-- Checkbox Column -->
+
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? toggleAllRowsPartner() : null"
+                [checked]="selectionPartner.hasValue() && isAllSelectedPartner()"
+                [indeterminate]="selectionPartner.hasValue() && !isAllSelectedPartner()"
+                [aria-label]="checkboxLabelPartner()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selectionPartner.toggle(row) : null"
+                [checked]="selectionPartner.isSelected(row)"
+                [aria-label]="checkboxLabelPartner(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="company_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>PARTNER NAME</th>
+            <td mat-cell *matCellDef="let element">{{ element.company_name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ADDRESS</th>
+            <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="contact_no">
+            <th mat-header-cell *matHeaderCellDef class="ps-3">CONTACT NUMBER</th>
+            <td mat-cell *matCellDef="let dataSource">{{ dataSource.contact_no }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="contract_dates">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="ps-3">CONTRACT DATES</th>
+            <td mat-cell *matCellDef="let dataSource">
+              {{ formatDate(dataSource.contracts.start_date) }} -
+              {{ formatDate(dataSource.contracts.end_date) }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="dataToCallPartner; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: dataToCallPartner" (click)="selectionPartner.toggle(row)"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+      </div>
+      <div class="paginator-wrapper">
+        <mat-paginator #paginator2 [pageSizeOptions]="[10, 20, 30]" aria-label="Select page of partners"></mat-paginator>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Account">
+    <div class="account-management">
+      <div class="filter-container">
+        <div class="filter-cont">
+          <div class="search" [class.show-btns]="this.selection.hasValue()">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span
+            ><input matInput (keyup)="applyFilterAccount($event)" placeholder="Search" #input />
+          </div>
+          <!-- <div class="btn-respond" *ngIf="selection.hasValue()">
+            <button class="reject-btn" (click)="disapproveUser()">Reject</button>
+
+            <button class="approve-btn" (click)="approveUser()">Approve</button>
+          </div> -->
+          <div class="btn-add-acc">
+            <button [disabled]="!selectionAccount.selected.length" (click)="unarchivedAccount()" class="btn-add">Unarchive</button>
+          </div>
+
+          <!-- <div class="buttons">
+
+
+          </div> -->
+          <div class="multiple-message">
+            <p class="counter" *ngIf="selectionAccount.selected.length > 0">
+              You are currently selecting {{ selectionAccount.selected.length }} programs.
+              <span (click)="selectAllAccount()"
+                ><Button class="link-button">{{
+                  selectionAccount.selected.length === dataSourceAccount.filteredData.length ? 'Unselect' : 'Select all'
+                }}</Button>
+                {{ dataSourceAccount.filteredData.length }} programs?</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tablewrapper">
+        <table mat-table [dataSource]="dataSourceAccount" matSort #sort3="matSort" class="mat-elevation-z8">
+          <!-- Checkbox Column -->
+
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? toggleAllRowsAccount() : null"
+                [checked]="selectionAccount.hasValue() && isAllSelectedAccount()"
+                [indeterminate]="selectionAccount.hasValue() && !isAllSelectedAccount()"
+                [aria-label]="checkboxLabelAccount()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selectionAccount.toggle(row) : null"
+                [checked]="selectionAccount.isSelected(row)"
+                [aria-label]="checkboxLabelAccount(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fname">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>NAME</th>
+            <td mat-cell *matCellDef="let element">{{ element.fname }} {{ element.lname }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>EMAIL</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="mobile_no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>MOBILE</th>
+            <td mat-cell *matCellDef="let element">{{ element.mobile_no }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="dataToCallAccount; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: dataToCallAccount" (click)="selectionAccount.toggle(row)"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+      </div>
+      <div class="paginator-wrapper">
+        <mat-paginator #paginator3 [pageSizeOptions]="[10, 20, 30]" aria-label="Select page of programs"></mat-paginator>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

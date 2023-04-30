@@ -196,7 +196,7 @@ export class ViewProgramComponent implements OnInit {
             message: message
           }
         });
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       (error) => {
         // TODO: Handle error

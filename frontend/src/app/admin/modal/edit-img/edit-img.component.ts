@@ -99,28 +99,29 @@ export class EditImgComponent implements OnInit {
     this.profileService.updateProfilePic(formData).subscribe(
       (program) => {
         console.log('Program created successfully:', program);
-          const message = 'Update Successfully';
-          const header = 'Success';
-          const dialogRef = this.dialog.open(SuccessComponent, {
+        const message = 'Update Successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
           width: '300px',
           data: {
             header: header,
             message: message
           }
         });
-          this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       (error) => {
         console.error('Error creating program:', error);
         const message = 'Error Updating Image';
-          const header = 'Error';
-          const dialogRef = this.dialog.open(ErrorComponent, {
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
           width: '300px',
           data: {
             header: header,
             message: message
           }
         });
+        this.dialogRef.close(false);
       }
     );
   }

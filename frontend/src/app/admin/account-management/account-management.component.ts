@@ -40,11 +40,14 @@ export class AccountManagementComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.adminLayout.pageTitle = 'Account Management';
-    // this.cdr.detectChanges();
+    this.getAccounts();
+  }
+
+  getAccounts() {
+    this.loading = true;
     this.accountService.getAccounts().subscribe((accounts) => {
       this.dataSource.data = accounts;
-      this.loading = true;
+      this.loading = false;
     });
   }
   ngAfterViewInit() {
@@ -125,7 +128,7 @@ export class AccountManagementComponent implements OnInit {
               message: message
             }
           });
-          this.refreshTable();
+          this.getAccounts();
         },
         (error) => {
           // Error handler
@@ -164,7 +167,7 @@ export class AccountManagementComponent implements OnInit {
               message: message
             }
           });
-          this.refreshTable();
+          this.getAccounts();
         },
         (error) => {
           // Error handler
@@ -185,19 +188,20 @@ export class AccountManagementComponent implements OnInit {
     }
   }
 
-  refreshTable() {
-    this.accountService.getAccounts().subscribe((accounts: Accounts[]) => {
-      this.dataSource.data = accounts;
-    });
-  }
-
   viewAccount(user_id: string) {
+    this.loading = true;
     this.accountService.getAccountInfo(user_id).subscribe(
       (account) => {
+        this.loading = false;
         const dialogRef = this.dialog.open(AccountInfoComponent, {
           data: { account: account },
           maxWidth: '90%',
           minWidth: '60%'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.getAccounts();
+          }
         });
       },
       (error) => {
@@ -210,6 +214,11 @@ export class AccountManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(CreateAccountComponent, {
       maxWidth: '90%',
       minWidth: '40%'
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getAccounts();
+      }
     });
   }
 }

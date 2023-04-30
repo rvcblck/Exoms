@@ -3,7 +3,19 @@
     <div class="search">
       <span><i class="fa-solid fa-magnifying-glass"></i></span><input (keyup)="applyFilter($event)" placeholder="Search" #input />
     </div>
-    <button (click)="createAccount()">Add Partner</button>
+
+    <div class="status">
+      <div class="dropdown">
+        <select placeholder="MOA status" [(ngModel)]="selectedStatus" (change)="moaStatusFilter()" id="status-select">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="expired">Expired</option>
+        </select>
+        <i class="arrow-icon fa-solid fa-chevron-down"></i>
+      </div>
+
+      <button (click)="createAccount()">Add Partner</button>
+    </div>
   </div>
   <div class="tablewrapper">
     <table mat-table [dataSource]="dataSource" matSort #sort="matSort" class="mat-elevation-z8">

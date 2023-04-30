@@ -17,6 +17,11 @@ import { ErrorComponent } from 'src/app/dialog/error/error.component';
   styleUrls: ['./partner-management.component.css']
 })
 export class PartnerManagementComponent implements OnInit {
+  activeContracts!: any[];
+  expiredContracts!: any[];
+  allPartners!: any[];
+  moaStatus!: any;
+  selectedStatus = 'all';
   constructor(
     private partnerService: PartnerService,
     private dialog: MatDialog,
@@ -35,18 +40,29 @@ export class PartnerManagementComponent implements OnInit {
   displayedColumns: string[] = ['company_name', 'address', 'contact_no', 'contract_dates', 'action'];
 
   ngOnInit(): void {
-    // this.adminLayout.pageTitle = 'Partner Management';
-    // this.cdr.detectChanges();
+    this.getPartner();
+  }
+
+  getPartner() {
     this.partnerService.getAllPartners().subscribe((partners) => {
       this.loading = true;
       this.dataSource.data = partners;
     });
 
     this.partnerService.getAllPartners().subscribe((partners) => {
+      this.allPartners = partners;
       this.dataSource.data = partners;
       this.dataSource.sort = this.sort;
       this.dataSource.sort.direction = 'desc';
       this.dataSource.sort.active = 'contract_dates';
+      this.activeContracts = partners.filter((partner) => {
+        const endDate = new Date(partner.contracts.end_date);
+        return endDate > new Date();
+      });
+      this.expiredContracts = partners.filter((partner) => {
+        const endDate = new Date(partner.contracts.end_date);
+        return endDate <= new Date();
+      });
     });
   }
 
@@ -65,6 +81,13 @@ export class PartnerManagementComponent implements OnInit {
           return item[property];
       }
     };
+
+    const statusSelect = document.getElementById('status-select');
+    const arrowIcon = document.querySelector('.status .arrow-icon');
+
+    statusSelect?.addEventListener('click', function () {
+      arrowIcon?.classList.toggle('rotate'); /* toggle the rotate class */
+    });
   }
 
   viewPartner(partner_id: string) {
@@ -74,6 +97,11 @@ export class PartnerManagementComponent implements OnInit {
           data: { partner: partner },
           maxWidth: '90%',
           minWidth: '40%'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.getPartner();
+          }
         });
       },
       (error) => {
@@ -100,9 +128,38 @@ export class PartnerManagementComponent implements OnInit {
     }
   }
 
+  moaStatusFilter() {
+    if (this.selectedStatus === 'active') {
+      this.dataSource.data = this.activeContracts;
+    } else if (this.selectedStatus === 'expired') {
+      this.dataSource.data = this.expiredContracts;
+    } else {
+      this.dataSource.data = this.allPartners;
+    }
+    this.moaStatus = this.selectedStatus;
+  }
+
+  // applyFilterMoa(filterValue: string) {
+  //   filterValue = filterValue.trim();
+  //   filterValue = filterValue.toLowerCase();
+  //   if (filterValue === 'active') {
+  //     this.dataSource.data = this.activeContracts;
+  //   } else if (filterValue === 'expired') {
+  //     this.dataSource.data = this.expiredContracts;
+  //   } else {
+  //     this.dataSource.data = this.allPartners;
+  //   }
+  //   this.moaStatus = filterValue;
+  // }
+
   createAccount() {
     const dialogRef = this.dialog.open(CreatePartnerComponent, {
       width: '80%'
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getPartner();
+      }
     });
   }
 

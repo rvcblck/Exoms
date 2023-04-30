@@ -78,9 +78,9 @@ export class ReportsComponent implements OnInit {
       this.inputWidth = this.inputValue.length * 8 + 'px';
     }
 
-    this.partnerService.getAllPartners().subscribe((partners) => {
-      this.dataSource.data = partners;
-    });
+    // this.partnerService.getAllPartners().subscribe((partners) => {
+    //   this.dataSource.data = partners;
+    // });
 
     this.partnerService.getAllPartners().subscribe((partners) => {
       this.dataSource.data = partners;

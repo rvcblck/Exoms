@@ -197,7 +197,7 @@ export class ViewPartnerComponent implements OnInit {
             message: message
           }
         });
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       (error) => {
         console.error('Error creating program:', error);
@@ -211,6 +211,7 @@ export class ViewPartnerComponent implements OnInit {
             message: message
           }
         });
+        this.dialogRef.close();
       }
     );
   }

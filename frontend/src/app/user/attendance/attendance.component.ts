@@ -103,6 +103,7 @@ export class AttendanceComponent implements OnInit {
             message: message
           }
         });
+        this.dialogRef.close(true);
       },
       (error) => {
         console.error('Error creating program:', error);

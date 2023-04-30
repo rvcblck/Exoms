@@ -117,6 +117,11 @@ export class ProgramManagementComponent implements OnInit {
           maxWidth: '90%',
           minWidth: '60%'
         });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.getPrograms();
+          }
+        });
       },
       (error) => {
         this.loadDialog = false;
@@ -136,6 +141,11 @@ export class ProgramManagementComponent implements OnInit {
           maxWidth: '90%',
           minWidth: '60%',
           maxHeight: '80vh'
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.getPrograms();
+          }
         });
       },
       (error) => {

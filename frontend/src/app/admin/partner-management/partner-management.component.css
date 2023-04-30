@@ -77,7 +77,6 @@
   font-size: 12px;
 }
 
-
 table {
   width: 100%;
 }
@@ -130,6 +129,49 @@ table {
   color: #ff5a2f;
   padding: 5px 20px;
   background-color: #ff592f3c;
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+}
+
+.dropdown {
+  width: 100px;
+  margin-right: 20px;
+}
+
+select {
+  position: relative;
+  width: 100%;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
+  /* background-color: #ffffff00; */
+  background-color: transparent;
+  outline: none;
+  border: none;
+  margin-right: 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  height: 40px;
+  padding: 0px 20px;
+  z-index: 2;
+  appearance: none;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  /* padding-right: 20px; */
+}
+
+.status .arrow-icon {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  transform: translateY(50%);
+  z-index: 1;
+  font-size: 12px;
+  transition: transform 0.3s ease; /* add transition effect */
+}
+
+.status .arrow-icon.rotate {
+  transform: translateY(50%) rotate(180deg); /* rotate the icon */
 }
 
 ::ng-deep .cdk-column-company_name {

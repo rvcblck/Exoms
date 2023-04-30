@@ -93,7 +93,7 @@ export class CreateAccountComponent implements OnInit {
     this.accountService.createAccount(formattedData).subscribe(
       (response) => {
         console.log(response);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
         const message = 'Creating Account Successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {

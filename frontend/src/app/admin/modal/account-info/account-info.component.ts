@@ -88,7 +88,7 @@ export class AccountInfoComponent implements OnInit {
             message: message
           }
         });
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       (error) => {
         // TODO: Handle error

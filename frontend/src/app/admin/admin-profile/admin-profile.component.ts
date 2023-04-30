@@ -51,6 +51,39 @@ export class AdminProfileComponent implements OnInit {
       bday: ['', Validators.required],
       mobile_no: ['', Validators.required]
     });
+  }
+
+  getImage() {
+    const user_id = localStorage.getItem('user_id');
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
+  }
+
+  ngOnInit(): void {
+    this.getProfile();
+
+    this.refreshImage();
+
+    const toggleCheckbox = document.getElementById('switch-toggle');
+    const accountInfo = document.querySelector('.account-info');
+    const breakpoint = 768; // Set your desired breakpoint for mobile devices here
+
+    toggleCheckbox?.addEventListener('change', () => {
+      if (window.innerWidth < breakpoint) {
+        accountInfo?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('auto scroll');
+      }
+    });
+  }
+
+  refreshImage() {
+    this.getImage().subscribe((data: Blob) => {
+      const imageUrl = URL.createObjectURL(data);
+
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+    });
+  }
+
+  getProfile() {
     const user_id = localStorage.getItem('user_id');
     if (user_id) {
       this.profileService.getUserInfo(user_id).subscribe(
@@ -89,35 +122,6 @@ export class AdminProfileComponent implements OnInit {
     }
   }
 
-  getImage() {
-    const user_id = localStorage.getItem('user_id');
-    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
-  }
-
-  ngOnInit(): void {
-    // this.adminLayout.pageTitle = 'Profile';
-    // this.cdr.detectChanges();
-    this.getImage().subscribe((data: Blob) => {
-      const imageUrl = URL.createObjectURL(data);
-
-      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-    });
-
-    const toggleCheckbox = document.getElementById('switch-toggle');
-    const accountInfo = document.querySelector('.account-info');
-    const breakpoint = 768; // Set your desired breakpoint for mobile devices here
-
-    toggleCheckbox?.addEventListener('change', () => {
-      if (window.innerWidth < breakpoint) {
-        accountInfo?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        console.log('auto scroll');
-      }
-    });
-
-    // this.profileForm
-    // this.profileForm.patchValue({ fname: this.user.fname });
-  }
-
   toggleAccountInfo(): boolean {
     const checkbox = document.getElementById('switch-toggle') as HTMLInputElement;
     return checkbox.checked;
@@ -138,7 +142,6 @@ export class AdminProfileComponent implements OnInit {
     if (this.profileForm.invalid) {
       return;
     }
-    console.log(this.profileForm);
     this.openConfirmationDialog();
   }
   openConfirmationDialog(): void {
@@ -179,7 +182,16 @@ export class AdminProfileComponent implements OnInit {
       maxWidth: '90%',
       minWidth: '40%'
     });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.refreshImage();
+      }
+    });
   }
+
+  // refresh() {
+  //   this.getProfile();
+  // }
 
   submitForm() {
     const address =
@@ -200,60 +212,17 @@ export class AdminProfileComponent implements OnInit {
 
     this.profileService.updateProfile(formattedData).subscribe(
       (response) => {
-        const user_id = localStorage.getItem('user_id');
-        if (user_id) {
-          this.profileService.getUserInfo(user_id).subscribe(
-            (user) => {
-              this.user = user;
-              // console.log(this.user);
-
-              const address = user.address;
-              if (address) {
-                const addressParts = address.split(', ');
-                const addressObject = {
-                  barangay: addressParts[0],
-                  city: addressParts[1],
-                  province: addressParts[2]
-                };
-
-                this.profileForm = this.formBuilder.group({
-                  fname: [user.fname, Validators.required],
-                  mname: [user.mname],
-                  lname: [user.lname, Validators.required],
-                  suffix: [user.suffix],
-                  address: [''],
-                  barangay: [addressObject.barangay, Validators.required],
-                  city: [addressObject.city, Validators.required],
-                  province: [addressObject.province, Validators.required],
-                  gender: [user.gender, Validators.required],
-                  bday: [user.bday, Validators.required],
-                  mobile_no: [user.mobile_no, Validators.required]
-                });
-              }
-                const message = 'Update successfully';
-                const header = 'Success';
-                const dialogRef = this.dialog.open(SuccessComponent, {
-                width: '300px',
-                data: {
-                header: header,
-                message: message
-              }
-            });
-            },
-            (error) => {
-              console.log('Error:', error);
-                const message = 'Something Wrong Please Try Again';
-                const header = 'Error';
-                const dialogRef = this.dialog.open(ErrorComponent, {
-                width: '300px',
-                data: {
-                header: header,
-                message: message
-              }
-            });
-            }
-          );
-        }
+        const message = 'Profile updated successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
+        this.getProfile();
+        this.refreshImage();
       },
       (error) => {
         // this.errors.push(error);
@@ -261,12 +230,12 @@ export class AdminProfileComponent implements OnInit {
         const message = 'Error Updating Accounts';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
-        width: '300px',
-        data: {
-        header: header,
-        message: message
-      }
-    });
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

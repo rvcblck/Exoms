@@ -263,13 +263,13 @@ export class CreatePartnerComponent implements OnInit {
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
-          this.dialogRef.close();
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          this.dialogRef.close(true);
         },
         (error) => {
           console.error('Error creating program:', error);
@@ -277,12 +277,12 @@ export class CreatePartnerComponent implements OnInit {
           const message = 'Error creating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       );
     } else {
@@ -292,25 +292,25 @@ export class CreatePartnerComponent implements OnInit {
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
-          this.dialogRef.close();
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          this.dialogRef.close(true);
         },
         (error) => {
           console.error('Error creating program:', error);
           const message = 'Error creating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
           // TODO: Handle error
         }
       );

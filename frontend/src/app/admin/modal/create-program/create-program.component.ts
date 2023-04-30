@@ -706,11 +706,30 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programService.updateProgram(formData).subscribe(
         (program) => {
           this.loadDialog = false;
-          console.log('Program created successfully:', program);
-          this.dialogRef.close();
+          console.log('Program updated successfully:', program);
+          const message = 'Program updated successfully';
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          this.dialogRef.close(true);
         },
         (error) => {
-          console.error('Error creating program:', error);
+          console.error('Error updating program:', error);
+          const message = 'Error updating program';
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          this.dialogRef.close();
         }
       );
     } else {
@@ -728,7 +747,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
               message: message
             }
           });
-          this.dialogRef.close();
+          this.dialogRef.close(true);
         },
         (error) => {
           console.error('Error creating program:', error);
@@ -741,6 +760,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
               message: message
             }
           });
+          this.dialogRef.close();
         }
       );
     }

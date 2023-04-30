@@ -1,61 +1,77 @@
-<div class="container">
+<div class="container-progflow">
   <div class="btn-select">
     <div class="box">
       <label for="">Pogram: </label>
       <div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
-      <div><button (click)="selectProgram()">Select Program</button></div>
+      <div><button class="text-nowrap" (click)="selectProgram()">Select Program</button></div>
     </div>
     <div class="cont-img" *ngIf="!programFlow">
-      <img src="../../../assets/images/Search-rafiki.png" alt="">
+      <img src="../../../assets/images/Search-rafiki.png" alt="" />
     </div>
   </div>
-      <mat-tab-group *ngIf="programFlow" dynamicHeight>
-        <!-- FLow  -->
-        <mat-tab label="Program Flow">
-          <div class="partner-wrapper">
-            <div class="partner">
-              <div class="contract-wrapper">
-                <div class="form">
-                  <form [formGroup]="flowForm">
-                    <div class="form-field">
-                      <label for="">Flow Title</label>
-                      <input type="text" formControlName="flowTitle" />
-                      <mat-error *ngIf="flowForm.get('flowTitle')?.invalid && (flowForm.get('flowTitle')?.touched || submitted)">
-                        Flow title is required.
-                      </mat-error>
-                    </div>
+  <mat-tab-group *ngIf="programFlow">
+    <!-- FLow  -->
+    <mat-tab label="Program Flow">
+      <div class="partner-wrapper">
+        <div class="partner">
+          <div class="contract-wrapper">
+            <div class="form">
+              <form [formGroup]="flowForm">
+                <div class="form-field">
+                  <label for="">Flow Title</label>
+                  <input type="text" formControlName="flowTitle" />
+                  <mat-error *ngIf="flowForm.get('flowTitle')?.invalid && (flowForm.get('flowTitle')?.touched || submitted)">
+                    Flow title is required.
+                  </mat-error>
+                </div>
 
-                    <div class="form-field">
-                      <label for="">Description</label>
-                      <input type="text" formControlName="flowDesc" />
-                      <mat-error *ngIf="flowForm.get('flowDesc')?.invalid && (flowForm.get('flowDesc')?.touched || submitted)">
-                        Flow description is required.
-                      </mat-error>
+                <div class="form-field">
+                  <label for="">Description</label>
+                  <textarea type="text" formControlName="flowDesc"></textarea>
+                  <mat-error *ngIf="flowForm.get('flowDesc')?.invalid && (flowForm.get('flowDesc')?.touched || submitted)">
+                    Flow description is required.
+                  </mat-error>
+                </div>
+                <button class="submit" type="submit" (click)="onSubmit()">Add</button>
+              </form>
+            </div>
+            <div class="table-wrapper">
+              <div class="table-bg">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#F1C21B"
+                    d="M24.7,-39.1C29.1,-35.5,27.9,-23.9,29.3,-15.1C30.7,-6.3,34.6,-0.4,40.5,10.6C46.4,21.6,54.2,37.7,48.8,40.2C43.4,42.7,24.7,31.7,11.4,32.7C-1.9,33.8,-9.8,47,-18.9,50.6C-28.1,54.3,-38.6,48.4,-48.2,40.2C-57.9,32,-66.8,21.4,-73.4,7.6C-80,-6.2,-84.4,-23.4,-73.6,-28.1C-62.8,-32.8,-37,-25,-22.2,-23.9C-7.4,-22.8,-3.7,-28.4,3.2,-33.4C10.1,-38.4,20.2,-42.8,24.7,-39.1Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#FF5A2D"
+                    d="M22.4,-33.6C33.9,-27.4,51.6,-29.5,62.4,-23.4C73.1,-17.2,76.9,-2.8,75.8,11.5C74.6,25.8,68.6,40,57.2,45.2C45.9,50.4,29.2,46.6,15.6,48.5C1.9,50.4,-8.7,58,-18,57.2C-27.3,56.3,-35.4,47,-39.9,37.2C-44.5,27.3,-45.4,17,-46.2,7.1C-47,-2.9,-47.5,-12.4,-42.1,-17.1C-36.7,-21.8,-25.2,-21.7,-17.2,-29.5C-9.2,-37.3,-4.6,-53.2,0.4,-53.8C5.4,-54.4,10.8,-39.8,22.4,-33.6Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <table>
+                  <body cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div>
+                      <td scope="col">Task</td>
+                      <td scope="col">Assign Faculty</td>
                     </div>
-                    <button class="submit" type="submit" (click)="onSubmit()">Add</button>
-                  </form>
-                </div>
-                <div class="table">
-                  <table>
-                    <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                      <tr>
-                        <th scope="col">Task</th>
-                        <th scope="col">Assign Faculty</th>
-                      </tr>
-                      <tr class="example-box" *ngFor="let flow of programFlow.flow" cdkDrag cdkDragExit>
-                        <td>{{ flow.flow }}</td>
-                        <td>{{ flow.description }}</td>
-                        <td class="removebtn" (click)="removeItem(flow)"><i class="fa-solid fa-circle-xmark"></i></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                    <div class="example-box" *ngFor="let flow of programFlow.flow" cdkDrag cdkDragExit>
+                      <td>{{ flow.flow }}</td>
+                      <td>{{ flow.description }}</td>
+                      <td class="removebtn" (click)="removeItem(flow)"><i class="fa-solid fa-circle-xmark"></i></td>
+                    </div>
+                  </body>
+                </table>
               </div>
-              <div class="btn-update"><button (click)="updateFlow()">update program flow</button></div>
             </div>
           </div>
-        </mat-tab>
-        <!--
+          <div class="btn-update"><button (click)="updateFlow()">Update</button></div>
+        </div>
+      </div>
+    </mat-tab>
+    <!--
 
 
 
@@ -64,69 +80,81 @@
 
 
          -->
-        <!-- Topic  -->
-        <mat-tab label="Program Topic">
-          <div class="partner-wrapper">
-            <div class="partner">
-              <div class="contract-wrapper">
-                <div class="form">
-                  <form [formGroup]="topicForm">
-                    <!-- col_1 input  -->
-                    <div class="form-field">
-                      <label for="">Flow Title</label>
-                      <input type="text" formControlName="col_1" />
-                      <mat-error *ngIf="flowForm.get('col_1')?.invalid && (flowForm.get('col_1')?.touched || submitted)"> col_1 is required. </mat-error>
-                    </div>
-                    <!--
+    <!-- Topic  -->
+    <mat-tab label="Program Topic">
+      <div class="partner-wrapper">
+        <div class="partner">
+          <div class="contract-wrapper">
+            <div class="form">
+              <form [formGroup]="topicForm">
+                <!-- col_1 input  -->
+                <div class="form-field">
+                  <label for="">Flow Title</label>
+                  <input type="text" formControlName="col_1" />
+                  <mat-error *ngIf="flowForm.get('col_1')?.invalid && (flowForm.get('col_1')?.touched || submitted)"> col_1 is required. </mat-error>
+                </div>
+                <!--
 
 
                      -->
-                    <!-- col_2 input  -->
-                    <div class="form-field">
-                      <label for="">Description</label>
-                      <input type="text" formControlName="col_2" />
-                      <mat-error *ngIf="flowForm.get('col_2')?.invalid && (flowForm.get('col_2')?.touched || submitted)">
-                        col_2 description is required.
-                      </mat-error>
-                    </div>
-                    <!--
+                <!-- col_2 input  -->
+                <div class="form-field">
+                  <label for="">Description</label>
+                  <textarea type="text" formControlName="col_2"></textarea>
+                  <mat-error *ngIf="flowForm.get('col_2')?.invalid && (flowForm.get('col_2')?.touched || submitted)">
+                    col_2 description is required.
+                  </mat-error>
+                </div>
+                <!--
 
 
                      -->
-                    <!-- col_3 input  -->
-                    <div class="form-field">
-                      <label for="">Description</label>
-                      <input type="text" formControlName="col_3" />
-                      <!-- <mat-error *ngIf="flowForm.get('col_3')?.invalid && (flowForm.get('col_3')?.touched || submitted)">
-                        description is required.
-                      </mat-error> -->
-                    </div>
-                    <button class="submit" type="submit" (click)="onTopicSubmit()">Add</button>
-                  </form>
+                <!-- col_3 input  -->
+                <div class="form-field">
+                  <label for="">Description</label>
+                  <textarea type="text" formControlName="col_3"></textarea>
                 </div>
-                <div class="table">
-                  <table>
-                    <thead>
-                      <tr colspan="2">
-                        <th scope="col">Program Flow</th>
-                      </tr>
-                    </thead>
-                    <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
-                      <tr class="example-box" *ngFor="let topic of programFlow.topic" cdkDrag cdkDragExit>
-                        <td>{{ topic.col_1 }}</td>
-                        <td>{{ topic.col_2 }}</td>
-                        <td>{{ topic.col_3 }}</td>
-                        <td class="removebtn" (click)="removeTopicItem(topic)"><i class="fa-solid fa-circle-xmark"></i></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="btn-update"><button (click)="updateTopic()">update program flow</button></div>
+                <button class="submit" type="submit" (click)="onTopicSubmit()">Add</button>
+              </form>
             </div>
+            <div class="table-wrapper">
+              <div class="table-bg">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#F1C21B"
+                    d="M24.7,-39.1C29.1,-35.5,27.9,-23.9,29.3,-15.1C30.7,-6.3,34.6,-0.4,40.5,10.6C46.4,21.6,54.2,37.7,48.8,40.2C43.4,42.7,24.7,31.7,11.4,32.7C-1.9,33.8,-9.8,47,-18.9,50.6C-28.1,54.3,-38.6,48.4,-48.2,40.2C-57.9,32,-66.8,21.4,-73.4,7.6C-80,-6.2,-84.4,-23.4,-73.6,-28.1C-62.8,-32.8,-37,-25,-22.2,-23.9C-7.4,-22.8,-3.7,-28.4,3.2,-33.4C10.1,-38.4,20.2,-42.8,24.7,-39.1Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#FF5A2D"
+                    d="M22.4,-33.6C33.9,-27.4,51.6,-29.5,62.4,-23.4C73.1,-17.2,76.9,-2.8,75.8,11.5C74.6,25.8,68.6,40,57.2,45.2C45.9,50.4,29.2,46.6,15.6,48.5C1.9,50.4,-8.7,58,-18,57.2C-27.3,56.3,-35.4,47,-39.9,37.2C-44.5,27.3,-45.4,17,-46.2,7.1C-47,-2.9,-47.5,-12.4,-42.1,-17.1C-36.7,-21.8,-25.2,-21.7,-17.2,-29.5C-9.2,-37.3,-4.6,-53.2,0.4,-53.8C5.4,-54.4,10.8,-39.8,22.4,-33.6Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <table>
+                  <body cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
+                    <div colspan="2">
+                      <td scope="col">Program Flow</td>
+                    </div>
+                    <div class="example-box topic" *ngFor="let topic of programFlow.topic" cdkDrag cdkDragExit>
+                      <td>{{ topic.col_1 }}</td>
+                      <td>{{ topic.col_2 }}</td>
+                      <td>{{ topic.col_3 }}</td>
+                      <td class="removebtn" (click)="removeTopicItem(topic)"><i class="fa-solid fa-circle-xmark"></i></td>
+                    </div>
+                  </body>
+                </table>
+              </div>
+            </div>
+
+            <div class="btn-update"><button (click)="updateTopic()">Update</button></div>
           </div>
-        </mat-tab>
-        <!--
+        </div>
+      </div>
+    </mat-tab>
+    <!--
 
 
 
@@ -135,19 +163,33 @@
 
 
          -->
-        <!-- Position  -->
-        <mat-tab label="Assign Roles">
-          <div class="partner-wrapper">
-            <div class="partner">
-              <div class="contract-wrapper">
-                <table class="table">
-                  <thead>
-                    <tr colspan="2">
-                      <th scope="col">Program Roles</th>
-                    </tr>
-                  </thead>
-                  <tbody cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
-                    <tr class="example-box" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
+    <!-- Position  -->
+    <mat-tab label="Assign Roles">
+      <div class="partner-wrapper">
+        <div class="partner">
+          <div class="contract-wrapper position">
+            <div class="table-wrapper">
+              <div class="table-bg">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#F1C21B"
+                    d="M24.7,-39.1C29.1,-35.5,27.9,-23.9,29.3,-15.1C30.7,-6.3,34.6,-0.4,40.5,10.6C46.4,21.6,54.2,37.7,48.8,40.2C43.4,42.7,24.7,31.7,11.4,32.7C-1.9,33.8,-9.8,47,-18.9,50.6C-28.1,54.3,-38.6,48.4,-48.2,40.2C-57.9,32,-66.8,21.4,-73.4,7.6C-80,-6.2,-84.4,-23.4,-73.6,-28.1C-62.8,-32.8,-37,-25,-22.2,-23.9C-7.4,-22.8,-3.7,-28.4,3.2,-33.4C10.1,-38.4,20.2,-42.8,24.7,-39.1Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fill="#FF5A2D"
+                    d="M22.4,-33.6C33.9,-27.4,51.6,-29.5,62.4,-23.4C73.1,-17.2,76.9,-2.8,75.8,11.5C74.6,25.8,68.6,40,57.2,45.2C45.9,50.4,29.2,46.6,15.6,48.5C1.9,50.4,-8.7,58,-18,57.2C-27.3,56.3,-35.4,47,-39.9,37.2C-44.5,27.3,-45.4,17,-46.2,7.1C-47,-2.9,-47.5,-12.4,-42.1,-17.1C-36.7,-21.8,-25.2,-21.7,-17.2,-29.5C-9.2,-37.3,-4.6,-53.2,0.4,-53.8C5.4,-54.4,10.8,-39.8,22.4,-33.6Z"
+                    transform="translate(100 100)"
+                  />
+                </svg>
+                <table>
+                  <body cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
+                    <div colspan="2">
+                      <td scope="col">Program Roles</td>
+                    </div>
+                    <div class="example-box position" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
                       <td>{{ position.name }}</td>
                       <td>
                         <mat-form-field appearance="fill">
@@ -159,14 +201,32 @@
                           <mat-error *ngIf="inputPositionEmpty && position_submitted"> Position is required </mat-error>
                         </mat-form-field>
                       </td>
-                    </tr>
-                  </tbody>
+                    </div>
+                  </body>
                 </table>
               </div>
-              <div class="btn-update"><button (click)="updatePosition()">update program roles</button></div>
             </div>
           </div>
-        </mat-tab>
-      </mat-tab-group>
-
+          <div class="btn-update"><button (click)="updatePosition()">Update</button></div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
+
+<!--
+
+             -->
+<!-- <table class="table">
+              <thead>
+                <tr colspan="2">
+                  <th scope="col">Program Roles</th>
+                </tr>
+              </thead>
+              <body cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
+                <tr class="example-box position" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
+                  <td>{{ position.name }}</td>
+                  <td></td>
+                </tr>
+              </body>
+            </table> -->

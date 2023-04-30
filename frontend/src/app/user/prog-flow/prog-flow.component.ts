@@ -63,7 +63,20 @@ export class ProgFlowComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.programTitle = 'kahit anong title';
+    // const program_id = 'PROG-6837351030';
+    // this.programService.getProgramFlow(program_id).subscribe(
+    //   (programs) => {
+    //     this.programFlow = programs;
+    //     this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
+    //     console.log(this.programFlow);
+    //   },
+    //   (error) => {
+    //     console.error('Error retrieving programs:', error);
+    //   }
+    // );
+  }
 
   selectProgram() {
     // this.programTitle = 'kahit anong title';

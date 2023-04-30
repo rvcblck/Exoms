@@ -45,10 +45,7 @@ export class ProgramManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.adminLayout.pageTitle = 'Program Management';
-    // this.cdr.detectChanges();
     const isAdmin = this.authService.isAdmin();
-    console.log('Is admin:', isAdmin);
     this.getPrograms();
   }
 
@@ -57,11 +54,8 @@ export class ProgramManagementComponent implements OnInit {
       this.programService.getPrograms().subscribe(
         (programs) => {
           this.programs = programs;
-          console.log('Programs retrieved successfully');
         },
-        (error) => {
-          console.error('Error retrieving programs:', error);
-        }
+        (error) => {}
       );
     } else {
       const user_id = localStorage.getItem('user_id');
@@ -69,11 +63,8 @@ export class ProgramManagementComponent implements OnInit {
         this.programService.getUserPrograms(user_id).subscribe(
           (programs) => {
             this.programs = programs;
-            console.log('Programs retrieved successfully');
           },
-          (error) => {
-            console.error('Error retrieving programs:', error);
-          }
+          (error) => {}
         );
       }
     }
@@ -125,7 +116,6 @@ export class ProgramManagementComponent implements OnInit {
       },
       (error) => {
         this.loadDialog = false;
-        console.log('Error:', error);
       }
     );
   }
@@ -134,7 +124,6 @@ export class ProgramManagementComponent implements OnInit {
     this.loadDialog = true;
     this.programService.getProgramInfo(user_id).subscribe(
       (program) => {
-        // console.log(program);
         this.loadDialog = false;
         const dialogRef = this.dialog.open(ViewProgramComponent, {
           data: { program: program },
@@ -148,9 +137,7 @@ export class ProgramManagementComponent implements OnInit {
           }
         });
       },
-      (error) => {
-        console.log('Error:', error);
-      }
+      (error) => {}
     );
   }
 
@@ -163,13 +150,9 @@ export class ProgramManagementComponent implements OnInit {
           data: { attendance: attendance },
           minWidth: '50%',
           maxWidth: '90%'
-          // maxHeight: '40%',
-          // position: { top: '0px' }
         });
       },
-      (error) => {
-        console.log('Error:', error);
-      }
+      (error) => {}
     );
   }
 }

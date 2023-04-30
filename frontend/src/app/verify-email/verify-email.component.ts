@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { SuccessComponent } from '../dialog/success/success.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorComponent } from '../dialog/error/error.component';
 
 const COUNTER_KEY = 'my-counter';
 
@@ -21,20 +24,14 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
   seconds = '';
   timer: any;
   timerRunning = false;
+  loadDialog = false;
 
-
-  constructor(
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.email = localStorage.getItem('email') ?? '';
     const countDownTime = window.sessionStorage.getItem(COUNTER_KEY) || 120;
     this.startCountdown(parseInt(countDownTime.toString()));
-
-
   }
 
   ngOnDestroy() {
@@ -64,16 +61,23 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-
-
+    this.loadDialog = true;
     const data = {
       email: this.email,
       code: this.verificationCode
     };
     this.authService.verifyCode(data.email, data.code).subscribe(
       (response) => {
-        console.log('Code verified successfully');
-
+        this.loadDialog = false;
+        const message = 'Email verify successfully';
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         clearInterval(this.timer);
         window.sessionStorage.removeItem(COUNTER_KEY);
 
@@ -88,7 +92,15 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
         });
       },
       (error) => {
-        console.log('Error verifying code:', error);
+        const message = `Error verifying email, ${error.error.message}`;
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
         // Handle error here
       }
     );
@@ -106,8 +118,4 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
       this.startCountdown(120);
     });
   }
-
-
-
-
 }

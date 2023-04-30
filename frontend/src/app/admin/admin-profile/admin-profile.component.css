@@ -143,7 +143,7 @@ select {
   font-size: 15px;
   text-indent: 20px;
   padding-right: 20px;
-  /* box-shadow: rgb(168, 181, 195) 3px 3px 6px 0px inset, rgba(221, 221, 221, 0.875) -3px -3px 6px 1px inset; */
+
 }
 .form-field input:focus {
   outline: #ff592f66;
@@ -377,7 +377,6 @@ input:checked + .switch-label:after {
   right: 10px;
   width: 50px;
   height: 50px;
-  /* aspect-ratio: 1/1; */
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -449,9 +448,6 @@ input:checked + .switch-label:after {
     width: 45%;
   }
 
-  /* .admin-profile .account-info.hidden + .picture.shrink {
-    transform: translateX(-33%);
-  } */
 
   .admin-profile .account-info {
     width: 50%;

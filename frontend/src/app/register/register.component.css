@@ -1,9 +1,9 @@
-.container {
-  margin-top: 50px;
+.reg-container {
   padding: 20px;
   display: flex;
   flex-direction: column;
   height: 80vh;
+  align-items: center;
   overflow: auto;
 }
 .content {
@@ -107,6 +107,12 @@ button {
   }
   .user-info {
     width: 100%;
+  }
+  .content {
+    width: 90%;
+  }
+  .reg-container {
+    align-items: start !important;
   }
 }
 

@@ -64,25 +64,7 @@
             <div class="info-detail" *ngIf="user">{{ user.gender }}</div>
           </div>
         </div>
-        <!-- <div class="email">
-
-        </div>
-        <div class="gender">
-          Gender:&nbsp;
-          <ng-container *ngIf="user?.gender === 'male'">
-            <i class="fa-solid fa-mars" style="color: rgb(5, 205, 255)"></i>
-          </ng-container>
-          <ng-container *ngIf="user?.gender === 'female'">
-            <i class="fa-solid fa-venus" style="color: rgb(247, 142, 255); font-weight: bolder"></i>
-          </ng-container>
-        </div>
-        <div *ngIf="user">
-          <div class="age">Age: {{ getAge(user.bday) }}</div>
-        </div>
-
-        <div class="mobile"><i class="fa-solid fa-mobile-screen-button"></i>&nbsp;&nbsp;&nbsp;{{ user?.mobile_no }}</div>
-
-        <div class="address"><i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;&nbsp;{{ user?.address }}</div> -->
+      
         <div class="edit-label">Edit Mode</div>
         <div class="edit-toggle">
           <input type="checkbox" id="switch-toggle" class="switch" (change)="toggleAccountInfo()" />

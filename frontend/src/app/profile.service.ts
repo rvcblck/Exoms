@@ -28,11 +28,8 @@ export class ProfileService {
     const headers = this.getHeaders();
 
     return this.http.get<Profile>(`${this.apiUrl}/profileInfo/${user_id}`, { headers }).pipe(
-      tap((response: Profile) => {
-        console.log('Profile info retrieved successfully:');
-      }),
+      tap((response: Profile) => {}),
       catchError((error) => {
-        console.error('Error retrieving Profile info:', error);
         throw error;
       })
     );
@@ -41,15 +38,9 @@ export class ProfileService {
   updateProfile(user: any) {
     const headers = this.getHeaders();
     return this.http.post(`${this.apiUrl}/updateProfile`, user, { headers }).pipe(
-      tap((response) => {
-        console.log('Profle Updated Successfuly');
-      }),
+      tap((response) => {}),
       catchError((errorResponse) => {
         return throwError(errorResponse);
-        // if (errorResponse.status === 401 && errorResponse.error.error === 'Email is already registered') {
-        //   return throwError('Email is already registered');
-        // }
-        // return throwError('Something went wrong, please try again later.');
       })
     );
   }
@@ -58,11 +49,8 @@ export class ProfileService {
     const headers = this.getHeaders();
 
     return this.http.get<any>(`${this.apiUrl}/isEmailAvailable/${email}`, { headers }).pipe(
-      tap((response: any) => {
-        // console.log('Profile info retrieved successfully:');
-      }),
+      tap((response: any) => {}),
       catchError((error) => {
-        console.error('Error retrieving email info:', error);
         throw error;
       })
     );
@@ -71,9 +59,7 @@ export class ProfileService {
   changeEmail(emailData: any) {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/changeEmail`, emailData, { headers }).pipe(
-      tap((response) => {
-        console.log(response);
-      }),
+      tap((response) => {}),
       catchError((errorResponse) => {
         return throwError(errorResponse);
       })
@@ -83,9 +69,7 @@ export class ProfileService {
   changePass(passData: any) {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/changePass`, passData, { headers }).pipe(
-      tap((response) => {
-        console.log(response);
-      }),
+      tap((response) => {}),
       catchError((errorResponse) => {
         return throwError(errorResponse);
       })
@@ -95,9 +79,7 @@ export class ProfileService {
   updateProfilePic(profile_pic: any) {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/changeProfilePic`, profile_pic, { headers }).pipe(
-      tap((response) => {
-        console.log(response);
-      }),
+      tap((response) => {}),
       catchError((errorResponse) => {
         return throwError(errorResponse);
       })

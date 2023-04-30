@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { SuccessComponent } from '../dialog/success/success.component';
+import { ErrorComponent } from '../dialog/error/error.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,16 +11,12 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-
   emailForm: FormGroup = new FormGroup({});
   errorMessage: string = '';
   successMessage: string = '';
+  loading = false;
 
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({
@@ -26,28 +25,38 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.loading = true;
     if (this.emailForm.valid) {
       const email = this.emailForm.value.email;
+      localStorage.setItem('email', email);
       this.authService.sendPasswordResetEmail(email).subscribe(
         (response: any) => {
-          if (response && response.message) {
-            this.successMessage = response.message;
-            this.errorMessage = "";
-          } else {
-            this.errorMessage = 'An error occurred. Please try again later.';
-          }
+          this.loading = false;
+          const message = `${response.message}`;
+          const header = 'Success';
+          const dialogRef = this.dialog.open(SuccessComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          console.log(response.message);
         },
         (error: any) => {
-          this.successMessage = "";
-          if (error.status === 404) {
-            this.errorMessage = 'This email is not registered.';
-          } else {
-            this.errorMessage = 'An error occurred. Please try again later.';
-          }
+          this.loading = false;
+          const message = `Error verifying email, ${error.error.message}`;
+          const header = 'Error';
+          const dialogRef = this.dialog.open(ErrorComponent, {
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
+          console.log(error.error.message);
         }
       );
     }
   }
-
-
 }

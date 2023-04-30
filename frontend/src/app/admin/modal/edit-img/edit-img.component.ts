@@ -58,7 +58,6 @@ export class EditImgComponent implements OnInit {
       event.target.value = ''; // clear the file input
     } else {
       this.profile_pic = file;
-      console.log(file.name);
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -98,7 +97,6 @@ export class EditImgComponent implements OnInit {
     }
     this.profileService.updateProfilePic(formData).subscribe(
       (program) => {
-        console.log('Program created successfully:', program);
         const message = 'Update Successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -111,7 +109,6 @@ export class EditImgComponent implements OnInit {
         this.dialogRef.close(true);
       },
       (error) => {
-        console.error('Error creating program:', error);
         const message = 'Error Updating Image';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {

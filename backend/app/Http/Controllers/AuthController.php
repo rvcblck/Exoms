@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\PasswordChange;
-// use App\Models\PasswordChange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -303,10 +302,13 @@ class AuthController extends Controller
 
     function generateUniqueToken(): string
     {
-        do {
-            $resetToken = Str::random(60);
-        } while (PasswordChange::where('reset_token', $resetToken)->exists());
 
+        $resetToken = Str::random(60);
+        $exist_resetToken = PasswordChange::where('reset_token', $resetToken)->first();
+        while ($exist_resetToken) {
+            $resetToken = Str::random(60);
+            $exist_resetToken = PasswordChange::where('reset_token', $resetToken)->first();
+        }
         return $resetToken;
     }
 }

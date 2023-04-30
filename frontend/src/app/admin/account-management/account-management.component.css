@@ -135,49 +135,6 @@ table {
   margin-top: auto;
 }
 
-/* .mat-header-cell,
-.mat-cell {
-  padding: 8px;
-}
-.mat-row.mat-row-selected {
-  background-color: #e0e0e0;
-}
-.mat-checkbox-inner-container {
-  background-color: #f1f1f1;
-}
-
-.mat-checkbox {
-  margin: 0 8px;
-}
-
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
-} */
-
-/* td {
-  width: 91px;
-  height: 15px;
-  font-family: Assistant;
-  font-size: 12px;
-  color: #51354b;
-  text-decoration: none solid rgb(81, 53, 75);
-}
-
-th {
-
-  height: 45px;
-  font-weight: bold;
-}
-tr.mat-row,
-tr.mat-footer-row {
-  height: 48px;
-} */
-/* .mat-mdc-form-field {
-  font-size: 14px;
-  width: 100%;
-} */
-
 .reject-btn {
   background: #fcd9e2;
   padding: 3px 5px;
@@ -202,14 +159,6 @@ tr.mat-footer-row {
   width: 100%;
 }
 
-/* .mat-column-select {
-  max-width: 25px;
-} */
-/*
-.mat-sort-header-container {
-  display: flex;
-  justify-content: center;
-} */
 .approve {
   background: #d9f0e2;
   padding: 3px 5px;

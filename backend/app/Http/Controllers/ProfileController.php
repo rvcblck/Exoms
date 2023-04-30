@@ -296,14 +296,7 @@ class ProfileController extends Controller
             }
         }
 
-        // if (empty($images)) {
-        //     $path = storage_path('app\public\images\profile-default.png');
-        //     if (File::exists($path)) {
-        //         $data = base64_encode(file_get_contents($path));
-        //         $images[] = $data;
-        //     }
-        // }
-
+        
         return $images;
     }
 

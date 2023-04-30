@@ -21,9 +21,7 @@ export class SelectFacultyComponent {
   displayedColumns: string[] = ['faculty_name', 'action'];
 
   ngOnInit(): void {
-    // console.log(this.data.accounts);
     this.dataSource.data = this.data.accounts;
-    console.log(this.dataSource);
   }
 
   ngAfterViewInit() {

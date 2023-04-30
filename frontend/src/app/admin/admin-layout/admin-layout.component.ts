@@ -71,9 +71,7 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.pageTitle = 'Dashboard';
-    // this.cdr.detectChanges();
-    // this.authenticatedUserInfo = this.authService.getAuthenticatedUserInfo();
+
 
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
@@ -81,9 +79,7 @@ export class AdminLayoutComponent implements OnInit {
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     });
 
-    // if (this.authenticatedUserInfo.role === 'user') {
-    //   this.authenticatedUserInfo.role = 'faculty';
-    // }
+
     const fname = localStorage.getItem('firstName');
     const role = localStorage.getItem('role');
     if (fname) {
@@ -100,8 +96,7 @@ export class AdminLayoutComponent implements OnInit {
     const closeBtn = document.querySelector('#btn');
     const navList = document.querySelector('.nav-list');
     const logo = document.querySelector('.cict-logo');
-    // const profileLink = document.querySelector('.profile-link');
-    // const searchBtn = document.querySelector('.bx-search');
+    
 
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {

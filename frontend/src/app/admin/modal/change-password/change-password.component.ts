@@ -84,7 +84,6 @@ export class ChangePasswordComponent implements OnInit {
 
     this.profileService.changePass(formattedData).subscribe(
       (response) => {
-        console.log('Email Updated successfully');
         this.dialogRef.close();
         const message = 'Change Password Successfully';
         const header = 'Success';
@@ -98,23 +97,20 @@ export class ChangePasswordComponent implements OnInit {
         this.dialogRef.close();
       },
       (error) => {
-        console.log('error', error);
-
         if (error.error.message === 'Wrong Password') {
           this.oldPassErrors = error.error.message;
         } else if (error.error.message === 'You cant set the same password') {
           this.newPassErrors = error.error.message;
         } else {
-          console.log('Something went wrong');
           const message = 'There is something wrong';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
-          width: '300px',
-          data: {
-            header: header,
-            message: message
-          }
-        });
+            width: '300px',
+            data: {
+              header: header,
+              message: message
+            }
+          });
         }
       }
     );

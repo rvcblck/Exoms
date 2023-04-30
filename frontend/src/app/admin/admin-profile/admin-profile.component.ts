@@ -70,7 +70,6 @@ export class AdminProfileComponent implements OnInit {
     toggleCheckbox?.addEventListener('change', () => {
       if (window.innerWidth < breakpoint) {
         accountInfo?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        console.log('auto scroll');
       }
     });
   }
@@ -89,7 +88,6 @@ export class AdminProfileComponent implements OnInit {
       this.profileService.getUserInfo(user_id).subscribe(
         (user) => {
           this.user = user;
-          console.log(this.user);
 
           const address = user.address;
           if (address) {
@@ -115,9 +113,7 @@ export class AdminProfileComponent implements OnInit {
             });
           }
         },
-        (error) => {
-          console.log('Error:', error);
-        }
+        (error) => {}
       );
     }
   }
@@ -157,7 +153,6 @@ export class AdminProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // The user confirmed the action, submit the form
         this.submitForm();
       }
     });
@@ -189,9 +184,7 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
-  // refresh() {
-  //   this.getProfile();
-  // }
+  
 
   submitForm() {
     const address =
@@ -225,8 +218,6 @@ export class AdminProfileComponent implements OnInit {
         this.refreshImage();
       },
       (error) => {
-        // this.errors.push(error);
-        console.log('error updating');
         const message = 'Error Updating Accounts';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {

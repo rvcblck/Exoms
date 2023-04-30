@@ -34,8 +34,6 @@ export class ViewProgramComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // console.log(this.data.program.members);
-    // console.log(this.data.users);
     setTimeout(() => {
       const invIcon = document.getElementById('viewInvIcon');
       const file = this.data.program.invitation_content.fileExtension;
@@ -142,9 +140,7 @@ export class ViewProgramComponent implements OnInit {
           minWidth: '40%'
         });
       },
-      (error) => {
-        console.log('Error:', error);
-      }
+      (error) => {}
     );
   }
 

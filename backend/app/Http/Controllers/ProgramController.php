@@ -405,7 +405,6 @@ class ProgramController extends Controller
         $end_date = Carbon::parse($end_dateString)->toDateString();
         //create path
         $program_id = $this->generateProgramId();
-        // $member_id = $this->generateMemberId();
 
         $start_time = '';
         if ($request->input('start_time')) {
@@ -465,7 +464,7 @@ class ProgramController extends Controller
         if (!empty($request->member_id)) {
             // $memberIds = $request->input('member_id');
             $memberIds = explode(',', $request->member_id);
-            // dd($memberIds);
+
             foreach ($memberIds as $memberId) {
                 Member::create([
                     'program_id' => $program_id,
@@ -827,7 +826,6 @@ class ProgramController extends Controller
                 ];
             }
 
-            // dd($leader);
 
 
             //status
@@ -870,8 +868,7 @@ class ProgramController extends Controller
             $attendanceData = [];
 
             $attendance = Attendance::where('participant_id', $participant->participant_id)->get();
-            // $attendance = $participant->attendance()->get();
-            // dd($attendance);
+
             if (!$attendance->isEmpty()) {
                 foreach ($attendance as $attendee) {
                     $attendanceData[] = [
@@ -907,7 +904,6 @@ class ProgramController extends Controller
 
                 $isSet = Attendance::where('participant_id', $participant_id)
                     ->where('date', $date['date'])->first();
-                // dd($isSet,$participant_id,$participantDate);
                 if ($isSet !== null) {
                     Attendance::where('participant_id', $participant_id)
                         ->where('date', $date['date'])->update([
@@ -950,16 +946,6 @@ class ProgramController extends Controller
             ];
         }
 
-
-        // $positions = Position::where('program_id',$program_id)->get();
-
-        // $positionData = [];
-        // foreach($positions as $position){
-        //     $positionData []=[
-        //         'name' => $position->name,
-        //         'position' => $position->position,
-        //     ];
-        // }
 
 
 
@@ -1098,18 +1084,6 @@ class ProgramController extends Controller
         return $program_id;
     }
 
-
-
-    // public function generatePostionId()
-    // {
-    //     $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-    //     $existing_program_id = Position::where('position_id', $program_id)->first();
-    //     while ($existing_program_id) {
-    //         $program_id = 'POS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
-    //         $existing_program_id = Position::where('position_id', $program_id)->first();
-    //     }
-    //     return $program_id;
-    // }
 
 
 

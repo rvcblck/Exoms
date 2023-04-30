@@ -105,7 +105,6 @@ export class PartnerManagementComponent implements OnInit {
         });
       },
       (error) => {
-        console.log('Error:', error);
         const message = 'Something Wrong Please Try Again';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
@@ -138,19 +137,6 @@ export class PartnerManagementComponent implements OnInit {
     }
     this.moaStatus = this.selectedStatus;
   }
-
-  // applyFilterMoa(filterValue: string) {
-  //   filterValue = filterValue.trim();
-  //   filterValue = filterValue.toLowerCase();
-  //   if (filterValue === 'active') {
-  //     this.dataSource.data = this.activeContracts;
-  //   } else if (filterValue === 'expired') {
-  //     this.dataSource.data = this.expiredContracts;
-  //   } else {
-  //     this.dataSource.data = this.allPartners;
-  //   }
-  //   this.moaStatus = filterValue;
-  // }
 
   createAccount() {
     const dialogRef = this.dialog.open(CreatePartnerComponent, {

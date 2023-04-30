@@ -16,6 +16,7 @@ import { PartnerService } from 'src/app/partner.service';
 import { ViewPartnerComponent } from '../modal/view-partner/view-partner.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth.service';
+import { ErrorComponent } from 'src/app/dialog/error/error.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -53,8 +54,6 @@ export class DashboardComponent implements OnInit {
   // routeData: any;
 
   ngOnInit(): void {
-    // this.adminLayout.pageTitle = 'Dashboard';
-    // this.cdr.detectChanges();
     setInterval(() => {
       this.currentDate = new Date();
       const currentTime = new Date().getHours();
@@ -76,7 +75,6 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem('quote', this.quote);
       localStorage.setItem('author', this.author);
     } else {
-      // console.log(meron)
       const quote = localStorage.getItem('quote');
       if (quote) {
         this.quote = quote;
@@ -85,7 +83,6 @@ export class DashboardComponent implements OnInit {
       if (author) {
         this.author = author;
       }
-
     }
 
     this.getDashboard();
@@ -100,13 +97,10 @@ export class DashboardComponent implements OnInit {
 
   getImages() {
     const userIds = this.dashboard.faculty.map((faculty) => faculty.user_id);
-    // console.log(userIds);
     this.getUserImages(userIds).subscribe((images) => {
       if (images.length > 0) {
         this.images = images;
-        // console.log(this.images);
       } else {
-        console.log('No images retrieved.');
       }
     });
   }
@@ -114,7 +108,6 @@ export class DashboardComponent implements OnInit {
   getUserImages(userIds: string[]): Observable<any[]> {
     const url = `${this.apiUrl}/users-profile-images`;
     const body = { user_ids: userIds };
-    // console.log(body);
     return this.http.post(url, body).pipe(
       map((response: any) => {
         const images: any[] = [];
@@ -136,14 +129,11 @@ export class DashboardComponent implements OnInit {
       this.dashboardService.getDashboard().subscribe(
         (programs) => {
           this.dashboard = programs;
-          console.log('Programs retrieved successfully');
           this.getImages();
           this.getChart();
           this.getUserChart();
         },
-        (error) => {
-          console.error('Error retrieving programs:', error);
-        }
+        (error) => {}
       );
     } else {
       const user_id = localStorage.getItem('user_id');
@@ -151,13 +141,20 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.getUserDashboard(user_id).subscribe(
           (programs) => {
             this.dashboard = programs;
-            console.log('Programs retrieved successfully');
             this.getImages();
             this.getChart();
             this.getUserChart();
           },
           (error) => {
-            console.error('Error retrieving programs:', error);
+            const message = 'Error: something went wrong';
+            const header = 'Error';
+            const dialogRef = this.dialog.open(ErrorComponent, {
+              width: '300px',
+              data: {
+                header: header,
+                message: message
+              }
+            });
           }
         );
       }
@@ -165,19 +162,14 @@ export class DashboardComponent implements OnInit {
   }
   getChart(): void {
     const month = localStorage.getItem('month');
-    console.log(month);
     if (this.isAdmin()) {
       if (month) {
         this.dashboardService.getProgramChart(month).subscribe(
           (programs) => {
             this.programChart = programs;
-            console.log(programs);
             this.getProgramChart();
-            console.log('Programs retrieved successfully');
           },
-          (error) => {
-            console.error('Error retrieving programs:', error);
-          }
+          (error) => {}
         );
       }
     } else {
@@ -190,12 +182,18 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.getUserProgramChart(userChart).subscribe(
           (programs) => {
             this.programChart = programs;
-            console.log(programs);
             this.getProgramChart();
-            console.log('Programs retrieved successfully');
           },
           (error) => {
-            console.error('Error retrieving programs:', error);
+            const message = 'Error: something went wrong';
+            const header = 'Error';
+            const dialogRef = this.dialog.open(ErrorComponent, {
+              width: '300px',
+              data: {
+                header: header,
+                message: message
+              }
+            });
           }
         );
       }
@@ -236,40 +234,38 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserChart() {
-    // console.log(this.dashboard.user_status);
-    if(this.dashboard.user_status){
+    if (this.dashboard.user_status) {
       const totalUsers = this.dashboard.user_status.reduce((total, status) => total + status.y, 0);
-    this.userChartOptions = {
-      animationEnabled: true,
-      title: {
-        text: 'User Status'
-      },
-      data: [
-        {
-          type: 'doughnut',
-          yValueFormatString: "#,###.##'%'",
-          indexLabel: '{name}: {y}',
-          indexLabelFontSize: 16,
-          indexLabelFontColor: '#555',
-          toolTipContent: '{name}: {y} (#percent%)',
-          dataPoints: this.dashboard.user_status.map((item, index) => ({
-            y: item.y,
-            name: item.name.toLowerCase(),
-            color: index === 0 ? '#74d49b' : index === 1 ? '#e4b830' : '#f47393' // set color based on index
-          }))
-        }
-      ],
-      subtitles: [
-        {
-          text: `Users: ${totalUsers}`,
-          verticalAlign: 'center',
-          fontSize: 24,
-          dockInsidePlotArea: true
-        }
-      ]
-    };
+      this.userChartOptions = {
+        animationEnabled: true,
+        title: {
+          text: 'User Status'
+        },
+        data: [
+          {
+            type: 'doughnut',
+            yValueFormatString: "#,###.##'%'",
+            indexLabel: '{name}: {y}',
+            indexLabelFontSize: 16,
+            indexLabelFontColor: '#555',
+            toolTipContent: '{name}: {y} (#percent%)',
+            dataPoints: this.dashboard.user_status.map((item, index) => ({
+              y: item.y,
+              name: item.name.toLowerCase(),
+              color: index === 0 ? '#74d49b' : index === 1 ? '#e4b830' : '#f47393' // set color based on index
+            }))
+          }
+        ],
+        subtitles: [
+          {
+            text: `Users: ${totalUsers}`,
+            verticalAlign: 'center',
+            fontSize: 24,
+            dockInsidePlotArea: true
+          }
+        ]
+      };
     }
-
   }
 
   previous(): void {
@@ -307,7 +303,15 @@ export class DashboardComponent implements OnInit {
         });
       },
       (error) => {
-        console.log('Error:', error);
+        const message = 'Error: something went wrong';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

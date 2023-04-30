@@ -63,39 +63,9 @@ export class ProgFlowComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {
-    // this.programTitle = 'kahit anong title';
-    // const program_id = 'PROG-6837351030';
-    // this.programService.getProgramFlow(program_id).subscribe(
-    //   (programs) => {
-    //     this.programFlow = programs;
-    //     this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
-    //     console.log(this.programFlow);
-    //   },
-    //   (error) => {
-    //     console.error('Error retrieving programs:', error);
-    //   }
-    // );
-  }
+  ngOnInit(): void {}
 
   selectProgram() {
-    // this.programTitle = 'kahit anong title';
-
-    // const program_id = "lagay mo yung id ng program dito";
-
-    // this.programService.getProgramFlow(program_id).subscribe(
-    //   (programs) => {
-    //     this.programFlow = programs;
-
-    //     this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
-
-    //     console.log(this.programFlow);
-    //   },
-    //   (error) => {
-    //     console.error('Error retrieving programs:', error);
-    //   }
-    // );
-
     const user_id = localStorage.getItem('user_id');
     if (user_id) {
       this.programService.getUserPrograms(user_id).subscribe(
@@ -116,19 +86,13 @@ export class ProgFlowComponent implements OnInit {
                   this.programFlow = programs;
 
                   this.positionControl = this.programFlow.position.map((position) => new FormControl(position.position));
-
-                  console.log(this.programFlow);
                 },
-                (error) => {
-                  console.error('Error retrieving programs:', error);
-                }
+                (error) => {}
               );
             }
           });
         },
-        (error) => {
-          console.error('Error retrieving programs:', error);
-        }
+        (error) => {}
       );
     }
   }
@@ -162,7 +126,6 @@ export class ProgFlowComponent implements OnInit {
     };
 
     this.programFlow.flow.push(newFlow);
-    // console.log(this.programFlow);
     this.flowForm.reset();
     this.submitted = false;
   }
@@ -172,11 +135,9 @@ export class ProgFlowComponent implements OnInit {
       program_id: this.program_id,
       data: this.programFlow.flow
     };
-    console.log(flow);
     // if (this.programFlow.length) {
     this.programService.updateProgramFlow(flow).subscribe(
       (programs) => {
-        console.log('success');
         const message = 'Update Successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -188,7 +149,6 @@ export class ProgFlowComponent implements OnInit {
         });
       },
       (error) => {
-        console.error('Error retrieving programs:', error);
         const message = 'Error Updating program';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
@@ -252,10 +212,8 @@ export class ProgFlowComponent implements OnInit {
       program_id: this.program_id,
       data: this.programFlow.topic
     };
-    console.log(topic);
     this.programService.updateProgramTopic(topic).subscribe(
       (programs) => {
-        console.log('success');
         // this.dialogRef.close();
         const message = 'Update Successfully';
         const header = 'Success';
@@ -268,7 +226,6 @@ export class ProgFlowComponent implements OnInit {
         });
       },
       (error) => {
-        console.error('Error retrieving programs:', error);
         const message = 'Error Updating program';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
@@ -312,10 +269,8 @@ export class ProgFlowComponent implements OnInit {
   }
 
   updatePosition() {
-    console.log('nandito 1');
     this.position_submitted = true;
     if (this.positionControl.some((control) => !control.value)) {
-      console.log('nandito 2');
       this.inputPositionEmpty = true;
       return; // return if any of the controls is empty
     }
@@ -345,10 +300,8 @@ export class ProgFlowComponent implements OnInit {
       program_id: this.program_id,
       data: updatedMembers
     };
-    console.log(position);
     this.programService.updateProgramPosition(position).subscribe(
       (programs) => {
-        console.log('success');
         const message = 'Update Successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -360,7 +313,6 @@ export class ProgFlowComponent implements OnInit {
         });
       },
       (error) => {
-        console.error('Error retrieving programs:', error);
         const message = 'Error Updating program';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {

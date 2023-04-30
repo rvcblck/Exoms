@@ -16,14 +16,7 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    // public function verify(EmailVerificationRequest $request)
-    // {
-    //     $request->fulfill();
 
-    //     event(new Verified($request->user()));
-
-    //     return redirect('http://localhost:4200/user/dashboard');
-    // }
 
 
     public function verifyEmail(Request $request)
@@ -61,7 +54,7 @@ class VerificationController extends Controller
             return response()->json(['message' => 'Invalid verification code.'], 422);
         }
 
-        if ($verificationCode->expires_at->lt(Carbon::now('Asia/Manila'))) {
+        if (Carbon::parse($verificationCode->expires_at, 'Asia/Manila')->lt(Carbon::now('Asia/Manila'))) {
             return response()->json(['message' => 'Verification code has expired.'], 422);
         }
 

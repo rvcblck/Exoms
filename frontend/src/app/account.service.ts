@@ -37,11 +37,8 @@ export class AccountService {
   getAccountInfo(user_id: string): Observable<ViewAccount> {
     const headers = this.getHeaders();
     return this.http.get<ViewAccount>(`${this.apiUrl}/accountInfo/${user_id}`, { headers }).pipe(
-      tap((response: ViewAccount) => {
-        console.log('Account info retrieved successfully:', response);
-      }),
+      tap((response: ViewAccount) => {}),
       catchError((error) => {
-        console.error('Error retrieving account info:', error);
         throw error;
       })
     );
@@ -51,9 +48,6 @@ export class AccountService {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/accounts`, account, { headers }).pipe(
       tap((response) => {
-        // localStorage.setItem('email', user.email);
-        // localStorage.setItem('password', user.password);
-        // this.router.navigate(['/verify-email']);
         return response.message;
       }),
       catchError((errorResponse) => {
@@ -77,9 +71,7 @@ export class AccountService {
     const accountIds = selectedAccounts.map((account) => account.user_id);
     const requestBody = { accountIds: accountIds };
     return this.http.post(`${this.apiUrl}/approve-accounts`, requestBody, { headers }).pipe(
-      tap(() => console.log('Accounts approved successfully')),
       catchError((error) => {
-        console.error('Error approving accounts:', error);
         return throwError(error);
       })
     );
@@ -90,9 +82,7 @@ export class AccountService {
     const accountIds = selectedAccounts.map((account) => account.user_id);
     const requestBody = { accountIds: accountIds };
     return this.http.post(`${this.apiUrl}/disapprove-accounts`, requestBody, { headers }).pipe(
-      tap(() => console.log('Accounts disapproved successfully')),
       catchError((error) => {
-        console.error('Error disapproving accounts:', error);
         return throwError(error);
       })
     );
@@ -105,7 +95,6 @@ export class AccountService {
     return this.http.post(`${this.apiUrl}/unarchived-account`, requestBody, { headers }).pipe(
       tap(() => {}),
       catchError((error) => {
-        // console.error('Error approving accounts:', error);
         return throwError(error);
       })
     );

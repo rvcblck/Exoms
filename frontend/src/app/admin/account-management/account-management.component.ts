@@ -69,7 +69,6 @@ export class AccountManagementComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    // console.log(numSelected,numRows)
     return numSelected === numRows;
   }
 
@@ -112,13 +111,12 @@ export class AccountManagementComponent implements OnInit {
 
   approveUser() {
     const selectedAccounts = this.selection.selected;
-    // console.log(selectedAccounts.length);
+
     if (selectedAccounts.length) {
       this.accountService.approveUser(selectedAccounts).subscribe(
         () => {
           // Success handler
           this.selection.clear();
-          console.log('Accounts approved successfully');
           const message = 'Accounts approved successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -132,7 +130,6 @@ export class AccountManagementComponent implements OnInit {
         },
         (error) => {
           // Error handler
-          console.error('Error approving accounts', error);
           const message = 'Error approving accounts';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
@@ -145,19 +142,26 @@ export class AccountManagementComponent implements OnInit {
         }
       );
     } else {
-      console.log('No Selected Accounts', selectedAccounts.length);
+      const message = 'Error: something went wrong';
+      const header = 'Error';
+      const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
     }
   }
 
   disapproveUser() {
     const selectedAccounts = this.selection.selected;
-    // console.log(selectedAccounts);
+
     if (selectedAccounts.length) {
       this.accountService.disapproveUser(selectedAccounts).subscribe(
         () => {
           // Success handler
           this.selection.clear();
-          console.log('Accounts disapproved successfully');
           const message = 'Accounts disapproved successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -184,7 +188,15 @@ export class AccountManagementComponent implements OnInit {
         }
       );
     } else {
-      console.log('No Selected Accounts', selectedAccounts.length);
+      const message = 'Error: something went wrong';
+      const header = 'Error';
+      const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
     }
   }
 
@@ -205,7 +217,15 @@ export class AccountManagementComponent implements OnInit {
         });
       },
       (error) => {
-        console.log('Error:', error);
+        const message = 'Error: something went wrong';
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

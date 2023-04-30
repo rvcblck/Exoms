@@ -10,6 +10,13 @@ interface UserInfo {
   role: string;
 }
 
+interface RegisterResponse {
+  success: boolean;
+  message: string;
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +36,6 @@ export class AuthService {
         localStorage.setItem('user_id', response.user.user_id);
       }),
       catchError((error) => {
-        console.log(error);
         if (error.status === 401) {
           if (error.error.message === 'Email is not yet validated') {
             return throwError('Email is not yet validated');
@@ -49,25 +55,24 @@ export class AuthService {
         return response;
       }),
       catchError((error) => {
-        console.log(error);
-
         return throwError('An error occurred while logging in');
       })
     );
   }
 
-  register(user: any) {
-    return this.http.post(`${this.apiUrl}/register`, user).pipe(
+  register(user: any): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, user).pipe(
       tap((response) => {
         localStorage.setItem('email', user.email);
         localStorage.setItem('password', user.password);
         this.router.navigate(['/verify-email']);
+        return response;
       }),
       catchError((errorResponse) => {
-        if (errorResponse.status === 401 && errorResponse.error.error === 'Email is already registered') {
-          return throwError('Email is already registered');
-        }
-        return throwError('Something went wrong, please try again later.');
+        // if (errorResponse.status === 401 && errorResponse.error.error === 'Email is already registered') {
+        //   return throwError('Email is already registered');
+        // }
+        return throwError(errorResponse);
       })
     );
   }
@@ -118,7 +123,6 @@ export class AuthService {
 
     const decodedToken = jwtHelper.decodeToken(token);
     const role = localStorage.getItem('role');
-    console.log(token);
     return {
       firstName: firstName ? firstName : decodedToken.firstName || '',
       role: role || ''
@@ -132,33 +136,35 @@ export class AuthService {
     const url = `${this.apiUrl}/email/resend-verification-code`;
     return this.http.post<any>(url, { email }).pipe(
       tap((response) => {
-        console.log(response); // You can handle the response here
+        return response;
       }),
       catchError((error) => {
-        console.log(error); // You can handle the error here
         return throwError(error);
       })
     );
   }
 
-  verifyCode(email: string, code: string) {
+  verifyCode(email: string, code: string): Observable<any> {
     const url = `${this.apiUrl}/verify-email`;
     const data = { email, code };
-    return this.http.post(url, data).pipe(
+    return this.http.post<any>(url, data).pipe(
+      tap((response) => {
+        return response;
+      }),
       catchError((error) => {
-        console.log(error); // You can handle the error here
         return throwError(error);
       })
     );
   }
 
-  sendPasswordResetEmail(email: string): Observable<void> {
+  sendPasswordResetEmail(email: string): Observable<any> {
     const url = `${this.apiUrl}/forgot-password`;
     const data = { email };
-    return this.http.post<void>(url, data).pipe(
-      tap((response) => console.log(response)), // Add this line to log the response
+    return this.http.post<any>(url, data).pipe(
+      tap((response) => {
+        return response;
+      }),
       catchError((error) => {
-        console.log(error); // You can handle the error here
         return throwError(error);
       })
     );
@@ -168,7 +174,6 @@ export class AuthService {
     const url = `${this.apiUrl}/reset-password/${encodeURIComponent(resetToken)}`;
     return this.http.get<{ success: boolean; message: string }>(url).pipe(
       catchError((error) => {
-        console.log(error); // You can handle the error here
         return throwError(error);
       })
     );
@@ -179,9 +184,10 @@ export class AuthService {
     const email = localStorage.getItem('email');
     const data = { resetToken, password, email };
     return this.http.post<{ success: boolean; message: string }>(url, data).pipe(
-      tap((response) => console.log(response)), // Add this line to log the response
+      tap((response) => {
+        return response;
+      }),
       catchError((error) => {
-        console.log(error); // You can handle the error here
         return throwError(error);
       })
     );

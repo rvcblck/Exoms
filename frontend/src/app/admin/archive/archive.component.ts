@@ -138,7 +138,6 @@ export class ArchiveComponent {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    // console.log(numSelected,numRows)
     return numSelected === numRows;
   }
 
@@ -146,7 +145,6 @@ export class ArchiveComponent {
   isAllSelectedPartner() {
     const numSelected = this.selectionPartner.selected.length;
     const numRows = this.dataSourcePartner.data.length;
-    // console.log(numSelected,numRows)
     return numSelected === numRows;
   }
 
@@ -154,7 +152,6 @@ export class ArchiveComponent {
   isAllSelectedAccount() {
     const numSelected = this.selectionAccount.selected.length;
     const numRows = this.dataSourceAccount.data.length;
-    // console.log(numSelected,numRows)
     return numSelected === numRows;
   }
 
@@ -299,7 +296,6 @@ export class ArchiveComponent {
         () => {
           // Success handler
           this.selection.clear();
-          // console.log('Program Unarchived successfully');
           const message = 'Programs unarchived successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -326,19 +322,25 @@ export class ArchiveComponent {
         }
       );
     } else {
-      console.log('No Selected Programs', selectedAccounts.length);
+      const message = 'Error: something went wrong';
+      const header = 'Error';
+      const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
     }
   }
 
   unarchivedPartner() {
     const selectedPartners = this.selectionPartner.selected;
-    // console.log(selectedPartners);
     if (selectedPartners.length) {
       this.partnerService.unarchive(selectedPartners).subscribe(
         () => {
           // Success handler
           this.selection.clear();
-          // console.log('Program Unarchived successfully');
           const message = 'Partner unarchived successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -365,7 +367,15 @@ export class ArchiveComponent {
         }
       );
     } else {
-      console.log('No Selected Partners', selectedPartners.length);
+      const message = 'Error: something went wrong';
+      const header = 'Error';
+      const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
     }
   }
 
@@ -376,7 +386,6 @@ export class ArchiveComponent {
         () => {
           // Success handler
           this.selection.clear();
-          // console.log('Program Unarchived successfully');
           const message = 'Accounts unarchived successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -389,8 +398,6 @@ export class ArchiveComponent {
           this.refreshTableAccount();
         },
         (error) => {
-          // Error handler
-          // console.error('Error unarchived partner', error);
           const message = 'Error unarchived account';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
@@ -403,7 +410,15 @@ export class ArchiveComponent {
         }
       );
     } else {
-      console.log('No Selected Accounts', selectedAccounts.length);
+      const message = 'Error: something went wrong';
+      const header = 'Error';
+      const dialogRef = this.dialog.open(ErrorComponent, {
+        width: '300px',
+        data: {
+          header: header,
+          message: message
+        }
+      });
     }
   }
 

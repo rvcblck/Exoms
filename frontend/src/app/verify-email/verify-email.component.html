@@ -1,27 +1,39 @@
 <div class="container">
   <div class="main-content">
-    <div class="line">
-
-    </div>
+    <div class="line"></div>
     <div class="content">
       <!-- <p>{{ message }}</p> -->
       <h1>{{ title }}</h1>
       <p>Enter the 6-digit code we sent to your email:</p>
-      <p>Time left: {{minutes}}:{{+seconds < 10 ? '0' + seconds : seconds}} minutes</p>
+      <p>Time left: {{ minutes }}:{{ +seconds < 10 ? '0' + seconds : seconds }} minutes</p>
 
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <input type="text" class="form-control" id="verification_code" placeholder="Enter code" [(ngModel)]="verificationCode" name="verificationCode">
+          <input
+            type="text"
+            class="form-control"
+            id="verification_code"
+            placeholder="Enter code"
+            [(ngModel)]="verificationCode"
+            name="verificationCode"
+          />
         </div>
-        <button type="submit">Verify</button>
-        <button type="button" (click)="resendCode()" [disabled]="timerRunning">Resend Code</button>
+        <button
+          [disabled]="!timerRunning && !verificationCode"
+          [ngStyle]="{ 'background-color': timerRunning && verificationCode ? '' : 'gray', cursor: timerRunning && verificationCode ? 'pointer' : 'not-allowed' }"
+          type="submit"
+        >
+          Verify
+        </button>
+        <button
+          type="button"
+          (click)="resendCode()"
+          [disabled]="timerRunning"
+          [ngStyle]="{ color: timerRunning ? 'grey' : 'rgb(51, 124, 249)', cursor: timerRunning ? 'not-allowed' : 'pointer' }"
+        >
+          Resend Code
+        </button>
       </form>
     </div>
   </div>
 </div>
-
-
-
-
-
-

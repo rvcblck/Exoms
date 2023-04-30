@@ -12,7 +12,6 @@ import { ProgramService } from 'src/app/program.service';
   styleUrls: ['./attendance.component.css']
 })
 export class AttendanceComponent implements OnInit {
-
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
@@ -88,11 +87,8 @@ export class AttendanceComponent implements OnInit {
       });
     }
 
-    console.log(participantAttendance);
-
     this.programService.storeAttendance(participantAttendance).subscribe(
       (program) => {
-        console.log('Program created successfully:', program);
         this.dialogRef.close();
         const message = 'Program created successfully';
         const header = 'Success';
@@ -106,7 +102,6 @@ export class AttendanceComponent implements OnInit {
         this.dialogRef.close(true);
       },
       (error) => {
-        console.error('Error creating program:', error);
         const message = 'There is something wrong';
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {

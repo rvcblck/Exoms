@@ -1,4 +1,4 @@
-<div class="container">
+<div class="reg-container">
   <div class="content">
     <div class="line"></div>
     <h1>Register</h1>
@@ -15,7 +15,7 @@
               >
             </div>
             <div class="form-group col-sm">
-              <label for="mname">Middle Initial</label>
+              <label for="mname">M.I.</label>
               <input type="text" class="form-control" id="mname" formControlName="mname" />
             </div>
             <div class="form-group col-sm">
@@ -49,7 +49,7 @@
             </div>
 
             <div class="form-group col-sm">
-              <label for="mobile_no">Mobile Number</label>
+              <label for="mobile_no" class="text-nowrap">Mobile Number</label>
               <input type="text" class="form-control" id="mobile_no" formControlName="mobile_no" />
               <mat-error *ngIf="submitted && registerForm.controls['mobile_no'].errors?.['required']" class="text-danger"
                 >Mobile Number is required.</mat-error
@@ -129,4 +129,10 @@
       </mat-step>
     </mat-stepper>
   </div>
+</div>
+<div *ngIf="loadDialog" class="loading-wave">
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
 </div>

@@ -19,7 +19,6 @@ export class SelectProgramComponent implements OnInit {
   displayedColumns: string[] = ['title', 'date', 'place', 'action'];
 
   ngOnInit(): void {
-    // console.log(this.data.programs);
     this.dataSource.data = this.data.programs;
   }
 
@@ -36,12 +35,4 @@ export class SelectProgramComponent implements OnInit {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
   }
-
-  // onClose(): void {
-  //   const data = {
-  //     program_id: this.dataSource.program_id,
-  //     title: this.dataSource.title
-  //   };
-  //   this.dialogRef.close(data);
-  // }
 }

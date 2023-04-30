@@ -17,8 +17,3 @@ use App\Http\Controllers\VerificationController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-// Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-// Route::get('/email/verify/{id}', [\App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');
-// Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');

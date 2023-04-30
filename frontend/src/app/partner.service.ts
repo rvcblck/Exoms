@@ -27,11 +27,8 @@ export class PartnerService {
   getAllPartners(): Observable<Partner[]> {
     const headers = this.getHeaders();
     return this.http.get<Partner[]>(`${this.apiUrl}/partners`, { headers }).pipe(
-      tap((response) => {
-        console.log('Partner retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving users:', error);
         return throwError('Error retrieving programs. Please try again later.');
       })
     );
@@ -40,11 +37,8 @@ export class PartnerService {
   getPartnerInfo(partner_id: string): Observable<ViewPartner> {
     const headers = this.getHeaders();
     return this.http.get<ViewPartner>(`${this.apiUrl}/partnerInfo/${partner_id}`, { headers }).pipe(
-      tap((response: ViewPartner) => {
-        console.log('Partner info retrieved successfully:');
-      }),
+      tap((response: ViewPartner) => {}),
       catchError((error) => {
-        console.error('Error retrieving account info:', error);
         throw error;
       })
     );
@@ -52,17 +46,11 @@ export class PartnerService {
 
   createPartner(partnerData: any): Observable<any> {
     const headers = this.getHeaders();
-    // console.log(programData);
     for (const entry of (<any>partnerData).entries()) {
-      console.log(entry);
     }
     return this.http.post<any>(`${this.apiUrl}/create-partner`, partnerData, { headers }).pipe(
-      tap((response) => {
-        console.log('Partner Created successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Creating Partner:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Creating Partner. Please try again later.');
       })
     );
@@ -72,12 +60,8 @@ export class PartnerService {
     const headers = this.getHeaders();
 
     return this.http.post<any>(`${this.apiUrl}/update-partner`, partnerData, { headers }).pipe(
-      tap((response) => {
-        console.log('Partner update successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error update Partner:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error update Partner. Please try again later.');
       })
     );
@@ -87,12 +71,8 @@ export class PartnerService {
     const headers = this.getHeaders();
 
     return this.http.post<any>(`${this.apiUrl}/extend-partner`, extend, { headers }).pipe(
-      tap((response) => {
-        console.log('Partner update successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error update Partner:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error update Partner. Please try again later.');
       })
     );
@@ -102,7 +82,6 @@ export class PartnerService {
     const headers = this.getHeaders();
     const partner_ids = selectedPartner.map((partner) => partner.partner_id);
     const requestBody = { partner_ids: partner_ids };
-    console.log(requestBody);
     return this.http.post(`${this.apiUrl}/unarchived-partner`, requestBody, { headers }).pipe(
       tap((response) => {
         return response;
@@ -126,11 +105,8 @@ export class PartnerService {
   getAllPartnersArchived(): Observable<Partner[]> {
     const headers = this.getHeaders();
     return this.http.get<Partner[]>(`${this.apiUrl}/get-archive-partners`, { headers }).pipe(
-      tap((response) => {
-        console.log('Partner retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving users:', error);
         return throwError('Error retrieving programs. Please try again later.');
       })
     );

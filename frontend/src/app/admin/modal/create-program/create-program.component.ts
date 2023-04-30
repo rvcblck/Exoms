@@ -210,7 +210,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     this.imageService.viewFile(filePath).subscribe((file) => {
       this.invName = file.fileName;
       this.invExt = file.fileExtension;
-      console.log(this.invitation);
       setTimeout(() => {
         this.invFile.nativeElement.innerHTML = file.fileName;
       }, 0);
@@ -306,7 +305,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programForm.get(controlName)?.setErrors({ max: true });
       event.target.value = ''; // clear the file input
     } else {
-      console.log(file);
       this.invitation = file;
       setTimeout(() => {
         this.invFile.nativeElement.innerHTML = file.name;
@@ -375,7 +373,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programForm.get(controlName)?.setErrors({ max: true });
       event.target.value = ''; // clear the file input
     } else {
-      console.log(file);
       this.certificate = file;
       setTimeout(() => {
         this.certFile.nativeElement.innerHTML = file.name;
@@ -430,14 +427,12 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
         this.showLeaderError = true;
       }
       this.options = [];
-      console.error('Error: No or multiple users match the input value');
     }
   }
 
   onLeaderSelected(event: MatAutocompleteSelectedEvent) {
     this.showLeaderError = false;
     const selectedOption = this.options.find((option) => option.user_id === event.option.value);
-    console.log(selectedOption);
     if (selectedOption) {
       // this.programForm.patchValue({ leader_id: selectedOption.user_id });
       this.selectedLeader = [selectedOption];
@@ -486,14 +481,12 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       }
 
       this.suggestions = [];
-      console.error('Error: No or multiple users match the input value');
     }
   }
 
   onMemberSelected(event: MatAutocompleteSelectedEvent) {
     this.showMemberError = false;
     const selectedOption = this.suggestions.find((option) => option.user_id === event.option.value);
-    console.log(selectedOption);
     if (selectedOption) {
       this.selectedMember.push(selectedOption);
       const joinedMemberIds = this.selectedMember.map((member) => member.user_id).join(',');
@@ -508,7 +501,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.selectedMember.splice(index, 1);
       const joinedMemberIds = this.selectedMember.map((member) => member.user_id).join(',');
       // this.programForm.patchValue({ member_id: joinedMemberIds });
-      console.log(this.programForm.value);
     }
   }
 
@@ -537,16 +529,12 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.partnerSuggestions = matchedCompanyNames.filter((partner: any) => {
         return !this.selectedPartners.some((name) => name.partner_id === partner.partner_id);
       });
-      // console.log(this.partnerSuggestions);
-
-      // console.log(this.suggestions);
     } else {
       if (this.partnerInput.nativeElement.value != '') {
         this.showPartnerError = true;
       }
 
       this.partnerSuggestions = [];
-      console.error('Error: No or multiple users match the input value');
     }
   }
 
@@ -582,7 +570,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     // Clear the input value
     event.chipInput!.clear();
     this.participantInput.nativeElement.value = '';
-    console.log(this.participants);
   }
 
   remove(participant: string): void {
@@ -668,8 +655,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     this.updateAddress();
     this.submitAttempted = true;
     if (this.programForm.invalid || this.showMemberError || this.showLeaderError || this.showPartnerError) {
-      console.log('not submit', this.showLeaderError, this.showMemberError, this.showPartnerError, this.programForm.invalid, this.selectedLeader);
-
       return;
     }
 
@@ -706,7 +691,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programService.updateProgram(formData).subscribe(
         (program) => {
           this.loadDialog = false;
-          console.log('Program updated successfully:', program);
           const message = 'Program updated successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -719,7 +703,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.error('Error updating program:', error);
           const message = 'Error updating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {
@@ -737,7 +720,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       this.programService.createProgram(formData).subscribe(
         (program) => {
           this.loadDialog = false;
-          console.log('Program created successfully:', program);
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -750,7 +732,6 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.error('Error creating program:', error);
           const message = 'Error creating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {

@@ -26,7 +26,6 @@ export class LoginComponent {
         }
       },
       (error) => {
-        // console.log(error);
         if (error === 'Invalid email or password') {
           this.errorMessage = 'Invalid credentials';
         } else if (error === 'Email is not yet validated') {
@@ -43,15 +42,12 @@ export class LoginComponent {
     localStorage.setItem('password', this.password);
     this.authService.sendEmail(this.email).subscribe(
       (response) => {
-        console.log(response.message, response.success);
         if (response.success) {
           this.router.navigate(['/verify-email']);
         } else {
-          console.log('error');
         }
       },
       (error) => {
-        // console.log(error);
         if (error === 'Invalid email or password') {
           this.errorMessage = 'Invalid credentials';
         } else if (error === 'Email is not yet validated') {

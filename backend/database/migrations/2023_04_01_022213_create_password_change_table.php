@@ -20,7 +20,7 @@ class CreatePasswordChangeTable extends Migration
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->string('password');
             $table->timestamp('change_date')->nullable();
-            $table->string('reset_token')->nullable()->unique();
+            $table->string('reset_token')->nullable();
             $table->timestamps();
         });
     }

@@ -61,7 +61,6 @@ export class CreatePartnerComponent implements OnInit {
         // this.dlInv = true;
         this.viewFiles();
       }
-      console.log(this.data.partner.moaFile_content.fileName, this.data.partner.moaFile_content.fileSize, this.data.partner.moaFile_content.fileExt);
 
       this.partnerForm = this.formBuilder.group({
         company_name: [data.partner.company_name, Validators.required],
@@ -152,7 +151,6 @@ export class CreatePartnerComponent implements OnInit {
       event.target.value = ''; // clear the file input
     } else {
       this.moaFile = file;
-      console.log(file.name);
       setTimeout(() => {
         this.moaFileName.nativeElement.innerHTML = file.name;
       }, 0);
@@ -251,15 +249,12 @@ export class CreatePartnerComponent implements OnInit {
       formData.append('moa_file', this.moaFile, this.moaFile.name);
     }
 
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
+    formData.forEach((value, key) => {});
 
     if (this.data) {
       formData.append('partner_id', this.data.partner.partner_id);
       this.partnerService.updatePartner(formData).subscribe(
         (program) => {
-          console.log('Program created successfully:', program);
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -272,7 +267,6 @@ export class CreatePartnerComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.error('Error creating program:', error);
           // TODO: Handle error
           const message = 'Error creating program';
           const header = 'Error';
@@ -288,7 +282,6 @@ export class CreatePartnerComponent implements OnInit {
     } else {
       this.partnerService.createPartner(formData).subscribe(
         (program) => {
-          console.log('Program created successfully:', program);
           const message = 'Program created successfully';
           const header = 'Success';
           const dialogRef = this.dialog.open(SuccessComponent, {
@@ -301,7 +294,6 @@ export class CreatePartnerComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.error('Error creating program:', error);
           const message = 'Error creating program';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {

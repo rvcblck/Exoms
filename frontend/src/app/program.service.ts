@@ -33,11 +33,8 @@ export class ProgramService {
   getPrograms(): Observable<Program[]> {
     const headers = this.getHeaders();
     return this.http.get<Program[]>(`${this.apiUrl}/programs`, { headers }).pipe(
-      tap((response) => {
-        console.log('Programs retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving programs:', error);
         return throwError('Error retrieving programs. Please try again later.');
       })
     );
@@ -47,11 +44,8 @@ export class ProgramService {
   getUserPrograms(user_id: string): Observable<Program[]> {
     const headers = this.getHeaders();
     return this.http.get<Program[]>(`${this.apiUrl}/userPrograms/${user_id}`, { headers }).pipe(
-      tap((response) => {
-        console.log('Programs retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving programs:', error);
         return throwError('Error retrieving programs. Please try again later.');
       })
     );
@@ -60,11 +54,8 @@ export class ProgramService {
   getProgramFlow(user_id: string): Observable<OtherDetails> {
     const headers = this.getHeaders();
     return this.http.get<OtherDetails>(`${this.apiUrl}/program-flow/${user_id}`, { headers }).pipe(
-      tap((response) => {
-        console.log('Programs retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving programs:', error);
         return throwError('Error retrieving programs. Please try again later.');
       })
     );
@@ -74,11 +65,8 @@ export class ProgramService {
     const headers = this.getHeaders();
 
     return this.http.get<ViewProgram>(`${this.apiUrl}/programInfo/${user_id}`, { headers }).pipe(
-      tap((response: ViewProgram) => {
-        console.log('Program info retrieved successfully:');
-      }),
+      tap((response: ViewProgram) => {}),
       catchError((error) => {
-        console.error('Error retrieving program info:', error);
         throw error;
       })
     );
@@ -86,16 +74,10 @@ export class ProgramService {
 
   createProgram(programData: any): Observable<any> {
     const headers = this.getHeaders();
-    // console.log(programData);
 
-    console.log((<any>programData).size);
     return this.http.post<any>(`${this.apiUrl}/create-programs`, programData, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Created successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Creating Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Creating Program. Please try again later.');
       })
     );
@@ -103,16 +85,10 @@ export class ProgramService {
 
   updateProgram(programData: any): Observable<any> {
     const headers = this.getHeaders();
-    // console.log(programData);
 
-    console.log((<any>programData).size);
     return this.http.post<any>(`${this.apiUrl}/update-programs`, programData, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Updated successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Updated Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Updated Program. Please try again later.');
       })
     );
@@ -121,11 +97,8 @@ export class ProgramService {
   getAutoComplete(): Observable<AutoComplete[]> {
     const headers = this.getHeaders();
     return this.http.get<AutoComplete[]>(`${this.apiUrl}/autoComplete`, { headers }).pipe(
-      tap((response) => {
-        console.log('autoComplete retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving autoComplete:', error);
         return throwError('Error retrieving autoComplete. Please try again later.');
       })
     );
@@ -134,11 +107,8 @@ export class ProgramService {
   getAttendance(programId: string): Observable<Attendance[]> {
     const headers = this.getHeaders();
     return this.http.get<Attendance[]>(`${this.apiUrl}/attendance/${programId}`, { headers }).pipe(
-      tap((response) => {
-        console.log('Attendance retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving Attendance:', error);
         return throwError('Error retrieving Attendance. Please try again later.');
       })
     );
@@ -146,16 +116,10 @@ export class ProgramService {
 
   storeAttendance(storeAttendance: any): Observable<any> {
     const headers = this.getHeaders();
-    // console.log(programData);
 
-    // console.log((<any>storeAttendance).size);
     return this.http.post<any>(`${this.apiUrl}/store-attendance`, storeAttendance, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Created successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Creating Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Creating Program. Please try again later.');
       })
     );
@@ -164,12 +128,8 @@ export class ProgramService {
   updateProgramFlow(programFlow: any): Observable<any> {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/update-program-flow`, programFlow, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Updated successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Updated Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Updated Program. Please try again later.');
       })
     );
@@ -178,12 +138,8 @@ export class ProgramService {
   updateProgramTopic(programTopic: any): Observable<any> {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/update-program-topic`, programTopic, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Updated successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Updated Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Updated Program. Please try again later.');
       })
     );
@@ -192,12 +148,8 @@ export class ProgramService {
   updateProgramPosition(programPosition: any): Observable<any> {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/update-program-position`, programPosition, { headers }).pipe(
-      tap((response) => {
-        console.log('Program Updated successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error Updated Program:', error);
-        console.error('Error Message:', error.message);
         return throwError('Error Updated Program. Please try again later.');
       })
     );

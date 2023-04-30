@@ -23,23 +23,13 @@ class AttendanceTableSeeder extends Seeder
 
         foreach ($programs as $program) {
 
-            //$program->start_date  -  $program->end_date
-            //get random date from start_date and end_date and it should be in sequence
-            //store the dates in object
 
 
             $start_date = Carbon::parse($program->start_date);
             $end_date = Carbon::parse($program->end_date);
             $date_diff = $start_date->diffInDays($end_date);
 
-            // Make sure there are at least 15 days between start_date and end_date
-
-            // if ($date_diff < 15) {
-
-            //     continue;
-            // }
-
-            // Create an array of 15 random dates between start_date and end_date
+           
             $dates = [];
 
             for ($i = 0; $i < $date_diff; $i++) {

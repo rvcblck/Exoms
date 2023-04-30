@@ -42,7 +42,6 @@ export class ViewPartnerComponent implements OnInit {
       if (this.moaFileName && this.moaFileSize) {
         this.moaFileName.nativeElement.innerHTML = this.data.partner.moaFile_content.fileName;
         this.moaFileSize.nativeElement.innerHTML = (this.data.partner.moaFile_content.fileSize / (1024 * 1024)).toFixed(2) + ' MB';
-        console.log('tae', this.data.partner);
 
         const extension = this.data.partner.moaFile_content.fileExt;
         const invIcon = document.getElementById('moaIcon');
@@ -114,7 +113,6 @@ export class ViewPartnerComponent implements OnInit {
 
     this.partnerService.extend(formattedData).subscribe(
       (program) => {
-        console.log('Program created successfully:', program);
         const message = 'Program created successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -127,7 +125,6 @@ export class ViewPartnerComponent implements OnInit {
         this.dialogRef.close();
       },
       (error) => {
-        console.error('Error creating program:', error);
         // TODO: Handle error
         const message = 'Error creating program';
         const header = 'Error';
@@ -156,9 +153,7 @@ export class ViewPartnerComponent implements OnInit {
           minWidth: '40%'
         });
       },
-      (error) => {
-        console.log('Error:', error);
-      }
+      (error) => {}
     );
 
     // call the edit page
@@ -187,7 +182,6 @@ export class ViewPartnerComponent implements OnInit {
     const partner_id = this.data.partner.partner_id;
     this.partnerService.archive(partner_id).subscribe(
       (program) => {
-        console.log('Program created successfully:', program);
         const message = 'Program created successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -200,7 +194,6 @@ export class ViewPartnerComponent implements OnInit {
         this.dialogRef.close(true);
       },
       (error) => {
-        console.error('Error creating program:', error);
         // TODO: Handle error
         const message = 'Error creating program';
         const header = 'Error';

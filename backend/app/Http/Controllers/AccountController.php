@@ -197,10 +197,10 @@ class AccountController extends Controller
             ->where('end_date', '>=', $now)
             ->where('start_date', '<=', $now)
             ->count();
-        // dd($ongoing);
+        
         $upcoming = $user->programs()->where('start_date', '>', $now)->count();
         $previous = $user->programs()->where('end_date', '<', $now)->count();
-        // dd($ongoing,$upcoming,$previous);
+
         $programsPrevious = $user->programs()->where('end_date', '<', $now)->get();
         foreach ($programsPrevious as $program) {
             $programDataPrevious[] = [

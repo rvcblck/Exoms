@@ -78,10 +78,6 @@ export class ReportsComponent implements OnInit {
       this.inputWidth = this.inputValue.length * 8 + 'px';
     }
 
-    // this.partnerService.getAllPartners().subscribe((partners) => {
-    //   this.dataSource.data = partners;
-    // });
-
     this.partnerService.getAllPartners().subscribe((partners) => {
       this.dataSource.data = partners;
       this.allPartners = partners;
@@ -101,8 +97,6 @@ export class ReportsComponent implements OnInit {
     if (currentDate) {
       this.currentDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     }
-
-    console.log(this.facultyDataSource.sort, this.sort2);
   }
 
   ngAfterViewInit() {
@@ -139,38 +133,23 @@ export class ReportsComponent implements OnInit {
             this.programTitle = result.title;
             this.program_id = result.program_id;
 
-            // this.adminName = localStorage.getItem('fullName');
-            // this.adminRole = localStorage.getItem('role');
-            // const currentDate = new Date();
-            // if (currentDate) {
-            //   this.currentDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
-            // }
-
             this.programService.getProgramInfo(result.program_id).subscribe(
               (program) => {
                 this.program = program;
               },
-              (error) => {
-                console.error('Error retrieving programs:', error);
-              }
+              (error) => {}
             );
 
             this.programService.getProgramFlow(result.program_id).subscribe(
               (programs) => {
                 this.programFlow = programs;
-
-                console.log(this.programFlow);
               },
-              (error) => {
-                console.error('Error retrieving programs:', error);
-              }
+              (error) => {}
             );
           }
         });
       },
-      (error) => {
-        console.error('Error retrieving programs:', error);
-      }
+      (error) => {}
     );
   }
 
@@ -397,22 +376,13 @@ export class ReportsComponent implements OnInit {
               (programs) => {
                 this.facultyDataSource.data = programs;
                 this.facultyDataSource.sort = this.sort2;
-
-                // console.log(this.dataSource, this.sort, 'eto sa partner');
-                // console.log(this.facultyDataSource, this.sort2, 'eto sa faculty');
-
-                console.log('Programs retrieved successfully');
               },
-              (error) => {
-                console.error('Error retrieving programs:', error);
-              }
+              (error) => {}
             );
           }
         });
       },
-      (error) => {
-        console.error('Error retrieving programs:', error);
-      }
+      (error) => {}
     );
   }
 }

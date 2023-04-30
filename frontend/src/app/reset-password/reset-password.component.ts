@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { mustMatch } from '../must-match.validator';
-
-
-
+import { SuccessComponent } from '../dialog/success/success.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +12,6 @@ import { mustMatch } from '../must-match.validator';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-
   resetForm!: FormGroup;
   isTokenValid = true;
   errorMessage = '';
@@ -24,7 +22,8 @@ export class ResetPasswordComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class ResetPasswordComponent implements OnInit {
       }
     );
 
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const resetToken = params.get('resetToken');
       this.authService.checkResetToken(resetToken || '').subscribe(
         () => {
@@ -52,7 +51,6 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-
   onSubmit(): void {
     const group = this.resetForm.controls;
 
@@ -60,13 +58,11 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
+    const password = group['password'].value;
 
-      const password = group['password'].value;
-
-      this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const resetToken = params.get('resetToken');
-      console.log(resetToken);
-      console.log(password);
+
       if (resetToken) {
         this.authService.resetPassword(resetToken, password).subscribe(
           (response) => {
@@ -74,6 +70,17 @@ export class ResetPasswordComponent implements OnInit {
               this.isSuccess = true;
               this.successMessage = response.message;
               this.resetForm.reset();
+
+              const message = `${response.message}`;
+              const header = 'Success';
+              const dialogRef = this.dialog.open(SuccessComponent, {
+                width: '300px',
+                data: {
+                  header: header,
+                  message: message
+                }
+              });
+              this.router.navigate(['/login']);
             }
           },
           (error) => {

@@ -444,13 +444,3 @@ class PartnerController extends Controller
         return $contract;
     }
 }
-
-
-
-// $contracts = $partner->contracts->map(function ($contract) {
-//     return [
-//         'contract_id' => $contract->contract_id,
-//         'start_date' => $contract->start_date,
-//         'end_date' => $contract->end_date,
-//     ];
-// });

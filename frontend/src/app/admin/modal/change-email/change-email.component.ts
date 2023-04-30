@@ -85,7 +85,6 @@ export class ChangeEmailComponent implements OnInit {
 
     this.profileService.changeEmail(formattedData).subscribe(
       (response) => {
-        console.log('Email Updated successfully');
         const message = 'Email Updated successfully';
         const header = 'Success';
         const dialogRef = this.dialog.open(SuccessComponent, {
@@ -101,30 +100,33 @@ export class ChangeEmailComponent implements OnInit {
         localStorage.setItem('password', this.changeEmailForm.get('password')?.value);
         this.authService.sendEmail(this.changeEmailForm.get('email')?.value).subscribe(
           (response) => {
-            console.log(response.message, response.success);
             if (response.success) {
               this.router.navigate(['/verify-email']);
               localStorage.removeItem('token');
               localStorage.removeItem('firstName');
               localStorage.removeItem('role');
             } else {
-              console.log('error');
             }
           },
           (error) => {
-            console.log(error);
+            const message = 'Error: something went wrong';
+            const header = 'Error';
+            const dialogRef = this.dialog.open(ErrorComponent, {
+              width: '300px',
+              data: {
+                header: header,
+                message: message
+              }
+            });
           }
         );
       },
       (error) => {
-        console.log('error', error);
-
         if (error.error.message === 'Not Available') {
           this.emailErrors = error.error.message;
         } else if (error.error.message === 'Wrong Password') {
           this.passErrors = error.error.message;
         } else {
-          console.log('Something went wrong');
           const message = 'There is something wrong';
           const header = 'Error';
           const dialogRef = this.dialog.open(ErrorComponent, {

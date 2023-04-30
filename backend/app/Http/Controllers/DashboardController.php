@@ -353,10 +353,7 @@ class DashboardController extends Controller
                 $programCount = $user->programs()->whereDate('start_date', '<=', $dateString)
                     ->whereDate('end_date', '>=', $dateString)
                     ->count();;
-                // $programCount = Program::whereDate('start_date', '<=', $dateString)
-                //                     ->whereDate('end_date', '>=', $dateString)
-                //                     ->count();
-                // add the data point to the array
+
                 $dataPoints[] = [
                     'x' => $dateString,
                     'y' => $programCount

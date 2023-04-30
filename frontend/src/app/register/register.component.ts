@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { ErrorComponent } from '../dialog/error/error.component';
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessComponent } from '../dialog/success/success.component';
 
+interface RegisterResponse {
+  success: boolean;
+  message: string;
+  email: string;
+  password: string;
+}
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,8 +20,9 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
   errors: any = [];
   submitted = false;
+  loadDialog = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -54,15 +64,35 @@ export class RegisterComponent implements OnInit {
       address:
         this.registerForm.get('barangay')?.value + ', ' + this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
     };
-
+    this.loadDialog = true;
     this.authService.register(formattedData).subscribe(
       (response) => {
-        // console.log(response);
-        // clear errors on success
-        this.errors = [];
+        this.loadDialog = false;
+        // console.log(response.message, 'eto yun');
+        const message = `${response.message}`;
+        const header = 'Success';
+        const dialogRef = this.dialog.open(SuccessComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       },
       (error) => {
         this.errors.push(error);
+        console.log(error);
+
+        this.loadDialog = false;
+        const message = `${error.error.message}`;
+        const header = 'Error';
+        const dialogRef = this.dialog.open(ErrorComponent, {
+          width: '300px',
+          data: {
+            header: header,
+            message: message
+          }
+        });
       }
     );
   }

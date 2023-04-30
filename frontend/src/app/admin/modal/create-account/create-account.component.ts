@@ -48,7 +48,6 @@ export class CreateAccountComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.registerForm.value);
 
     this.openConfirmationDialog();
   }
@@ -92,7 +91,6 @@ export class CreateAccountComponent implements OnInit {
 
     this.accountService.createAccount(formattedData).subscribe(
       (response) => {
-        console.log(response);
         this.dialogRef.close(true);
         const message = 'Creating Account Successfully';
         const header = 'Success';
@@ -105,7 +103,6 @@ export class CreateAccountComponent implements OnInit {
         });
       },
       (error) => {
-        console.log(error);
         if (error.error.error === 'Email is already registered') {
           this.emailError = 'Email is already registered';
         }
@@ -121,30 +118,6 @@ export class CreateAccountComponent implements OnInit {
       }
     );
   }
-
-  // passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  //   const password = control.get('password');
-  //   const password_confirmation = control.get('password_confirmation');
-
-  //   if (password && password_confirmation && password.value !== password_confirmation.value) {
-  //     password_confirmation.setErrors({ 'passwordMismatch': true });
-  //     return { 'passwordMismatch': true };
-  //   } else {
-  //     if (password_confirmation) {
-  //       // remove the passwordMismatch error
-  //       password_confirmation.setErrors(null);
-  //     }
-  //     return null;
-  //   }
-  // };
-
-  // get password_confirmation(): AbstractControl | null {
-  //   return this.registerForm.get('password_confirmation');
-  // }
-
-  // get password(): AbstractControl | null {
-  //   return this.registerForm.get('password');
-  // }
 
   onCancel(): void {
     this.dialogRef.close();

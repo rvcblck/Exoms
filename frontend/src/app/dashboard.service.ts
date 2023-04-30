@@ -28,11 +28,8 @@ export class DashboardService {
   getDashboard(): Observable<ResponseData> {
     const headers = this.getHeaders();
     return this.http.get<ResponseData>(`${this.apiUrl}/dashboard`, { headers }).pipe(
-      tap((response) => {
-        console.log('dashboard retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving dashboard:', error);
         return throwError('Error retrieving dashboard. Please try again later.');
       })
     );
@@ -41,11 +38,8 @@ export class DashboardService {
   getProgramChart(month: string): Observable<ChartData[]> {
     const headers = this.getHeaders();
     return this.http.get<ChartData[]>(`${this.apiUrl}/dashboard-chart/${month}`, { headers }).pipe(
-      tap((response) => {
-        console.log('dashboard retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving dashboard:', error);
         return throwError('Error retrieving dashboard. Please try again later.');
       })
     );
@@ -54,11 +48,8 @@ export class DashboardService {
   getUserDashboard(user_id: string): Observable<ResponseData> {
     const headers = this.getHeaders();
     return this.http.get<ResponseData>(`${this.apiUrl}/user-dashboard/${user_id}`, { headers }).pipe(
-      tap((response) => {
-        console.log('dashboard retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving dashboard:', error);
         return throwError('Error retrieving dashboard. Please try again later.');
       })
     );
@@ -67,11 +58,8 @@ export class DashboardService {
   getUserProgramChart(userChart: any): Observable<any> {
     const headers = this.getHeaders();
     return this.http.post<any>(`${this.apiUrl}/user-dashboard-chart`, userChart, { headers }).pipe(
-      tap((response) => {
-        console.log('dashboard retrieved successfully');
-      }),
+      tap((response) => {}),
       catchError((error) => {
-        console.error('Error retrieving dashboard:', error);
         return throwError('Error retrieving dashboard. Please try again later.');
       })
     );

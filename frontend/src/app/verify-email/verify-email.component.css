@@ -38,12 +38,17 @@
   cursor: pointer;
 }
 .content button[type='button']{
-  color: blue;
+  color: rgb(51, 124, 249);
   text-decoration: underline;
   font-size: 18px;
   background: none;
   cursor: pointer;
   border: none;
+}
+
+.disabled-button {
+  color: gray;
+  cursor: not-allowed;
 }
 
 /* Desktop screens */

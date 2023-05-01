@@ -64,8 +64,16 @@ import { ChangePasswordComponent } from './admin/modal/change-password/change-pa
 import { EditImgComponent } from './admin/modal/edit-img/edit-img.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ProgFlowComponent } from './user/prog-flow/prog-flow.component';
+import { environment } from 'src/environments/environment';
+// import * as CanvasJSAngularChart from '../assets/js/canvasjs/canvasjs.angular.component';
+
+// import * as CanvasJSAngularChart from `${environment.assetPath}/js/canvasjs/canvasjs.angular.component`;
+
+
+
 
 import * as CanvasJSAngularChart from '../assets/js/canvasjs/canvasjs.angular.component';
+
 import { ProgTopicComponent } from './user/prog-topic/prog-topic.component';
 import { SelectProgramComponent } from './user/modal/select-program/select-program.component';
 

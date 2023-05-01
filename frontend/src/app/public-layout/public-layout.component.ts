@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-public-layout',
@@ -9,8 +10,9 @@ import { AuthService } from '../auth.service';
 })
 export class PublicLayoutComponent implements OnInit {
   isAuthenticated$: Observable<boolean> = of(false);
+  assetPath = environment.assetPath;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     const isAuthenticated = this.authService.isAuthenticated();
@@ -19,7 +21,6 @@ export class PublicLayoutComponent implements OnInit {
       observer.complete();
     });
   }
-
 
   getDashboardLink(): string {
     if (this.authService.isAdmin()) {

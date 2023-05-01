@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 export class AdminProfileComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({});
   submitted = false;
+  assetPath = environment.assetPath;
 
   public user: Profile | undefined;
   private apiUrl = environment.apiUrl;

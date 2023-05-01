@@ -46,7 +46,7 @@
           <div class="info">
             <div class="info-icon">
               <div class="icon-cont">
-                <img class="logo" src="../../assets/images/age-icon.png" alt="My Image" />
+                <img class="logo" src="{{ assetPath }}assets/images/age-icon.png" alt="My Image" />
               </div>
             </div>
             <div class="info-detail" *ngIf="user">{{ getAge(user.bday) }}</div>
@@ -64,7 +64,7 @@
             <div class="info-detail" *ngIf="user">{{ user.gender }}</div>
           </div>
         </div>
-      
+
         <div class="edit-label">Edit Mode</div>
         <div class="edit-toggle">
           <input type="checkbox" id="switch-toggle" class="switch" (change)="toggleAccountInfo()" />

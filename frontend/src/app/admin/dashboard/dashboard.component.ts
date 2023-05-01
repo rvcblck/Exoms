@@ -17,6 +17,8 @@ import { ViewPartnerComponent } from '../modal/view-partner/view-partner.compone
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth.service';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -47,6 +49,7 @@ export class DashboardComponent implements OnInit {
   dashboard!: ResponseData;
   userChartOptions: any;
   programChart: ChartData[] = [];
+  assetPath = environment.assetPath;
 
   private apiUrl = 'http://localhost:8000/api';
   public imageUrl: any;

@@ -3,7 +3,7 @@
     <div class="cont-message">
       <div class="message">
         <div class="date">
-          <div><img src="../../assets/images/qoute.png" alt="" /></div>
+          <div><img src="{{ assetPath }}assets/images/qoute.png" alt="" /></div>
           <div class="dateTime">
             <div>
               {{ currentDate | date : 'h:mm' }} &nbsp; <span style="font-size: 20px">{{ currentDate | date : 'a' }}</span>
@@ -21,7 +21,7 @@
       <div class="prog-status-wrapper">
         <div class="prog-status">
           <div class="icon upcoming">
-            <img src="../../assets/images/upcoming.png" alt="" />
+            <img src="{{ assetPath }}assets/images/upcoming.png" alt="" />
           </div>
           <div class="count upcoming">
             <div>UPCOMING</div>
@@ -30,7 +30,7 @@
         </div>
         <div class="prog-status">
           <div class="icon ongoing">
-            <img src="../../assets/images/ongoing.png" alt="" />
+            <img src="{{ assetPath }}assets/images/ongoing.png" alt="" />
           </div>
           <div class="count ongoing">
             <div>ONGOING</div>
@@ -39,7 +39,7 @@
         </div>
         <div class="prog-status">
           <div class="icon previous">
-            <img src="../../assets/images/previous.png" alt="" />
+            <img src="{{ assetPath }}assets/images/previous.png" alt="" />
           </div>
           <div class="count previous">
             <div>PREVIOUS</div>
@@ -85,7 +85,7 @@
         <div matRipple (click)="previous()" class="previous-wrapper"><i class="fa-solid fa-chevron-left"></i></div>
       </div>
       <div class="progchart">
-        <canvasjs-chart *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
+        <canvasjs-chart  *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
       </div>
       <div class="nxt-div">
         <div matRipple (click)="next()" class="next-wrapper"><i class="fa-solid fa-chevron-right"></i></div>

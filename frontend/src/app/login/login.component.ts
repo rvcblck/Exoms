@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
   showValidateButton: boolean = false;
+  assetPath = environment.assetPath;
 
   constructor(private authService: AuthService, private router: Router) {}
 

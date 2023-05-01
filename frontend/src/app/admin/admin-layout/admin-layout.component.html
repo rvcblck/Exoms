@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <h1 class="navbar-title"><img class="logo" src="../../assets/images/logo.png" alt="My Image" />&nbsp;&nbsp;&nbsp; CICT-Exoms</h1>
+  <h1 class="navbar-title"><img class="logo" src="{{ assetPath }}assets/images/logo.png" alt="My Image" />&nbsp;&nbsp;&nbsp; CICT-Exoms</h1>
   <div class="profile">
     <div class="profile-wrapper-mobile">
       <img [src]="imageUrl" alt="profile image" (click)="profile($event); $event.stopPropagation()" />
@@ -28,7 +28,7 @@
 
 <div class="sidebar">
   <div class="logo_details">
-    <img class="logo" src="../../assets/images/logo.png" alt="My Image" />
+    <img class="logo" src="{{ assetPath }}assets/images/logo.png" alt="My Image" />
     <div class="logo_name">CICT-Exoms</div>
     <i class="bx bx-menu" id="btn"></i>
   </div>
@@ -141,7 +141,7 @@
     </li>
   </ul>
   <div class="cict-logo">
-    <img class="logo" src="../../assets/images/logo.png" alt="My Image" />
+    <img class="logo" src="{{ assetPath }}assets/images/logo.png" alt="My Image" />
   </div>
 </div>
 

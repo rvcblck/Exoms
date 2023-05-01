@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { ErrorComponent } from '../dialog/error/error.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessComponent } from '../dialog/success/success.component';
+import { environment } from 'src/environments/environment';
 
 interface RegisterResponse {
   success: boolean;
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
   errors: any = [];
   submitted = false;
   loadDialog = false;
+  assetPath = environment.assetPath;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private dialog: MatDialog) {}
 

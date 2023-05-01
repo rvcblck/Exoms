@@ -23,10 +23,12 @@ export class AdminLayoutComponent implements OnInit {
   pageTitle = '';
   firstName = '';
   role = '';
+  assetPath = environment.assetPath;
 
   // imageUrl!: string;
 
   private apiUrl = environment.apiUrl;
+
   public imageUrl: any;
   // route: any;
 

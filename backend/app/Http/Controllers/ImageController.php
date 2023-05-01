@@ -31,7 +31,8 @@ class ImageController extends Controller
 
 
 
-        $path = storage_path('app\public\\' . $request->filePath);
+        // $path = storage_path('app\public\\' . $request->filePath);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->filePath);
 
         if (!File::exists($path)) {
             abort(404);
@@ -51,7 +52,8 @@ class ImageController extends Controller
 
     public function viewUserFiles($filePath)
     {
-        $path = storage_path('app\public\\' . $filePath);
+        // $path = storage_path('app\public\\' . $filePath);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $filePath);
         if (!File::exists($path)) {
             abort(404);
         }
@@ -67,7 +69,8 @@ class ImageController extends Controller
 
     public function getProgramFiles(Request $request)
     {
-        $path = storage_path('app\public\\' . $request->filePath);
+        // $path = storage_path('app\public\\' . $request->filePath);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $request->filePath);
         if (!File::exists($path)) {
             abort(404);
         }
@@ -84,7 +87,8 @@ class ImageController extends Controller
     public function downloadFile($id)
     {
         $filePath = Program::where('program_id', $id)->first();
-        $path = storage_path('app\public\\' . $filePath->invitation);
+        // $path = storage_path('app\public\\' . $filePath->invitation);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $filePath->invitation);
         if (!File::exists($path)) {
             abort(404);
         }
@@ -104,7 +108,8 @@ class ImageController extends Controller
     public function downloadCertFile($id)
     {
         $filePath = Program::where('program_id', $id)->first();
-        $path = storage_path('app\public\\' . $filePath->certificate);
+        // $path = storage_path('app\public\\' . $filePath->certificate);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $filePath->certificate);
         if (!File::exists($path)) {
             abort(404);
         }
@@ -124,7 +129,8 @@ class ImageController extends Controller
     public function downloadMoa($id)
     {
         $filePath = Partner::where('partner_id', $id)->first();
-        $path = storage_path('app\public\\' . $filePath->moa_file);
+        // $path = storage_path('app\public\\' . $filePath->moa_file);
+        $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $filePath->moa_file);
         if (!File::exists($path)) {
             abort(404);
         }

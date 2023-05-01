@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    public function index($id){
-        $users = User::where('user_id',$id)->get()->first();
+    public function index($id)
+    {
+        $users = User::where('user_id', $id)->get()->first();
 
 
 
@@ -23,7 +24,8 @@ class ProfileController extends Controller
         return response()->json($users);
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
 
         $rules = [
             'fname' => 'required',
@@ -44,7 +46,7 @@ class ProfileController extends Controller
 
 
 
-        User::where('user_id',$request->user_id)->update([
+        User::where('user_id', $request->user_id)->update([
             'fname' => $request->fname,
             'lname' => $request->lname,
             'mname' => $request->mname,
@@ -62,15 +64,16 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function isEmailAvailable($email){
-        $email = User::where('email',$email)->first();
+    public function isEmailAvailable($email)
+    {
+        $email = User::where('email', $email)->first();
 
-        if($email){
+        if ($email) {
             return response()->json([
                 'success' => true,
                 'message' => 'Not Available',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => true,
                 'message' => 'Available',
@@ -78,7 +81,8 @@ class ProfileController extends Controller
         }
     }
 
-    public function changeEmail(Request $request){
+    public function changeEmail(Request $request)
+    {
 
         $rules = [
             'email' => 'required',
@@ -93,20 +97,20 @@ class ProfileController extends Controller
         }
 
 
-        $email = User::where('email',$request->email)->first();
+        $email = User::where('email', $request->email)->first();
 
-        if($email){
+        if ($email) {
             return response()->json([
                 'success' => false,
                 'message' => 'Not Available',
             ], 401);
         }
 
-        $checkPass = PasswordChange::where('user_id',$request->user_id)->latest()->first();
+        $checkPass = PasswordChange::where('user_id', $request->user_id)->latest()->first();
 
 
 
-        if($checkPass){
+        if ($checkPass) {
             if (!Hash::check($request->password, $checkPass->password)) {
                 return response()->json([
                     'success' => false,
@@ -114,7 +118,7 @@ class ProfileController extends Controller
                 ], 401);
             }
         }
-        User::where('user_id',$request->user_id)->update([
+        User::where('user_id', $request->user_id)->update([
             'email' => $request->email,
             'email_verified_at' => null,
         ]);
@@ -125,7 +129,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function changePass(Request $request){
+    public function changePass(Request $request)
+    {
         $rules = [
             'user_id' => 'required',
             'old_password' => 'required',
@@ -140,11 +145,11 @@ class ProfileController extends Controller
 
 
 
-        $checkPass = PasswordChange::where('user_id',$request->user_id)->latest()->first();
+        $checkPass = PasswordChange::where('user_id', $request->user_id)->latest()->first();
 
 
 
-        if($checkPass){
+        if ($checkPass) {
             if (!Hash::check($request->old_password, $checkPass->password)) {
                 return response()->json([
                     'success' => false,
@@ -152,7 +157,7 @@ class ProfileController extends Controller
                 ], 401);
             }
         }
-        if($checkPass){
+        if ($checkPass) {
             if (!Hash::check($request->new_password, $checkPass->password)) {
                 return response()->json([
                     'success' => false,
@@ -180,7 +185,8 @@ class ProfileController extends Controller
 
 
 
-    public function changeProfilePic(Request $request){
+    public function changeProfilePic(Request $request)
+    {
 
 
         $rules = [
@@ -213,23 +219,23 @@ class ProfileController extends Controller
 
         $filename = $profile_pic->getClientOriginalName();
         $new_filename = $filename;
-        $profile_pic_path = Storage::putFileAs('user/'.$request->user_id, $profile_pic, $new_filename);
+        $profile_pic_path = Storage::putFileAs('user/' . $request->user_id, $profile_pic, $new_filename);
 
-        User::where('user_id',$request->user_id)->update([
+        User::where('user_id', $request->user_id)->update([
             'profile_pic' => $profile_pic_path
         ]);
-
-
-
     }
 
-    public function profileImage($id){
-        $user = User::where('user_id',$id)->first();
+    public function profileImage($id)
+    {
+        $user = User::where('user_id', $id)->first();
 
         $file_path = $user->profile_pic;
 
-        if($file_path){
-            $path = storage_path('app\public\\'.$file_path);
+        // dd($file_path);
+
+        if ($file_path) {
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file_path);
             if (!File::exists($path)) {
                 abort(404);
             }
@@ -239,8 +245,8 @@ class ProfileController extends Controller
             $response = new Response($file, 200);
             $response->header("Content-Type", $type);
             return $response;
-        }else{
-            $path = storage_path('app\public\images\profile-default.png');
+        } else {
+            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file_path);
             if (!File::exists($path)) {
                 abort(404);
             }
@@ -251,8 +257,6 @@ class ProfileController extends Controller
             $response->header("Content-Type", $type);
             return $response;
         }
-
-
     }
 
 
@@ -260,10 +264,11 @@ class ProfileController extends Controller
 
 
 
-    public function generatePasswordId() {
+    public function generatePasswordId()
+    {
         $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
-        while($existing_password_id) {
+        while ($existing_password_id) {
             $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
         }
@@ -272,7 +277,8 @@ class ProfileController extends Controller
 
 
 
-    public function usersProfileImages(Request $request){
+    public function usersProfileImages(Request $request)
+    {
         $userIds = $request->input('user_ids');
 
         $images = [];
@@ -282,22 +288,21 @@ class ProfileController extends Controller
             $file_path = $user->profile_pic;
 
             if ($file_path) {
-                $path = storage_path('app\public\\'.$file_path);
+                $path = storage_path('app\public\\' . $file_path);
                 if (File::exists($path)) {
                     $data = base64_encode(file_get_contents($path));
                     $images[] = $data;
                 }
-            }else{
+            } else {
                 $path = storage_path('app\public\images\profile-default.png');
                 if (File::exists($path)) {
-                $data = base64_encode(file_get_contents($path));
-                $images[] = $data;
-            }
+                    $data = base64_encode(file_get_contents($path));
+                    $images[] = $data;
+                }
             }
         }
 
-        
+
         return $images;
     }
-
 }

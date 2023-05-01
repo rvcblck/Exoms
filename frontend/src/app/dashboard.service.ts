@@ -6,13 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { ResponseData } from './dashboard.model';
 import { ChartData } from './dashboard.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrl = 'http://localhost:8000/api';
-  private jwtHelper = new JwtHelperService();
+  private apiUrl = environment.apiUrl;
+
 
   constructor(private http: HttpClient) {}
 

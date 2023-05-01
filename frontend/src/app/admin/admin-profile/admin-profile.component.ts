@@ -13,6 +13,7 @@ import { EditImgComponent } from '../modal/edit-img/edit-img.component';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-profile',
@@ -24,7 +25,7 @@ export class AdminProfileComponent implements OnInit {
   submitted = false;
 
   public user: Profile | undefined;
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   public imageUrl: any;
   showAccountInfo = false;
 
@@ -183,8 +184,6 @@ export class AdminProfileComponent implements OnInit {
       }
     });
   }
-
-  
 
   submitForm() {
     const address =

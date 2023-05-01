@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-layout',
@@ -25,7 +26,7 @@ export class AdminLayoutComponent implements OnInit {
 
   // imageUrl!: string;
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   public imageUrl: any;
   // route: any;
 
@@ -71,14 +72,11 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
 
       this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     });
-
 
     const fname = localStorage.getItem('firstName');
     const role = localStorage.getItem('role');
@@ -96,7 +94,6 @@ export class AdminLayoutComponent implements OnInit {
     const closeBtn = document.querySelector('#btn');
     const navList = document.querySelector('.nav-list');
     const logo = document.querySelector('.cict-logo');
-    
 
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {

@@ -11,12 +11,13 @@ import { ViewProgram } from './program.model';
 import { AutoComplete } from './program.model';
 import { Attendance } from './attendance.model';
 import { ProgramFlow } from './program.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}

@@ -6,12 +6,13 @@ import { Observable, throwError } from 'rxjs';
 import { Profile } from './profile.model';
 import { Partner } from './partner.model';
 import { ViewPartner } from './program.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PartnerService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}

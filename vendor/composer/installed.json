@@ -253,8 +253,8 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.52.5",
-            "version_normalized": "9.52.5.0",
+            "version": "v9.52.7",
+            "version_normalized": "9.52.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -311,8 +311,8 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.52.5",
-            "version_normalized": "9.52.5.0",
+            "version": "v9.52.7",
+            "version_normalized": "9.52.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -360,8 +360,8 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.52.5",
-            "version_normalized": "9.52.5.0",
+            "version": "v9.52.7",
+            "version_normalized": "9.52.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -411,8 +411,8 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.52.5",
-            "version_normalized": "9.52.5.0",
+            "version": "v9.52.7",
+            "version_normalized": "9.52.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -460,17 +460,17 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.52.5",
-            "version_normalized": "9.52.5.0",
+            "version": "v9.52.7",
+            "version_normalized": "9.52.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "199e5250735d0c49fe0385360451659690ff71a3"
+                "reference": "5c38d755c5fa767d5b689867888ee4e5f53fc8a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/199e5250735d0c49fe0385360451659690ff71a3",
-                "reference": "199e5250735d0c49fe0385360451659690ff71a3",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/5c38d755c5fa767d5b689867888ee4e5f53fc8a6",
+                "reference": "5c38d755c5fa767d5b689867888ee4e5f53fc8a6",
                 "shasum": ""
             },
             "require": {
@@ -498,7 +498,7 @@
                 "symfony/var-dumper": "Required to use the dd function (^6.0).",
                 "vlucas/phpdotenv": "Required to use the Env class and env helper (^5.4.1)."
             },
-            "time": "2023-03-13T01:37:31+00:00",
+            "time": "2023-04-04T18:35:58+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -819,17 +819,17 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v6.2.8",
-            "version_normalized": "6.2.8.0",
+            "version": "v6.2.10",
+            "version_normalized": "6.2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "511a524affeefc191939348823ac75e9921c2112"
+                "reference": "49adbb92bcb4e3c2943719d2756271e8b9602acc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/511a524affeefc191939348823ac75e9921c2112",
-                "reference": "511a524affeefc191939348823ac75e9921c2112",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/49adbb92bcb4e3c2943719d2756271e8b9602acc",
+                "reference": "49adbb92bcb4e3c2943719d2756271e8b9602acc",
                 "shasum": ""
             },
             "require": {
@@ -852,7 +852,7 @@
             "suggest": {
                 "symfony/mime": "To use the file extension guesser"
             },
-            "time": "2023-03-29T21:42:15+00:00",
+            "time": "2023-04-18T13:46:08+00:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -880,7 +880,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v6.2.8"
+                "source": "https://github.com/symfony/http-foundation/tree/v6.2.10"
             },
             "funding": [
                 {

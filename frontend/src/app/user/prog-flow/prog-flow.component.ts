@@ -111,6 +111,14 @@ export class ProgFlowComponent implements OnInit {
     // update the arrangement property based on new position
   }
 
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
     if (this.flowForm.invalid) {

@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   loadDialog = false;
   assetPath = environment.assetPath;
+  hidePassword = true;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private dialog: MatDialog) {}
 
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
         bday: ['', [Validators.required]],
         mobile_no: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
         password_confirmation: ['', Validators.required],
         barangay: ['', [Validators.required]],
         city: ['', [Validators.required]],
@@ -47,6 +48,19 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  passwordValidator(control: { value: string }) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    return regex.test(control.value) ? null : { passwordInvalid: true };
+  }
+
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
     if (this.registerForm.invalid) {
@@ -54,9 +68,9 @@ export class RegisterComponent implements OnInit {
     }
 
     const formattedData = {
-      fname: this.registerForm.get('fname')?.value,
-      lname: this.registerForm.get('lname')?.value,
-      mname: this.registerForm.get('mname')?.value,
+      fname: this.capitalizeWords(this.registerForm.get('fname')?.value),
+      lname: this.capitalizeWords(this.registerForm.get('lname')?.value),
+      mname: this.capitalizeWords(this.registerForm.get('mname')?.value),
       suffix: this.registerForm.get('suffix')?.value,
       gender: this.registerForm.get('gender')?.value,
       bday: this.registerForm.get('bday')?.value,
@@ -64,7 +78,11 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.get('email')?.value,
       password: this.registerForm.get('password')?.value,
       address:
-        this.registerForm.get('barangay')?.value + ', ' + this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
+        this.capitalizeWords(this.registerForm.get('barangay')?.value) +
+        ', ' +
+        this.capitalizeWords(this.registerForm.get('city')?.value) +
+        ', ' +
+        this.capitalizeWords(this.registerForm.get('province')?.value)
     };
     this.loadDialog = true;
     this.authService.register(formattedData).subscribe(
@@ -121,5 +139,9 @@ export class RegisterComponent implements OnInit {
 
   get password(): AbstractControl | null {
     return this.registerForm.get('password');
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 }

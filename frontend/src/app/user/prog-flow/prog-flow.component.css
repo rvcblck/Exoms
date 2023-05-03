@@ -380,6 +380,10 @@ body {
   max-width: 50%;
 }
 
+input[type='text'] {
+  text-transform: capitalize;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */

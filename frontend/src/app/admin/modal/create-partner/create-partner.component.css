@@ -250,6 +250,10 @@ input[type='date'] {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
+
+input[type='text']:not([type='email']):not(#password):not(#password_confirmation) {
+  text-transform: capitalize;
+}
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */

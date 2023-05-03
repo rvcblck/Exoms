@@ -31,7 +31,7 @@
   border: 1px solid black;
   padding: 20px;
 }
-button {
+.stepperbtn {
   width: 150px;
   background-color: #ff5a2f;
   border-radius: 50px;
@@ -94,6 +94,32 @@ button {
   width: 100%;
   height: 300px;
 }
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: none;
+  border: none;
+  font-size: 15px;
+  background-color: none;
+}
+small {
+  width: 100%;
+}
+
+input[type='text']:not([type='email']):not([name='password']):not([name='password_confirmation']) {
+  text-transform: capitalize;
+}
+
+/* :not(input[type='email']):not(input[type='password']) {
+  text-transform: capitalize;
+} */
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */

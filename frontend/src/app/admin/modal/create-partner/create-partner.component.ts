@@ -95,9 +95,9 @@ export class CreatePartnerComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     // if (this.data) {
-      if (this.partnerForm.invalid || !this.moaFile) {
-        return;
-      }
+    if (this.partnerForm.invalid || !this.moaFile) {
+      return;
+    }
     // }
 
     this.openConfirmationDialog();
@@ -220,9 +220,21 @@ export class CreatePartnerComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
+
   submitForm(): void {
     const address =
-      this.partnerForm.value.address_barangay + ', ' + this.partnerForm.value.address_city + ', ' + this.partnerForm.value.address_province;
+      this.capitalizeWords(this.partnerForm.value.address_barangay) +
+      ', ' +
+      this.capitalizeWords(this.partnerForm.value.address_city) +
+      ', ' +
+      this.capitalizeWords(this.partnerForm.value.address_province);
     this.partnerForm.patchValue({ address: address });
 
     const startDateValue = this.partnerForm.get('start_date')?.value;
@@ -232,9 +244,9 @@ export class CreatePartnerComponent implements OnInit {
     const endDate = this.datePipe.transform(this.partnerForm.get('end_date')?.value, 'yyyy-MM-dd');
 
     const formData = new FormData();
-    formData.append('company_name', this.partnerForm.get('company_name')?.value);
-    formData.append('address', this.partnerForm.get('address')?.value);
-    formData.append('contact_person', this.partnerForm.get('contact_person')?.value);
+    formData.append('company_name', this.capitalizeWords(this.partnerForm.get('company_name')?.value));
+    formData.append('address', this.capitalizeWords(this.partnerForm.get('address')?.value));
+    formData.append('contact_person', this.capitalizeWords(this.partnerForm.get('contact_person')?.value));
     formData.append('contact_no', this.partnerForm.get('contact_no')?.value);
     if (startDate && endDate) {
       formData.append('start_date', startDate);

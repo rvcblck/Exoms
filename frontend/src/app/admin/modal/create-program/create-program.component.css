@@ -1,4 +1,4 @@
-*:not(.fa-solid):not(.fa-regular) {
+*:not(.fa-solid):not(.fa-regular):not(.mat-error) {
   font-family: 'Assistant', sans-serif;
   color: #51354b;
 }
@@ -604,6 +604,10 @@ hr {
   border: 1px solid #ff5a2f;
   border-radius: 3px;
   width: 100%;
+}
+
+input[type='text']:not([type='email']):not(#password):not(#password_confirmation) {
+  text-transform: capitalize;
 }
 
 /* .file-icon {

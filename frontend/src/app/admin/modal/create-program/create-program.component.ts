@@ -651,6 +651,14 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     this.dialogRef.close();
   }
 
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
+
   onSubmit(): void {
     this.updateAddress();
     this.submitAttempted = true;
@@ -662,8 +670,8 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     const end_time = this.programForm.get('end_time')?.value;
 
     const formData = new FormData();
-    formData.append('title', this.programForm.get('title')?.value);
-    formData.append('details', this.programForm.get('details')?.value);
+    formData.append('title', this.capitalizeWords(this.programForm.get('title')?.value));
+    formData.append('details', this.capitalizeWords(this.programForm.get('details')?.value));
     console.log(start_time);
     if (start_time) {
       formData.append('start_time', this.programForm.get('start_time')?.value);
@@ -690,7 +698,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     formData.append('member_id', joinedMemberIds);
     formData.append('partner_id', joinedPartnerIds);
     formData.append('participant', joineParticipantIds);
-    formData.append('address', this.programForm.get('address')?.value);
+    formData.append('address', this.capitalizeWords(this.programForm.get('address')?.value));
     if (this.invitation) {
       formData.append('invitation', this.invitation);
     }
@@ -698,9 +706,9 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       formData.append('certificate', this.certificate);
     }
 
-    formData.forEach((value: FormDataEntryValue, key: string) => {
-      console.log(key + ' - ' + value);
-    });
+    // formData.forEach((value: FormDataEntryValue, key: string) => {
+    //   console.log(key + ' - ' + value);
+    // });
 
     if (this.data.program) {
       this.loadDialog = true;

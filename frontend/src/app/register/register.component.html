@@ -76,7 +76,7 @@
               <mat-error *ngIf="submitted && registerForm.controls['province'].errors?.['required']">Province is required.</mat-error>
             </div>
           </div>
-          <button matStepperNext>Next</button>
+          <button class="stepperbtn" matStepperNext>Next</button>
         </form>
       </mat-step>
 
@@ -99,17 +99,45 @@
 
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" />
+                <!-- <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" /> -->
+                <div class="password-input-wrapper">
+                  <input type="{{ hidePassword ? 'password' : 'text' }}" class="" name="password" formControlName="password" required />
+                  <button
+                    type="button"
+                    *ngIf="registerForm.get('password')?.value"
+                    class="password-toggle-button"
+                    (click)="togglePasswordVisibility()"
+                  >
+                    <i class="fa-solid" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                  </button>
+                </div>
                 <div *ngIf="submitted && registerForm.controls['password'].errors">
-                  <mat-error *ngIf="registerForm.controls['password'].errors['required']">Password is required</mat-error>
-                  <mat-error *ngIf="registerForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</mat-error>
+                  <!-- <mat-error *ngIf="registerForm.controls['password'].errors['required']">Password is required</mat-error>
+                  <mat-error *ngIf="registerForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</mat-error> -->
+                  <small class="text-danger" *ngIf="registerForm.get('password')?.hasError('required')">Password is required.</small>
+                  <small class="text-danger" *ngIf="registerForm.get('password')?.hasError('minlength')"
+                    >Password must be at least 8 characters long.</small
+                  >
+                  <small class="text-danger" *ngIf="registerForm.get('password')?.hasError('passwordInvalid')"
+                    >Password must contain upper and lowercase letter and number</small
+                  >
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required />
-
+                <!-- <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required /> -->
+                <div class="password-input-wrapper">
+                  <input type="{{ hidePassword ? 'password' : 'text' }}" class="" name="password" formControlName="password_confirmation" required />
+                  <button
+                    type="button"
+                    *ngIf="registerForm.get('password_confirmation')?.value"
+                    class="password-toggle-button"
+                    (click)="togglePasswordVisibility()"
+                  >
+                    <i class="fa-solid" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                  </button>
+                </div>
                 <div
                   *ngIf="(submitted || registerForm.get('password_confirmation')?.touched) && registerForm.hasError('passwordMismatch')"
                   class="text-danger"
@@ -118,8 +146,8 @@
                   <mat-error *ngIf="registerForm.get('password_confirmation')?.hasError('passwordMismatch')">Passwords do not match</mat-error>
                 </div>
               </div>
-              <button matStepperPrevious>Back</button>
-              <button type="submit">Register</button>
+              <button class="stepperbtn" matStepperPrevious>Back</button>
+              <button class="stepperbtn" type="submit">Register</button>
             </form>
           </div>
           <div class="col-sm bg-image">

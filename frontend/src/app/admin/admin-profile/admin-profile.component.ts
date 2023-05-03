@@ -14,6 +14,7 @@ import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { environment } from 'src/environments/environment';
+// import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-admin-profile',
@@ -38,7 +39,7 @@ export class AdminProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private adminLayout: AdminLayoutComponent,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef // private titleCasePipe: TitleCasePipe
   ) {
     this.profileForm = this.formBuilder.group({
       fname: ['', Validators.required],
@@ -195,6 +196,14 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
+
   submitForm() {
     const address =
       this.profileForm.get('barangay')?.value + ', ' + this.profileForm.get('city')?.value + ', ' + this.profileForm.get('province')?.value;
@@ -202,14 +211,14 @@ export class AdminProfileComponent implements OnInit {
 
     const formattedData = {
       user_id: this.user?.user_id,
-      fname: this.profileForm.get('fname')?.value,
-      lname: this.profileForm.get('lname')?.value,
-      mname: this.profileForm.get('mname')?.value,
+      fname: this.capitalizeWords(this.profileForm.get('fname')?.value),
+      lname: this.capitalizeWords(this.profileForm.get('lname')?.value),
+      mname: this.capitalizeWords(this.profileForm.get('mname')?.value),
       suffix: this.profileForm.get('suffix')?.value,
       gender: this.profileForm.get('gender')?.value,
       bday: this.profileForm.get('bday')?.value,
       mobile_no: this.profileForm.get('mobile_no')?.value,
-      address: this.profileForm.get('address')?.value
+      address: this.capitalizeWords(this.profileForm.get('address')?.value)
     };
 
     this.profileService.updateProfile(formattedData).subscribe(

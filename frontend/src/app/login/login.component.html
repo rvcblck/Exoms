@@ -4,7 +4,7 @@
       <div class="line"></div>
       <div class="form">
         <h2>Login</h2>
-        <form class="login-form" (ngSubmit)="onSubmit()">
+        <!-- <form class="login-form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" [(ngModel)]="email" required />
@@ -24,6 +24,41 @@
           <button type="button" class="link-button" *ngIf="showValidateButton" (click)="sendEmail()">Validate Email</button>
 
           <button type="submit">Login</button>
+        </form> -->
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" required />
+            <!-- <mat-error *ngIf="loginForm.controls.email.invalid">Invalid email</mat-error> -->
+            <mat-error *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || submitted)"> email required. </mat-error>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <!-- <input type="password" id="password" formControlName="password" required /> -->
+            <div class="password-input-wrapper">
+              <input type="{{ hidePassword ? 'password' : 'text' }}" class="" name="password" formControlName="password" required />
+              <button type="button" *ngIf="loginForm.get('password')?.value" class="password-toggle-button" (click)="togglePasswordVisibility()">
+                <i class="fa-solid" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+              </button>
+            </div>
+            <mat-error *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || submitted)">
+              password is required.
+            </mat-error>
+            <mat-error class="mt-2" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </mat-error>
+          </div>
+          <div class="form-group">
+            <a routerLink="/forgot-password">Forgot Password?</a>
+          </div>
+
+          <!-- <span class="mt-2">
+            <mat-error>{{ errorMessage }}</mat-error>
+          </span> -->
+
+          <button type="button" class="link-button" *ngIf="showValidateButton" (click)="sendEmail()">Validate Email</button>
+
+          <button type="submit" [disabled]="loginForm.invalid">Login</button>
         </form>
       </div>
     </div>

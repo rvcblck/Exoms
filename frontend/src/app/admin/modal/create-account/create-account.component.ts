@@ -74,20 +74,33 @@ export class CreateAccountComponent implements OnInit {
       }
     });
   }
+  capitalizeWords(value: string): string {
+    if (value) {
+      return value.replace(/\b\w/g, (c) => c.toUpperCase());
+    } else {
+      return value;
+    }
+  }
 
   submitForm() {
     const formattedData = {
-      fname: this.registerForm.get('fname')?.value,
-      lname: this.registerForm.get('lname')?.value,
-      mname: this.registerForm.get('mname')?.value,
+      fname: this.capitalizeWords(this.registerForm.get('fname')?.value),
+      lname: this.capitalizeWords(this.registerForm.get('lname')?.value),
+      mname: this.capitalizeWords(this.registerForm.get('mname')?.value),
       suffix: this.registerForm.get('suffix')?.value,
       gender: this.registerForm.get('gender')?.value,
       bday: this.registerForm.get('bday')?.value,
       mobile_no: this.registerForm.get('mobile_no')?.value,
       email: this.registerForm.get('email')?.value,
       address:
-        this.registerForm.get('barangay')?.value + ', ' + this.registerForm.get('city')?.value + ', ' + this.registerForm.get('province')?.value
+        this.capitalizeWords(this.registerForm.get('barangay')?.value) +
+        ', ' +
+        this.capitalizeWords(this.registerForm.get('city')?.value) +
+        ', ' +
+        this.capitalizeWords(this.registerForm.get('province')?.value)
     };
+
+    // console.log(formattedData);
 
     this.accountService.createAccount(formattedData).subscribe(
       (response) => {

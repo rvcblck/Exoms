@@ -1,5 +1,4 @@
 <mat-dialog-content>
-  
   <div class="add-account">
     <form [formGroup]="registerForm">
       <div class="account-info" *ngIf="registerForm">
@@ -8,7 +7,7 @@
         <div class="wrapper">
           <div class="form-field email">
             <label for="">Email</label>
-            <input type="text" formControlName="email" />
+            <input type="email" formControlName="email" />
             <mat-error *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || submitted)">
               Email is required.
             </mat-error>

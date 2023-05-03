@@ -27,7 +27,7 @@
 
                 <div class="form-field">
                   <label for="">Description</label>
-                  <textarea type="text" formControlName="flowDesc"></textarea>
+                  <textarea formControlName="flowDesc"></textarea>
                   <mat-error *ngIf="flowForm.get('flowDesc')?.invalid && (flowForm.get('flowDesc')?.touched || submitted)">
                     Flow description is required.
                   </mat-error>

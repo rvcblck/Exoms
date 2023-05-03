@@ -15,11 +15,23 @@ export class LoginComponent {
   errorMessage: string = '';
   showValidateButton: boolean = false;
   assetPath = environment.assetPath;
+  loginForm: FormGroup = new FormGroup({});
+  submitted = false;
+  hidePassword = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
 
   onSubmit() {
-    this.authService.login(this.email, this.password).subscribe(
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
       (response) => {
         if (this.authService.isAdmin()) {
           this.router.navigate(['/admin/dashboard']);
@@ -60,5 +72,9 @@ export class LoginComponent {
         }
       }
     );
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 }

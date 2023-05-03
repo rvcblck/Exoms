@@ -22,7 +22,7 @@
 
         <div class="date-field">
           <div class="start-date-wrapper">
-            <label for="start_date">Start Date</label>
+            <label for="start_date">Start Date </label>
             <input class="start-date" formControlName="start_date" type="date" id="start_date" name="start_date" required placeholder="Select Date" />
             <!-- <mat-error *ngIf="programForm.get('start_date')?.invalid && (programForm.get('start_date')?.touched || submitAttempted)">start date is required.</mat-error> -->
           </div>
@@ -41,7 +41,7 @@
 
         <div class="date-field">
           <div class="start-date-wrapper">
-            <label for="start_date">Start Time</label>
+            <label for="start_date">Start Time <small class="text-secondary">(Optional)</small></label>
             <input
               class="start-date"
               formControlName="start_time"
@@ -53,7 +53,7 @@
             />
           </div>
           <div class="end-date-wrapper">
-            <label for="end_date">End Time</label>
+            <label for="end_date">End Time <small class="text-secondary">(Optional)</small></label>
             <input class="end-date" formControlName="end_time" type="time" id="end_time" name="end_time" value="08:00" placeholder="Optional" />
           </div>
         </div>
@@ -214,7 +214,7 @@
         <!-- field for participant -->
         <div class="participant">
           <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
-          <label>Participants</label>
+          <label>Participants <small class="text-secondary">(Optional)</small></label>
           <mat-chip-list #participantChipList aria-label="Participant selection">
             <mat-chip color="warn" *ngFor="let participant of participants" (removed)="remove(participant)">
               {{ participant }}
@@ -237,7 +237,7 @@
         <!-- invitation field  -->
         <div class="upload-files">
           <div class="upload-wrapper1">
-            <div class="inv-label">Invitation</div>
+            <div class="inv-label">Invitation <small class="text-secondary">(Optional)</small></div>
             <div class="invitation">
               <label for="invitation-upload" *ngIf="!invitation && !edithInv" class="invitation-label">
                 <mat-icon><i class="fa-solid fa-arrow-up-from-bracket"></i></mat-icon>
@@ -277,7 +277,7 @@
           </div>
 
           <div class="upload-wrapper2">
-            <div class="inv-label">Certificate</div>
+            <div class="inv-label">Certificate <small class="text-secondary">(Optional)</small></div>
             <div class="invitation">
               <label for="cert-upload" *ngIf="!certificate && !edithCert" class="invitation-label">
                 <mat-icon><i class="fa-solid fa-arrow-up-from-bracket"></i></mat-icon>
@@ -337,8 +337,8 @@
       </div>
       <div class="footer">
         <button matStepperPrevious>Back</button>
-        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="!data.program">Add Program</button>
-        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="data.program">Update Program</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="!data.program">Submit</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary" *ngIf="data.program">Submit</button>
       </div>
     </form>
   </mat-step>

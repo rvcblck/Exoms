@@ -225,7 +225,10 @@ class ProgramController extends Controller
             }
 
             $invViewFile = [
-                'fileName' => basename($invpath),
+                // 'fileName' => basename($invpath),
+                // 'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
+                // 'fileSize' => filesize($invpath),
+                'fileName' => pathinfo($invpath, PATHINFO_FILENAME),
                 'fileExtension' => pathinfo($invpath, PATHINFO_EXTENSION),
                 'fileSize' => filesize($invpath),
             ];
@@ -241,7 +244,10 @@ class ProgramController extends Controller
             }
 
             $certViewFile = [
-                'fileName' => basename($certpath),
+                // 'fileName' => basename($certpath),
+                // 'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
+                // 'fileSize' => filesize($certpath),
+                'fileName' => pathinfo($certpath, PATHINFO_FILENAME),
                 'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
                 'fileSize' => filesize($certpath),
             ];
@@ -290,57 +296,57 @@ class ProgramController extends Controller
 
 
 
-        $certViewFile = [];
-        if ($program->certificate) {
-            $certpath = storage_path('app\public\\' . $program->certificate);
-            if (!File::exists($certpath)) {
-                abort(404);
-            }
+        // $certViewFile = [];
+        // if ($program->certificate) {
+        //     $certpath = storage_path('app\public\\' . $program->certificate);
+        //     if (!File::exists($certpath)) {
+        //         abort(404);
+        //     }
 
-            $certViewFile = [
-                'fileName' => basename($certpath),
-                'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
-                'fileSize' => filesize($certpath),
-            ];
-        }
-
-
-
-
-        //status
-        $endDate = Carbon::parse($program->end_date);
-        $startDate = Carbon::parse($program->start_date);
-        $status = '';
-        if ($endDate->lt($now)) {
-            $status = 'Previous';
-        } else if ($startDate->gt($now)) {
-            $status = 'Upcoming';
-        } else {
-            $status = 'Ongoing';
-        }
-
-
-        $programData[] = [
-            'program_id' => $program->program_id,
-            'title' => $program->title,
-            'details' => $program->details,
-            'place' => $program->place,
-            'start_date' => $program->start_date,
-            'end_date' => $program->end_date,
-            'status' => $status,
-            'certificate' => $program->certificate,
-            'invitation' => $program->invitation,
-            'leader' => $leaderData,
-            'members' => $userData,
-            'partners' => $partnerData,
-            'participants' => $participantData,
-            'participant_count' => $participantCount,
-            'invitation_content' => $invViewFile,
-            'certificate_content' => $certViewFile,
+        //     $certViewFile = [
+        //         'fileName' => basename($certpath),
+        //         'fileExtension' => pathinfo($certpath, PATHINFO_EXTENSION),
+        //         'fileSize' => filesize($certpath),
+        //     ];
+        // }
 
 
 
-        ];
+
+        // //status
+        // $endDate = Carbon::parse($program->end_date);
+        // $startDate = Carbon::parse($program->start_date);
+        // $status = '';
+        // if ($endDate->lt($now)) {
+        //     $status = 'Previous';
+        // } else if ($startDate->gt($now)) {
+        //     $status = 'Upcoming';
+        // } else {
+        //     $status = 'Ongoing';
+        // }
+
+
+        // $programData[] = [
+        //     'program_id' => $program->program_id,
+        //     'title' => $program->title,
+        //     'details' => $program->details,
+        //     'place' => $program->place,
+        //     'start_date' => $program->start_date,
+        //     'end_date' => $program->end_date,
+        //     'status' => $status,
+        //     'certificate' => $program->certificate,
+        //     'invitation' => $program->invitation,
+        //     'leader' => $leaderData,
+        //     'members' => $userData,
+        //     'partners' => $partnerData,
+        //     'participants' => $participantData,
+        //     'participant_count' => $participantCount,
+        //     'invitation_content' => $invViewFile,
+        //     'certificate_content' => $certViewFile,
+
+
+
+        // ];
 
 
 

@@ -3,11 +3,12 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 // import { Accounts } from 'src/app/account.model';
 import { ViewAccount } from 'src/app/account.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { AccountService } from 'src/app/account.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-info',
@@ -23,7 +24,7 @@ export class AccountInfoComponent implements OnInit {
   showTablePrevious: boolean = false;
   showTableUpcoming: boolean = false;
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   public imageUrl: any;
 
   constructor(
@@ -34,6 +35,14 @@ export class AccountInfoComponent implements OnInit {
     private dialog: MatDialog,
     private accountService: AccountService
   ) {}
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return headers;
+  }
 
   ngOnInit(): void {
     this.getImage().subscribe((data: Blob) => {
@@ -48,8 +57,9 @@ export class AccountInfoComponent implements OnInit {
 
   getImage() {
     // const filename = 'samplepic.jpg';
+    const headers = this.getHeaders();
     const user_id = this.data.account.user_id;
-    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { headers, responseType: 'blob' });
   }
   formatDate(dateString: string): string {
     const date = new Date(dateString);

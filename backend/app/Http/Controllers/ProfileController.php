@@ -204,7 +204,6 @@ class ProfileController extends Controller
 
         // $user = User::where('user_id',$request->user_id)->first();
 
-        Storage::makeDirectory('public/user/' . $request->user_id);
 
         $profile_pic = $request->file('profile_pic');
 
@@ -235,9 +234,11 @@ class ProfileController extends Controller
         // dd($file_path);
 
         if ($file_path) {
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file_path);
+            $path = public_path('storage' . DIRECTORY_SEPARATOR . $file_path);
+
             if (!File::exists($path)) {
                 abort(404);
+                dd($path);
             }
 
             $file = File::get($path);
@@ -246,8 +247,11 @@ class ProfileController extends Controller
             $response->header("Content-Type", $type);
             return $response;
         } else {
-            $path = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $file_path);
+
+            $path = public_path('storage' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'default.jpg');
+
             if (!File::exists($path)) {
+                // dd($path, 'pag wala');
                 abort(404);
             }
 
@@ -288,13 +292,13 @@ class ProfileController extends Controller
             $file_path = $user->profile_pic;
 
             if ($file_path) {
-                $path = storage_path('app\public\\' . $file_path);
+                $path = public_path('storage' . DIRECTORY_SEPARATOR . $file_path);
                 if (File::exists($path)) {
                     $data = base64_encode(file_get_contents($path));
                     $images[] = $data;
                 }
             } else {
-                $path = storage_path('app\public\images\profile-default.png');
+                $path = public_path('storage' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'default.jpg');
                 if (File::exists($path)) {
                     $data = base64_encode(file_get_contents($path));
                     $images[] = $data;

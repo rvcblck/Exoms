@@ -5,7 +5,7 @@ import { DashboardService } from 'src/app/dashboard.service';
 import { ResponseData } from 'src/app/dashboard.model';
 import { ImageService } from 'src/app/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OperatorFunction, catchError } from 'rxjs';
 import { of } from 'rxjs';
 import { ChartData } from 'src/app/dashboard.model';
@@ -18,7 +18,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth.service';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { environment } from 'src/environments/environment';
-
 
 @Component({
   selector: 'app-dashboard',
@@ -51,10 +50,18 @@ export class DashboardComponent implements OnInit {
   programChart: ChartData[] = [];
   assetPath = environment.assetPath;
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = environment.apiUrl;
   public imageUrl: any;
 
   // routeData: any;
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return headers;
+  }
 
   ngOnInit(): void {
     setInterval(() => {
@@ -111,7 +118,8 @@ export class DashboardComponent implements OnInit {
   getUserImages(userIds: string[]): Observable<any[]> {
     const url = `${this.apiUrl}/users-profile-images`;
     const body = { user_ids: userIds };
-    return this.http.post(url, body).pipe(
+    const headers = this.getHeaders();
+    return this.http.post(url, body, { headers }).pipe(
       map((response: any) => {
         const images: any[] = [];
         const data = response as string[]; // cast to string[] type

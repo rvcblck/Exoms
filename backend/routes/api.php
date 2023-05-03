@@ -106,12 +106,13 @@ Route::middleware('jwt', 'verified')->group(function () {
 
     //image controller
     Route::get('/images/{filename}', [ImageController::class, 'getImage']);
-    Route::get('/download-file/{id}', [ImageController::class, 'downloadFile'])->middleware('cors');
-    Route::get('/download-certfile/{id}', [ImageController::class, 'downloadCertFile'])->middleware('cors');
-    Route::get('/download-moa/{id}', [ImageController::class, 'downloadMoa'])->middleware('cors');
-    Route::post('/file', [ImageController::class, 'getUserFiles'])->middleware('cors');
+    Route::get('/download-file/{id}', [ImageController::class, 'downloadFile']);
+    Route::get('/download-certfile/{id}', [ImageController::class, 'downloadCertFile']);
+    Route::get('/download-moa/{id}', [ImageController::class, 'downloadMoa']);
+    Route::post('/file', [ImageController::class, 'getUserFiles']);
     Route::get('/view-file/{filePath}', [ImageController::class, 'viewUserFiles']);
-    Route::post('/program-file', [ImageController::class, 'getProgramFiles'])->middleware('cors');
+    Route::post('/program-file', [ImageController::class, 'getProgramFiles']);
+
 
 
     //dashboard controller

@@ -94,15 +94,11 @@ export class CreatePartnerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.data) {
-      if (this.partnerForm.invalid) {
-        return;
-      }
-    } else {
+    // if (this.data) {
       if (this.partnerForm.invalid || !this.moaFile) {
         return;
       }
-    }
+    // }
 
     this.openConfirmationDialog();
   }

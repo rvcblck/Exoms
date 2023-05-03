@@ -3,7 +3,7 @@ import { ProfileService } from 'src/app/profile.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Profile } from 'src/app/profile.model';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -55,9 +55,18 @@ export class AdminProfileComponent implements OnInit {
     });
   }
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return headers;
+  }
+
   getImage() {
     const user_id = localStorage.getItem('user_id');
-    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { headers, responseType: 'blob' });
   }
 
   ngOnInit(): void {

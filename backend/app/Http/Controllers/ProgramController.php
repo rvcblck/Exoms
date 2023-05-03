@@ -218,7 +218,8 @@ class ProgramController extends Controller
 
         $invViewFile = [];
         if ($program->invitation) {
-            $invpath = storage_path('app\public\\' . $program->invitation);
+            // $invpath = storage_path('app\public\\' . $program->invitation);
+            $invpath = public_path('storage' . DIRECTORY_SEPARATOR . $program->invitation);
             if (!File::exists($invpath)) {
                 abort(404);
             }
@@ -233,7 +234,8 @@ class ProgramController extends Controller
 
         $certViewFile = [];
         if ($program->certificate) {
-            $certpath = storage_path('app\public\\' . $program->certificate);
+            // $certpath = storage_path('app\public\\' . $program->certificate);
+            $certpath = public_path('storage' . DIRECTORY_SEPARATOR . $program->certificate);
             if (!File::exists($certpath)) {
                 abort(404);
             }
@@ -420,7 +422,7 @@ class ProgramController extends Controller
 
 
 
-        Storage::makeDirectory('public/program/' . $program_id);
+
 
 
         // store file
@@ -542,8 +544,7 @@ class ProgramController extends Controller
             'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
-            'start_time' => 'nullable',
-            'end_time' => 'nullable',
+
 
         ];
 
@@ -578,12 +579,12 @@ class ProgramController extends Controller
         $end_dateString = $request->input('end_date');
         $end_date = Carbon::parse($end_dateString)->toDateString();
 
-        $start_time = '';
+        $start_time = null;
         if ($request->input('start_time')) {
             $start_timeString = $request->input('start_time');
             $start_time = Carbon::parse($start_timeString)->toTimeString();
         }
-        $end_time = '';
+        $end_time = null;
         if ($request->input('end_time')) {
             $end_timeString = $request->input('end_time');
             $end_time = Carbon::parse($end_timeString)->toTimeString();
@@ -593,7 +594,7 @@ class ProgramController extends Controller
         $certificate = $request->file('certificate');
 
 
-        Storage::makeDirectory('public/program/' . $request->program_id);
+
 
 
         $path_invitation = '';
@@ -647,11 +648,17 @@ class ProgramController extends Controller
             'title' => $title,
             'start_date' => $start_date,
             'end_date' => $end_date,
-            'start_time' => $start_time,
-            'end_time' => $end_time,
+            // 'start_time' => $start_time,
+            // 'end_time' => $end_time,
             'place' => $address,
             'details' => $details,
         ];
+        if ($start_time) {
+            $updates['start_time'] = $start_time;
+        }
+        if ($end_time) {
+            $updates['end_time'] = $end_time;
+        }
 
         if (!empty($path_certificate)) {
             $updates['certificate'] = $path_certificate;

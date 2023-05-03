@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 // import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import { ImageService } from 'src/app/image.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -68,9 +68,18 @@ export class AdminLayoutComponent implements OnInit {
     this.authService = _authService;
   }
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return headers;
+  }
+
   getImage() {
     const user_id = localStorage.getItem('user_id');
-    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { responseType: 'blob' });
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/profile-image/${user_id}`, { headers, responseType: 'blob' });
   }
 
   ngOnInit() {

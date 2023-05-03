@@ -125,7 +125,7 @@ class PartnerController extends Controller
             ];
         }
 
-        $path = storage_path('app\public\\' . $partner->moa_file);
+        $path = public_path('storage' . DIRECTORY_SEPARATOR . $partner->moa_file);
         if (!File::exists($path)) {
             abort(404);
         }
@@ -199,7 +199,7 @@ class PartnerController extends Controller
         $partner_id = $this->generatePartnerId();
 
         // save file and make path
-        Storage::makeDirectory('public/partner/' . $partner_id);
+
 
 
 
@@ -283,7 +283,7 @@ class PartnerController extends Controller
         $moa_file = $request->file('moa_file');
 
         // save file and make path
-        Storage::makeDirectory('public/partner/' . $request->partner_id);
+
 
 
         $path_moaFile = '';

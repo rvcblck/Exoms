@@ -75,7 +75,7 @@ class AuthController extends Controller
         }
 
         //return token
-        $token = JWTAuth::fromUser($user);
+        $token = JWTAuth::fromUser($user, ['expires_in' => 480]);
         return response()->json([
             'success' => true,
             'message' => 'Logged in successfully',

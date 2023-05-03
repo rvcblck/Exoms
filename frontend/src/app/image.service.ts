@@ -17,13 +17,14 @@ export class ImageService {
 
   getImage() {
     const filename = 'logo.png';
-    return this.http.get(`${this.apiUrl}/images/${filename}`, { responseType: 'blob' });
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/images/${filename}`, { headers, responseType: 'blob' });
   }
 
   viewFile(filePath: string): Observable<any> {
     const body = { filePath };
     const headers = this.getHeaders();
-    return this.http.post<any>(`${this.apiUrl}/program-file`, body).pipe(
+    return this.http.post<any>(`${this.apiUrl}/program-file`, body, { headers }).pipe(
       tap((response) => {}),
       catchError((error) => {
         return throwError('Error retrieving file. Please try again later.');

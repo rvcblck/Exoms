@@ -21,6 +21,7 @@ import 'jspdf-autotable';
 import { SelectFacultyComponent } from '../modal/select-faculty/select-faculty.component';
 import { Accounts, SelectAccount } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
+import { environment } from 'src/environments/environment';
 
 // import { jsPDFHookData } from 'jspdf-autotable';
 
@@ -40,6 +41,7 @@ export class ReportsComponent implements OnInit {
   content: any;
   currentDate: any;
   moaStatus: any;
+  assetPath = environment.assetPath;
 
   inputWidth!: string;
   inputValue!: string;
@@ -210,6 +212,8 @@ export class ReportsComponent implements OnInit {
     const role = this.adminRole;
     const totalPages = doc.getNumberOfPages();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const assetPath = this.assetPath;
+
     let moaStatus = '';
     let pdfName = '';
     if (this.moaStatus === 'active') {
@@ -264,7 +268,7 @@ export class ReportsComponent implements OnInit {
 
       didDrawPage: function (data: { pageNumber: number }) {
         // add image to the top of every page
-        doc.addImage('../../assets/images/pdf-logo.png', 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
+        doc.addImage(`${assetPath}assets/images/pdf-logo.png`, 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
         // doc.setFont('helvetica');
         doc.setFontSize(12);
         doc.text(moaStatus, 15, 55); // Add "Faculty Name:" text
@@ -294,6 +298,7 @@ export class ReportsComponent implements OnInit {
     const currentDate = this.currentDate;
     const role = this.adminRole;
     const pageWidth = doc.internal.pageSize.getWidth();
+    const assetPath = this.assetPath;
 
     // Add header row
     const headerRow = [];
@@ -330,7 +335,7 @@ export class ReportsComponent implements OnInit {
       },
       didDrawPage: function (data: { pageNumber: number }) {
         // add image to the top of every page
-        doc.addImage('../../assets/images/pdf-logo.png', 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
+        doc.addImage(`${assetPath}assets/images/pdf-logo.png`, 'PNG', 10, 10, doc.internal.pageSize.getWidth() - 20, 40);
         // doc.setFontStyle('bold');
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(12);

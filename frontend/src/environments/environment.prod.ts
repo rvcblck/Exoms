@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://www.slarenasitsolutions.com/4mcictexoms/api',
-  assetPath: 'https://www.slarenasitsolutions.com/4mcictexoms/',
+  apiUrl: 'https://4mcictexoms.cmkis.online/api',
+  assetPath: 'https://exoms.cmkis.online/',
   canvasJsAngularComponentPath: 'https://www.slarenasitsolutions.com/4mcictexoms/assets/js/canvasjs/canvasjs.angular.component'
 };

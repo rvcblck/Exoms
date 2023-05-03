@@ -13,7 +13,7 @@
           <table class="prog-flow" id="programFlow">
             <body>
               <div class="img-container">
-                <img src="../../assets/images/pdf-logo.png" alt="" />
+                <img src="{{ assetPath }}assets/images/pdf-logo.png" alt="" />
               </div>
 
               <tr class="main-title">
@@ -126,7 +126,7 @@
           <table class="prog-flow" id="programTopic">
             <body>
               <div class="img-container">
-                <img src="../../assets/images/pdf-logo.png" alt="" />
+                <img src="{{ assetPath }}assets/images/pdf-logo.png" alt="" />
               </div>
 
               <tr class="main-title">
@@ -200,7 +200,8 @@
                 <td>Dean, CICT</td>
               </tr>
               <div class="footer">
-                <div>Printed By : {{ adminName }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ adminRole }}</div><div>{{ currentDate | date : 'longDate' }}</div>
+                <div>Printed By : {{ adminName }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ adminRole }}</div>
+                <div>{{ currentDate | date : 'longDate' }}</div>
               </div>
             </body>
           </table>

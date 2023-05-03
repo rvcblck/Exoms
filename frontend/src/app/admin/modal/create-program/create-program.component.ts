@@ -658,12 +658,23 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    const start_time = this.programForm.get('start_time')?.value;
+    const end_time = this.programForm.get('end_time')?.value;
+
     const formData = new FormData();
     formData.append('title', this.programForm.get('title')?.value);
     formData.append('details', this.programForm.get('details')?.value);
-
-    formData.append('start_date', this.programForm.get('start_date')?.value);
-    formData.append('end_date', this.programForm.get('end_date')?.value);
+    console.log(start_time);
+    if (start_time) {
+      formData.append('start_time', this.programForm.get('start_time')?.value);
+    } else {
+      formData.append('start_time', '');
+    }
+    if (end_time) {
+      formData.append('end_time', this.programForm.get('end_time')?.value);
+    } else {
+      formData.append('end_time', '');
+    }
 
     if (this.data.program) {
       formData.append('program_id', this.data.program.program_id);
@@ -673,8 +684,8 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     const joinedPartnerIds = this.selectedPartners.map((partner) => partner.partner_id).join(',');
     const joineParticipantIds = this.participants.join(',');
 
-    formData.append('start_time', this.programForm.get('start_time')?.value);
-    formData.append('end_time', this.programForm.get('end_time')?.value);
+    formData.append('start_date', this.programForm.get('start_date')?.value);
+    formData.append('end_date', this.programForm.get('end_date')?.value);
     formData.append('leader_id', LeaderId);
     formData.append('member_id', joinedMemberIds);
     formData.append('partner_id', joinedPartnerIds);
@@ -686,6 +697,11 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     if (this.certificate) {
       formData.append('certificate', this.certificate);
     }
+
+    formData.forEach((value: FormDataEntryValue, key: string) => {
+      console.log(key + ' - ' + value);
+    });
+
     if (this.data.program) {
       this.loadDialog = true;
       this.programService.updateProgram(formData).subscribe(

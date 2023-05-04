@@ -35,6 +35,7 @@ export class AuthService {
         localStorage.setItem('fullName', response.user.lname + ', ' + response.user.fname);
         localStorage.setItem('role', response.user.role);
         localStorage.setItem('user_id', response.user.user_id);
+        localStorage.setItem('status', response.user.status);
       }),
       catchError((error) => {
         if (error.status === 401) {

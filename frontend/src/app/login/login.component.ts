@@ -53,8 +53,8 @@ export class LoginComponent {
   }
 
   sendEmail() {
-    localStorage.setItem('password', this.password);
-    this.authService.sendEmail(this.email).subscribe(
+    localStorage.setItem('password', this.loginForm.value.password);
+    this.authService.sendEmail(this.loginForm.value.email).subscribe(
       (response) => {
         if (response.success) {
           this.router.navigate(['/verify-email']);

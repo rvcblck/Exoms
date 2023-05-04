@@ -1,4 +1,4 @@
-<div *ngIf="dashboard" class="dashboard">
+<div *ngIf="dashboard && userStatus" class="dashboard">
   <div class="cont">
     <div class="cont-message">
       <div class="message">
@@ -85,7 +85,7 @@
         <div matRipple (click)="previous()" class="previous-wrapper"><i class="fa-solid fa-chevron-left"></i></div>
       </div>
       <div class="progchart">
-        <canvasjs-chart  *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
+        <canvasjs-chart *ngIf="chartOptions" [options]="chartOptions"></canvasjs-chart>
       </div>
       <div class="nxt-div">
         <div matRipple (click)="next()" class="next-wrapper"><i class="fa-solid fa-chevron-right"></i></div>
@@ -145,6 +145,15 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div *ngIf="dashboard && !userStatus" class="dashboard">
+  <div class="sorry-cont">
+    <img src="{{ assetPath }}assets/images/sorry.png" alt="" />
+  </div>
+  <div class="text-center">
+    <h1><strong>Account status is not yet approve</strong></h1>
+    <h3>Contact your admin for this problem</h3>
   </div>
 </div>
 <div *ngIf="!dashboard" class="loading-wave">

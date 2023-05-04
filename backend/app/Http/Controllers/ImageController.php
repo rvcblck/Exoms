@@ -123,6 +123,8 @@ class ImageController extends Controller
         return $response;
     }
 
+    
+
     public function downloadMoa($id)
     {
         $filePath = Partner::where('partner_id', $id)->first();

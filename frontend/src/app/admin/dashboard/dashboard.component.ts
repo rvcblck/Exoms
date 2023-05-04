@@ -49,6 +49,7 @@ export class DashboardComponent implements OnInit {
   userChartOptions: any;
   programChart: ChartData[] = [];
   assetPath = environment.assetPath;
+  userStatus = false;
 
   private apiUrl = environment.apiUrl;
   public imageUrl: any;
@@ -64,6 +65,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const userStatus = localStorage.getItem('status');
+    if (userStatus == 'approve') {
+      this.userStatus = true;
+    }
+
     setInterval(() => {
       this.currentDate = new Date();
       const currentTime = new Date().getHours();

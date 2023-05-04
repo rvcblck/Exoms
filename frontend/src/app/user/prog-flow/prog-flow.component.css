@@ -384,14 +384,33 @@ input[type='text'] {
   text-transform: capitalize;
 }
 
+.sorry-cont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sorry-cont img {
+  width: 30%;
+  aspect-ratio: 1/1;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
+  .sorry-cont img {
+    width: 40%;
+    aspect-ratio: 1/1;
+  }
 }
 
 /* Tablet screens */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  .sorry-cont img {
+    width: 60%;
+    aspect-ratio: 1/1;
+  }
   .container {
     margin-top: 30px;
     width: fit-content;

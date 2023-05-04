@@ -457,6 +457,17 @@
   font-weight: 700;
 }
 
+.sorry-cont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sorry-cont img {
+  width: 30%;
+  aspect-ratio: 1/1;
+}
+
 /* Desktop screens */
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -482,6 +493,11 @@
   .date img {
     aspect-ratio: 1/1;
     width: 65%;
+  }
+
+  .sorry-cont img {
+    width: 40%;
+    aspect-ratio: 1/1;
   }
 
   /* .date div:nth-child(2) {
@@ -709,6 +725,11 @@
   .cont-faculty-mobile {
     padding: 10px 0;
   }
+
+  .sorry-cont img {
+    width: 60%;
+    aspect-ratio: 1/1;
+  }
 }
 
 /*
@@ -721,4 +742,3 @@
 
  */
 /* loadder */
-

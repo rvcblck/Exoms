@@ -1,4 +1,4 @@
-<div class="container-progflow">
+<div class="container-progflow" *ngIf="userStatus">
   <div class="btn-select">
     <div class="box">
       <label for="">Pogram: </label>
@@ -136,7 +136,7 @@
                 <table>
                   <body cdkDropList class="example-list" (cdkDropListDropped)="dropTopic($event)">
                     <div colspan="2">
-                      <td scope="col">Program Flow</td>
+                      <td scope="col">Program Topic</td>
                     </div>
                     <div class="example-box topic" *ngFor="let topic of programFlow.topic" cdkDrag cdkDragExit>
                       <td>{{ topic.col_1 }}</td>
@@ -213,19 +213,12 @@
   </mat-tab-group>
 </div>
 
-<!--
-
-             -->
-<!-- <table class="table">
-              <thead>
-                <tr colspan="2">
-                  <th scope="col">Program Roles</th>
-                </tr>
-              </thead>
-              <body cdkDropList class="example-list" (cdkDropListDropped)="dropPosition($event)">
-                <tr class="example-box position" *ngFor="let position of programFlow.position; let i = index" cdkDrag cdkDragExit>
-                  <td>{{ position.name }}</td>
-                  <td></td>
-                </tr>
-              </body>
-            </table> -->
+<div class="container-progflow" *ngIf="!userStatus">
+  <div class="sorry-cont">
+    <img src="{{ assetPath }}assets/images/sorry.png" alt="" />
+  </div>
+  <div class="text-center">
+    <h1><strong>Account status is not yet approve</strong></h1>
+    <h3>Contact your admin for this problem</h3>
+  </div>
+</div>

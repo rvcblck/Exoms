@@ -87,6 +87,12 @@
       </div>
     </form>
   </div>
+  <div *ngIf="loading" class="loading-wave">
+    <div class="loading-bar"></div>
+    <div class="loading-bar"></div>
+    <div class="loading-bar"></div>
+    <div class="loading-bar"></div>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="footer">

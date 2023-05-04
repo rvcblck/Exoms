@@ -30,7 +30,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
-  height: 130px;
+  height: auto;
   width: 90%;
   margin-left: 5%;
 }
@@ -377,7 +377,16 @@
   margin-right: 3px;
 }
 
-
+.sorry-cont {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sorry-cont img {
+  width: 30%;
+  aspect-ratio: 1/1;
+}
 
 @media only screen and (min-width: 1200px) {
   /* Styles for desktop screens go here */
@@ -394,12 +403,20 @@
   .program-card {
     width: 80%;
   }
+  .sorry-cont img {
+    width: 40%;
+    aspect-ratio: 1/1;
+  }
 }
 
 /* Phone screens */
 @media only screen and (max-width: 767px) {
   /* Styles for phone screens go here */
 
+  .sorry-cont img {
+    width: 60%;
+    aspect-ratio: 1/1;
+  }
   .filter-container {
     display: block;
   }

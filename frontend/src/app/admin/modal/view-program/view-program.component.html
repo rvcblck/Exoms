@@ -116,14 +116,20 @@
   <mat-dialog-actions>
     <div class="footer">
       <div>
-        <button (click)="archive()"><i class="fa-solid fa-box-archive"></i>&nbsp;&nbsp;&nbsp;Archive</button>
+        <button *ngIf="isAdmin()" (click)="archive()"><i class="fa-solid fa-box-archive"></i>&nbsp;&nbsp;&nbsp;Archive</button>
       </div>
-      <div>
+      <div *ngIf="isAdmin()">
         <div>
           <button (click)="closeDialog()">Close</button>
         </div>
-        <div *ngIf="isAdmin()">
+        <div>
           <button (click)="editProgram(data.program.program_id)">Edit</button>
+        </div>
+      </div>
+      <div *ngIf="!isAdmin()">
+        <div></div>
+        <div>
+          <button (click)="closeDialog()">Close</button>
         </div>
       </div>
     </div>

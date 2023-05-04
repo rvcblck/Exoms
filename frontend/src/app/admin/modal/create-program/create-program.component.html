@@ -135,8 +135,12 @@
             <mat-option *ngFor="let option of options" [value]="option.user_id">
               <div class="autocomplete-option">
                 <div class="name">{{ option.full_name }}</div>
-                <div class="ongoing">{{ option.ongoing }}</div>
-                <div class="upcoming">{{ option.upcoming }}</div>
+                <div class="ongoing">
+                  <div>{{ option.ongoing }}</div>
+                </div>
+                <div class="upcoming">
+                  <div>{{ option.upcoming }}</div>
+                </div>
               </div>
             </mat-option>
           </mat-autocomplete>
@@ -169,8 +173,12 @@
             <mat-option *ngFor="let option of suggestions" [value]="option.user_id">
               <div class="autocomplete-option">
                 <div class="name">{{ option.full_name }}</div>
-                <div class="ongoing">{{ option.ongoing }}</div>
-                <div class="upcoming">{{ option.upcoming }}</div>
+                <div class="ongoing">
+                  <div>{{ option.ongoing }}</div>
+                </div>
+                <div class="upcoming">
+                  <div>{{ option.upcoming }}</div>
+                </div>
               </div>
             </mat-option>
           </mat-autocomplete>
@@ -260,7 +268,7 @@
                 </div>
                 <div>
                   <button mat-icon-button color="warn" (click)="removeInvitation()">
-                    <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+                    <mat-icon style="color: #ff5a2f"><i class="fa-solid fa-circle-xmark"></i></mat-icon>
                   </button>
                 </div>
               </div>
@@ -301,7 +309,7 @@
                 </div>
                 <div>
                   <button mat-icon-button color="warn" (click)="removeCert()">
-                    <mat-icon><i class="fa-solid fa-circle-xmark"></i></mat-icon>
+                    <mat-icon style="color: #ff5a2f"><i class="fa-solid fa-circle-xmark"></i></mat-icon>
                   </button>
                 </div>
               </div>

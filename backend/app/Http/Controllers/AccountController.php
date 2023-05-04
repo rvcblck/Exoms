@@ -8,6 +8,8 @@ use App\Models\Program;
 use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use App\Models\PasswordChange;
+use App\Notifications\createAccount;
+use App\Notifications\VerifyEmail;
 use Illuminate\Support\Carbon;
 
 
@@ -126,8 +128,12 @@ class AccountController extends Controller
 
         $user_id = $this->generateUserId();
 
+        $password = $this->generatePassword();
 
-        User::create([
+        //i want to generate password minimum of 8 characters, combination of upper and lower case character and number
+
+
+        $user = User::create([
             'user_id' => $user_id,
             'fname' => $request->fname,
             'lname' => $request->lname,
@@ -138,14 +144,43 @@ class AccountController extends Controller
             'mobile_no' => $request->mobile_no,
             'email' => $request->email,
             'address' => $request->address,
-            'status' => 'approved'
+            'status' => 'approve',
+            'email_verified_at' => now('Asia/Manila')
 
         ]);
+
+        $password_id = $this->generatePasswordId();
+
+        PasswordChange::create([
+            'password_id' => $password_id,
+            'user_id' =>  $user_id,
+            'password' => bcrypt($password),
+            'change_date' => now('Asia/Manila')
+        ]);
+
+        $userDetails = [
+            'email' => $request->email,
+            'password' => $password
+        ];
+
+        $user->notify(new createAccount($userDetails));
+        $user->notify(new createAccount($userDetails));
 
         return response()->json([
             'success' => true,
             'message' => 'Account Created',
         ]);
+    }
+
+    public function generatePassword()
+    {
+        $length = 8;
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        return $password;
     }
 
 
@@ -197,7 +232,7 @@ class AccountController extends Controller
             ->where('end_date', '>=', $now)
             ->where('start_date', '<=', $now)
             ->count();
-        
+
         $upcoming = $user->programs()->where('start_date', '>', $now)->count();
         $previous = $user->programs()->where('end_date', '<', $now)->count();
 
@@ -334,5 +369,16 @@ class AccountController extends Controller
             $existing_user_id = User::where('user_id', $user_id)->first();
         }
         return $user_id;
+    }
+
+    public function generatePasswordId()
+    {
+        $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
+        while ($existing_password_id) {
+            $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+            $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
+        }
+        return $password_id;
     }
 }

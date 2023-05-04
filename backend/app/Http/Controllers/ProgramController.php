@@ -414,12 +414,12 @@ class ProgramController extends Controller
         //create path
         $program_id = $this->generateProgramId();
 
-        $start_time = '';
+        $start_time = null;
         if ($request->input('start_time')) {
             $start_timeString = $request->input('start_time');
             $start_time = Carbon::parse($start_timeString)->toTimeString();
         }
-        $end_time = '';
+        $end_time = null;
         if ($request->input('end_time')) {
             $end_timeString = $request->input('end_time');
             $end_time = Carbon::parse($end_timeString)->toTimeString();

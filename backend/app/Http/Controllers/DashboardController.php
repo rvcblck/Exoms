@@ -128,16 +128,29 @@ class DashboardController extends Controller
         $expireData = [];
 
         foreach ($contracts as $contract) {
-            $endDate1 = Carbon::parse($contract->end_date);
-            $endDate2 = Carbon::parse($contract->end_date);
-
-
-            $beforeEndDate = $endDate1->subMonth(1);
 
 
 
 
-            if (($beforeEndDate->lt(now('Asia/Manila')) == true) && ($endDate2->gt(now('Asia/Manila')) == true)) {
+
+
+            $now = now('Asia/Manila');
+            $endDate = Carbon::parse($contract->end_date);
+            $diffInDays = $now->diffInDays($endDate);
+
+
+
+
+
+            // i want to get the date difference of this
+
+
+            // $beforeEndDate = $endDate1->subMonth(1);
+
+
+
+
+            if ($diffInDays <= 30  && $endDate->gt(now('Asia/Manila'))) {
 
 
                 $partner = Partner::where('partner_id', $contract->partner_id)->first();

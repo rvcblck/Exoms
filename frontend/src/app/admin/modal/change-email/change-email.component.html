@@ -2,16 +2,24 @@
   <div class="title">Change Email</div>
   <form [formGroup]="changeEmailForm" (ngSubmit)="onSubmit()">
     <div class="form-group mb-3">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" id="email" formControlName="email" />
-      <mat-error *ngIf="changeEmailForm.get('email')?.invalid && (changeEmailForm.get('email')?.touched || submited)"> Email is required. </mat-error>
+      <label for="email">New email address</label>
+      <input type="email" id="email" formControlName="email" />
+      <mat-error *ngIf="changeEmailForm.get('email')?.invalid && (changeEmailForm.get('email')?.touched || submited)">
+        New email is required.
+      </mat-error>
       <mat-error *ngIf="emailErrors && submited">{{ emailErrors }}</mat-error>
       <mat-error *ngIf="submited && changeEmailForm.controls['email'].errors?.['email']" class="text-danger">Invalid email address.</mat-error>
     </div>
 
     <div class="form-group mb-3">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" />
+      <div class="password-input-wrapper">
+        <input type="{{ hidePassword ? 'password' : 'text' }}" class="" name="password" formControlName="password" required />
+        <button type="button" *ngIf="changeEmailForm.get('password')?.value" class="password-toggle-button" (click)="togglePasswordVisibility()">
+          <i class="fa-solid" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </button>
+      </div>
+      <!-- <input type="password" class="form-control" id="password" formControlName="password" required minlength="6" /> -->
       <div *ngIf="submited && changeEmailForm.controls['password'].errors">
         <div *ngIf="changeEmailForm.controls['password'].errors['required']">Password is required</div>
         <div *ngIf="changeEmailForm.controls['password'].errors['minlength']">Password must be at least 6 characters long</div>
@@ -21,8 +29,18 @@
 
     <div class="form-group mb-3">
       <label for="password_confirmation">Confirm Password</label>
-      <input type="password" class="form-control" id="password_confirmation" formControlName="password_confirmation" required />
-
+      <div class="password-input-wrapper">
+        <input type="{{ hidePassword ? 'password' : 'text' }}" class="" id="password_confirmation" formControlName="password_confirmation" required />
+        <button
+          type="button"
+          *ngIf="changeEmailForm.get('password_confirmation')?.value"
+          class="password-toggle-button"
+          (click)="togglePasswordVisibility()"
+        >
+          <i class="fa-solid" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </button>
+      </div>
+      <!-- <input type="password" id="password_confirmation" formControlName="password_confirmation" required /> -->
       <div
         *ngIf="(submited || changeEmailForm.get('password_confirmation')?.touched) && changeEmailForm.hasError('passwordMismatch')"
         class="text-danger"

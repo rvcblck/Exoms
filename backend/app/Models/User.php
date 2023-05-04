@@ -37,7 +37,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'role',
         'status',
         'archived',
-        'profile_pic'
+        'profile_pic',
+        'email_verified_at'
 
     ];
 
@@ -63,12 +64,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function verificationCodes()
     {
-        return $this->hasMany(VerificationCode::class,'user_id');
+        return $this->hasMany(VerificationCode::class, 'user_id');
     }
 
     public function passwordChanges()
     {
-        return $this->hasMany(PasswordChange::class,'user_id');
+        return $this->hasMany(PasswordChange::class, 'user_id');
     }
 
     public function programs()
@@ -80,6 +81,4 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return $this->belongsToMany(User::class, 'members', 'user_id', 'program_id')->withPivot('leader');
     }
-
-
 }

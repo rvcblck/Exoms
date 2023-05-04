@@ -17,6 +17,7 @@ export class ChangeEmailComponent implements OnInit {
   submited = false;
   emailErrors = '';
   passErrors = '';
+  hidePassword = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +42,10 @@ export class ChangeEmailComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 
   passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {

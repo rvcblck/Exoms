@@ -14,11 +14,13 @@
       <input id="search-toggle" type="checkbox" />
       <input type="text" [(ngModel)]="searchText" placeholder="Search..." (mouseleave)="collapseSearch()" />
     </div>
-    <div class="start-date">
+    <div class="start-date d-flex flex-column justify-content-center mt-4">
       <input type="date" id="start-date" [(ngModel)]="minStartDate" />
+      <small class="w-100 ps-4 text-secondary">start date</small>
     </div>
-    <div class="end-date">
+    <div class="end-date d-flex flex-column justify-content-center mt-4">
       <input type="date" id="end-date" [(ngModel)]="maxEndDate" />
+      <small class="w-100 ps-3 text-secondary">end date</small>
     </div>
   </div>
 
@@ -48,7 +50,7 @@
   </div>
 </div>
 
-<div class="program-list" *ngIf="programs">
+<div class="program-list" *ngIf="programs && userStatus">
   <div class="program-card" matRipple *ngFor="let program of filteredPrograms()" (click)="viewProgram(program.program_id)">
     <div>
       <div *ngIf="!isAdmin()" class="btn-attendance" matRippleDisabled>
@@ -105,5 +107,14 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="program-list" *ngIf="programs && !userStatus">
+  <div class="sorry-cont">
+    <img src="{{ assetPath }}assets/images/sorry.png" alt="" />
+  </div>
+  <div class="text-center">
+    <h1><strong>Account status is not yet approve</strong></h1>
+    <h3>Contact your admin for this problem</h3>
   </div>
 </div>

@@ -28,6 +28,7 @@ class AdminAccountSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'email_verified_at' => now('Asia/Manila'),
             'role' => 'admin',
+            'status' => 'approve'
 
 
 
@@ -42,20 +43,22 @@ class AdminAccountSeeder extends Seeder
         ]);
     }
 
-    public function generatePasswordId() {
+    public function generatePasswordId()
+    {
         $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
-        while($existing_password_id) {
+        while ($existing_password_id) {
             $password_id = 'PASS-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_password_id = PasswordChange::where('password_id', $password_id)->first();
         }
         return $password_id;
     }
 
-    public function generateUserId() {
+    public function generateUserId()
+    {
         $user_id = 'USER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
         $existing_user_id = User::where('user_id', $user_id)->first();
-        while($existing_user_id) {
+        while ($existing_user_id) {
             $user_id = 'USER-' . str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
             $existing_user_id = User::where('user_id', $user_id)->first();
         }

@@ -15,6 +15,7 @@ import { map, startWith } from 'rxjs/operators';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { CreateAccountComponent } from 'src/app/admin/modal/create-account/create-account.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { environment } from 'src/environments/environment';
 
 export interface User {
   name: string;
@@ -37,6 +38,8 @@ export class ProgFlowComponent implements OnInit {
   topic_submitted = false;
   position_submitted = false;
   inputPositionEmpty = false;
+  userStatus = false;
+  assetPath = environment.assetPath;
 
   positionControl!: FormControl[];
 
@@ -63,7 +66,12 @@ export class ProgFlowComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userStatus = localStorage.getItem('status');
+    if (userStatus == 'approve') {
+      this.userStatus = true;
+    }
+  }
 
   selectProgram() {
     const user_id = localStorage.getItem('user_id');

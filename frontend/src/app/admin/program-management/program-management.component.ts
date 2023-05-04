@@ -12,6 +12,7 @@ import { AccountService } from 'src/app/account.service';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { AuthService } from 'src/app/auth.service';
 import { AttendanceComponent } from 'src/app/user/attendance/attendance.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-program-management',
@@ -30,6 +31,8 @@ export class ProgramManagementComponent implements OnInit {
   maxEndDate: Date | undefined;
   pageName = 'Program Management';
   loadDialog = false;
+  assetPath = environment.assetPath;
+  userStatus = false;
 
   isSearchActive = true;
   datePipe: any;
@@ -45,6 +48,11 @@ export class ProgramManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const userStatus = localStorage.getItem('status');
+    if (userStatus == 'approve') {
+      this.userStatus = true;
+    }
+
     const isAdmin = this.authService.isAdmin();
     this.getPrograms();
   }

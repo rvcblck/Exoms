@@ -42,6 +42,7 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/reset-password/{token}', [AuthController::class, 'checkResetToken']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/accounts', [AccountController::class, 'store']);
 
 
 
@@ -54,7 +55,7 @@ Route::middleware('jwt', 'verified')->group(function () {
     Route::get('/accountInfo/{id}', [AccountController::class, 'accountInfo']);
     Route::get('/select-accounts', [AccountController::class, 'selectAccount']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/accounts', [AccountController::class, 'store']);
+
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
     Route::put('/accounts/{id}', [AccountController::class, 'update']);
     Route::delete('/accounts/{id}', [AccountController::class, 'destroy']);

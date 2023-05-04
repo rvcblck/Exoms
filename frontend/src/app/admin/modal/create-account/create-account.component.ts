@@ -26,6 +26,7 @@ export class CreateAccountComponent implements OnInit {
   errors: any = [];
   submitted = false;
   emailError = '';
+  loading = false;
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -101,9 +102,10 @@ export class CreateAccountComponent implements OnInit {
     };
 
     // console.log(formattedData);
-
+    this.loading = true;
     this.accountService.createAccount(formattedData).subscribe(
       (response) => {
+        this.loading = false;
         this.dialogRef.close(true);
         const message = 'Creating Account Successfully';
         const header = 'Success';
@@ -116,6 +118,7 @@ export class CreateAccountComponent implements OnInit {
         });
       },
       (error) => {
+        this.loading = false;
         if (error.error.error === 'Email is already registered') {
           this.emailError = 'Email is already registered';
         }

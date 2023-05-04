@@ -17,6 +17,9 @@ export class ChangePasswordComponent implements OnInit {
   submited = false;
   oldPassErrors = '';
   newPassErrors = '';
+  hidePassword = true;
+  hidePassword2 = true;
+  hidePassword3 = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +43,18 @@ export class ChangePasswordComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  togglePasswordVisibility2() {
+    this.hidePassword2 = !this.hidePassword2;
+  }
+
+  togglePasswordVisibility3() {
+    this.hidePassword3 = !this.hidePassword3;
   }
 
   passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {

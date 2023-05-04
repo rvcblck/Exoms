@@ -15,7 +15,8 @@
 
     <div class="dropdown-container">
       <div>
-        <div class="profile-link"><i class="bx bx-user"></i>&nbsp;&nbsp;<a routerLink="/admin/admin-profile">Profile</a></div>
+        <div class="profile-link" *ngIf="isAdmin()"><i class="bx bx-user"></i>&nbsp;&nbsp;<a routerLink="/admin/admin-profile">Profile</a></div>
+        <div class="profile-link" *ngIf="!isAdmin()"><i class="bx bx-user"></i>&nbsp;&nbsp;<a routerLink="/user/user-profile">Profile</a></div>
         <div class="logout-link"><i class="bx bx-log-out"></i>&nbsp;&nbsp;<a (click)="onLogout()">Logout</a></div>
       </div>
     </div>

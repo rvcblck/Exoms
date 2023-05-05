@@ -6,7 +6,8 @@
       <div><button class="text-nowrap" (click)="selectProgram()">Select Program</button></div>
     </div>
     <div class="cont-img" *ngIf="!programFlow">
-      <img src="../../../assets/images/Search-rafiki.png" alt="" />
+      <img src="{{ assetPath }}assets/images/Search-rafiki.png" alt="" />
+      <h1>Please select a program.</h1>
     </div>
   </div>
   <mat-tab-group *ngIf="programFlow">

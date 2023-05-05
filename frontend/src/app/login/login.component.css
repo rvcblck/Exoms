@@ -82,12 +82,14 @@ form button[type='submit']:hover {
 .form-group a {
   /* margin-top: 15px; */
   text-decoration: none;
-  color: #ff5a2f;
+  /* color: #ff5a2f; */
+  color: grey;
   font-size: 16px;
   float: right;
 }
 .form-group a:hover {
   text-decoration: underline;
+  color: #ff5a2f;
   transition: 0.4s;
 }
 

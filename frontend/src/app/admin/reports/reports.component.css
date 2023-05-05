@@ -190,6 +190,18 @@ table .img-container {
   justify-content: space-between;
   /* flex-wrap: wrap; */
 }
+
+.img-search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.img-search img {
+  width: 30%;
+}
 /*
 
 
@@ -254,4 +266,25 @@ table .img-container {
 
 .mat-table {
   width: 100%;
+}
+
+/* Desktop screens */
+@media only screen and (min-width: 1200px) {
+  /* Styles for desktop screens go here */
+}
+
+/* Tablet screens */
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+  /* Styles for tablet screens go here */
+  .img-search img {
+    min-width: 40%;
+  }
+}
+
+/* Phone screens */
+@media only screen and (max-width: 767px) {
+  /* Styles for phone screens go here */
+  .img-search img {
+    width: 60%;
+  }
 }

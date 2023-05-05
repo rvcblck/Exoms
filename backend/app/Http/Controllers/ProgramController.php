@@ -546,8 +546,8 @@ class ProgramController extends Controller
             'leader_id' => 'required',
             'member_id' => 'required',
             'address' => 'required',
-            'invitation' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
-            'certificate' => 'nullable|mimes:pdf,docx,png,jpeg|max:5048',
+            'invitation' => 'nullable|mimes:pdf,docx,png,jpeg,jpg|max:5048',
+            'certificate' => 'nullable|mimes:pdf,docx,png,jpeg,jpg|max:5048',
             'participant' => 'nullable',
             'partner_id' => 'required',
 
@@ -612,11 +612,14 @@ class ProgramController extends Controller
             $files = Storage::files($programDir);
 
             // Loop through the files and delete the invitation file if it exists
-            foreach ($files as $file) {
-                if (Str::startsWith($file, $programDir . '/Inv_')) {
-                    Storage::delete($file);
+            if ($files) {
+                foreach ($files as $file) {
+                    if (Str::startsWith($file, $programDir . '/Inv_')) {
+                        Storage::delete($file);
+                    }
                 }
             }
+
 
             $filename = $invitation->getClientOriginalName();
             $new_filename = 'Inv_' . $filename;
@@ -633,11 +636,14 @@ class ProgramController extends Controller
             $files = Storage::files($programDir);
 
             // Loop through the files and delete the invitation file if it exists
-            foreach ($files as $file) {
-                if (Str::startsWith($file, $programDir . '/Cert_')) {
-                    Storage::delete($file);
+            if ($files) {
+                foreach ($files as $file) {
+                    if (Str::startsWith($file, $programDir . '/Cert_')) {
+                        Storage::delete($file);
+                    }
                 }
             }
+
 
             $filename = $certificate->getClientOriginalName();
             $new_filename = 'Cert_' . $filename;
@@ -661,9 +667,14 @@ class ProgramController extends Controller
         ];
         if ($start_time) {
             $updates['start_time'] = $start_time;
+        } else {
+            $updates['start_time'] = null;
         }
+
         if ($end_time) {
             $updates['end_time'] = $end_time;
+        } else {
+            $updates['end_time'] = null;
         }
 
         if (!empty($path_certificate)) {

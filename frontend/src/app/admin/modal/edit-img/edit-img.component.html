@@ -25,7 +25,7 @@
 </div>
 <mat-dialog-actions>
   <div class="footer">
-    <button tabindex="-1">Cancel</button>
+    <button (click)="closeDialog()" tabindex="-1">Cancel</button>
     <button class="submit" type="submit" (click)="onSubmit()">Submit</button>
   </div>
 </mat-dialog-actions>

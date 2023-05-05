@@ -8,6 +8,10 @@
         <div id="selected-program" *ngIf="programTitle">{{ programTitle }}</div>
         <div><button class="text-nowrap" (click)="selectProgram()">Select Program</button></div>
       </div>
+      <div class="img-search" *ngIf="!program && !programFlow">
+        <img src="{{ assetPath }}assets/images/Search-rafiki.png" alt="" />
+        <h1>Please select a program.</h1>
+      </div>
       <div *ngIf="program && programFlow" class="table-container">
         <div class="table-wrapper">
           <table class="prog-flow" id="programFlow">
@@ -290,7 +294,8 @@
         </div>
         <div class="btn-cont d-flex justify-content-end">
           <div class="downloadbtn">
-            <i class="fa-solid fa-circle-down"></i><button class="text-nowrap" (click)="downloadFacultyPDF()">Download PDF</button>
+            <i class="fa-solid fa-circle-down"></i
+            ><button class="text-nowrap" [disabled]="!facultyName" (click)="downloadFacultyPDF()">Download PDF</button>
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ export class ChangePasswordComponent implements OnInit {
     this.changePassForm = this.formBuilder.group(
       {
         old_password: ['', [Validators.required, Validators.minLength(6)]],
-        new_password: ['', [Validators.required, Validators.minLength(6)]],
+        new_password: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
         password_confirmation: ['', Validators.required]
       },
       { validators: [this.passwordMatchValidator] }
@@ -40,6 +40,11 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  passwordValidator(control: { value: string }) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    return regex.test(control.value) ? null : { passwordInvalid: true };
+  }
 
   closeDialog() {
     this.dialogRef.close();

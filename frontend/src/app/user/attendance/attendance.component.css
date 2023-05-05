@@ -178,7 +178,7 @@ td.mat-footer-cell:first-of-type {
   width: 100%;
 }
 .add-col button {
-  width: 50%;
+  /* width: 50%; */
 
   height: 35px;
   border-radius: 5px;
@@ -192,15 +192,17 @@ td.mat-footer-cell:first-of-type {
 }
 .btn-add {
   display: flex;
+  justify-content: end;
   width: 100%;
 }
 .btn-add form {
   padding: 0px;
-  flex: 1;
+  /* flex: 1; */
   margin: auto;
 }
 .btn-add button {
-  flex: 1;
+  /* flex: 1; */
+  max-width: fit-content;
   height: 35px;
   border-radius: 5px;
   background-color: #ff5a2f;
@@ -213,10 +215,18 @@ td.mat-footer-cell:first-of-type {
   margin: auto 5px;
 }
 
+.datePick {
+  display: flex;
+  justify-content: end;
+  max-width: fit-content;
+}
+
 form {
   display: flex;
+  flex-direction: row;
+  width: 100%;
   height: 60px;
-  justify-content: right;
+  justify-content: end;
 }
 .mat-form-field-underline {
   position: absolute;
@@ -226,8 +236,8 @@ form {
 }
 
 form input {
-  width: 100px;
-
+  /* width: 100px; */
+  margin: auto 5px;
   height: 35px;
   background: #f0f0f0;
   border-radius: 5px;
@@ -237,9 +247,9 @@ form input {
   padding: 8px 10px;
 }
 
-.datePick {
+/* .datePick {
   margin: auto;
-}
+} */
 
 td,
 th {
@@ -267,5 +277,10 @@ th.mat-header-cell {
   .filter,
   .search {
     display: none;
+  }
+
+  ::ng-deep .cdk-dialog-container {
+    margin: 0;
+    padding: 0;
   }
 }

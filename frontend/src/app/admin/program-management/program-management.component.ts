@@ -57,6 +57,12 @@ export class ProgramManagementComponent implements OnInit {
     this.getPrograms();
   }
 
+  resetFilter() {
+    this.searchText = '';
+    this.minStartDate = undefined;
+    this.maxEndDate = undefined;
+  }
+
   getPrograms(): void {
     if (this.isAdmin()) {
       this.programService.getPrograms().subscribe(

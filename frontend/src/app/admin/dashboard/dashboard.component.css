@@ -90,7 +90,7 @@
 .dateTime div:nth-child(1) {
   line-height: 60px;
   height: min-content;
-  font-size: 50px;
+  font-size: 3.2rem;
   font-weight: bolder;
 }
 
@@ -476,6 +476,9 @@
 /* Tablet screens */
 @media only screen and (min-width: 540px) and (max-width: 1199px) {
   /* Styles for tablet screens go here */
+  html {
+    font-size: 14px;
+  }
   .cont-faculty {
     display: none;
   }
@@ -526,6 +529,9 @@
 
 /* Phone screens */
 @media only screen and (max-width: 540px) {
+  html {
+    font-size: 12px;
+  }
   /* Styles for phone screens go here */
   .cont-faculty {
     display: none;

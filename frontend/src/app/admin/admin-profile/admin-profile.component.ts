@@ -102,28 +102,28 @@ export class AdminProfileComponent implements OnInit {
           this.user = user;
 
           const address = user.address;
+          var addressObject = { barangay: '', city: '', province: '' };
           if (address) {
             const addressParts = address.split(', ');
-            const addressObject = {
+            addressObject = {
               barangay: addressParts[0],
               city: addressParts[1],
               province: addressParts[2]
             };
-
-            this.profileForm = this.formBuilder.group({
-              fname: [user.fname, Validators.required],
-              mname: [user.mname],
-              lname: [user.lname, Validators.required],
-              suffix: [user.suffix],
-              address: [''],
-              barangay: [addressObject.barangay, Validators.required],
-              city: [addressObject.city, Validators.required],
-              province: [addressObject.province, Validators.required],
-              gender: [user.gender, Validators.required],
-              bday: [user.bday, Validators.required],
-              mobile_no: [user.mobile_no, Validators.required]
-            });
           }
+          this.profileForm = this.formBuilder.group({
+            fname: [user.fname, Validators.required],
+            mname: [user.mname],
+            lname: [user.lname, Validators.required],
+            suffix: [user.suffix],
+            address: [''],
+            barangay: [addressObject.barangay, Validators.required],
+            city: [addressObject.city, Validators.required],
+            province: [addressObject.province, Validators.required],
+            gender: [user.gender, Validators.required],
+            bday: [user.bday, Validators.required],
+            mobile_no: [user.mobile_no, Validators.required]
+          });
         },
         (error) => {}
       );

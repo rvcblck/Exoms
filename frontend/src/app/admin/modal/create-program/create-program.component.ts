@@ -300,9 +300,11 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
 
     if (!allowedExtensions.includes(extension.toLowerCase())) {
       this.programForm.get(controlName)?.setErrors({ invalidExtension: true });
+      this.edithInv = false;
       event.target.value = ''; // clear the file input
     } else if (file.size > maxFileSize * 1024) {
       this.programForm.get(controlName)?.setErrors({ max: true });
+      this.edithInv = false;
       event.target.value = ''; // clear the file input
     } else {
       this.invitation = file;
@@ -368,9 +370,11 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
 
     if (!allowedExtensions.includes(extension.toLowerCase())) {
       this.programForm.get(controlName)?.setErrors({ invalidExtension: true });
+      this.edithCert = false;
       event.target.value = ''; // clear the file input
     } else if (file.size > maxFileSize * 1024) {
       this.programForm.get(controlName)?.setErrors({ max: true });
+      this.edithCert = false;
       event.target.value = ''; // clear the file input
     } else {
       this.certificate = file;
@@ -672,7 +676,7 @@ export class CreateProgramComponent implements OnInit, AfterViewInit {
     const formData = new FormData();
     formData.append('title', this.capitalizeWords(this.programForm.get('title')?.value));
     formData.append('details', this.capitalizeWords(this.programForm.get('details')?.value));
-    console.log(start_time);
+
     if (start_time) {
       formData.append('start_time', this.programForm.get('start_time')?.value);
     } else {

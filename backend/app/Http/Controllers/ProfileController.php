@@ -158,7 +158,7 @@ class ProfileController extends Controller
             }
         }
         if ($checkPass) {
-            if (!Hash::check($request->new_password, $checkPass->password)) {
+            if (!Hash::check($request->new_password, $checkPass->password) === 0) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You cant set the same password',

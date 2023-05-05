@@ -92,6 +92,7 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
         });
       },
       (error) => {
+        this.loadDialog = false;
         const message = `Error verifying email, ${error.error.message}`;
         const header = 'Error';
         const dialogRef = this.dialog.open(ErrorComponent, {
@@ -112,8 +113,9 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
     }
     // clearInterval(this.timer);
     // this.timerRunning = false;
-
+    this.loadDialog = true;
     this.authService.resendVerificationCode(this.email).subscribe(() => {
+      this.loadDialog = false;
       this.message = 'A new verification code has been sent to your email. Please enter the new code to verify your email address.';
       this.startCountdown(120);
     });

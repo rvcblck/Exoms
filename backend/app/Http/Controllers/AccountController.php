@@ -307,7 +307,7 @@ class AccountController extends Controller
     public function selectAccount()
     {
 
-        $users = User::get();
+        $users = User::where('archived', false)->get();
         $userData = [];
         foreach ($users as $user) {
 

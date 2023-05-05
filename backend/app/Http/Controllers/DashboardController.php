@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $users = User::with('programs')->get();
 
         foreach ($users as $user) {
-            $programs = $user->programs()->get();
+            $programs = $user->programs()->where('archived', false)->get();
             $ongoing = 0;
             $upcoming = 0;
             $previous = 0;
@@ -60,7 +60,7 @@ class DashboardController extends Controller
 
 
 
-        $allPrograms = Program::get();
+        $allPrograms = Program::where('archived', false)->get();
 
         $allOngoing = 0;
         $allUpcoming = 0;
@@ -97,7 +97,7 @@ class DashboardController extends Controller
         $pending = 0;
         $disapprove = 1;
 
-        $statusUsers = User::get();
+        $statusUsers = User::where('archived', false)->get();
 
         foreach ($statusUsers as $statusUser) {
             if ($statusUser->status === 'approve') {
@@ -234,7 +234,7 @@ class DashboardController extends Controller
         $userData = [];
 
 
-        $user1 = User::with('programs')->where('user_id', $user_id)->first();
+        $user1 = User::with('programs')->where('user_id', $user_id)->where('archived', false)->first();
 
 
         $programs = $user1->programs()->get();
@@ -340,7 +340,7 @@ class DashboardController extends Controller
     {
 
 
-        $user = User::with('programs')->where('user_id', $request->user_id)->first();
+        $user = User::with('programs')->where('user_id', $request->user_id)->where('archived', false)->first();
 
 
         $year = date('Y'); // get the current year using now()

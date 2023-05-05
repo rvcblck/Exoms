@@ -18,6 +18,7 @@ export class LoginComponent {
   loginForm: FormGroup = new FormGroup({});
   submitted = false;
   hidePassword = true;
+  loading = false;
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -31,8 +32,10 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
+    this.loading = true;
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
       (response) => {
+        this.loading = false;
         if (this.authService.isAdmin()) {
           this.router.navigate(['/admin/dashboard']);
         } else {
@@ -40,6 +43,7 @@ export class LoginComponent {
         }
       },
       (error) => {
+        this.loading = false;
         if (error === 'Invalid email or password') {
           this.errorMessage = 'Invalid credentials';
         } else if (error === 'Email is not yet validated') {
@@ -54,14 +58,17 @@ export class LoginComponent {
 
   sendEmail() {
     localStorage.setItem('password', this.loginForm.value.password);
+    this.loading = true;
     this.authService.sendEmail(this.loginForm.value.email).subscribe(
       (response) => {
+        this.loading = false;
         if (response.success) {
           this.router.navigate(['/verify-email']);
         } else {
         }
       },
       (error) => {
+        this.loading = false;
         if (error === 'Invalid email or password') {
           this.errorMessage = 'Invalid credentials';
         } else if (error === 'Email is not yet validated') {

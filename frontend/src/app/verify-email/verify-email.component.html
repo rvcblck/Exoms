@@ -20,7 +20,10 @@
         </div>
         <button
           [disabled]="!timerRunning && !verificationCode"
-          [ngStyle]="{ 'background-color': timerRunning && verificationCode ? '' : 'gray', cursor: timerRunning && verificationCode ? 'pointer' : 'not-allowed' }"
+          [ngStyle]="{
+            'background-color': timerRunning && verificationCode ? '' : 'gray',
+            cursor: timerRunning && verificationCode ? 'pointer' : 'not-allowed'
+          }"
           type="submit"
         >
           Verify
@@ -36,4 +39,10 @@
       </form>
     </div>
   </div>
+</div>
+<div *ngIf="loadDialog" class="loading-wave">
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
+  <div class="loading-bar"></div>
 </div>

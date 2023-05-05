@@ -765,7 +765,7 @@ class ProgramController extends Controller
     {
         $now = Carbon::now('Asia/Manila');
         $usersData = [];
-        $users = User::with('programs')->get();
+        $users = User::with('programs')->where('archived', false)->get();
         foreach ($users as $user) {
 
 
@@ -827,7 +827,7 @@ class ProgramController extends Controller
 
         $programData = [];
 
-        $user = User::with('programs', 'members')->where('user_id', $id)->get()->first();
+        $user = User::with('programs', 'members')->where('user_id', $id)->where('archived', false)->get()->first();
 
 
 
@@ -948,7 +948,7 @@ class ProgramController extends Controller
 
     public function programFlow($program_id)
     {
-        $flows = Flow::where('program_id', $program_id)->get();
+        $flows = Flow::where('program_id', $program_id)->where('archived', false)->get();
 
         $flowData = [];
         foreach ($flows as $flow) {

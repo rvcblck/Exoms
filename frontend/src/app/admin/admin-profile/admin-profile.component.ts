@@ -14,6 +14,7 @@ import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { environment } from 'src/environments/environment';
+import { TitleService } from 'src/app/title.service';
 // import { TitleCasePipe } from '@angular/common';
 
 @Component({
@@ -39,7 +40,8 @@ export class AdminProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private adminLayout: AdminLayoutComponent,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef // private titleCasePipe: TitleCasePipe
+    private cdr: ChangeDetectorRef, // private titleCasePipe: TitleCasePipe
+    private titleService: TitleService
   ) {
     this.profileForm = this.formBuilder.group({
       fname: ['', Validators.required],
@@ -71,6 +73,10 @@ export class AdminProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageTitle = 'Profile';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
+
     this.getProfile();
 
     this.refreshImage();

@@ -15,8 +15,6 @@
   /* font-family: 'Poppins', sans-serif; */
 }
 
-
-
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -379,6 +377,22 @@ body {
   width: 250px;
 }
 
+.page-title {
+  /* border: 1px dashed red; */
+  margin-left: 78px;
+  padding-left: 20px;
+  font-weight: 800;
+  font-size: 20px;
+  font-family: 'Assistant', sans-serif;
+  color: #51354b;
+  transition: all 0.5s ease;
+}
+
+.page-title.open {
+  /* border: 1px dashed red; */
+  margin-left: 250px;
+}
+
 @media only screen and (min-width: 1200px) {
   .navbar-mobile {
     display: none;
@@ -503,7 +517,6 @@ body {
     font-weight: 600;
     height: 100%;
     width: 60%;
-
   }
   .navbar-title img {
     height: 100%;
@@ -581,10 +594,7 @@ body {
     border: none;
     border-radius: 5px;
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.05);
-
   }
-
-  
 
   .dropdown-container.show {
     display: block;

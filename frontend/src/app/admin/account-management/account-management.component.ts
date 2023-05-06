@@ -11,6 +11,7 @@ import { CreateAccountComponent } from '../modal/create-account/create-account.c
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-account-management',
@@ -36,10 +37,14 @@ export class AccountManagementComponent implements OnInit {
     private accountService: AccountService,
     private dialog: MatDialog,
     private adminLayout: AdminLayoutComponent,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) {}
 
   ngOnInit() {
+    const pageTitle = 'Account Management';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
     this.getAccounts();
   }
 

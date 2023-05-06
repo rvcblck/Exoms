@@ -15,6 +15,7 @@ import { Program } from 'src/app/program.model';
 import { ProgramService } from 'src/app/program.service';
 import { PartnerService } from 'src/app/partner.service';
 import { Partner } from 'src/app/partner.model';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-archive',
@@ -56,11 +57,17 @@ export class ArchiveComponent {
     private adminLayout: AdminLayoutComponent,
     private cdr: ChangeDetectorRef,
     private programService: ProgramService,
-    private partnerService: PartnerService
+    private partnerService: PartnerService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit() {
+    const pageTitle = 'Archives';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
+
     // program
+
     this.programService.getAllProgramsArchived().subscribe((programs) => {
       this.dataSource.data = programs;
 

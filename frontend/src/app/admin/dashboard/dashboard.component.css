@@ -444,17 +444,49 @@
   border-radius: 3px;
   font-weight: 700;
   font-size: 12px;
-  color: #ff5a2f !important;
+  color: #ffffff !important;
   padding: 5px 20px;
-  background-color: #ff592f3c;
+  background-color: #ff5a2f;
 }
 
-.contract-wrapper .table tr th {
+.contract-wrapper .table-head tr td {
   color: #8a8a8b;
+  font-weight: 800;
+  border: none;
 }
 
-.contract-wrapper .table tbody td {
-  font-weight: 700;
+.table tr {
+  display: flex;
+  flex-direction: row;
+  border: none;
+}
+
+.table tr td:nth-child(1) {
+  width: 60%;
+  border: none;
+}
+
+.table tr td:nth-child(2),
+.table tr td:nth-child(3) {
+  width: 20%;
+  border: none;
+}
+
+.contract-wrapper .table body {
+  max-height: 40vh;
+  min-width: 100%;
+  overflow-y: auto;
+  border: none;
+  background-color: #fff;
+}
+
+table tr:nth-child(even) {
+  background-color: #ff592f32;
+  border-radius: 10px;
+}
+
+.contract-wrapper .table body td {
+  font-weight: 500;
 }
 
 .sorry-cont {

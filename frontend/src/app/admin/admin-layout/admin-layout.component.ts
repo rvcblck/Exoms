@@ -10,6 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmComponent } from 'src/app/dialog/confirm/confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter, map } from 'rxjs';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -63,10 +67,22 @@ export class AdminLayoutComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+    private titleService: Title,
+    private titleReloadService: TitleService
   ) {
     this.authService = _authService;
   }
+
+  // onTitleChange(event: Event) {
+  //   console.log('nasa admin layout');
+  //   const title = (event.target as HTMLTitleElement).textContent;
+  //   if (title) {
+  //     this.pageTitle = title;
+  //     this.titleService.setTitle(title);
+  //   }
+  // }
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -83,6 +99,35 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let route: ActivatedRoute = this.router.routerState.root;
+          let routeTitle = '';
+          while (route!.firstChild) {
+            route = route.firstChild;
+          }
+          if (route.snapshot.data['title']) {
+            routeTitle = route!.snapshot.data['title'];
+          }
+          console.log(routeTitle, 'eto yun');
+          return routeTitle;
+        })
+      )
+      .subscribe((title: string) => {
+        if (title) {
+          this.titleService.setTitle(title);
+          this.pageTitle = title;
+        }
+      });
+
+    this.titleReloadService.titleChange.subscribe((title: string) => {
+      this.pageTitle = title;
+      this.titleService.setTitle(title);
+      this.cdr.detectChanges();
+    });
+
     this.getImage().subscribe((data: Blob) => {
       const imageUrl = URL.createObjectURL(data);
 
@@ -105,10 +150,13 @@ export class AdminLayoutComponent implements OnInit {
     const closeBtn = document.querySelector('#btn');
     const navList = document.querySelector('.nav-list');
     const logo = document.querySelector('.cict-logo');
+    const pageTitle = document.querySelector('.page-title');
 
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {
         sidebar?.classList.toggle('open');
+        pageTitle?.classList.toggle('open');
+
         menuBtnChange();
       });
     }
@@ -118,6 +166,7 @@ export class AdminLayoutComponent implements OnInit {
         burgerMenu.classList.toggle('open');
         navList?.classList.toggle('open');
         logo?.classList.toggle('open');
+        pageTitle?.classList.toggle('open');
       });
     }
 

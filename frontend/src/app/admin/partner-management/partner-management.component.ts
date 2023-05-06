@@ -10,6 +10,7 @@ import { ViewPartnerComponent } from '../modal/view-partner/view-partner.compone
 import { CreatePartnerComponent } from '../modal/create-partner/create-partner.component';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-partner-management',
@@ -26,7 +27,8 @@ export class PartnerManagementComponent implements OnInit {
     private partnerService: PartnerService,
     private dialog: MatDialog,
     private adminLayout: AdminLayoutComponent,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) {}
   loading = false;
 
@@ -40,6 +42,9 @@ export class PartnerManagementComponent implements OnInit {
   displayedColumns: string[] = ['company_name', 'address', 'contact_no', 'contract_dates', 'action'];
 
   ngOnInit(): void {
+    const pageTitle = 'Partner Management';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
     this.getPartner();
   }
 

@@ -22,6 +22,7 @@ import { SelectFacultyComponent } from '../modal/select-faculty/select-faculty.c
 import { Accounts, SelectAccount } from 'src/app/account.model';
 import { AccountService } from 'src/app/account.service';
 import { environment } from 'src/environments/environment';
+import { TitleService } from 'src/app/title.service';
 
 // import { jsPDFHookData } from 'jspdf-autotable';
 
@@ -70,12 +71,15 @@ export class ReportsComponent implements OnInit {
     private dialog: MatDialog,
     private datePipe: DatePipe,
     private partnerService: PartnerService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
-    // this.adminLayout.pageTitle = 'Reports';
-    // this.cdr.detectChanges();\
+    const pageTitle = 'Reports';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
+
     if (this.inputValue) {
       this.inputWidth = this.inputValue.length * 8 + 'px';
     }

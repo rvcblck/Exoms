@@ -103,20 +103,20 @@
         <label for="">Expiring Contracts</label>
         <div class="contract-wrapper">
           <table class="table">
-            <thead>
+            <div class="table-head">
               <tr>
-                <th scope="col">PARTNER NAME</th>
-                <th scope="col" class="text-center">EXPIRATION DATE</th>
-                <th scope="col" class="text-center">ACTION</th>
+                <td scope="col">PARTNER NAME</td>
+                <td scope="col" class="text-center">EXPIRATION DATE</td>
+                <td scope="col" class="text-center">ACTION</td>
               </tr>
-            </thead>
-            <tbody>
+            </div>
+            <body>
               <tr *ngFor="let partner of dashboard.expire_data">
                 <td>{{ partner.partner_name }}</td>
                 <td class="text-center">{{ formatDate(partner.end_date) }}</td>
-                <td class="text-center"><button class="extend-btn" (click)="ViewPartner(partner.partner_id)">View</button></td>
+                <td class="text-center ps-4"><button class="extend-btn" (click)="ViewPartner(partner.partner_id)">View</button></td>
               </tr>
-            </tbody>
+            </body>
           </table>
         </div>
       </div>

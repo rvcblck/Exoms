@@ -102,7 +102,7 @@ const routes: Routes = [
         path: 'archive',
         component: ArchiveComponent,
         canActivate: [AuthGuard, AdminGuard],
-        data: { title: 'archive' }
+        data: { title: 'Archives' }
       },
       {
         path: 'admin-profile',
@@ -136,22 +136,23 @@ const routes: Routes = [
         path: 'program-management',
         component: ProgramManagementComponent,
         canActivate: [AuthGuard, UserGuard],
-        data: { title: 'Program Management' }
+        data: { title: 'My Extension' }
       },
       {
         path: 'user-profile',
         component: AdminProfileComponent,
-        canActivate: [AuthGuard, UserGuard]
+        canActivate: [AuthGuard, UserGuard],
+        data: {
+          title: 'Profile'
+        }
       },
       {
         path: 'program-flow',
         component: ProgFlowComponent,
-        canActivate: [AuthGuard, UserGuard]
-      },
-      {
-        path: 'program-topic',
-        component: ProgTopicComponent,
-        canActivate: [AuthGuard, UserGuard]
+        canActivate: [AuthGuard, UserGuard],
+        data: {
+          title: 'Program Flow'
+        }
       }
     ]
   }

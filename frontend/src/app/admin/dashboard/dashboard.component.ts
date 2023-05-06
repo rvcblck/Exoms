@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { DashboardService } from 'src/app/dashboard.service';
 import { ResponseData } from 'src/app/dashboard.model';
 import { ImageService } from 'src/app/image.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OperatorFunction, catchError } from 'rxjs';
 import { of } from 'rxjs';
@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth.service';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { environment } from 'src/environments/environment';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,6 +26,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  @Output() titleChange: EventEmitter<string> = new EventEmitter();
+  // @Output() titleChange: EventEmitter<string> = new EventEmitter<string>();
   constructor(
     private adminLayout: AdminLayoutComponent,
     private cdr: ChangeDetectorRef,
@@ -34,10 +37,12 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient,
     private dialog: MatDialog,
     private partnerService: PartnerService,
-    private authService: AuthService
-  ) {
-    // Chart.register(Annotation);
-  }
+    private authService: AuthService,
+    // private titleService: Title,
+    // private route: ,
+    private titleService: TitleService
+  ) // private cdr: ChangeDetectorRef
+  {}
   currentDate: Date = new Date();
   timeOfDay!: string;
   quote!: string;
@@ -65,6 +70,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageTitle = 'Dashboard';
+    this.titleService.titleChange.emit(pageTitle);
+    this.cdr.detectChanges();
+
     const userStatus = localStorage.getItem('status');
     if (userStatus == 'approve') {
       this.userStatus = true;

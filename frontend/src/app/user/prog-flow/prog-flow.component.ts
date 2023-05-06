@@ -16,6 +16,7 @@ import { SuccessComponent } from 'src/app/dialog/success/success.component';
 import { CreateAccountComponent } from 'src/app/admin/modal/create-account/create-account.component';
 import { ErrorComponent } from 'src/app/dialog/error/error.component';
 import { environment } from 'src/environments/environment';
+import { TitleService } from 'src/app/title.service';
 
 export interface User {
   name: string;
@@ -48,7 +49,12 @@ export class ProgFlowComponent implements OnInit {
   @ViewChild('progFlowTitle') progFlowTitleInput!: ElementRef;
   @ViewChild('progFlowDesc') progFlowDescInput!: ElementRef;
 
-  constructor(private programService: ProgramService, private dialog: MatDialog, private formBuilder: FormBuilder) {
+  constructor(
+    private programService: ProgramService,
+    private dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private titleService: TitleService
+  ) {
     this.flowForm = this.formBuilder.group({
       flowTitle: ['', Validators.required],
       flowDesc: ['', Validators.required]
@@ -67,6 +73,10 @@ export class ProgFlowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const pageTitle = 'Program Flow';
+    this.titleService.titleChange.emit(pageTitle);
+    // this.cdr.detectChanges();
+
     const userStatus = localStorage.getItem('status');
     if (userStatus == 'approve') {
       this.userStatus = true;

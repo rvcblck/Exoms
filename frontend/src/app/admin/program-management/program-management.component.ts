@@ -13,6 +13,7 @@ import { AdminLayoutComponent } from '../admin-layout/admin-layout.component';
 import { AuthService } from 'src/app/auth.service';
 import { AttendanceComponent } from 'src/app/user/attendance/attendance.component';
 import { environment } from 'src/environments/environment';
+import { TitleService } from 'src/app/title.service';
 
 @Component({
   selector: 'app-program-management',
@@ -44,10 +45,21 @@ export class ProgramManagementComponent implements OnInit {
     private accountService: AccountService,
     private adminLayout: AdminLayoutComponent,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
+    if (this.isAdmin()) {
+      const pageTitle = 'Program Management';
+      this.titleService.titleChange.emit(pageTitle);
+      this.cdr.detectChanges();
+    } else {
+      const pageTitle = 'My Extensions';
+      this.titleService.titleChange.emit(pageTitle);
+      this.cdr.detectChanges();
+    }
+
     const userStatus = localStorage.getItem('status');
     if (userStatus == 'approve') {
       this.userStatus = true;
